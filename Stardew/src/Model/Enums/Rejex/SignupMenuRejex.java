@@ -1,14 +1,28 @@
 package Model.Enums.Rejex;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum SignupMenuRejex {
-    Register(Pattern.compile("register\\s+-u\\s+(.+)\\s+-p\\s+(.+)\\s+(.+)\\s+-n\\s+(.+)\\s+-e\\s+(.+)\\s+-g\\s+(.+)")),
-    ValidUser(Pattern.compile("^[a-zA-Z0-9-]+$")),
-    ValidEmail(Pattern.compile("^(?![._-])[a-zA-Z0-9._-]+(?<![._-])@[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*\\.(?:org|com|net)$"));
-    public final Pattern Rejex;
+    Register("register\\s+-u\\s+(.+)\\s+-p\\s+(.+)\\s+(.+)\\s+-n\\s+(.+)\\s+-e\\s+(.+)\\s+-g\\s+(.+)"),
+    ValidUser("^[a-zA-Z0-9-]+$"),
+    ValidEmail("^(?![._-])[a-zA-Z0-9._-]+(?<![._-])@[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*\\.(?:org|com|net)$"),
+    ValidPassword("^[a-zA-Z0-9?><,\\\\\\\"';:\\\\\\\\\\\\/|\\\\]\\\\[\\\\}\\\\{\\\\+=\\\\)\\\\(\\\\*&\\\\^%\\\\$#!]*$"),
+    WeakMail("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\\\d)(?=.*[?><,\\\\\\\"';:\\\\\\\\\\\\/|\\\\]\\\\[\\\\}\\\\{\\\\+=\\\\)\\\\(\\\\*&\\\\^%\\\\$#!]).{8,}$"),
+    PickQuestion("^pick\\s+question\\s+-q\\s+(.+)\\s+-a\\s+(.+)\\s+-c\\s+(.+)")
+    ;
 
-    SignupMenuRejex(Pattern Rejex) {
-        this.Rejex = Rejex;
+
+    public String command;
+    SignupMenuRejex(String command) {
+        this.command = command;
+    }
+    public Matcher getMatcher(String line) {
+        Matcher matcher = Pattern.compile(this.command).matcher(line);
+        if(matcher.matches())
+        {
+            return matcher;
+        }
+        return null;
     }
 }
