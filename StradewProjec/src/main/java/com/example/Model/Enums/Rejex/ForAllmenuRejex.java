@@ -1,12 +1,21 @@
 package com.example.Model.Enums.Rejex;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum ForAllmenuRejex {
-    ShowCurrentMenu(Pattern.compile("show\\s+current\\s+menu")),
-    GoTOMenu(Pattern.compile("menu\\s+enter\\s+(.+)"));
-    public final Pattern Rejex;
-    ForAllmenuRejex(Pattern Rejex) {
-        this.Rejex = Rejex;
+    ShowCurrentMenu("^show\\s+current\\s+menu$"),
+    GoTOMenu("^menu\\s+enter\\s+(.+)$");
+    public String command;
+    ForAllmenuRejex(String command) {
+        this.command = command;
+    }
+    public Matcher getMatcher(String line) {
+        Matcher matcher = Pattern.compile(command).matcher(line);
+        if(matcher.matches())
+        {
+            return matcher;
+        }
+        return null;
     }
 }
