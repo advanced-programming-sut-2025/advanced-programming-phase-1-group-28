@@ -1,10 +1,13 @@
 package com.example.Controller;
 
 import com.example.Model.App;
+import com.example.Model.Enums.MenuName;
 import com.example.Model.Enums.Rejex.SignupMenuRejex;
 import com.example.Model.Enums.SecurityQuestions;
 import com.example.Model.User;
+import com.example.View.Appview;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public class SignUpController {
@@ -109,20 +112,37 @@ public class SignUpController {
         }
     }
 
-    public void ShowSecurityQuestions()
+    public ArrayList<String> ShowSecurityQuestions()
     {
+        ArrayList<String> Output = new ArrayList<>();
         for(SecurityQuestions question : SecurityQuestions.values())
         {
-            System.out.println(question.QuestionName);
+            Output.add(question.QuestionName);
         }
+        return Output;
     }
 
+    public String SetQuestion(int QuestionId , String Answer , String ConfirmAnswer)
+    {
+        if(QuestionId > SecurityQuestions.values().length)
+        {
+            return "Invalid Security Question Index";
+        }
+        if(!Answer.equals(ConfirmAnswer))
+        {
+            return "Invalid Confirm Answer";
+        }
+        QuestionId--;
+        App.Users.get(Appview.getUserLoggedInId()).setAnswerIdQuestion(QuestionId);
+        App.Users.get(Appview.getUserLoggedInId()).setAnswer(Answer);
+        return "Answer Submit Successful";
+    }
     public void ApplySignUp(String Username , String Password , String NickName , String  Email , String Gender)
     {
         String HashedPassword = HashAlghorithm.DecryptPassword(Password);
         User newuser = new User(Username , Password , HashedPassword , Email , App.Users.size() , NickName , Gender);
         App.Users.add(newuser);
+        Appview.Situation = MenuName.LoginMenu;
     }
-
 }
 

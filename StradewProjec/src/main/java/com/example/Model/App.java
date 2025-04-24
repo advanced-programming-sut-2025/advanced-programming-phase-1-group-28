@@ -6,6 +6,7 @@ import com.example.Controller.MainMenuController.GameMenuController;
 import com.example.Controller.MainMenuController.ProfileMenuController;
 import com.example.Controller.SignUpController;
 import com.example.View.AppInputCommand;
+import com.example.View.Appview;
 import com.example.View.LoginMenu;
 import com.example.View.MainMenu.GameMenu;
 import com.example.View.MainMenu.ProfileMenu;
@@ -54,7 +55,7 @@ public class App {
     {
         return Users.get(index);
     }
-    public int ReturnUserIndex(String Username)
+    public static int ReturnUserIndex(String Username)
     {
         for(int i = 0; i < Users.size(); i++)
         {

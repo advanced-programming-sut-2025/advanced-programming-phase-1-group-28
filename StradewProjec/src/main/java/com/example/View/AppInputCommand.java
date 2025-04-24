@@ -11,22 +11,26 @@ public class AppInputCommand {
         if(Appview.Situation == MenuName.SignUpMenu)
         {
             App.signUpMenu.Input(Command);
+            return true;
         }
         if(Appview.Situation == MenuName.LoginMenu)
         {
             App.loginMenu.Input(Command);
+            return true;
         }
         if(Appview.Situation == MenuName.ProfileMenu)
         {
             App.loginMenu.Input(Command);
+            return true;
         }
         if(Appview.Situation == MenuName.GameMenu)
         {
             App.loginMenu.Input(Command);
+            return true;
         }
         if(2 == 3)
         {
-            //Exit
+
         }
         return true;
     }
