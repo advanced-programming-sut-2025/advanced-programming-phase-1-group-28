@@ -1,6 +1,6 @@
 package Model.Enums;
 
-public enum Weather {
+public enum Weathers {
     SUNNY , RAIN , STORM , SNOW
 }
 

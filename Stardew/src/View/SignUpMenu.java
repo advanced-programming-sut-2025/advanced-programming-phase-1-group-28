@@ -9,9 +9,8 @@ import java.util.regex.Matcher;
 
 public class SignUpMenu {
     SignUpController signUpController = App.signUpController;
-    public boolean Input()
+    public boolean Input(String Command)
     {
-        String Command = App.scanner.nextLine();
         Matcher ShowCurrentMenu = ForAllmenuRejex.ShowCurrentMenu.Rejex.matcher(Command);
         Matcher GotoMenu = ForAllmenuRejex.GoTOMenu.Rejex.matcher(Command);
         if(ShowCurrentMenu.matches())
