@@ -9,28 +9,28 @@ import java.util.regex.Matcher;
 
 public class SignUpMenu {
     SignUpController signUpController = App.signUpController;
-    public boolean Input()
+    Matcher matcher;
+    public void Input(String Command)
     {
-        String Command = App.scanner.nextLine();
-        Matcher ShowCurrentMenu = ForAllmenuRejex.ShowCurrentMenu.Rejex.matcher(Command);
-        Matcher GotoMenu = ForAllmenuRejex.GoTOMenu.Rejex.matcher(Command);
-        if(ShowCurrentMenu.matches())
+        if((matcher = SignupMenuRejex.Register.getMatcher(Command)) != null)
         {
-            System.out.println(App.allMenuCommandsController.ShowCurrentMenu());
+            // go to Sign Up Menu Controller
         }
-        if(GotoMenu.matches())
+        else if((matcher = SignupMenuRejex.PickQuestion.getMatcher(Command)) != null)
         {
-            if(App.allMenuCommandsController.Returnmenuname(GotoMenu.group(1).trim()) == null)
-            {
-                System.out.println("Enter Valid Menu");
-            }
-            System.out.println(App.allMenuCommandsController.GoToMenu(App.allMenuCommandsController.Returnmenuname(GotoMenu.group(1).trim())));
+            // go to sec questions
         }
-        return true;
+        else
+        {
+            System.out.println("Invalid command");
+        }
     }
     public void SignUp(String Username , String Password , String ConfirmPassword , String NickName ,  String Email , String Gender) {
         //if password == Random ...
         //print Security
+    }
+    public void PickQuestion() {
+        //
     }
 
 }
