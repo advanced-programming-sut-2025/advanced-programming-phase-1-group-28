@@ -1,4 +1,5 @@
 package com.example;
+import com.example.View.AppInputCommand;
 import com.google.gson.Gson;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,6 +9,12 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) {
-
+        AppInputCommand InputObject = new AppInputCommand();
+        while(true) {
+            if(!InputObject.InputCommands())
+            {
+                break;
+            }
+        }
     }
 }
