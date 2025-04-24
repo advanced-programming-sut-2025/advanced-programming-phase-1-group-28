@@ -12,6 +12,11 @@ public class AppInputCommand {
         {
 
         }
+        if(2 == 3)
+        {
+            //Exit
+
+        }
         return true;
     }
 }

@@ -5,8 +5,13 @@ import com.example.Controller.LoginController;
 import com.example.Controller.MainMenuController.GameMenuController;
 import com.example.Controller.MainMenuController.ProfileMenuController;
 import com.example.Controller.SignUpController;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -22,6 +27,18 @@ public class App {
     public static ProfileMenuController profileMenuController = new ProfileMenuController();
     public static AllMenuCommandsController allMenuCommandsController = new AllMenuCommandsController();
     public static Random random = new Random();
+    static {
+        Gson gson = new Gson();
+        try (FileReader reader = new FileReader("Users.json")) {
+        JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
+        for(JsonElement jsonelemnt: jsonArray) {
+            User user = gson.fromJson(jsonelemnt, User.class);
+            Users.add(user);
+        }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public static User ReturnUser(int index)
     {
         return Users.get(index);
