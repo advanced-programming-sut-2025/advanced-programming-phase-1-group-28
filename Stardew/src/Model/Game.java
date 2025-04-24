@@ -14,5 +14,4 @@ public class Game {
     public int WhoseTurn = 0;
     Weather Weather = new Weather();
     //Boolean IsEnd = false;
-
 }

@@ -1,5 +1,6 @@
 package Model;
 
+import Controller.AllMenuCommandsController;
 import Controller.LoginController;
 import Controller.MainMenuController.GameMenuController;
 import Controller.MainMenuController.ProfileMenuController;
@@ -8,15 +9,18 @@ import View.Appview;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class App {
     File UsersFile;
     public static ArrayList<User> Users = new ArrayList<>();
     public static ArrayList<Game> Games = new ArrayList<>();
+    public static Scanner scanner = new Scanner(System.in);
     public static SignUpController signUpController = new SignUpController();
     public static LoginController loginController = new LoginController();
     public static GameMenuController gameMenuController = new GameMenuController();
     public static ProfileMenuController profileMenuController = new ProfileMenuController();
+    public static AllMenuCommandsController allMenuCommandsController = new AllMenuCommandsController();
     public static User ReturnUser(int index)
     {
         return Users.get(index);

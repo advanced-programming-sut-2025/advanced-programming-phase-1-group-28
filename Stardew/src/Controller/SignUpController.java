@@ -1,9 +1,14 @@
 package Controller;
 
+import Model.Enums.Rejex.SignupMenuRejex;
+
+import java.util.regex.Matcher;
+
 public class SignUpController {
     public boolean IsUsernameValid(String Username)
     {
-        return true;
+        Matcher UserMatcher = SignupMenuRejex.ValidUser.Rejex.matcher(Username);
+        return UserMatcher.matches();
     }
     public boolean IsUsernameTaken(String Username)
     {
@@ -11,7 +16,8 @@ public class SignUpController {
     }
     public boolean IsEmailValid(String Email)
     {
-        return true;
+        Matcher EmailMatcher = SignupMenuRejex.ValidEmail.Rejex.matcher(Email);
+        return EmailMatcher.matches();
     }
     public boolean IsPassValid(String Password)
     {

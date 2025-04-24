@@ -4,9 +4,10 @@ import Model.Item.Item;
 import Model.Quest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public enum NPC {
-    Mamad();
+    Mamad("mamad" , "mamad" , new ArrayList<String>(Arrays.asList("mamad")) , new ArrayList<Item>(Arrays.asList(new Item())) ,new ArrayList<Quest>(Arrays.asList(new Quest()))),;
     public final String name;
     public final String Job;
     public final ArrayList<String> Dialogs;
