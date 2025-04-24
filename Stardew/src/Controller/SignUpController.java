@@ -10,8 +10,8 @@ import java.util.regex.Pattern;
 public class SignUpController {
     public boolean IsUsernameValid(String Username)
     {
-        Matcher UserMatcher = SignupMenuRejex.ValidUser.Rejex.matcher(Username);
-        return UserMatcher.matches();
+        Matcher UserMatcher = SignupMenuRejex.ValidUser.getMatcher(Username);
+        return  UserMatcher != null;
     }
 
     public boolean IsUsernameTaken(String Username)
@@ -21,42 +21,14 @@ public class SignUpController {
 
     public boolean IsEmailValid(String Email)
     {
-        Matcher EmailMatcher = SignupMenuRejex.ValidEmail.Rejex.matcher(Email);
-        return EmailMatcher.matches();
+        Matcher EmailMatcher = SignupMenuRejex.ValidEmail.getMatcher(Email);
+        return EmailMatcher != null;
     }
 
     public boolean IsPassValid(String Password)
     {
-        String SpecialCharacters = "?><,\"';:\\/|][}{+=)(*&^%$#!";
-        for(int i = 0; i < Password.length(); i++)
-        {
-            boolean ok = false;
-            for (int j = 0; j < SpecialCharacters.length(); j++)
-            {
-                if(Password.charAt(i) == SpecialCharacters.charAt(j))
-                {
-                    ok = true;
-                }
-            }
-            int AsciIndex = Password.charAt(i);
-            if(AsciIndex >= 65 && AsciIndex <= 90)
-            {
-                ok = true;
-            }
-            if(AsciIndex >= 97 && AsciIndex <= 122)
-            {
-                ok = true;
-            }
-            if(AsciIndex >= 48 && AsciIndex <= 57)
-            {
-                ok = true;
-            }
-            if(!ok)
-            {
-                return false;
-            }
-        }
-        return true;
+        Matcher matcher = SignupMenuRejex.ValidPassword.getMatcher(Password);
+        return matcher != null;
     }
 
     public boolean IsPasswordWeak(String Password)
