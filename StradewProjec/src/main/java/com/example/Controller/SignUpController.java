@@ -3,6 +3,7 @@ package com.example.Controller;
 import com.example.Model.App;
 import com.example.Model.Enums.Rejex.SignupMenuRejex;
 import com.example.Model.Enums.SecurityQuestions;
+import com.example.Model.User;
 
 import java.util.regex.Matcher;
 
@@ -15,7 +16,14 @@ public class SignUpController {
 
     public boolean IsUsernameTaken(String Username)
     {
-        return true;
+        for(int i = 0;i < App.Users.size(); i++)
+        {
+            if(App.Users.get(i).getUsername().equals(Username))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean IsEmailValid(String Email)
@@ -109,14 +117,12 @@ public class SignUpController {
         }
     }
 
-    public void ApplySignUp(String Username , String Password , String Email , String Answer , int QuestionId)
+    public void ApplySignUp(String Username , String Password , String NickName , String  Email , String Gender)
     {
-
+        String HashedPassword = HashAlghorithm.DecryptPassword(Password);
+        User newuser = new User(Username , Password , HashedPassword , Email , App.Users.size() , NickName , Gender);
+        App.Users.add(newuser);
     }
 
-    public String HashCodeEncrypt(String password)
-    {
-        return "mamad";
-    }
 }
 

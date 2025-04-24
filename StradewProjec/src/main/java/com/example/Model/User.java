@@ -1,6 +1,8 @@
 package com.example.Model;
 
 public class User {
+    private String Gender;
+    private String Nickname;
     private String Username;
     private String Password;;
     private String HashedPassword;
@@ -12,15 +14,16 @@ public class User {
     private int GamesPlayed = 0;
     private int GameId = -1;
 
+
     public User(String username, String password, String hashedPassword, String email, int ID,
-                int answerIdQuestion, String answer) {
+                 String nickname , String Gender) {
         Username = username;
         Password = password;
         HashedPassword = hashedPassword;
         Email = email;
         this.ID = ID;
-        AnswerIdQuestion = answerIdQuestion;
-        Answer = answer;
+        Nickname = nickname;
+        this.Gender = Gender;
     }
 
     public String getUsername() {
@@ -101,5 +104,21 @@ public class User {
 
     public void setGameId(int gameId) {
         GameId = gameId;
+    }
+
+    public String getNickname() {
+        return Nickname;
+    }
+
+    public void setNickname(String nickname) {
+        Nickname = nickname;
+    }
+
+    public String getGender() {
+        return Gender;
+    }
+
+    public void setGender(String gender) {
+        Gender = gender;
     }
 }

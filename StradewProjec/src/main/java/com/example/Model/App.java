@@ -5,6 +5,11 @@ import com.example.Controller.LoginController;
 import com.example.Controller.MainMenuController.GameMenuController;
 import com.example.Controller.MainMenuController.ProfileMenuController;
 import com.example.Controller.SignUpController;
+import com.example.View.AppInputCommand;
+import com.example.View.LoginMenu;
+import com.example.View.MainMenu.GameMenu;
+import com.example.View.MainMenu.ProfileMenu;
+import com.example.View.SignUpMenu;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -26,14 +31,20 @@ public class App {
     public static GameMenuController gameMenuController = new GameMenuController();
     public static ProfileMenuController profileMenuController = new ProfileMenuController();
     public static AllMenuCommandsController allMenuCommandsController = new AllMenuCommandsController();
+    public static SignUpMenu signUpMenu = new SignUpMenu();
+    public static ProfileMenu profileMenu = new ProfileMenu();
+    public static GameMenu gameMenu = new GameMenu();
+    public static LoginMenu loginMenu = new LoginMenu();
     public static Random random = new Random();
     static {
         Gson gson = new Gson();
         try (FileReader reader = new FileReader("Users.json")) {
         JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
-        for(JsonElement jsonelemnt: jsonArray) {
-            User user = gson.fromJson(jsonelemnt, User.class);
-            Users.add(user);
+        if(jsonArray != null) {
+            for (JsonElement jsonelemnt : jsonArray) {
+                User user = gson.fromJson(jsonelemnt, User.class);
+                Users.add(user);
+            }
         }
         } catch (Exception e) {
             e.printStackTrace();
