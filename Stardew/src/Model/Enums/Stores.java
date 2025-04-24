@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public enum Stores {
-    FishShop("mamad" , "mamad" , new ArrayList<Item>(Arrays.asList(new Item())) , 1 , 1);
+    FishShop("mamad" , "mamad" , new ArrayList<Item>(Arrays.asList(new Item(2 , "mamad"))) , 1 , 1);
     public final String name;
     public final String OwnerName;
     public final ArrayList<Item> Products;
