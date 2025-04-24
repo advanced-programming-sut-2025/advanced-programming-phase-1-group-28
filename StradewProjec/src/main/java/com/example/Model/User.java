@@ -14,9 +14,8 @@ public class User {
     private int GamesPlayed = 0;
     private int GameId = -1;
 
-
     public User(String username, String password, String hashedPassword, String email, int ID,
-                 String nickname , String Gender) {
+                 String nickname, String Gender) {
         Username = username;
         Password = password;
         HashedPassword = hashedPassword;
@@ -24,6 +23,14 @@ public class User {
         this.ID = ID;
         Nickname = nickname;
         this.Gender = Gender;
+    }
+
+    public String getNickname() {
+        return Nickname;
+    }
+
+    public void setNickname(String nickname) {
+        Nickname = nickname;
     }
 
     public String getUsername() {
@@ -104,14 +111,6 @@ public class User {
 
     public void setGameId(int gameId) {
         GameId = gameId;
-    }
-
-    public String getNickname() {
-        return Nickname;
-    }
-
-    public void setNickname(String nickname) {
-        Nickname = nickname;
     }
 
     public String getGender() {

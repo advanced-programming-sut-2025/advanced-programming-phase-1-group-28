@@ -69,4 +69,8 @@ public class App {
     {
         return Games.get(GameID);
     }
+
+    public static User getCurrentUser(){
+        return Users.get(Appview.getUserLoggedInId());
+    }
 }
