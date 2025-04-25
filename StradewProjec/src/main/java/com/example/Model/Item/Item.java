@@ -1,8 +1,9 @@
 package com.example.Model.Item;
 
 public class Item {
-    private int count = 0;
-    private String Quality;
+    protected String name;
+    protected int count = 0;
+    protected String Quality;
 
     public Item(int count, String quality) {
         this.count = count;
@@ -23,5 +24,13 @@ public class Item {
 
     public void setQuality(String quality) {
         Quality = quality;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
