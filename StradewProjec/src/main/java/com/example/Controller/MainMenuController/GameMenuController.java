@@ -2,6 +2,7 @@ package com.example.Controller.MainMenuController;
 
 import com.example.Model.App;
 import com.example.Model.Enums.ConstantFarms;
+import com.example.Model.Enums.Direction;
 import com.example.Model.Game;
 import com.example.Model.Tools.Pepolee;
 import com.example.Model.User;
@@ -80,6 +81,7 @@ public class GameMenuController {
     public void SetFarm(int Id , int FarmID) {
         App.Games.get(Appview.CurrentGameID).getCharactersInGame().get(Id).setFarm(ReturnFarm(FarmID).farm);
     }
+
 
     public void ApplyDeleteGame()
     {

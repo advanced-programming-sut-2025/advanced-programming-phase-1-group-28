@@ -2,8 +2,8 @@ package com.example.Model.Tile;
 
 public class Tile {
     private String name;
-    //add Arraylist
 
+    //add Arraylist
     public Tile(String name) {
         this.name = name;
     }

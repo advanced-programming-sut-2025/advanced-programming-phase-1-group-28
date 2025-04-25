@@ -7,10 +7,13 @@ public class MechanicGame {
     public void BuildGreenHouse() {
 
     }
+
     public void walk()
     {
+
         //if user want to faint be carefully
     }
+
     public void ApplyFainting()
     {
 

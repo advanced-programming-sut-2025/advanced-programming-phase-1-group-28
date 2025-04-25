@@ -1,9 +1,25 @@
 package com.example.Controller.MainMenuController.MechanicController;
 
+import com.example.Model.Enums.Direction;
 import com.example.Model.Item.Item;
 import com.example.Model.Tile.Animal;
 
 public class MechanicController {
+    public boolean IsWalkable(int x , int y)
+    {
+        return true;
+    }
+
+    public void BFS(int CurrentX , int CurrentY ,int[][] Checked , int[][][] MinimumCost) {
+        for(Direction direction : Direction.values())
+        {
+            if(IsWalkable(CurrentX - direction.x, CurrentY - direction.y))
+            {
+                direction
+            }
+        }
+    }
+
     public boolean CanBuild()
     {
         return true;
@@ -73,3 +89,4 @@ public class MechanicController {
 
 
 }
+
