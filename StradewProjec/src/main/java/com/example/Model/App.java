@@ -66,7 +66,7 @@ public class App {
         }
         return -1;
     }
-    public Game returnGame(int GameID)
+    public static Game returnGame(int GameID)
     {
         return Games.get(GameID);
     }
