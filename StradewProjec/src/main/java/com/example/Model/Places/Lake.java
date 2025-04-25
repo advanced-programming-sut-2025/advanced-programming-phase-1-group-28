@@ -5,4 +5,5 @@ public class Lake extends Place {
         X_Coordinate = x_Cordinate;
         Y_Coordinate = y_Cordinate;
     }
+
 }

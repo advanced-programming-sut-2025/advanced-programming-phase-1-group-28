@@ -39,7 +39,7 @@ public class App {
     public static Random random = new Random();
     static {
         Gson gson = new Gson();
-        try (FileReader reader = new FileReader("Users.json")) {
+        try (FileReader reader = new FileReader("StradewProjec/Users.json")) {
         JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
         if(jsonArray != null) {
             for (JsonElement jsonelemnt : jsonArray) {
