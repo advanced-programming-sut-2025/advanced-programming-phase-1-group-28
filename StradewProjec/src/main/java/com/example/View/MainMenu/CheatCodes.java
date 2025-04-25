@@ -12,6 +12,9 @@ public class CheatCodes {
 
     public void ChangeHour(int Hour)
     {
+        if (Hour < 0){
+            System.out.println("Time can only move forward! Please enter a positive number!");
+        }
         cheatCodeController.ChangeHour(Hour);
         Game currentGame = App.returnGame(Appview.CurrentGameID);
         Time gameTime = currentGame.getTime();
@@ -19,6 +22,9 @@ public class CheatCodes {
     }
     public void ChangeDay(int Day)
     {
+        if (Day < 0){
+            System.out.println("Time can only move forward! Please enter a positive number!");
+        }
         cheatCodeController.ChangeDay(Day);
         Game currentGame = App.returnGame(Appview.CurrentGameID);
         Time gameTime = currentGame.getTime();
