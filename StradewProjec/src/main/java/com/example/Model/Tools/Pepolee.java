@@ -3,6 +3,7 @@ package com.example.Model.Tools;
 import com.example.Model.Inventory;
 import com.example.Model.Places.Farm;
 import com.example.Model.Skill;
+import com.example.Model.User;
 
 public class Pepolee {
     private int x;
@@ -14,6 +15,15 @@ public class Pepolee {
     private int Coin = 0;
     private Inventory inventory = new Inventory();
     private Skill[] Skills = new Skill[4];
+    private User CharacterUser;
+
+    public User getCharacterUser() {
+        return CharacterUser;
+    }
+
+    public void setCharacterUser(User characterUser) {
+        CharacterUser = characterUser;
+    }
 
     public int getX() {
         return x;

@@ -13,7 +13,7 @@ public class Game {
     private Time Time;
     private ArrayList<Integer> Scores = new ArrayList<>();
     private int WhoseTurn = 0;
-    private Weathers Weather;
+    private Weathers Weather = Weathers.SUNNY;
 
     public Game(int ID) {
         this.ID = ID;
