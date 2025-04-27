@@ -9,8 +9,10 @@ import com.example.Model.Tools.Pepolee;
 import com.example.View.AppInputCommand;
 import com.example.View.Appview;
 import com.example.View.LoginMenu;
+import com.example.View.MainMenu.CheatCodes;
 import com.example.View.MainMenu.GameMenu;
 import com.example.View.MainMenu.ProfileMenu;
+import com.example.View.MainMenu.ShowFigures;
 import com.example.View.SignUpMenu;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -27,6 +29,8 @@ public class App {
     File UsersFile;
     public static ArrayList<User> Users = new ArrayList<>();
     public static ArrayList<Game> Games = new ArrayList<>();
+    public static ShowFigures showFigures = new ShowFigures();
+    public static CheatCodes cheatCodes = new CheatCodes();
     public static Scanner scanner = new Scanner(System.in);
     public static SignUpController signUpController = new SignUpController();
     public static LoginController loginController = new LoginController();
@@ -40,7 +44,7 @@ public class App {
     public static Random random = new Random();
     static {
         Gson gson = new Gson();
-        try (FileReader reader = new FileReader("StradewProjec/Users.json")) {
+        try (FileReader reader = new FileReader("Users.json")) {
         JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
         if(jsonArray != null) {
             for (JsonElement jsonelemnt : jsonArray) {
