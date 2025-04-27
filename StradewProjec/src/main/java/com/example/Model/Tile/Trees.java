@@ -1,5 +1,8 @@
 package com.example.Model.Tile;
 
+import com.example.Model.Enums.Entitity;
+import com.example.Model.Enums.PlaceType;
+import com.example.Model.Enums.Terrain;
 import com.example.Model.Enums.Tree;
 
 public class Trees extends Tile {
@@ -8,8 +11,8 @@ public class Trees extends Tile {
     private int HowOldAreYou;
     private boolean IsAttackingWithCrow = false;
 
-    public Trees(String name, Tree tree, int stage, int howOldAreYou) {
-        super(name);
+    public Trees(Tree tree, int stage, int howOldAreYou) {
+        super(Terrain.GRASS , PlaceType.NORMAL , Entitity.TREE);
         this.tree = tree;
         this.stage = stage;
         HowOldAreYou = howOldAreYou;

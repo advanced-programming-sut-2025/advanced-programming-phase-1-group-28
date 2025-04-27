@@ -5,6 +5,7 @@ import com.example.Model.Tile.Animal;
 import java.util.ArrayList;
 
 public class Farm extends Place {
+
     private ArrayList<Animal> Animals;
     private GreenHouse greenHouse;
     private Cabin cabin; // attention if we construct in Cabin Class then Apply Here
@@ -54,5 +55,12 @@ public class Farm extends Place {
     public void RandFeatures()
     {
         //To Put Rand Features
+    }
+
+    public Farm(GreenHouse greenHouse, Cabin cabin, Lake lake, Quarry quarry) {
+        this.greenHouse = greenHouse;
+        this.cabin = cabin;
+        this.lake = lake;
+        this.quarry = quarry;
     }
 }

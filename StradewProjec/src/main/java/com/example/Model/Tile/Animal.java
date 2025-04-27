@@ -1,6 +1,9 @@
 package com.example.Model.Tile;
 
 import com.example.Model.Enums.Animals;
+import com.example.Model.Enums.Entitity;
+import com.example.Model.Enums.PlaceType;
+import com.example.Model.Enums.Terrain;
 import com.example.Model.Item.Item;
 
 import java.util.ArrayList;
@@ -12,8 +15,8 @@ public class Animal extends Tile{
     private ArrayList<Item> NoneHarvestingItems = new ArrayList<>();
     private boolean IsFed = true;
 
-    public Animal(String name, String petName, Animals animalType, ArrayList<Item> noneHarvestingItems) {
-        super(name);
+    public Animal(String petName, Animals animalType, ArrayList<Item> noneHarvestingItems) {
+        super(Terrain.GRASS , PlaceType.NORMAL , Entitity.ANIMAL);
         PetName = petName;
         this.animalType = animalType;
         NoneHarvestingItems = noneHarvestingItems;
