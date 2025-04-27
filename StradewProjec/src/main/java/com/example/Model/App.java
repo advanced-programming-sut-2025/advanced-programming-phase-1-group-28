@@ -5,6 +5,7 @@ import com.example.Controller.LoginController;
 import com.example.Controller.MainMenuController.GameMenuController;
 import com.example.Controller.MainMenuController.ProfileMenuController;
 import com.example.Controller.SignUpController;
+import com.example.Model.Tools.Pepolee;
 import com.example.View.AppInputCommand;
 import com.example.View.Appview;
 import com.example.View.LoginMenu;
@@ -74,4 +75,14 @@ public class App {
     public static User getCurrentUser(){
         return Users.get(Appview.getUserLoggedInId());
     }
+
+    public static Game getCurrentGame(){
+        return Games.get(Appview.CurrentGameID);
+    }
+
+    public static Pepolee ReturnCurrentPlayer()
+    {
+        return getCurrentGame().getCharactersInGame().get(getCurrentGame().getWhoseTurn());
+    }
+
 }

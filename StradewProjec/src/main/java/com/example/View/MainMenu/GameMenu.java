@@ -3,13 +3,52 @@ package com.example.View.MainMenu;
 import com.example.Controller.MainMenuController.GameMenuController;
 import com.example.Controller.SignUpController;
 import com.example.Model.App;
+import com.example.Model.Enums.Rejex.GameMenuRejex;
 import com.example.View.Appview;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
 
 public class GameMenu {
     SignUpController signUpController = App.signUpController;
     GameMenuController gameMenuController = App.gameMenuController;
+    ShowFigures showFigures = App.showFigures;
+    CheatCodes cheatCodes = App.cheatCodes;
+
+    public void Input(String command){
+        Matcher matcher;
+        if ((matcher = GameMenuRejex.EnergyShow.getMatcher(command)) != null){
+            showFigures.ShowEnergy();
+        } else if ((matcher = GameMenuRejex.EnergySet.getMatcher(command)) != null) {
+            cheatCodes.SetEnergy(Integer.parseInt(matcher.group(1)));
+        } else if ((matcher = GameMenuRejex.EnergyUnlimited.getMatcher(command)) != null) {
+            cheatCodes.SetUnlimitedEnergy();
+        } else if ((matcher = GameMenuRejex.InventoryShow.getMatcher(command)) != null) {
+            showFigures.ShowInventory();
+        } else if ((matcher = GameMenuRejex.CheatWeatherSet.getMatcher(command)) != null) {
+            cheatCodes.SetWeather(matcher.group(1));
+        } else if ((matcher = GameMenuRejex.ShowWeather.getMatcher(command)) != null) {
+            showFigures.ShowWeather();
+        } else if ((matcher = GameMenuRejex.WeatherForecast.getMatcher(command)) != null) {
+            showFigures.PredictWeather();// This is incomplete
+        } else if ((matcher = GameMenuRejex.CheatThor.getMatcher(command)) != null) {
+            cheatCodes.Thor(Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2)));// This is incomplete
+        } else if ((matcher = GameMenuRejex.ShowSeason.getMatcher(command)) != null) {
+            showFigures.ShowSeason();
+        } else if ((matcher = GameMenuRejex.CheatAdvanceDate.getMatcher(command)) != null) {
+            cheatCodes.ChangeDay(Integer.parseInt(matcher.group(1)));
+        } else if ((matcher = GameMenuRejex.CheatAdvanceTime.getMatcher(command)) != null) {
+            cheatCodes.ChangeHour(Integer.parseInt(matcher.group(1)));
+        } else if ((matcher = GameMenuRejex.ShowDayOfWeek.getMatcher(command)) != null) {
+            showFigures.ShowDayOfWeek();
+        } else if ((matcher = GameMenuRejex.ShowDateTime.getMatcher(command)) != null) {
+            showFigures.ShowDateTime();
+        } else if ((matcher = GameMenuRejex.ShowDate.getMatcher(command)) != null) {
+            showFigures.ShowDate();
+        } else if ((matcher = GameMenuRejex.ShowTime.getMatcher(command)) != null) {
+            showFigures.ShowTime();
+        }
+    }
     public void StartGame(ArrayList<String> PlayersInGame)
     {
         for(int i = 0 ;i < PlayersInGame.size();i++) {
@@ -40,6 +79,7 @@ public class GameMenu {
         }
         //InputMapValid();
     }
+
     /*public boolean InputMapValid(ArrayList<String> PlayersInGame)
     {
 
