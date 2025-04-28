@@ -123,11 +123,13 @@ public class MechanicController {
     {
         return false;
     }
+
     public boolean IsInKaveh()
     {
         //Ahangari
         return false;
     }
+
     public boolean EnoughResources()
     {
         return false;
@@ -165,10 +167,34 @@ public class MechanicController {
         }
     }
 
+    public void ApplySetTool(String ItemName)
+    {
+        Inventory TempInventory = App.ReturnCurrentPlayer().getInventory();
+        for(int i = 0 ;i < TempInventory.getItems().size(); i++)
+        {
+            if(TempInventory.getItems().get(i).getName().equals(ItemName))
+            {
+                TempInventory.setCurrentItem(TempInventory.getItems().get(i));
+                TempInventory.setCurrentTool(null);
+            }
+        }
+        for(int i = 0 ;i < TempInventory.getTools().size(); i++)
+        {
+            if(TempInventory.getTools().get(i).getName().equals(ItemName))
+            {
+                TempInventory.setCurrentTool(TempInventory.getTools().get(i));
+                TempInventory.setCurrentItem(null);
+            }
+        }
+    }
+
+
     public void ApplyUpgradeTool()
     {
         //decrease EnergyCost
     }
+
+
     public boolean CheckIfTileIsEmpty()
     {
         return false;

@@ -58,11 +58,20 @@ public class ShowFigures {
     }
     public void ShowTool()
     {
-
+        if(App.ReturnCurrentPlayer().getInventory().getCurrentTool() != null) {
+            System.out.println(App.ReturnCurrentPlayer().getInventory().getCurrentTool());
+        }
+        else
+        {
+            System.out.println("You Dont have Tool in your hand");
+        }
     }
     public void ShowAvailableTools()
     {
-
+        for(int i = 0;i < App.ReturnCurrentPlayer().getInventory().getTools().size();i++)
+        {
+            System.out.println(App.ReturnCurrentPlayer().getInventory().getTools().get(i));
+        }
     }
     public void ShowInventory()
     {
