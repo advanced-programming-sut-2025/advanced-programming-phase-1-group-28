@@ -11,6 +11,15 @@ public class Farm extends Place {
     private Cabin cabin; // attention if we construct in Cabin Class then Apply Here
     private Lake lake;
     private Quarry quarry;
+    private ArrayList<Coop> Coops;
+
+    public ArrayList<Coop> getCoops() {
+        return Coops;
+    }
+
+    public void setCoops(ArrayList<Coop> coops) {
+        Coops = coops;
+    }
 
     public ArrayList<Animal> getAnimals() {
         return Animals;

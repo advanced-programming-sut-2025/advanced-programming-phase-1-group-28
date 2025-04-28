@@ -15,11 +15,10 @@ public class Animal extends Tile{
     private ArrayList<Item> NoneHarvestingItems = new ArrayList<>();
     private boolean IsFed = true;
 
-    public Animal(String petName, Animals animalType, ArrayList<Item> noneHarvestingItems) {
+    public Animal(String petName, Animals animalType) {
         super(Terrain.GRASS , PlaceType.NORMAL , Entitity.ANIMAL);
         PetName = petName;
         this.animalType = animalType;
-        NoneHarvestingItems = noneHarvestingItems;
     }
 
     public String getPetName() {

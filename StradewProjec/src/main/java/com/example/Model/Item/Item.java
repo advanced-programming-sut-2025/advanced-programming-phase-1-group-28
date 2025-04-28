@@ -3,11 +3,10 @@ package com.example.Model.Item;
 public class Item {
     protected String name;
     protected int count = 0;
-    protected String Quality;
 
-    public Item(int count, String quality) {
+    public Item(int count, String name) {
         this.count = count;
-        Quality = quality;
+        this.name = name;
     }
 
     public int getCount() {
@@ -16,14 +15,6 @@ public class Item {
 
     public void setCount(int count) {
         this.count = count;
-    }
-
-    public String getQuality() {
-        return Quality;
-    }
-
-    public void setQuality(String quality) {
-        Quality = quality;
     }
 
     public String getName() {

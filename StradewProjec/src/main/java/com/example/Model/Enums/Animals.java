@@ -1,12 +1,10 @@
 package com.example.Model.Enums;
 
 public enum Animals {
-    Hen("mamad" , "mamad");
-    public final String Name;
-    public final String Type;
+    Chicken(800);
+    public final int Price;
 
-    Animals(String Name , java.lang.String type) {
-        Type = type;
-        this.Name = Name;
+    Animals(int price) {
+        Price = price;
     }
 }

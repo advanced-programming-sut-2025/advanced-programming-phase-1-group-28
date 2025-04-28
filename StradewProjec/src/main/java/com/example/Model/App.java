@@ -38,6 +38,7 @@ public class App {
     public static GameMenu gameMenu = new GameMenu();
     public static LoginMenu loginMenu = new LoginMenu();
     public static Random random = new Random();
+    public static DailyLimits dailyLimits = new DailyLimits();
     static {
         Gson gson = new Gson();
         try (FileReader reader = new FileReader("StradewProjec/Users.json")) {
