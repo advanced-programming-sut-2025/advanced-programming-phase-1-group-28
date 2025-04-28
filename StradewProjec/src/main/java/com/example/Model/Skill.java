@@ -4,6 +4,15 @@ public class Skill {
     private int Xp = 0;
     private int Level = 1;
     private String Name ;
+
+    public void UpdateLevel()
+    {
+        if((Level + 1) * 100 + 50 < Xp)
+        {
+            Level++;
+        }
+    }
+
     public Skill(String Name) {
         this.Name = Name;
     }
@@ -14,6 +23,7 @@ public class Skill {
 
     public void setXp(int xp) {
         Xp = xp;
+        UpdateLevel();
     }
 
     public int getLevel() {

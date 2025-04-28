@@ -3,6 +3,7 @@ package com.example.Controller.MainMenuController.MechanicController;
 import com.example.Main;
 import com.example.Model.App;
 import com.example.Model.Enums.Direction;
+import com.example.Model.Inventory;
 import com.example.Model.Item.Item;
 import com.example.Model.Node;
 import com.example.Model.Tile.Animal;
@@ -117,10 +118,7 @@ public class MechanicController {
             App.ReturnCurrentPlayer().setEnergy(App.ReturnCurrentPlayer().getEnergy() - 10);
         }
     }
-    public void ApplyWalking(int x , int y , int DestenationX , int DestenationY)
-    {
 
-    }
     public boolean CheckIsInAnAnotherFarm(int DestenationX , int DestenationY)
     {
         return false;
@@ -134,6 +132,39 @@ public class MechanicController {
     {
         return false;
     }
+    public void ApplyRemoveItem(String ItemName , int number)
+    {
+        Inventory TempInventory = App.ReturnCurrentPlayer().getInventory();
+        for(int i = 0 ;i < TempInventory.getItems().size(); i++)
+        {
+            if(TempInventory.getItems().get(i).getName().equals(ItemName))
+            {
+                if(number == -1)
+                {
+                    TempInventory.getItems().remove(i);
+                }
+                else
+                {
+                    TempInventory.getItems().get(i).setCount(TempInventory.getItems().get(i).getCount() - number);
+                }
+            }
+        }
+        for(int i = 0 ;i < TempInventory.getTools().size(); i++)
+        {
+            if(TempInventory.getTools().get(i).getName().equals(ItemName))
+            {
+                if(number == -1)
+                {
+                    TempInventory.getTools().remove(i);
+                }
+                else
+                {
+                    TempInventory.getTools().get(i).setCount(TempInventory.getTools().get(i).getCount() - number);
+                }
+            }
+        }
+    }
+
     public void ApplyUpgradeTool()
     {
         //decrease EnergyCost

@@ -32,17 +32,14 @@ public class MechanicGame {
         }
     }
 
-    public void ApplyFainting()
-    {
-
-    }
     public boolean IsEnergyOver()
     {
         return false;
     }
-    public void DeleteFromInventory()
-    {
 
+    public void DeleteFromInventory(String ItemName , int Number)
+    {
+        App.mechanicController.ApplyRemoveItem(ItemName, Number);
     }
     public void SetTool()
     {
