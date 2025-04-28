@@ -3,6 +3,7 @@ package com.example.Model;
 import com.example.Controller.AllMenuCommandsController;
 import com.example.Controller.LoginController;
 import com.example.Controller.MainMenuController.GameMenuController;
+import com.example.Controller.MainMenuController.MechanicController.FriendShipController;
 import com.example.Controller.MainMenuController.ProfileMenuController;
 import com.example.Controller.SignUpController;
 import com.example.Model.Tools.Pepolee;
@@ -29,6 +30,7 @@ public class App {
     File UsersFile;
     public static ArrayList<User> Users = new ArrayList<>();
     public static ArrayList<Game> Games = new ArrayList<>();
+    public static FriendShipController friendShipController = new FriendShipController();
     public static ShowFigures showFigures = new ShowFigures();
     public static CheatCodes cheatCodes = new CheatCodes();
     public static Scanner scanner = new Scanner(System.in);

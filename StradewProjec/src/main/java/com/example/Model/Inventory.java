@@ -38,4 +38,13 @@ public class Inventory {
     public void setTools(ArrayList<Tools> tools) {
         this.tools = tools;
     }
+
+    public Item getItemByName(String name){
+        for (Item item: items){
+            if (item.getName().equals(name)){
+                return item;
+            }
+        }
+        return null;
+    }
 }

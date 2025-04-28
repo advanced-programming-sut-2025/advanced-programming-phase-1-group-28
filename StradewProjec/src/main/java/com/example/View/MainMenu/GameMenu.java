@@ -78,6 +78,7 @@ public class GameMenu {
             }
         }
         //InputMapValid();
+        // call start game commands
     }
 
     /*public boolean InputMapValid(ArrayList<String> PlayersInGame)

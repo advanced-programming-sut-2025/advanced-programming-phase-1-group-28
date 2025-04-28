@@ -140,5 +140,30 @@ public class Game {
         Weather = weather;
     }
 
+    public int getPlayerIDByUsername(String username){
+        int i = 0;
+        for (User user: PlayersInGame){
+            if (user.getUsername().equals(username)){
+                return i;
+            }
+            i++;
+        }
+        return -1; // player not found
+    }
+
+    public Pepolee getPlayerByID(int id){
+        return CharactersInGame.get(id);
+    }
+
+    public Pepolee getPlayerByUsername(String username){
+        return this.getPlayerByID(getPlayerIDByUsername(username));
+    }
+
+    public FriendShip getFriedShipBetweenPlayers(String firstUsername, String secondUsername){
+        int firstPlayerId = this.getPlayerIDByUsername(firstUsername);
+        int secondPlayerId = this.getPlayerIDByUsername(secondUsername);
+        return FriendShips[firstPlayerId][secondPlayerId];
+    }
+
     //Boolean IsEnd = false;
 }

@@ -9,9 +9,13 @@ public class FriendShip {
     private int XP = 0;
     private int level = 0;
     private ArrayList<String> TalkHistory = new ArrayList<>();
-    private HashMap<Item , Integer> Gifts = new HashMap<>();
+    private ArrayList<Gift> gifts = new ArrayList<>();
 
     public FriendShip() {
+    }
+
+    public void setGifts(ArrayList<Gift> gifts) {
+        this.gifts = gifts;
     }
 
     public int getXP() {
@@ -38,11 +42,38 @@ public class FriendShip {
         TalkHistory = talkHistory;
     }
 
-    public HashMap<Item, Integer> getGifts() {
-        return Gifts;
+    public void addXp(int amount){
+        XP += amount;
+        if (XP > (level + 1) * 100  && level <= 2){
+            level ++;
+        }
     }
 
-    public void setGifts(HashMap<Item, Integer> gifts) {
-        Gifts = gifts;
+    public void applyTalk(String message){
+        TalkHistory.add(message);
+        this.addXp(20);
+    }
+
+    public void addGift(Gift gift){
+        gifts.add(gift);
+    }
+
+    public void rateGift(int rate){
+        int xpChanged = (rate - 3) * 30 + 15;
+        this.addXp(xpChanged);
+    }
+
+    public void applyHug(){
+        this.addXp(60);
+    }
+
+    public void applyFlower(){
+        if (level < 3){
+            level = 3;
+        }
+    }
+
+    public void applyMarriage(){
+        level = 4;
     }
 }

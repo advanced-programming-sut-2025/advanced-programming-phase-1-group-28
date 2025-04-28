@@ -2,6 +2,7 @@ package com.example.View.MainMenu;
 
 import com.example.Model.App;
 import com.example.Model.Game;
+import com.example.Model.Gift;
 import com.example.Model.Inventory;
 import com.example.Model.Item.Item;
 import com.example.Model.Tools.Pepolee;
@@ -112,9 +113,17 @@ public class ShowFigures {
     {
 
     }
-    public void ShowGifts()
+    public void ShowUpcomingGifts()
     {
-        //All Gifts
+        Pepolee currentPlayer = App.ReturnCurrentPlayer();
+        int i = 0;
+        for (Gift gift: currentPlayer.getUpcomingGifts()){
+            System.out.println("Gift number: " + i);
+            System.out.println("Sender: " + gift.getSender());
+            System.out.println("Item: " + gift.getItem().getName());
+            System.out.println("Count: " + gift.getCount());
+            i++;
+        }
     }
     public void ShowGiftsFromDreamMan(String Username)
     {
