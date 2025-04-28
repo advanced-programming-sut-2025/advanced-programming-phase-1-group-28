@@ -1,9 +1,14 @@
 package com.example.Model.Tools;
 
+import com.example.Model.Gift;
 import com.example.Model.Inventory;
+import com.example.Model.Item.Item;
 import com.example.Model.Places.Farm;
 import com.example.Model.Skill;
 import com.example.Model.User;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Pepolee {
     private int x;
@@ -16,6 +21,7 @@ public class Pepolee {
     private Inventory inventory = new Inventory();
     private Skill[] Skills = new Skill[4];
     private User CharacterUser;
+    private ArrayList<Gift> upcomingGifts = new ArrayList<>();
 
     public User getCharacterUser() {
         return CharacterUser;
@@ -95,6 +101,22 @@ public class Pepolee {
 
     public void setSkills(Skill[] skills) {
         Skills = skills;
+    }
+
+    public ArrayList<Gift> getUpcomingGifts() {
+        return upcomingGifts;
+    }
+
+    public void setUpcomingGifts(ArrayList<Gift> upcomingGifts) {
+        this.upcomingGifts = upcomingGifts;
+    }
+
+    public void addGift(Gift gift){
+        upcomingGifts.add(gift);
+    }
+
+    public void removeUpcomingGift(Gift gift){
+        upcomingGifts.remove(gift);
     }
 //Set Energy
 }
