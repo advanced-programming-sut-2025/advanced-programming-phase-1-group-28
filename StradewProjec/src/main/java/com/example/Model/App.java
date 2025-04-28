@@ -4,6 +4,7 @@ import com.example.Controller.AllMenuCommandsController;
 import com.example.Controller.LoginController;
 import com.example.Controller.MainMenuController.GameMenuController;
 import com.example.Controller.MainMenuController.MechanicController.FriendShipController;
+import com.example.Controller.MainMenuController.MechanicController.MechanicController;
 import com.example.Controller.MainMenuController.ProfileMenuController;
 import com.example.Controller.SignUpController;
 import com.example.Model.Tools.Pepolee;
@@ -38,6 +39,7 @@ public class App {
     public static LoginController loginController = new LoginController();
     public static GameMenuController gameMenuController = new GameMenuController();
     public static ProfileMenuController profileMenuController = new ProfileMenuController();
+    public static MechanicController mechanicController = new MechanicController();
     public static AllMenuCommandsController allMenuCommandsController = new AllMenuCommandsController();
     public static SignUpMenu signUpMenu = new SignUpMenu();
     public static ProfileMenu profileMenu = new ProfileMenu();

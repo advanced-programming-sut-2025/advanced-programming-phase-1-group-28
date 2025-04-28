@@ -1,5 +1,6 @@
 package com.example.View.MainMenu.MechanicGame;
 
+import com.example.Model.App;
 import com.example.Model.Item.Item;
 import com.example.Model.Tile.Animal;
 
@@ -8,10 +9,27 @@ public class MechanicGame {
 
     }
 
-    public void walk()
+    public void walk(int StartX, int StartY, int EndX, int EndY)
     {
-
-        //if user want to faint be carefully
+        int Cost = App.mechanicController.BFS(StartX, StartY, EndX, EndY);
+        if(Cost == -1)
+        {
+            System.out.println("You Cant reach The point . \n Do you want Go And Faint?");
+            String ISOK = App.scanner.nextLine();
+            if(ISOK.equals("Yes"))
+            {
+                App.mechanicController.ApplyWalkToFaint(StartX, StartY, EndX, EndY);
+            }
+        }
+        else
+        {
+            System.out.println("You can go there in Energy cost : " + Cost / 20 + "Do you wanna Go there");
+            String ISOK = App.scanner.nextLine();
+            if(ISOK.equals("Yes"))
+            {
+                App.mechanicController.ApplyWalk(StartX, StartY, EndX, EndY);
+            }
+        }
     }
 
     public void ApplyFainting()

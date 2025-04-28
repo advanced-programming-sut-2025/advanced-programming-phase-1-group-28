@@ -1,6 +1,7 @@
 package com.example.Controller.MainMenuController.MechanicController;
 
 import com.example.Main;
+import com.example.Model.App;
 import com.example.Model.Enums.Direction;
 import com.example.Model.Item.Item;
 import com.example.Model.Node;
@@ -69,6 +70,10 @@ public class MechanicController {
         }
         if(Check[EndX][EndY].ReturnMinCost() != Integer.MAX_VALUE)
         {
+            if(Check[EndX][EndY].ReturnMinCost() / 20 > App.ReturnCurrentPlayer().getEnergy())
+            {
+                return -1;
+            }
             return Check[EndX][EndY].ReturnMinCost();
         }
         else
@@ -77,18 +82,40 @@ public class MechanicController {
         }
     }
 
+    public void ApplyWalk(int StartX , int StartY , int EndX , int EndY)
+    {
+        App.ReturnCurrentPlayer().setX(EndX);
+        App.ReturnCurrentPlayer().setY(EndY);
+        App.ReturnCurrentPlayer().setEnergy(App.ReturnCurrentPlayer().getEnergy() - BFS(StartX , StartY , EndX , EndY) / 20);
+    }
+
     public boolean CanBuild()
     {
         return true;
     }
+
     public void ApplyBuildingGreenHouse()
     {
 
     }
-    public int BestWay(int x , int y , int DestenationX , int DestenationY)
+
+    public void ApplyWalkToFaint(int StartX , int StartY , int EndX , int EndY)
     {
-        //Attenation to the Energy needed for Emtiazi formula
-        return -1;
+        while(App.ReturnCurrentPlayer().getEnergy() > 0)
+        {
+            int RandomDirection = App.random.nextInt() % 8;
+            int count = 0;
+            for(Direction direction : Direction.values())
+            {
+                if(count == RandomDirection)
+                {
+                    App.ReturnCurrentPlayer().setX(StartX + direction.x);
+                    App.ReturnCurrentPlayer().setY(StartY + direction.y);
+                }
+                count++;
+            }
+            App.ReturnCurrentPlayer().setEnergy(App.ReturnCurrentPlayer().getEnergy() - 10);
+        }
     }
     public void ApplyWalking(int x , int y , int DestenationX , int DestenationY)
     {
