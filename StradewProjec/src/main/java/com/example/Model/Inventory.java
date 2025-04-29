@@ -65,4 +65,8 @@ public class Inventory {
         }
         return null;
     }
+
+    public void addItem(Item item){
+        items.add(item);
+    }
 }

@@ -44,7 +44,7 @@ public class FriendShip {
 
     public void addXp(int amount){
         XP += amount;
-        if (XP > (level + 1) * 100  && level <= 2){
+        if (XP > (level + 1) * 100  && level < 2){
             level ++;
         }
     }
@@ -75,5 +75,13 @@ public class FriendShip {
 
     public void applyMarriage(){
         level = 4;
+    }
+
+    public void applyAcceptTrade(){
+        this.addXp(50);
+    }
+
+    public void applyRejectTrade(){
+        this.addXp(-30);
     }
 }

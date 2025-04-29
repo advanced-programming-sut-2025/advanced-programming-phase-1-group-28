@@ -40,11 +40,6 @@ public class Friendship {
         }
     }
 
-    public void Exchange(Item item , String UsernameSeller , String UsernameBuyer)
-    {
-
-    }
-
     public void Gifting(String Username , String itemName , int Count)
     {
         int usernameID = App.getCurrentGame().getPlayerIDByUsername(Username);
@@ -111,7 +106,7 @@ public class Friendship {
         System.out.println(username + " received your flower successfully.");
     }
 
-    public void marriage(String username, String ringName){
+    public void marriageRequest(String username, String ringName){
         int usernameID = App.getCurrentGame().getPlayerIDByUsername(username);
         if (usernameID == -1){
             System.out.println("User not found");
@@ -129,11 +124,75 @@ public class Friendship {
             System.out.println("No lgbt!");
             return;
         }
-        if (!friendShipController.isGiftAvailable(ringName)){
+        if (!friendShipController.isItemAvailable(ringName)){
             System.out.println("You can't give away what you don't have.");
             return;
         }
         friendShipController.sentMarriageRequest(username, ringName);
         System.out.println("your marriage request sent successfully.");
+    }
+
+    public void tradeRequest(String username, String type, String offerItemName,
+                             int offerAmount, int price, String targetItemName, int targetAmount){
+        int usernameID = App.getCurrentGame().getPlayerIDByUsername(username);
+        if (usernameID == -1){
+            System.out.println("User not found");
+            return;
+        }
+        if (offerAmount <= 0){
+            System.out.println("Amount must be positive.");
+            return;
+        }
+        if (friendShipController.isItemAvailable(offerItemName)){
+            System.out.println("You can't trade what you don't have!");
+            return;
+        }
+        Item offerItem = App.ReturnCurrentPlayer().getInventory().getItemByName(offerItemName);
+        if (offerItem.getCount() < offerAmount){
+            System.out.println("You don't have enough " + offerItemName);
+            return;
+        }
+        if (!type.equals("offer") && !type.equals("request")){
+            System.out.println("Trade type must be offer or request.");
+            return;
+        }
+        if (type.equals("offer") && price > App.ReturnCurrentPlayer().getCoin()){
+            System.out.println("You don't have enough money.");
+            return;
+        }
+        friendShipController.tradeRequest(username,type,offerItemName,offerAmount, price, targetItemName, targetAmount);
+        System.out.println("Your trade request sent successfully.");
+    }
+
+    public void tradeResponse(boolean accept, int id){
+        Pepolee currentPlayer = App.ReturnCurrentPlayer();
+        if (currentPlayer.getUpcomingTrade().get(id) == null){
+            System.out.println("Trade not found!");
+        }
+        Trade trade = currentPlayer.getUpcomingTrade().get(id);
+        if (accept){
+            if (trade.getType().equals("request")){
+                if (!friendShipController.isItemAvailable(trade.getTargetItemName())){
+                    System.out.println("You don't have target item.");
+                    return;
+                }
+                if (currentPlayer.getInventory().getItemByName(trade.getTargetItemName()).getCount() < trade.getTargetAmount()){
+                    System.out.println("You don't have enough items.");
+                    return;
+                }
+            } else if (trade.getType().equals("offer")) {
+                if (currentPlayer.getCoin() < trade.getPrice()){
+                    System.out.println("You don't have enough money.");
+                    return;
+                }
+            }
+            friendShipController.acceptTrade(trade);
+            friendShipController.removeTrade(id);
+            System.out.println("Trade completed!");
+        }else {
+            friendShipController.removeTrade(id);
+            friendShipController.rejectTrade(trade.getSender());
+            System.out.println("You rejected the trade successfully.");
+        }
     }
 }
