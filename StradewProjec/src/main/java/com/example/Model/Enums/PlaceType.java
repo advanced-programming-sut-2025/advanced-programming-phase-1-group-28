@@ -7,13 +7,15 @@ public enum PlaceType {
     CABIN(true ,4 , 4),
     QUARRY(true , 5 , 5),
     GREENHOUSE(true , 5 , 6),
-    LAKE(false , 4 , 4);
+    LAKE(false , 4 , 4),
+    COOP(true , 6 , 3),
+    BARN(true , 7 , 4),;
     public final boolean isWalkable;
-    public final int XLenght;
-    public final int Ylenght;
-    PlaceType(boolean isWalkable , int XLenght, int Ylenght) {
-        this.XLenght = XLenght;
-        this.Ylenght = Ylenght;
+    public final int XLength;
+    public final int YLength;
+    PlaceType(boolean isWalkable , int XLength, int YLength) {
+        this.XLength = XLength;
+        this.YLength = YLength;
         this.isWalkable = isWalkable;
     }
     public boolean isWalkable() {return this.isWalkable;}
