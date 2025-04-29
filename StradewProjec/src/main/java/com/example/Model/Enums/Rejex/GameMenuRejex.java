@@ -23,7 +23,29 @@ public enum GameMenuRejex {
     EnergySet("^energy\\s+set\\s+-v\\s+(\\d+)"),
     EnergyUnlimited("^energy\\s+unlimited"),
     InventoryShow("^inventory\\s+show"),
-    InventoryTrash("^inventory\\s+trash\\s+-i\\s+(.+)\\s+-n\\s+(\\d+)");
+    InventoryTrash("^inventory\\s+trash\\s+-i\\s+(.+)\\s+-n\\s+(\\d+)"),
+    TalkToSomeone("^talk\\s+-u\\s+(.+)\\s+-m\\s+(.+)"),
+    TalkHistory("^talk\\s+history\\s+-u\\s+(.+)"),
+    GiftSomeone("^gift\\s+-u\\s+(.+)\\s+-i\\s+(.+)\\s+-a\\s+(\\d+)"),
+    GiftList("^gift\\s+list"),
+    GiftRate("^gift\\s+rate\\s+-i\\s+(.+)\\s+-r\\s+(.+)"),
+    GiftHistory("^gift\\s+history\\s+-u\\s+(.+)"),
+    Flower("^flower\\s+-u\\s+(.+)"),
+    Hug("^hug\\s+-u\\s+(.+)"),
+    AskMarriage("^ask\\s+marriage\\s+-u\\s+(.+)\\s+-r\\s+(.+)"),
+    RespondMarriage("^respond\\s+(-accept|-reject)\\s+-u\\s+(.+)"),
+    StartTrade("^start\\s+trade"),
+    TradeSomeone(
+            "^trade\\s+-u\\s+(\\S+)" +
+                    "\\s+-t\\s+(\\S+)" +
+                    "\\s+-i\\s+(\\S+)" +
+                    "\\s+-a\\s+(\\d+)" +
+                    "\\s+(?:-p\\s+(\\d+)" +
+                    "|-ti\\s+(\\S+)\\s+-ta\\s+(\\d+))"
+    ),
+    TradeList("^trade\\s+list"),
+    TradeResponse("^trade\\s+response\\s+(-accept|-reject)\\s+-i\\s+(\\d)"),
+    TradeHistory("^trade\\s+history");
     public String command;
     GameMenuRejex(String command) {
         this.command = command;
