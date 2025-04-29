@@ -4,7 +4,9 @@ public enum Terrain {
     GRASS(true),
     WATER(false),
     DIRT(true),
-    FLOOR(true);
+    FLOOR(true),
+    STONE(false),
+    NORMALTREE(false);
     private final boolean isWalkable;
     Terrain(boolean isWalkable) {
         this.isWalkable = isWalkable;
