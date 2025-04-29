@@ -24,4 +24,8 @@ public class Item {
     public void setName(String name) {
         this.name = name;
     }
+
+    public void addCount(int amount){
+        count += amount;
+    }
 }

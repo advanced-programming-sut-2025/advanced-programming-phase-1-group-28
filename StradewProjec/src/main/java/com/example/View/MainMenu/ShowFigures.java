@@ -1,12 +1,11 @@
 package com.example.View.MainMenu;
 
-import com.example.Model.App;
-import com.example.Model.Game;
-import com.example.Model.Gift;
-import com.example.Model.Inventory;
+import com.example.Model.*;
 import com.example.Model.Item.Item;
 import com.example.Model.Tools.Pepolee;
 import com.example.Model.Tools.Tools;
+
+import java.util.ArrayList;
 
 public class ShowFigures {
     public void ShowTime()
@@ -132,6 +131,49 @@ public class ShowFigures {
             System.out.println("Item: " + gift.getItem().getName());
             System.out.println("Count: " + gift.getCount());
             i++;
+        }
+    }
+
+    public void showTradeList(){
+        Pepolee currentPlayer = App.ReturnCurrentPlayer();
+        ArrayList<Trade> upcomingTrades = currentPlayer.getUpcomingTrade();
+        System.out.println("Your trade requests: ");
+        int i = 1;
+        for (Trade trade:upcomingTrades){
+            System.out.println("Trade ID: " + i);
+            System.out.println("Sender name: " + trade.getSender());
+            System.out.println("Trade type: " + trade.getType());
+            System.out.println("Offer Item: " + trade.getOfferItem().getName());
+            System.out.println("Offer amount: " + trade.getAmount());
+            if (trade.getType().equals("offer")){
+                System.out.println("Price: " + trade.getPrice());
+            }else {
+                System.out.println("Target item: " + trade.getTargetItemName());
+                System.out.println("Target amount: " + trade.getTargetAmount());
+            }
+            i++;
+        }
+    }
+
+    public void showTradeHistory(){
+        Pepolee currentPlayer = App.ReturnCurrentPlayer();
+        ArrayList<Trade> tradeHistory = currentPlayer.getTradeHistory();
+        for (Trade trade: tradeHistory){
+            System.out.println("Sender name: " + trade.getSender());
+            System.out.println("Trade type: " + trade.getType());
+            System.out.println("Offer Item: " + trade.getOfferItem().getName());
+            System.out.println("Offer amount: " + trade.getAmount());
+            if (trade.getType().equals("offer")){
+                System.out.println("Price: " + trade.getPrice());
+            }else {
+                System.out.println("Target item: " + trade.getTargetItemName());
+                System.out.println("Target amount: " + trade.getTargetAmount());
+            }
+            if (trade.isAccept()){
+                System.out.println("Response: ACCEPTED");
+            }else {
+                System.out.println("Response: REJECTED");
+            }
         }
     }
     public void ShowGiftsFromDreamMan(String Username)

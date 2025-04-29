@@ -1,14 +1,9 @@
 package com.example.Model.Tools;
 
-import com.example.Model.Gift;
-import com.example.Model.Inventory;
-import com.example.Model.Item.Item;
+import com.example.Model.*;
 import com.example.Model.Places.Farm;
-import com.example.Model.Skill;
-import com.example.Model.User;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Pepolee {
     private int x;
@@ -22,6 +17,8 @@ public class Pepolee {
     private Skill[] Skills = new Skill[4];
     private User CharacterUser;
     private ArrayList<Gift> upcomingGifts = new ArrayList<>();
+    private ArrayList<Trade> upcomingTrade = new ArrayList<>();
+    private ArrayList<Trade> tradeHistory = new ArrayList<>();
 
     public User getCharacterUser() {
         return CharacterUser;
@@ -103,6 +100,14 @@ public class Pepolee {
         Skills = skills;
     }
 
+    public ArrayList<Trade> getTradeHistory() {
+        return tradeHistory;
+    }
+
+    public void setTradeHistory(ArrayList<Trade> tradeHistory) {
+        this.tradeHistory = tradeHistory;
+    }
+
     public ArrayList<Gift> getUpcomingGifts() {
         return upcomingGifts;
     }
@@ -118,5 +123,34 @@ public class Pepolee {
     public void removeUpcomingGift(Gift gift){
         upcomingGifts.remove(gift);
     }
-//Set Energy
+
+    public ArrayList<Trade> getUpcomingTrade() {
+        return upcomingTrade;
+    }
+
+    public void setUpcomingTrade(ArrayList<Trade> upcomingTrade) {
+        this.upcomingTrade = upcomingTrade;
+    }
+
+    public void addTrade(Trade trade){
+        upcomingTrade.add(trade);
+    }
+
+    public void removeTrade(Trade trade){
+        upcomingTrade.remove(trade);
+    }
+
+    public void removeTradeByID(int id){
+        upcomingTrade.remove(id);
+    }
+
+    public void addTradeToHistory(Trade trade){
+        tradeHistory.add(trade);
+    }
+
+    public void addCoin(int amount){
+        Coin += amount;
+    }
+
+    //Set Energy
 }

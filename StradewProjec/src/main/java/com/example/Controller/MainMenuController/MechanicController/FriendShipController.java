@@ -26,7 +26,7 @@ public class FriendShipController {
         }
     }
 
-    public boolean isGiftAvailable(String giftName){
+    public boolean isItemAvailable(String giftName){
         Pepolee currentPlayer = App.ReturnCurrentPlayer();
         if (currentPlayer.getInventory().getItemByName(giftName) == null){
             return false;
@@ -120,4 +120,74 @@ public class FriendShipController {
         secondFriendShip.applyMarriage();
         // marriage main effects
     }
+
+    public void tradeRequest(String username, String type, String offerItemName,
+                             int amount, int price, String targetItemName, int targetAmount){
+        Item offerItem = App.ReturnCurrentPlayer().getInventory().getItemByName(offerItemName);
+        Trade trade = new Trade(App.getCurrentUser().getUsername(), type, amount, offerItem,
+                price, targetItemName, targetAmount);
+        Pepolee receiverPlayer = App.getCurrentGame().getPlayerByUsername(username);
+        receiverPlayer.addTrade(trade);
+    }
+
+    public void removeTrade(int id){
+        Pepolee currentPlayer = App.ReturnCurrentPlayer();
+        currentPlayer.removeTradeByID(id);
+    }
+
+    public void acceptTrade(Trade trade){
+        Pepolee currentPlayer = App.ReturnCurrentPlayer();
+        Pepolee otherPlayer = App.getCurrentGame().getPlayerByUsername(trade.getSender());
+        if (trade.getType().equals("offer")){
+            // exchange money
+            currentPlayer.addCoin(trade.getPrice());
+            otherPlayer.addCoin(-1 * trade.getPrice());
+        }else {
+            // remove and add item from inventories
+            Item targetItem = otherPlayer.getInventory().getItemByName(trade.getTargetItemName());
+            targetItem.addCount(-1 * trade.getAmount());
+            if (this.isItemAvailable(trade.getTargetItemName())){
+                currentPlayer.getInventory().getCurrentItem().addCount(trade.getTargetAmount());
+            }else {
+                Item item = new Item(trade.getTargetAmount(), trade.getTargetItemName());
+                currentPlayer.getInventory().addItem(item);
+            }
+        }
+        // remove and add item from inventories
+        Item offerItem = otherPlayer.getInventory().getItemByName(trade.getOfferItem().getName());
+        offerItem.addCount(-1 * trade.getAmount());
+        if (this.isItemAvailable(trade.getOfferItem().getName())){
+            currentPlayer.getInventory().getCurrentItem().addCount(trade.getAmount());
+        }else {
+            Item item = new Item(trade.getAmount(), trade.getOfferItem().getName());
+            currentPlayer.getInventory().addItem(item);
+        }
+        // add trade to history
+        currentPlayer.addTradeToHistory(trade);
+        otherPlayer.addTradeToHistory(trade);
+        // friendship effect
+        Game game = App.getCurrentGame();
+        User currentUser = App.getCurrentUser();
+        FriendShip firstFriendShip = game.getFriedShipBetweenPlayers(currentUser.getUsername(), otherPlayer.getCharacterUser().getUsername());
+        FriendShip secondFriendShip = game.getFriedShipBetweenPlayers(otherPlayer.getCharacterUser().getUsername(), currentUser.getUsername());
+        firstFriendShip.applyAcceptTrade();
+        secondFriendShip.applyAcceptTrade();
+    }
+
+    public void rejectTrade(Trade trade){
+        // friendship effect
+        Game game = App.getCurrentGame();
+        User currentUser = App.getCurrentUser();
+        FriendShip firstFriendShip = game.getFriedShipBetweenPlayers(currentUser.getUsername(), trade.getSender());
+        FriendShip secondFriendShip = game.getFriedShipBetweenPlayers(trade.getSender(), currentUser.getUsername());
+        firstFriendShip.applyRejectTrade();
+        secondFriendShip.applyRejectTrade();
+
+        // add trade to history
+        Pepolee currentPlayer = App.ReturnCurrentPlayer();
+        Pepolee otherPlayer = App.getCurrentGame().getPlayerByUsername(trade.getSender());
+        currentPlayer.addTradeToHistory(trade);
+        otherPlayer.addTradeToHistory(trade);
+    }
+
 }
