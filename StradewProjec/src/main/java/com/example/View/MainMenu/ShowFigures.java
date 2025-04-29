@@ -154,6 +154,28 @@ public class ShowFigures {
             i++;
         }
     }
+
+    public void showTradeHistory(){
+        Pepolee currentPlayer = App.ReturnCurrentPlayer();
+        ArrayList<Trade> tradeHistory = currentPlayer.getTradeHistory();
+        for (Trade trade: tradeHistory){
+            System.out.println("Sender name: " + trade.getSender());
+            System.out.println("Trade type: " + trade.getType());
+            System.out.println("Offer Item: " + trade.getOfferItem().getName());
+            System.out.println("Offer amount: " + trade.getAmount());
+            if (trade.getType().equals("offer")){
+                System.out.println("Price: " + trade.getPrice());
+            }else {
+                System.out.println("Target item: " + trade.getTargetItemName());
+                System.out.println("Target amount: " + trade.getTargetAmount());
+            }
+            if (trade.isAccept()){
+                System.out.println("Response: ACCEPTED");
+            }else {
+                System.out.println("Response: REJECTED");
+            }
+        }
+    }
     public void ShowGiftsFromDreamMan(String Username)
     {
 

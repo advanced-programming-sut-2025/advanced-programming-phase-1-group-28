@@ -10,6 +10,7 @@ public class Trade {
     int price;
     String targetItemName;
     int targetAmount;
+    boolean accept;
 
     public Trade(String sender, String type, int amount, Item offerItem, int price, String targetItemName, int targetAmount) {
         this.sender = sender;
@@ -75,5 +76,13 @@ public class Trade {
 
     public void setTargetItemName(String targetItemName) {
         this.targetItemName = targetItemName;
+    }
+
+    public boolean isAccept() {
+        return accept;
+    }
+
+    public void setAccept(boolean accept) {
+        this.accept = accept;
     }
 }

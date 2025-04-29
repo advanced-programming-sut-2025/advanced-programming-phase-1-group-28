@@ -100,6 +100,14 @@ public class Pepolee {
         Skills = skills;
     }
 
+    public ArrayList<Trade> getTradeHistory() {
+        return tradeHistory;
+    }
+
+    public void setTradeHistory(ArrayList<Trade> tradeHistory) {
+        this.tradeHistory = tradeHistory;
+    }
+
     public ArrayList<Gift> getUpcomingGifts() {
         return upcomingGifts;
     }

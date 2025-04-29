@@ -170,6 +170,7 @@ public class Friendship {
             System.out.println("Trade not found!");
         }
         Trade trade = currentPlayer.getUpcomingTrade().get(id);
+        trade.setAccept(accept);
         if (accept){
             if (trade.getType().equals("request")){
                 if (!friendShipController.isItemAvailable(trade.getTargetItemName())){
@@ -191,7 +192,7 @@ public class Friendship {
             System.out.println("Trade completed!");
         }else {
             friendShipController.removeTrade(id);
-            friendShipController.rejectTrade(trade.getSender());
+            friendShipController.rejectTrade(trade);
             System.out.println("You rejected the trade successfully.");
         }
     }

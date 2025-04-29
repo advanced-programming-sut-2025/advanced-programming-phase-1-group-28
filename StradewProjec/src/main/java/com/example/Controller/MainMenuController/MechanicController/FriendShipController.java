@@ -139,9 +139,11 @@ public class FriendShipController {
         Pepolee currentPlayer = App.ReturnCurrentPlayer();
         Pepolee otherPlayer = App.getCurrentGame().getPlayerByUsername(trade.getSender());
         if (trade.getType().equals("offer")){
+            // exchange money
             currentPlayer.addCoin(trade.getPrice());
             otherPlayer.addCoin(-1 * trade.getPrice());
         }else {
+            // remove and add item from inventories
             Item targetItem = otherPlayer.getInventory().getItemByName(trade.getTargetItemName());
             targetItem.addCount(-1 * trade.getAmount());
             if (this.isItemAvailable(trade.getTargetItemName())){
@@ -151,6 +153,7 @@ public class FriendShipController {
                 currentPlayer.getInventory().addItem(item);
             }
         }
+        // remove and add item from inventories
         Item offerItem = otherPlayer.getInventory().getItemByName(trade.getOfferItem().getName());
         offerItem.addCount(-1 * trade.getAmount());
         if (this.isItemAvailable(trade.getOfferItem().getName())){
@@ -159,8 +162,10 @@ public class FriendShipController {
             Item item = new Item(trade.getAmount(), trade.getOfferItem().getName());
             currentPlayer.getInventory().addItem(item);
         }
+        // add trade to history
         currentPlayer.addTradeToHistory(trade);
         otherPlayer.addTradeToHistory(trade);
+        // friendship effect
         Game game = App.getCurrentGame();
         User currentUser = App.getCurrentUser();
         FriendShip firstFriendShip = game.getFriedShipBetweenPlayers(currentUser.getUsername(), otherPlayer.getCharacterUser().getUsername());
@@ -169,13 +174,20 @@ public class FriendShipController {
         secondFriendShip.applyAcceptTrade();
     }
 
-    public void rejectTrade(String username){
+    public void rejectTrade(Trade trade){
+        // friendship effect
         Game game = App.getCurrentGame();
         User currentUser = App.getCurrentUser();
-        FriendShip firstFriendShip = game.getFriedShipBetweenPlayers(currentUser.getUsername(), username);
-        FriendShip secondFriendShip = game.getFriedShipBetweenPlayers(username, currentUser.getUsername());
+        FriendShip firstFriendShip = game.getFriedShipBetweenPlayers(currentUser.getUsername(), trade.getSender());
+        FriendShip secondFriendShip = game.getFriedShipBetweenPlayers(trade.getSender(), currentUser.getUsername());
         firstFriendShip.applyRejectTrade();
         secondFriendShip.applyRejectTrade();
+
+        // add trade to history
+        Pepolee currentPlayer = App.ReturnCurrentPlayer();
+        Pepolee otherPlayer = App.getCurrentGame().getPlayerByUsername(trade.getSender());
+        currentPlayer.addTradeToHistory(trade);
+        otherPlayer.addTradeToHistory(trade);
     }
 
 }
