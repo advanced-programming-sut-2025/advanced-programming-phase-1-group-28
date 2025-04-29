@@ -6,6 +6,7 @@ import com.example.Model.Enums.Terrain;
 
 
 public class Tile {
+    private boolean IsHow = false;
     private Terrain terrain;
     private PlaceType placeType;
     private Entitity entitity;
@@ -13,6 +14,14 @@ public class Tile {
         this.terrain = terrain;
         this.placeType = placeType;
         this.entitity = entitity;
+    }
+
+    public boolean isHow() {
+        return IsHow;
+    }
+
+    public void setHow(boolean how) {
+        IsHow = how;
     }
 
     public Terrain getTerrain() {
