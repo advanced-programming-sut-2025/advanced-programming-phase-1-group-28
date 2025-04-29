@@ -7,7 +7,9 @@ public enum PlaceType {
     CABIN(true),
     QUARRY(true),
     GREENHOUSE(true),
-    LAKE(false);
+    LAKE(false),
+    BARN(true),
+    COOP(true),;
     private final boolean isWalkable;
     PlaceType(boolean isWalkable) {
         this.isWalkable = isWalkable;

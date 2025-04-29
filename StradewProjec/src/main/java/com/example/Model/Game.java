@@ -165,5 +165,13 @@ public class Game {
         return FriendShips[firstPlayerId][secondPlayerId];
     }
 
+    public Tile[][] getEntireMap() {
+        return EntireMap;
+    }
+
+    public void setEntireMap(Tile[][] entireMap) {
+        EntireMap = entireMap;
+    }
+
     //Boolean IsEnd = false;
 }
