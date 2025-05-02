@@ -18,7 +18,33 @@ public class Ref {
         this.items = items;
     }
 
-    public void AddItem(Item item){
+    public Item findItem(Item item){
+        for (Item item1: items){
+            if (item1.getName().equals(item.getName())){
+                return item1;
+            }
+        }
+        return null;
+    }
 
+    public void AddItem(Item item){
+        Item newItem = findItem(item);
+        if (newItem != null){
+            newItem.addCount(1);
+            return;
+        }
+        newItem = item.getCopy();
+        newItem.setCount(1);
+        items.add(newItem);
+    }
+
+    public Item pickItemByName(String name){
+        for (Item item: items){
+            if (item.getName().equals(name)){
+                item.addCount(-1);
+                return item.getCopy();
+            }
+        }
+        return null;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.View.MainMenu;
 
 import com.example.Model.*;
+import com.example.Model.Enums.Foods;
 import com.example.Model.Item.Item;
 import com.example.Model.Tools.Pepolee;
 import com.example.Model.Tools.Tools;
@@ -99,7 +100,23 @@ public class ShowFigures {
     }
     public void ShowRecipe()
     {
-        //for on on every food Check If he Knows Then Print
+        System.out.println("Known recipes: ");
+        ArrayList<Foods> knownRecipes = App.ReturnCurrentPlayer().getKnownRecipes();
+        for (Foods food: knownRecipes){
+            System.out.println("Name: " + food.Name);
+            System.out.println("Ingredients: ");
+            int i = 0;
+            for (String ingredient: food.Ingredient){
+                System.out.println(ingredient + " " + food.IngredientCount.get(i));
+                i++;
+            }
+            System.out.println("Energy: " + food.Energy);
+            if (food.Buff != null){
+                System.out.println("Buff: " + food.Buff);
+            }
+            System.out.println("Sell price: " + food.SellPrice);
+        }
+        //for on every food Check If he Knows Then Print
     }
     public void ShowAnimals()
     {
