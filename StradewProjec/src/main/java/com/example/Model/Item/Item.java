@@ -28,4 +28,8 @@ public class Item {
     public void addCount(int amount){
         count += amount;
     }
+
+    public Item getCopy(){
+        return new Item(count, name);
+    }
 }

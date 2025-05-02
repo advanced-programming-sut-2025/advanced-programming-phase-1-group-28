@@ -16,4 +16,11 @@ public class Food extends Item {
         this.food = food;
         this.name = food.toString();
     }
+
+    @Override
+    public Food getCopy(){
+        Food result = new Food(count, name);
+        result.setFood(food);
+        return result;
+    }
 }

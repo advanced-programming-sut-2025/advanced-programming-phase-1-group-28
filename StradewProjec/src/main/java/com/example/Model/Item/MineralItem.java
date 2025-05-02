@@ -17,4 +17,11 @@ public class MineralItem extends Item{
     public MineralItem(int count, String name) {
         super(count, name);
     }
+
+    @Override
+    public MineralItem getCopy(){
+        MineralItem result = new MineralItem(count, name);
+        result.setMineral(mineral);
+        return result;
+    }
 }

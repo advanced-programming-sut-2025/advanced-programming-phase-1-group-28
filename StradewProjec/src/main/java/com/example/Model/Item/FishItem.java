@@ -17,4 +17,11 @@ public class FishItem extends Item{
         this.fish = fish;
         this.name = fish.toString();
     }
+
+    @Override
+    public FishItem getCopy(){
+        FishItem result = new FishItem(count, name);
+        result.setFish(fish);
+        return result;
+    }
 }
