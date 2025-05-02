@@ -30,21 +30,28 @@ public class Ref {
     public void AddItem(Item item){
         Item newItem = findItem(item);
         if (newItem != null){
-            newItem.addCount(1);
+            newItem.addCount(item.getCount());
             return;
         }
         newItem = item.getCopy();
-        newItem.setCount(1);
         items.add(newItem);
     }
 
     public Item pickItemByName(String name){
         for (Item item: items){
             if (item.getName().equals(name)){
-                item.addCount(-1);
-                return item.getCopy();
+                Item copy = item.getCopy();
+                items.remove(item);
+                return copy;
             }
         }
         return null;
+    }
+
+    public boolean isItemAvailable(String itemName){
+        if (this.pickItemByName(itemName) == null){
+            return false;
+        }
+        return true;
     }
 }

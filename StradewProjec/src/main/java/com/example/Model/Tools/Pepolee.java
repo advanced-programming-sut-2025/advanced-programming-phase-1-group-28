@@ -6,8 +6,6 @@ import com.example.Model.Places.Farm;
 
 import java.util.ArrayList;
 
-import static java.util.Arrays.asList;
-
 public class Pepolee {
     private int x;
     private int y;
@@ -168,6 +166,10 @@ public class Pepolee {
 
     public void addCoin(int amount){
         Coin += amount;
+    }
+
+    public void addEnergy(int count){
+        Energy += count;
     }
 
     //Set Energy
