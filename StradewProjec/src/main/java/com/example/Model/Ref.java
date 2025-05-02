@@ -17,4 +17,8 @@ public class Ref {
     public void setItems(ArrayList<Item> items) {
         this.items = items;
     }
+
+    public void AddItem(Item item){
+
+    }
 }

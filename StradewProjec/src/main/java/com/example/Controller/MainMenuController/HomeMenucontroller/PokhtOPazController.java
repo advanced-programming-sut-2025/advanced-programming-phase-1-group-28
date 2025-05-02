@@ -1,7 +1,7 @@
 package com.example.Controller.MainMenuController.HomeMenucontroller;
 
 public class PokhtOPazController {
-    public void ApplyPick(String ItemName , int count)
+    public void ApplyPickFromRef(String ItemName , int count)
     {
 
     }
@@ -9,7 +9,7 @@ public class PokhtOPazController {
     {
 
     }
-    public boolean EnoughItemsFormRef(String ItemName, int count)
+    public boolean EnoughItemsFromRef(String ItemName, int count)
     {
         return false;
     }
