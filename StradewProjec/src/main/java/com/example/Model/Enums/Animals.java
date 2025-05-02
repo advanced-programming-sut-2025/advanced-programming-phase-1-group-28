@@ -10,7 +10,6 @@ public enum Animals {
     Sheep(8000),
     Pig(16000);
     public final int Price;
-
     Animals(int price) {
         Price = price;
     }

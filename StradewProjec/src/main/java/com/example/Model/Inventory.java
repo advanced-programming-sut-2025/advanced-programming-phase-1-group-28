@@ -15,6 +15,21 @@ public class Inventory {
         WhichTool = 0;
     }
 
+    public void AddItem(Item item) {
+        boolean IsHere = false;
+        for(int i = 0;i < this.items.size();i++) {
+            if(item.getName().equals(this.items.get(i).getName())) {
+                this.items.get(i).setCount(this.items.get(i).getCount() + item.getCount());
+                IsHere = true;
+            }
+        }
+        //Check Limit of Items Count
+        //ToDo
+        if(!IsHere) {
+            this.items.add(item);
+        }
+    }
+
     private ArrayList<Item> items = new ArrayList<>();
 
     public void setCurrentTool(Tools currentTool) {

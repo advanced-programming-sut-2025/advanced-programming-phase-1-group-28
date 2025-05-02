@@ -1,12 +1,12 @@
 package com.example.Controller.MainMenuController.MechanicController;
 
 import com.example.Model.App;
-import com.example.Model.Enums.Entitity;
-import com.example.Model.Enums.Fishes;
-import com.example.Model.Enums.Terrain;
+import com.example.Model.Enums.*;
 import com.example.Model.Item.FishItem;
+import com.example.Model.Item.Ingredients;
 import com.example.Model.Item.Item;
 import com.example.Model.Item.MineralItem;
+import com.example.Model.Tile.Animal;
 import com.example.Model.Tile.Minreal;
 import com.example.Model.Tile.Tile;
 import com.example.Model.Tile.Trees;
@@ -56,19 +56,7 @@ public class UseToolController {
             TempGround[NewX][NewY].setTerrain(Terrain.DIRT);
             Minreal ourmineral = (Minreal) TempGround[NewX][NewY];
             Item newitem = new MineralItem(20 , ourmineral.getMineral().name());
-            boolean IsHere = false;
-            for(int i = 0 ;i < CurrentPepolee.getInventory().getItems().size() ; i++)
-            {
-                if(CurrentPepolee.getInventory().getItems().get(i).getName().equals(newitem.getName()))
-                {
-                    CurrentPepolee.getInventory().getItems().get(i).setCount(newitem.getCount() + CurrentPepolee.getInventory().getItems().get(i).getCount());
-                    IsHere = true;
-                }
-            }
-            if(!IsHere)
-            {
-                CurrentPepolee.getInventory().getItems().add(newitem);
-            }
+            CurrentPepolee.getInventory().AddItem(newitem);
             CurrentPepolee.getFarm().setGround(TempGround);
             return "Mineral Collected";
         }
@@ -145,18 +133,7 @@ public class UseToolController {
                     if(count == Randomfish)
                     {
                         FishItem fishitem = new FishItem(count, f.toString());
-                        boolean ISHere = false;
-                        for(int i = 0 ;i < CurrentPepolee.getInventory().getItems().size() ; i++)
-                        {
-                            if(CurrentPepolee.getInventory().getItems().get(i).getName().equals(fishitem.getName()))
-                            {
-                                CurrentPepolee.getInventory().getItems().get(i).setCount(CurrentPepolee.getInventory().getItems().get(i).getCount() + 1);
-                                ISHere = true;
-                            }
-                        }
-                        if(!ISHere) {
-                            CurrentPepolee.getInventory().getItems().add(fishitem);
-                        }
+                        CurrentPepolee.getInventory().AddItem(fishitem);
                     }
                     count++;
                 }
@@ -173,19 +150,71 @@ public class UseToolController {
         }
     }
 
-    public void ApplySeythe()
+    public String ApplySeythe()
     {
-
+        int NewX = App.ReturnCurrentPlayer().getX();
+        int NewY = App.ReturnCurrentPlayer().getY();
+        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
+        Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
+        if(TempGround[NewX][NewY].getTerrain() == Terrain.GRASS)
+        {
+            TempGround[NewX][NewY].setTerrain(Terrain.DIRT);
+            return "Success Cutting Grass";
+        }
+        CurrentPepolee.setEnergy(CurrentPepolee.getEnergy() - 2);
+        return null;
     }
 
-    public void ApplyMilkPail()
+    public String ApplyMilkPail()
     {
-
+        int NewX = App.ReturnCurrentPlayer().getX();
+        int NewY = App.ReturnCurrentPlayer().getY();
+        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
+        Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
+        Ingredients newingredient = new Ingredients(0 , null  , null);
+        if(TempGround[NewX][NewY].getEntitity() == Entitity.ANIMAL)
+        {
+            Animal OurAnimal = (Animal) TempGround[NewX][NewY];
+            //TO Check If it has Milk
+            if(OurAnimal.getAnimalType() == Animals.Cow)
+            {
+                newingredient = new Ingredients(1 , "abbas" , com.example.Model.Enums.Ingredients.CowMilk);
+            }
+            if(OurAnimal.getAnimalType() == Animals.Goat)
+            {
+                newingredient = new Ingredients(1 , "abbas" , com.example.Model.Enums.Ingredients.GoatMilk);
+            }
+            CurrentPepolee.getInventory().AddItem(newingredient);
+            return "Success Milking";
+        }
+        else
+        {
+            return "You Cant Use Milk Pail in that Place";
+        }
     }
 
-    public void ApplyShear()
+    public String ApplyShear(int x , int y)
     {
-
+        int NewX = App.ReturnCurrentPlayer().getX();
+        int NewY = App.ReturnCurrentPlayer().getY();
+        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
+        Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
+        if(TempGround[NewX][NewY].getEntitity() == Entitity.ANIMAL)
+        {
+            Animal ourAnimal = (Animal) TempGround[NewX][NewY];
+            if(ourAnimal.getAnimalType() == Animals.Sheep)
+            {
+                //To check If HAs Pashm
+                Ingredients newingrdient = new Ingredients(5 , null  , com.example.Model.Enums.Ingredients.SheepCotton);
+                CurrentPepolee.getInventory().AddItem(newingrdient);
+                return "Success CuttinPashm";
+            }
+            return "You Cant Use Sheep Pail in this Animal";
+        }
+        else
+        {
+            return "cut Pashm please";
+        }
     }
 
     public void ApplyTRashCan()
