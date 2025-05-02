@@ -8,4 +8,13 @@ public class FishItem extends Item{
     public FishItem(int count, String name) {
         super(count, name);
     }
+
+    public Fishes getFish() {
+        return fish;
+    }
+
+    public void setFish(Fishes fish) {
+        this.fish = fish;
+        this.name = fish.toString();
+    }
 }

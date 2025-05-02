@@ -11,6 +11,7 @@ public class MineralItem extends Item{
 
     public void setMineral(Minerals mineral) {
         this.mineral = mineral;
+        this.name = mineral.toString();
     }
 
     public MineralItem(int count, String name) {
