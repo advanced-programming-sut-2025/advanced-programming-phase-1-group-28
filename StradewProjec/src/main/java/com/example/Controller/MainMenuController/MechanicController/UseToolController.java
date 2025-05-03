@@ -2,12 +2,11 @@ package com.example.Controller.MainMenuController.MechanicController;
 
 import com.example.Model.App;
 import com.example.Model.Enums.*;
-import com.example.Model.Item.FishItem;
+import com.example.Model.Item.*;
 import com.example.Model.Item.Ingredients;
-import com.example.Model.Item.Item;
-import com.example.Model.Item.MineralItem;
 import com.example.Model.Tile.Animal;
 import com.example.Model.Tile.Minreal;
+import com.example.Model.Tile.Plants;
 import com.example.Model.Tile.Tile;
 import com.example.Model.Tile.Trees;
 import com.example.Model.Tools.Hoe;
@@ -88,6 +87,7 @@ public class UseToolController {
             TempGround[NewX][NewY].setEntitity(null);
             TempGround[NewX][NewY].setTerrain(Terrain.DIRT);
             CurrentPepolee.setEnergy(CurrentPepolee.getEnergy() - CurrentPepolee.getInventory().getCurrentTool().getEnergyCost());
+            CurrentPepolee.getFarm().setGround(TempGround);
             return "Success Using Axe";
         }
         else
@@ -111,6 +111,20 @@ public class UseToolController {
         }
         else
         {
+            if(CurrentPepolee.getFarm().getGround()[NewX][NewY].getEntitity() == Entitity.PLANTS)
+            {
+                WaterCan ourwatercan = (WaterCan) CurrentPepolee.getInventory().getCurrentTool();
+                if(ourwatercan.getWater() > 1) {
+                    com.example.Model.Tile.Plants ourPlant = (Plants) TempGround[NewX][NewY];
+                    ourPlant.setLastTimeWatering(App.getCurrentGame().getTime());
+                    ourwatercan.setWater(ourwatercan.getWater() - 2);
+                    return "Watered sucssecfully";
+                }
+                else
+                {
+                    return "Not Enough Water";
+                }
+            }
             return "You Cant Use Water in that Place";
         }
     }
@@ -156,12 +170,31 @@ public class UseToolController {
         int NewY = App.ReturnCurrentPlayer().getY();
         Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
         Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
+        CurrentPepolee.setEnergy(CurrentPepolee.getEnergy() - 2);
         if(TempGround[NewX][NewY].getTerrain() == Terrain.GRASS)
         {
             TempGround[NewX][NewY].setTerrain(Terrain.DIRT);
+            CurrentPepolee.getFarm().setGround(TempGround);
             return "Success Cutting Grass";
         }
-        CurrentPepolee.setEnergy(CurrentPepolee.getEnergy() - 2);
+        else {
+            if (TempGround[NewX][NewY].getEntitity() == Entitity.PLANTS) {
+                Plants ourplant = (Plants) TempGround[NewX][NewY];
+                if(ourplant.CanHarvest()) {
+                    CurrentPepolee.getInventory().AddItem(new PlantsItem(1, ourplant.getPlant()));
+                    System.out.println("Plant Added to your inventory");
+                }
+                else
+                {
+                    System.out.println("Your Item dont grow completely");
+                }
+            }
+            else
+            {
+
+            }
+
+        }
         return null;
     }
 

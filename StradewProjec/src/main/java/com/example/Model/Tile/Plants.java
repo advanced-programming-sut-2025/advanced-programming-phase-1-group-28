@@ -1,19 +1,51 @@
 package com.example.Model.Tile;
 
+import com.example.Model.App;
 import com.example.Model.Enums.Entitity;
 import com.example.Model.Enums.PlaceType;
 import com.example.Model.Enums.Terrain;
+import com.example.Model.Time;
 
 public class Plants extends Tile{
     private com.example.Model.Enums.Plants plant;
     private int Stage = 0;
-    private int HowOldAreYou = 0;
+    private Time BornTime;
+    private boolean ISCooded = false;
+    private Time LastTimeWatering;
 
-    public Plants(com.example.Model.Enums.Plants plant, int stage, int howOldAreYou) {
+    public boolean CanHarvest(){
+        Time PassesTime = this.BornTime.DifreenceTime(App.getCurrentGame().getTime());
+        //TODO check with the plant.totalharvesttime
+        return true;
+    }
+
+    public Time getLastTimeWatering() {
+        return LastTimeWatering;
+    }
+
+    public void setLastTimeWatering(Time lastTimeWatering) {
+        LastTimeWatering = lastTimeWatering;
+    }
+
+    public Time getBornTime() {
+        return BornTime;
+    }
+
+    public void setBornTime(Time bornTime) {
+        BornTime = bornTime;
+    }
+
+    public boolean isISCooded() {
+        return ISCooded;
+    }
+
+    public void setISCooded(boolean ISCooded) {
+        this.ISCooded = ISCooded;
+    }
+
+    public Plants(com.example.Model.Enums.Plants plant) {
         super(Terrain.GRASS , PlaceType.NORMAL , Entitity.PLANTS);
         this.plant = plant;
-        Stage = stage;
-        HowOldAreYou = howOldAreYou;
     }
 
     public com.example.Model.Enums.Plants getPlant() {
@@ -32,11 +64,4 @@ public class Plants extends Tile{
         Stage = stage;
     }
 
-    public int getHowOldAreYou() {
-        return HowOldAreYou;
-    }
-
-    public void setHowOldAreYou(int howOldAreYou) {
-        HowOldAreYou = howOldAreYou;
-    }
 }

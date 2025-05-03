@@ -1,5 +1,6 @@
 package com.example.Model;
 
+import com.example.Model.Enums.Seeds;
 import com.example.Model.Item.Item;
 import com.example.Model.Tools.Tools;
 import java.util.ArrayList;
@@ -31,6 +32,16 @@ public class Inventory {
     }
 
     private ArrayList<Item> items = new ArrayList<>();
+
+    private ArrayList<Seeds> seeds = new ArrayList<>();
+
+    public ArrayList<Seeds> getSeeds() {
+        return seeds;
+    }
+
+    public void setSeeds(ArrayList<Seeds> seeds) {
+        this.seeds = seeds;
+    }
 
     public void setCurrentTool(Tools currentTool) {
         CurrentTool = currentTool;

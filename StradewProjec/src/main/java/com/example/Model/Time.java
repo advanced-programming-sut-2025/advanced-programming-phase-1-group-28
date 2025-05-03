@@ -34,6 +34,12 @@ public class Time {
         //if Day changes as GameController Apply changing Day
     }
     //--------------------------------------------- update time
+
+    public Time DifreenceTime(Time time1) {
+        //TODO
+        return time1;
+    }
+
     public void jumpAheadOneHour(){
         isDayChanged = false;
         hour += 1;
