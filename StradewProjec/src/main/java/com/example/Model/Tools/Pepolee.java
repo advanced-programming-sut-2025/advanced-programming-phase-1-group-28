@@ -176,5 +176,9 @@ public class Pepolee {
 
     }
 
+    public void addRecipe(Foods foods){
+        knownRecipes.add(foods);
+    }
+
     //Set Energy
 }
