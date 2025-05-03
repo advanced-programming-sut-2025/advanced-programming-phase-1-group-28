@@ -10,6 +10,15 @@ public class Trees extends Tile {
     private int stage;
     private int HowOldAreYou;
     private boolean IsAttackingWithCrow = false;
+    private boolean Iscooded = false;
+
+    public boolean isIscooded() {
+        return Iscooded;
+    }
+
+    public void setIscooded(boolean iscooded) {
+        Iscooded = iscooded;
+    }
 
     public Trees(Tree tree, int stage, int howOldAreYou) {
         super(Terrain.GRASS , PlaceType.NORMAL , Entitity.TREE);

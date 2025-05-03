@@ -4,11 +4,15 @@ import com.example.Model.App;
 import com.example.Model.Enums.Animals;
 import com.example.Model.Enums.Entitity;
 import com.example.Model.Enums.PlaceType;
+import com.example.Model.Enums.Tools.Trashcans;
 import com.example.Model.Game;
 import com.example.Model.Item.Item;
 import com.example.Model.Places.AnimalHouse;
 import com.example.Model.Tile.Animal;
+import com.example.Model.Tools.Tools;
+import com.example.Model.Tools.TrashCan;
 
+import javax.tools.Tool;
 import java.util.ArrayList;
 
 public class ShoppingController {
@@ -39,357 +43,63 @@ public class ShoppingController {
         }
         else if(ProductName.equals("Copper Tool"))
         {
-            // check if you used the daily limit or not
-            if(App.dailyLimits.getBlackSmithLimits()[0] == 0)
-            {
-                System.out.println("You have used your daily limit for this item");
-                return;
-            }
-            // check if you have enough ingredients and money
-            if(2000 * count > App.ReturnCurrentPlayer().getCoin())
-            {
-                System.out.println("Not enough money bro");
-                return;
-            }
-            boolean IngredientExists = false;
-            for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
-            {
-                if(item.getName().equals("Copper Bar"))
-                {
-                    if(item.getCount() < 5 * count)
-                    {
-                        System.out.println("Not enough ingredients");
-                        return;
-                    }
-                    else
-                    {
-                        IngredientExists = true;
-                        item.setCount(item.getCount() - 5 * count);
-                    }
-                }
-            }
-            if(!IngredientExists)
-            {
-                System.out.println("Not enough ingredients");
-                return;
-            }
-            // Apply purchase and other logic
-            boolean ItemExists = false;
-            for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
-            {
-                if(item.getName().equals("Copper Tool"))
-                {
-                    item.setCount(item.getCount() + count);
-                    ItemExists = true;
-                    break;
-                }
-            }
-            if(!ItemExists)
-            {
-                ArrayList<Item> newItems = App.ReturnCurrentPlayer().getInventory().getItems();
-                newItems.add(new Item(count, ProductName));
-                App.ReturnCurrentPlayer().getInventory().setItems(newItems);
-            }
             int newLimits[] = App.dailyLimits.getBlackSmithLimits();
-            newLimits[0]--;
+            newLimits[0] = UpgradeTool(ProductName , "Copper Bar" , count , 2000 , newLimits[0]);
             App.dailyLimits.setBlackSmithLimits(newLimits);
-            App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - count * 2000);
-            System.out.println("Copper Tool purchased");
         }
         else if(ProductName.equals("Steel Tool"))
         {
-            // check if you used the daily limit or not
-            if(App.dailyLimits.getBlackSmithLimits()[1] == 0)
-            {
-                System.out.println("You have used your daily limit for this item");
-                return;
-            }
-            // check if you have enough ingredients and money
-            if(5000 * count > App.ReturnCurrentPlayer().getCoin())
-            {
-                System.out.println("Not enough money bro");
-                return;
-            }
-            boolean IngredientExists = false;
-            for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
-            {
-                if(item.getName().equals("Iron Bar"))
-                {
-                    if(item.getCount() < 5 * count)
-                    {
-                        System.out.println("Not enough ingredients");
-                        return;
-                    }
-                    else
-                    {
-                        IngredientExists = true;
-                        item.setCount(item.getCount() - 5 * count);
-                    }
-                }
-            }
-            if(!IngredientExists)
-            {
-                System.out.println("Not enough ingredients");
-                return;
-            }
-            // Apply purchase and other logic
-            boolean ItemExists = false;
-            for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
-            {
-                if(item.getName().equals("Steel Tool"))
-                {
-                    item.setCount(item.getCount() + count);
-                    ItemExists = true;
-                    break;
-                }
-            }
-            if(!ItemExists)
-            {
-                ArrayList<Item> newItems = App.ReturnCurrentPlayer().getInventory().getItems();
-                newItems.add(new Item(count, ProductName));
-                App.ReturnCurrentPlayer().getInventory().setItems(newItems);
-            }
             int newLimits[] = App.dailyLimits.getBlackSmithLimits();
-            newLimits[1]--;
+            newLimits[1] = UpgradeTool(ProductName , "Iron Bar" , count , 5000 , newLimits[1]);
             App.dailyLimits.setBlackSmithLimits(newLimits);
-            App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - count * 5000);
-            System.out.println("Steel Tool purchased");
         }
         else if(ProductName.equals("Gold Tool"))
         {
-            // check if you used the daily limit or not
-            if(App.dailyLimits.getBlackSmithLimits()[2] == 0)
-            {
-                System.out.println("You have used your daily limit for this item");
-                return;
-            }
-            // check if you have enough ingredients and money
-            if(10000 * count > App.ReturnCurrentPlayer().getCoin())
-            {
-                System.out.println("Not enough money bro");
-                return;
-            }
-            boolean IngredientExists = false;
-            for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
-            {
-                if(item.getName().equals("Gold Bar"))
-                {
-                    if(item.getCount() < 5 * count)
-                    {
-                        System.out.println("Not enough ingredients");
-                        return;
-                    }
-                    else
-                    {
-                        IngredientExists = true;
-                        item.setCount(item.getCount() - 5 * count);
-                    }
-                }
-            }
-            if(!IngredientExists)
-            {
-                System.out.println("Not enough ingredients");
-                return;
-            }
-            // Apply purchase and other logic
-            boolean ItemExists = false;
-            for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
-            {
-                if(item.getName().equals("Gold Tool"))
-                {
-                    item.setCount(item.getCount() + count);
-                    ItemExists = true;
-                    break;
-                }
-            }
-            if(!ItemExists)
-            {
-                ArrayList<Item> newItems = App.ReturnCurrentPlayer().getInventory().getItems();
-                newItems.add(new Item(count, ProductName));
-                App.ReturnCurrentPlayer().getInventory().setItems(newItems);
-            }
             int newLimits[] = App.dailyLimits.getBlackSmithLimits();
-            newLimits[2]--;
+            newLimits[2] = UpgradeTool(ProductName , "Gold Bar" , count , 10000 , newLimits[2]);
             App.dailyLimits.setBlackSmithLimits(newLimits);
-            App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - count * 10000);
-            System.out.println("Gold Tool purchased");
         }
         else if(ProductName.equals("Copper Trash Can"))
         {
-            // check if you used the daily limit or not
-            if(App.dailyLimits.getBlackSmithLimits()[4] == 0)
+            TrashCan newTrashCan = null;
+            for(Tools tool : App.ReturnCurrentPlayer().getInventory().getTools())
             {
-                System.out.println("You have used your daily limit for this item");
-                return;
-            }
-            // check if you have enough ingredients and money
-            if(1000 * count > App.ReturnCurrentPlayer().getCoin())
-            {
-                System.out.println("Not enough money bro");
-                return;
-            }
-            boolean IngredientExists = false;
-            for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
-            {
-                if(item.getName().equals("Copper Bar"))
+                if(tool instanceof TrashCan)
                 {
-                    if(item.getCount() < 5 * count)
-                    {
-                        System.out.println("Not enough ingredients");
-                        return;
-                    }
-                    else
-                    {
-                        IngredientExists = true;
-                        item.setCount(item.getCount() - 5 * count);
-                    }
+                    newTrashCan = (TrashCan) tool;
                 }
-            }
-            if(!IngredientExists)
-            {
-                System.out.println("Not enough ingredients");
-                return;
-            }
-            // Apply purchase and other logic
-            boolean ItemExists = false;
-            for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
-            {
-                if(item.getName().equals("Copper Trash Can"))
-                {
-                    item.setCount(item.getCount() + count);
-                    ItemExists = true;
-                    break;
-                }
-            }
-            if(!ItemExists)
-            {
-                ArrayList<Item> newItems = App.ReturnCurrentPlayer().getInventory().getItems();
-                newItems.add(new Item(count, ProductName));
-                App.ReturnCurrentPlayer().getInventory().setItems(newItems);
             }
             int newLimits[] = App.dailyLimits.getBlackSmithLimits();
-            newLimits[4]--;
+            newLimits[3] = UpgradeTrashCan(newTrashCan , "Copper Bar" , count , 1000 , newLimits[3] , Trashcans.Copper , Trashcans.Normal);
             App.dailyLimits.setBlackSmithLimits(newLimits);
-            App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - count * 1000);
-            System.out.println("Copper Trash Can purchased");
         }
         else if(ProductName.equals("Steel Trash Can"))
         {
-            // check if you used the daily limit or not
-            if(App.dailyLimits.getBlackSmithLimits()[5] == 0)
+            TrashCan newTrashCan = null;
+            for(Tools tool : App.ReturnCurrentPlayer().getInventory().getTools())
             {
-                System.out.println("You have used your daily limit for this item");
-                return;
-            }
-            // check if you have enough ingredients and money
-            if(2500 * count > App.ReturnCurrentPlayer().getCoin())
-            {
-                System.out.println("Not enough money bro");
-                return;
-            }
-            boolean IngredientExists = false;
-            for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
-            {
-                if(item.getName().equals("Iron Bar"))
+                if(tool instanceof TrashCan)
                 {
-                    if(item.getCount() < 5 * count)
-                    {
-                        System.out.println("Not enough ingredients");
-                        return;
-                    }
-                    else
-                    {
-                        IngredientExists = true;
-                        item.setCount(item.getCount() - 5 * count);
-                    }
+                    newTrashCan = (TrashCan) tool;
                 }
-            }
-            if(!IngredientExists)
-            {
-                System.out.println("Not enough ingredients");
-                return;
-            }
-            // Apply purchase and other logic
-            boolean ItemExists = false;
-            for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
-            {
-                if(item.getName().equals("Steel Trash Can"))
-                {
-                    item.setCount(item.getCount() + count);
-                    ItemExists = true;
-                    break;
-                }
-            }
-            if(!ItemExists)
-            {
-                ArrayList<Item> newItems = App.ReturnCurrentPlayer().getInventory().getItems();
-                newItems.add(new Item(count, ProductName));
-                App.ReturnCurrentPlayer().getInventory().setItems(newItems);
             }
             int newLimits[] = App.dailyLimits.getBlackSmithLimits();
-            newLimits[5]--;
+            newLimits[4] = UpgradeTrashCan(newTrashCan , "Iron Bar" , count , 2000 , newLimits[4] , Trashcans.Iron , Trashcans.Copper);
             App.dailyLimits.setBlackSmithLimits(newLimits);
-            App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - count * 2500);
-            System.out.println("Steel Trash Can purchased");
         }
         else if(ProductName.equals("Gold Trash Can"))
         {
-            // check if you used the daily limit or not
-            if(App.dailyLimits.getBlackSmithLimits()[6] == 0)
+            TrashCan newTrashCan = null;
+            for(Tools tool : App.ReturnCurrentPlayer().getInventory().getTools())
             {
-                System.out.println("You have used your daily limit for this item");
-                return;
-            }
-            // check if you have enough ingredients and money
-            if(5000 * count > App.ReturnCurrentPlayer().getCoin())
-            {
-                System.out.println("Not enough money bro");
-                return;
-            }
-            boolean IngredientExists = false;
-            for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
-            {
-                if(item.getName().equals("Gold Bar"))
+                if(tool instanceof TrashCan)
                 {
-                    if(item.getCount() < 5 * count)
-                    {
-                        System.out.println("Not enough ingredients");
-                        return;
-                    }
-                    else
-                    {
-                        IngredientExists = true;
-                        item.setCount(item.getCount() - 5 * count);
-                    }
+                    newTrashCan = (TrashCan) tool;
                 }
-            }
-            if(!IngredientExists)
-            {
-                System.out.println("Not enough ingredients");
-                return;
-            }
-            // Apply purchase and other logic
-            boolean ItemExists = false;
-            for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
-            {
-                if(item.getName().equals("Gold Trash Can"))
-                {
-                    item.setCount(item.getCount() + count);
-                    ItemExists = true;
-                    break;
-                }
-            }
-            if(!ItemExists)
-            {
-                ArrayList<Item> newItems = App.ReturnCurrentPlayer().getInventory().getItems();
-                newItems.add(new Item(count, ProductName));
-                App.ReturnCurrentPlayer().getInventory().setItems(newItems);
             }
             int newLimits[] = App.dailyLimits.getBlackSmithLimits();
-            newLimits[6]--;
+            newLimits[5] = UpgradeTrashCan(newTrashCan , "Gold Bar" , count , 5000 , newLimits[5] , Trashcans.Gold , Trashcans.Iron);
             App.dailyLimits.setBlackSmithLimits(newLimits);
-            App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - count * 5000);
-            System.out.println("Gold Trash Can purchased");
         }
         else
         {
@@ -406,362 +116,64 @@ public class ShoppingController {
         else if(ProductName.equals("Milk Pail"))
         {
             int count = Integer.parseInt(CountOrName);
-            // price is 1000
-            if(count * 1000 > App.ReturnCurrentPlayer().getCoin())
-            {
-                System.out.println("Not enough money bro");
-                return;
-            }
-            if(App.dailyLimits.getMarineRanch()[0] == 0)
-            {
-                System.out.println("You have used your daily limit for this item");
-                return;
-            }
-            // list of items:
-            // check if the item already exists
-            // if it does just add the count
-            // if not add the item, put the count 0 then add
-            boolean ItemExists = false;
-            for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
-            {
-                if(item.getName().equals(ProductName))
-                {
-                    item.setCount(item.getCount() + count);
-                    ItemExists = true;
-                    break;
-                }
-            }
-            if(!ItemExists)
-            {
-                ArrayList<Item> newItems = App.ReturnCurrentPlayer().getInventory().getItems();
-                newItems.add(new Item(count, ProductName));
-                App.ReturnCurrentPlayer().getInventory().setItems(newItems);
-            }
-            App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - count * 1000);
             int newLimits[] = App.dailyLimits.getMarineRanch();
-            newLimits[0]--;
+            newLimits[0] = LimitedBuying("Milk Pail" , count , 1000 , newLimits[0]);
             App.dailyLimits.setMarineRanch(newLimits);
-            System.out.println("Milk Pail purchased");
         }
         else if(ProductName.equals("Shears"))
         {
             int count = Integer.parseInt(CountOrName);
-            // price is 1000
-            if(count * 1000 > App.ReturnCurrentPlayer().getCoin())
-            {
-                System.out.println("Not enough money bro");
-                return;
-            }
-            if(App.dailyLimits.getMarineRanch()[1] == 0)
-            {
-                System.out.println("You have used your daily limit for this item");
-                return;
-            }
-            // list of items:
-            // check if the item already exists
-            // if it does just add the count
-            // if not add the item, put the count 0 then add
-            boolean ItemExists = false;
-            for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
-            {
-                if(item.getName().equals(ProductName))
-                {
-                    item.setCount(item.getCount() + count);
-                    ItemExists = true;
-                    break;
-                }
-            }
-            if(!ItemExists)
-            {
-                ArrayList<Item> newItems = App.ReturnCurrentPlayer().getInventory().getItems();
-                newItems.add(new Item(count, ProductName));
-                App.ReturnCurrentPlayer().getInventory().setItems(newItems);
-            }
-            App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - count * 1000);
             int newLimits[] = App.dailyLimits.getMarineRanch();
-            newLimits[1]--;
+            newLimits[1] = LimitedBuying("Shears" , count , 1000 , newLimits[1]);
             App.dailyLimits.setMarineRanch(newLimits);
-            System.out.println("Shears purchased");
         }
         else if(ProductName.equals("Chicken"))
         {
-            // check for enough money
-            if(800 > App.ReturnCurrentPlayer().getCoin())
-            {
-                System.out.println("Not enough money bro");
-                return;
-            }
-            // check for daily limit
-            if(App.dailyLimits.getMarineRanch()[2] == 0)
-            {
-                System.out.println("You have used your daily limit for this item");
-                return;
-            }
-            // check for proper coop
-            for(AnimalHouse coop : App.ReturnCurrentPlayer().getFarm().getCoops())
-            {
-                if(coop.getAnimalHouse().equals("Coop") && coop.getCapacity() > 0)
-                {
-                    // Add animals
-                    // lessen limit
-                    // lessen capacity
-                    // price
-                    ArrayList<Animal> newAnimals = App.ReturnCurrentPlayer().getFarm().getAnimals();
-                    newAnimals.add(new Animal(CountOrName , Animals.Chicken));
-                    App.ReturnCurrentPlayer().getFarm().setAnimals(newAnimals);
-                    App.dailyLimits.getMarineRanch()[2]--;
-                    coop.setCapacity(coop.getCapacity() - 1);
-                    App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - 800);
-                    System.out.println("Chicken purchased");
-                    return;
-                }
-            }
-            System.out.println("You don't own a proper coop");
+            int newLimits[] = App.dailyLimits.getMarineRanch();
+            newLimits[2] = BuyCoopAnimal(CountOrName , "Coop" , Animals.Chicken , newLimits[2] , 800);
+            App.dailyLimits.setMarineRanch(newLimits);
         }
         else if(ProductName.equals("Duck"))
         {
-            // check for enough money
-            if(1200 > App.ReturnCurrentPlayer().getCoin())
-            {
-                System.out.println("Not enough money bro");
-                return;
-            }
-            // check for daily limit
-            if(App.dailyLimits.getMarineRanch()[5] == 0)
-            {
-                System.out.println("You have used your daily limit for this item");
-                return;
-            }
-            // check for proper coop
-            for(AnimalHouse coop : App.ReturnCurrentPlayer().getFarm().getCoops())
-            {
-                if(coop.getAnimalHouse().equals("Big Coop") && coop.getCapacity() > 0)
-                {
-                    // Add animals
-                    // lessen limit
-                    // lessen capacity
-                    // price
-                    ArrayList<Animal> newAnimals = App.ReturnCurrentPlayer().getFarm().getAnimals();
-                    newAnimals.add(new Animal(CountOrName , Animals.Duck));
-                    App.ReturnCurrentPlayer().getFarm().setAnimals(newAnimals);
-                    App.dailyLimits.getMarineRanch()[5]--;
-                    coop.setCapacity(coop.getCapacity() - 1);
-                    App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - 1200);
-                    System.out.println("Duck purchased");
-                    return;
-                }
-            }
-            System.out.println("You don't own a proper coop");
+            int newLimits[] = App.dailyLimits.getMarineRanch();
+            newLimits[5] = BuyCoopAnimal(CountOrName , "Big Coop" , Animals.Duck , newLimits[5] , 1200);
+            App.dailyLimits.setMarineRanch(newLimits);
         }
         else if(ProductName.equals("Rabbit"))
         {
-            // check for enough money
-            if(8000 > App.ReturnCurrentPlayer().getCoin())
-            {
-                System.out.println("Not enough money bro");
-                return;
-            }
-            // check for daily limit
-            if(App.dailyLimits.getMarineRanch()[7] == 0)
-            {
-                System.out.println("You have used your daily limit for this item");
-                return;
-            }
-            // check for proper coop
-            for(AnimalHouse coop : App.ReturnCurrentPlayer().getFarm().getCoops())
-            {
-                if(coop.getAnimalHouse().equals("Deluxe Coop") && coop.getCapacity() > 0)
-                {
-                    // Add animals
-                    // lessen limit
-                    // lessen capacity
-                    // price
-                    ArrayList<Animal> newAnimals = App.ReturnCurrentPlayer().getFarm().getAnimals();
-                    newAnimals.add(new Animal(CountOrName , Animals.Rabbit));
-                    App.ReturnCurrentPlayer().getFarm().setAnimals(newAnimals);
-                    App.dailyLimits.getMarineRanch()[7]--;
-                    coop.setCapacity(coop.getCapacity() - 1);
-                    App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - 8000);
-                    System.out.println("Rabbit purchased");
-                    return;
-                }
-            }
-            System.out.println("You don't own a proper coop");
+            int newLimits[] = App.dailyLimits.getMarineRanch();
+            newLimits[7] = BuyCoopAnimal(CountOrName , "Deluxe Coop" , Animals.Rabbit , newLimits[7] , 8000);
+            App.dailyLimits.setMarineRanch(newLimits);
         }
         else if(ProductName.equals("Dinosaur"))
         {
-            // check for enough money
-            if(14000 > App.ReturnCurrentPlayer().getCoin())
-            {
-                System.out.println("Not enough money bro");
-                return;
-            }
-            // check for daily limit
-            if(App.dailyLimits.getMarineRanch()[8] == 0)
-            {
-                System.out.println("You have used your daily limit for this item");
-                return;
-            }
-            // check for proper coop
-            for(AnimalHouse coop : App.ReturnCurrentPlayer().getFarm().getCoops())
-            {
-                if(coop.getAnimalHouse().equals("Big Coop") && coop.getCapacity() > 0)
-                {
-                    // Add animals
-                    // lessen limit
-                    // lessen capacity
-                    // price
-                    ArrayList<Animal> newAnimals = App.ReturnCurrentPlayer().getFarm().getAnimals();
-                    newAnimals.add(new Animal(CountOrName , Animals.Dinosaur));
-                    App.ReturnCurrentPlayer().getFarm().setAnimals(newAnimals);
-                    App.dailyLimits.getMarineRanch()[8]--;
-                    coop.setCapacity(coop.getCapacity() - 1);
-                    App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - 14000);
-                    System.out.println("Dinosaur purchased");
-                    return;
-                }
-            }
-            System.out.println("You don't own a proper coop");
+            int newLimits[] = App.dailyLimits.getMarineRanch();
+            newLimits[8] = BuyCoopAnimal(CountOrName , "Big Coop" , Animals.Dinosaur , newLimits[8] , 14000);
+            App.dailyLimits.setMarineRanch(newLimits);
         }
         else if(ProductName.equals("Cow"))
         {
-            // check for enough money
-            if(1500 > App.ReturnCurrentPlayer().getCoin())
-            {
-                System.out.println("Not enough money bro");
-                return;
-            }
-            // check for daily limit
-            if(App.dailyLimits.getMarineRanch()[3] == 0)
-            {
-                System.out.println("You have used your daily limit for this item");
-                return;
-            }
-            // check for proper coop
-            for(AnimalHouse barn : App.ReturnCurrentPlayer().getFarm().getBarns())
-            {
-                if(barn.getAnimalHouse().equals("Barn") && barn.getCapacity() > 0)
-                {
-                    // Add animals
-                    // lessen limit
-                    // lessen capacity
-                    // price
-                    ArrayList<Animal> newAnimals = App.ReturnCurrentPlayer().getFarm().getAnimals();
-                    newAnimals.add(new Animal(CountOrName , Animals.Cow));
-                    App.ReturnCurrentPlayer().getFarm().setAnimals(newAnimals);
-                    App.dailyLimits.getMarineRanch()[3]--;
-                    barn.setCapacity(barn.getCapacity() - 1);
-                    App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - 1500);
-                    System.out.println("Cow purchased");
-                    return;
-                }
-            }
-            System.out.println("You don't own a proper barn");
+            int newLimits[] = App.dailyLimits.getMarineRanch();
+            newLimits[3] = BuyBarnAnimal(CountOrName , "Barn" , Animals.Cow , newLimits[3] , 1500);
+            App.dailyLimits.setMarineRanch(newLimits);
         }
         else if(ProductName.equals("Goat"))
         {
-            // check for enough money
-            if(4000 > App.ReturnCurrentPlayer().getCoin())
-            {
-                System.out.println("Not enough money bro");
-                return;
-            }
-            // check for daily limit
-            if(App.dailyLimits.getMarineRanch()[4] == 0)
-            {
-                System.out.println("You have used your daily limit for this item");
-                return;
-            }
-            // check for proper coop
-            for(AnimalHouse barn : App.ReturnCurrentPlayer().getFarm().getBarns())
-            {
-                if(barn.getAnimalHouse().equals("Big Barn") && barn.getCapacity() > 0)
-                {
-                    // Add animals
-                    // lessen limit
-                    // lessen capacity
-                    // price
-                    ArrayList<Animal> newAnimals = App.ReturnCurrentPlayer().getFarm().getAnimals();
-                    newAnimals.add(new Animal(CountOrName , Animals.Goat));
-                    App.ReturnCurrentPlayer().getFarm().setAnimals(newAnimals);
-                    App.dailyLimits.getMarineRanch()[4]--;
-                    barn.setCapacity(barn.getCapacity() - 1);
-                    App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - 4000);
-                    System.out.println("Goat purchased");
-                    return;
-                }
-            }
-            System.out.println("You don't own a proper barn");
+            int newLimits[] = App.dailyLimits.getMarineRanch();
+            newLimits[4] = BuyBarnAnimal(CountOrName , "Big Barn" , Animals.Duck , newLimits[4] , 4000);
+            App.dailyLimits.setMarineRanch(newLimits);
         }
         else if(ProductName.equals("Sheep"))
         {
-            // check for enough money
-            if(8000 > App.ReturnCurrentPlayer().getCoin())
-            {
-                System.out.println("Not enough money bro");
-                return;
-            }
-            // check for daily limit
-            if(App.dailyLimits.getMarineRanch()[6] == 0)
-            {
-                System.out.println("You have used your daily limit for this item");
-                return;
-            }
-            // check for proper coop
-            for(AnimalHouse barn : App.ReturnCurrentPlayer().getFarm().getBarns())
-            {
-                if(barn.getAnimalHouse().equals("Deluxe Barn") && barn.getCapacity() > 0)
-                {
-                    // Add animals
-                    // lessen limit
-                    // lessen capacity
-                    // price
-                    ArrayList<Animal> newAnimals = App.ReturnCurrentPlayer().getFarm().getAnimals();
-                    newAnimals.add(new Animal(CountOrName , Animals.Sheep));
-                    App.ReturnCurrentPlayer().getFarm().setAnimals(newAnimals);
-                    App.dailyLimits.getMarineRanch()[6]--;
-                    barn.setCapacity(barn.getCapacity() - 1);
-                    App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - 8000);
-                    System.out.println("Sheep purchased");
-                    return;
-                }
-            }
-            System.out.println("You don't own a proper barn");
+            int newLimits[] = App.dailyLimits.getMarineRanch();
+            newLimits[6] = BuyBarnAnimal(CountOrName , "Deluxe Barn" , Animals.Sheep , newLimits[6] , 8000);
+            App.dailyLimits.setMarineRanch(newLimits);
         }
-        else if(ProductName.equals("Sheep"))
+        else if(ProductName.equals("Pig"))
         {
-            // check for enough money
-            if(16000 > App.ReturnCurrentPlayer().getCoin())
-            {
-                System.out.println("Not enough money bro");
-                return;
-            }
-            // check for daily limit
-            if(App.dailyLimits.getMarineRanch()[9] == 0)
-            {
-                System.out.println("You have used your daily limit for this item");
-                return;
-            }
-            // check for proper coop
-            for(AnimalHouse barn : App.ReturnCurrentPlayer().getFarm().getBarns())
-            {
-                if(barn.getAnimalHouse().equals("Deluxe Barn") && barn.getCapacity() > 0)
-                {
-                    // Add animals
-                    // lessen limit
-                    // lessen capacity
-                    // price
-                    ArrayList<Animal> newAnimals = App.ReturnCurrentPlayer().getFarm().getAnimals();
-                    newAnimals.add(new Animal(CountOrName , Animals.Pig));
-                    App.ReturnCurrentPlayer().getFarm().setAnimals(newAnimals);
-                    App.dailyLimits.getMarineRanch()[9]--;
-                    barn.setCapacity(barn.getCapacity() - 1);
-                    App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - 16000);
-                    System.out.println("Pig purchased");
-                    return;
-                }
-            }
-            System.out.println("You don't own a proper barn");
+            int newLimits[] = App.dailyLimits.getMarineRanch();
+            newLimits[9] = BuyBarnAnimal(CountOrName , "Deluxe Barn" , Animals.Pig , newLimits[9] , 16000);
+            App.dailyLimits.setMarineRanch(newLimits);
         }
         else
         {
@@ -905,10 +317,17 @@ public class ShoppingController {
             newLimits[5] = BuildCoop(ProductName , 12 , Integer.parseInt(parts[0]) , Integer.parseInt(parts[1]) , 20000 , 500 , 200 , newLimits[5]);
             App.dailyLimits.setCarpenterShop(newLimits);
         }
+        else if(ProductName.equals("Well"))
+        {
+
+        }
         else if(ProductName.equals("Shipping Been"))
         {
-            String parts[] = CountOrCoordinate.trim().split("\\s+");
-
+            //String parts[] = CountOrCoordinate.trim().split("\\s+");
+        }
+        else
+        {
+            System.out.println("Item not found");
         }
     }
     public void UnlimitedBuying(String ProductName , int count , int Price)
@@ -1139,5 +558,184 @@ public class ShoppingController {
         System.out.println(CoopType + " has been built");
         return limit - 1;
 
+    }
+    public int UpgradeTool(String ProductName , String Ingredient , int count , int Price , int limit)
+    {
+        // check for limit
+        if(limit == 0)
+        {
+            System.out.println("You have used your daily limit for this item");
+            return limit;
+        }
+        // check for price
+        if(Price * count > App.ReturnCurrentPlayer().getCoin())
+        {
+            System.out.println("Not enough money bro");
+            return limit;
+        }
+        boolean IngredientExists = false;
+        for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
+        {
+            if(item.getName().equals(Ingredient))
+            {
+                if(item.getCount() < 5 * count)
+                {
+                    System.out.println("Not enough ingredients");
+                    return limit;
+                }
+                else
+                {
+                    IngredientExists = true;
+                    item.setCount(item.getCount() - 5 * count);
+                }
+            }
+        }
+        if(!IngredientExists)
+        {
+            System.out.println("Not enough ingredients");
+            return limit;
+        }
+        boolean ItemExists = false;
+        for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
+        {
+            if(item.getName().equals(ProductName))
+            {
+                item.setCount(item.getCount() + count);
+                ItemExists = true;
+                break;
+            }
+        }
+        if(!ItemExists)
+        {
+            ArrayList<Item> newItems = App.ReturnCurrentPlayer().getInventory().getItems();
+            newItems.add(new Item(count, ProductName));
+            App.ReturnCurrentPlayer().getInventory().setItems(newItems);
+        }
+        App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price * count);
+        System.out.println(ProductName + " has been upgraded");
+        return limit - 1;
+    }
+    public int UpgradeTrashCan(TrashCan trashCan , String Ingredient , int count , int Price , int limit , Trashcans NewTrashType , Trashcans OldTrashType)
+    {
+        if(count > 1)
+        {
+            System.out.println("You can do it once");
+            return limit;
+        }
+        if(trashCan.getTrashcan() != OldTrashType)
+        {
+            System.out.println("Trash can level doesn't match the upgrade");
+            return limit;
+        }
+        // check for limit
+        if(limit == 0)
+        {
+            System.out.println("You have used your daily limit for this item");
+            return limit;
+        }
+        // check for price
+        if(Price > App.ReturnCurrentPlayer().getCoin())
+        {
+            System.out.println("Not enough money bro");
+            return limit;
+        }
+        boolean IngredientExists = false;
+        for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
+        {
+            if(item.getName().equals(Ingredient))
+            {
+                if(item.getCount() < 5)
+                {
+                    System.out.println("Not enough ingredients");
+                    return limit;
+                }
+                else
+                {
+                    IngredientExists = true;
+                    item.setCount(item.getCount() - 5);
+                }
+            }
+        }
+        if(!IngredientExists)
+        {
+            System.out.println("Not enough ingredients");
+            return limit;
+        }
+        App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price);
+        trashCan.setTrashcan(NewTrashType);
+        System.out.println("Trashcan has been upgraded");
+        return limit - 1;
+    }
+    public int BuyCoopAnimal(String AnimalName , String CoopType , Animals AnimalType , int limit , int Price)
+    {
+        // check for enough money
+        if(Price > App.ReturnCurrentPlayer().getCoin())
+        {
+            System.out.println("Not enough money bro");
+            return limit;
+        }
+        // check for daily limit
+        if(limit == 0)
+        {
+            System.out.println("You have used your daily limit for this item");
+            return limit;
+        }
+        // check for proper coop
+        for(AnimalHouse coop : App.ReturnCurrentPlayer().getFarm().getCoops())
+        {
+            if(coop.getAnimalHouse().equals(CoopType) && coop.getCapacity() > 0)
+            {
+                // Add animals
+                // lessen limit
+                // lessen capacity
+                // price
+                ArrayList<Animal> newAnimals = App.ReturnCurrentPlayer().getFarm().getAnimals();
+                newAnimals.add(new Animal(AnimalName , AnimalType));
+                App.ReturnCurrentPlayer().getFarm().setAnimals(newAnimals);
+                limit--;
+                coop.setCapacity(coop.getCapacity() - 1);
+                App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price);
+                System.out.println(AnimalType.name() + " purchased");
+                return limit;
+            }
+        }
+        System.out.println("You don't own a proper coop");
+        return limit;
+    }
+    public int BuyBarnAnimal(String AnimalName , String CoopType , Animals AnimalType , int limit , int Price)
+    {
+        // check for enough money
+        if(Price > App.ReturnCurrentPlayer().getCoin())
+        {
+            System.out.println("Not enough money bro");
+            return limit;
+        }
+        // check for daily limit
+        if(limit == 0)
+        {
+            System.out.println("You have used your daily limit for this item");
+            return limit;
+        }
+        // check for proper coop
+        for(AnimalHouse barn : App.ReturnCurrentPlayer().getFarm().getBarns())
+        {
+            if(barn.getAnimalHouse().equals(CoopType) && barn.getCapacity() > 0)
+            {
+                // Add animals
+                // lessen limit
+                // lessen capacity
+                // price
+                ArrayList<Animal> newAnimals = App.ReturnCurrentPlayer().getFarm().getAnimals();
+                newAnimals.add(new Animal(AnimalName , AnimalType));
+                App.ReturnCurrentPlayer().getFarm().setAnimals(newAnimals);
+                limit--;
+                barn.setCapacity(barn.getCapacity() - 1);
+                App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price);
+                System.out.println(AnimalType.name() + " purchased");
+                return limit;
+            }
+        }
+        System.out.println("You don't own a proper coop");
+        return limit;
     }
 }

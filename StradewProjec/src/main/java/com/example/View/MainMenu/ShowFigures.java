@@ -1,11 +1,14 @@
 package com.example.View.MainMenu;
 
 import com.example.Model.*;
+import com.example.Model.Enums.Entitity;
 import com.example.Model.Enums.Foods;
 import com.example.Model.Item.Item;
+import com.example.Model.Tile.Plants;
 import com.example.Model.Tools.Pepolee;
 import com.example.Model.Tools.Tools;
 
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class ShowFigures {
@@ -88,7 +91,33 @@ public class ShowFigures {
     }
     public void ShowCraft(int x , int y)
     {
-
+        if(App.ReturnCurrentPlayer().getFarm().getGround()[x][y].getEntitity() == Entitity.PLANTS)
+        {
+            Plants ourplant = (Plants) App.ReturnCurrentPlayer().getFarm().getGround()[x][y];
+            System.out.println("Name : " + ourplant.getPlant().toString());
+            System.out.println("Source : " + ourplant.getPlant().Source);
+            System.out.println("Stages : " + ourplant.getPlant().stage);
+            System.out.println("TotalHarvestTime : " + ourplant.getPlant().TotalTimeHarvest);
+            System.out.println("On Time : " + ourplant.getPlant().OnTime);
+            if(ourplant.getPlant().RegrowthTime == 0)
+            {
+                System.out.println("Regrowth time is : ");
+            }
+            else
+            {
+                System.out.println("Regrowth time is : " + ourplant.getPlant().RegrowthTime);
+            }
+            System.out.println("Base Sell Price : " + ourplant.getPlant().BasePrice);
+            System.out.println("Is Edible :" + ourplant.getPlant().IsEdible);
+            System.out.println("Base Energy : " + ourplant.getPlant().energy);
+            //System.out.println("Base Health : " + ourplant.getPlant().);
+            System.out.println("Seoson : " + ourplant.getPlant().season);
+            System.out.println("Can become Giant" + ourplant.getPlant().CanBecomeGiant);
+        }
+        else
+        {
+            System.out.println("There is no plant here");
+        }
     }
     public void ShowPlant(int x, int y)
     {
