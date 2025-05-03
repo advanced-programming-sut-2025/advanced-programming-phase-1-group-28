@@ -13,6 +13,26 @@ public class DailyLimits {
     // Barn , Big , Deluxe
     // Coop , Big , Deluxe
     // well
+    private int JojaMart[] = new int[]
+            {5 , 10 , 5 , 1 , 5 ,
+                    5 , 5 , 5 , 5 , 5 ,
+                    5 , 5 , 5 , 5 , 5 ,
+                    5 , 5 , 5 , 5 , 5 ,
+                    5 , 5 , 10 , 5 , 5 ,
+                    10 , 5 , 5 , 5 , 5 ,
+                    5 , 5 , 5 , 5 , 5 ,
+                    5 , 1 , 10 , 1 , 5};
+    private int PierreStore[] = new int[]
+            {
+                    2 , 2 , 1 , 1 , 1 ,
+                    1 , 5 , 5 , 5 , 5 ,
+                    5 , 5 , 5 , 5 , 5 ,
+                    5 , 5 , 5 , 5 , 5 ,
+                    5 , 5 , 5 , 5 , 5 ,
+                    5 , 5 , 5 , 5 , 5 ,
+                    5 , 5 , 5 , 5 , 5 ,
+                    5 , 5 , 5 , 5
+            };
 
     public int[] getBlackSmithLimits() {
         return BlackSmithLimits;
@@ -44,5 +64,21 @@ public class DailyLimits {
 
     public void setCarpenterShop(int carpenterShop[]) {
         CarpenterShop = carpenterShop;
+    }
+
+    public int[] getJojaMart() {
+        return JojaMart;
+    }
+
+    public void setJojaMart(int jojaMart[]) {
+        JojaMart = jojaMart;
+    }
+
+    public int[] getPierreStore() {
+        return PierreStore;
+    }
+
+    public void setPierreStore(int pierreStore[]) {
+        PierreStore = pierreStore;
     }
 }

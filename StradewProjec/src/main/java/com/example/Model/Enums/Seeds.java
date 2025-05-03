@@ -46,7 +46,8 @@ public enum Seeds {
 
     public final Plants Plant;
 
-    Seeds(Plants plant) {
+    Seeds(Plants plant)
+    {
         Plant = plant;
     }
 }

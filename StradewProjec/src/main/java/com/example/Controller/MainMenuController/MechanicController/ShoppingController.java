@@ -1,9 +1,7 @@
 package com.example.Controller.MainMenuController.MechanicController;
 
 import com.example.Model.App;
-import com.example.Model.Enums.Animals;
-import com.example.Model.Enums.Entitity;
-import com.example.Model.Enums.PlaceType;
+import com.example.Model.Enums.*;
 import com.example.Model.Enums.Tools.Trashcans;
 import com.example.Model.Game;
 import com.example.Model.Item.Item;
@@ -328,6 +326,96 @@ public class ShoppingController {
         else
         {
             System.out.println("Item not found");
+        }
+    }
+    public void ApplyJojaMart(String ProductName , int count)
+    {
+        if(ProductName.equals("Joja Cola"))
+        {
+            UnlimitedBuying(ProductName , count, 75);
+        }
+        else if(ProductName.equals("Grass Starter"))
+        {
+            UnlimitedBuying(ProductName , count, 125);
+        }
+        else if(ProductName.equals("Sugar"))
+        {
+            UnlimitedBuying(ProductName , count, 125);
+        }
+        else if(ProductName.equals("White Flour"))
+        {
+            UnlimitedBuying(ProductName , count, 125);
+        }
+        else if(ProductName.equals("Rice"))
+        {
+            UnlimitedBuying(ProductName , count, 250);
+        }
+        else
+        {
+            boolean seedExists = false;
+            for(JojaMartItems mySeed : JojaMartItems.values())
+            {
+                if(mySeed.name().equals(ProductName) && mySeed.Price >= 0)
+                {
+                    seedExists = true;
+                    int newLimits[] = App.dailyLimits.getJojaMart();
+                    if(newLimits[mySeed.LimitIndex] == 0)
+                    {
+                        System.out.println("You have used your daily limit for this item");
+                        return;
+                    }
+                    if(count * mySeed.Price > App.ReturnCurrentPlayer().getCoin())
+                    {
+                        System.out.println("Not enough money bro");
+                        return;
+                    }
+                    newLimits[mySeed.LimitIndex]--;
+                    App.dailyLimits.setJojaMart(newLimits);
+                    App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - count * mySeed.Price);
+                    ArrayList<Seeds> newSeeds = App.ReturnCurrentPlayer().getInventory().getSeeds();
+                    while(count > 0)
+                    {
+                        newSeeds.add(mySeed.Seed);
+                        count--;
+                    }
+                    App.ReturnCurrentPlayer().getInventory().setSeeds(newSeeds);
+                    break;
+                }
+            }
+            if(!seedExists)
+            {
+                System.out.println("Item not found");
+            }
+        }
+    }
+    public void ApplyPierreStore(String ProductName , int count)
+    {
+        boolean itemExists = false;
+        for(PierreStoreItems myItem : PierreStoreItems.values())
+        {
+            if(myItem.name().equals(ProductName))
+            {
+                itemExists = true;
+                if(myItem.LimitIndex < 0)
+                {
+                    UnlimitedBuying(ProductName , count , myItem.Price);
+                }
+                else if(myItem.LimitIndex < 5)
+                {
+                    int newLimits[] = App.dailyLimits.getPierreStore();
+                    newLimits[myItem.LimitIndex] = LimitedBuying(ProductName , count , myItem.Price , newLimits[myItem.LimitIndex]);
+                    App.dailyLimits.setPierreStore(newLimits);
+                }
+                else if(myItem.LimitIndex == 5)
+                {
+                    boolean itemExists2 = false;
+                    for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
+                    {
+                        if(item.getName().equals("Large Pack"))
+                    }
+                }
+                break;
+            }
         }
     }
     public void UnlimitedBuying(String ProductName , int count , int Price)
