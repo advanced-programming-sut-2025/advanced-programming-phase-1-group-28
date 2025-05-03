@@ -1,10 +1,18 @@
 package com.example.Controller.MainMenuController.MechanicController;
 
 import com.example.Model.App;
-import com.example.Model.Enums.Terrain;
+import com.example.Model.Enums.*;
+import com.example.Model.Item.FishItem;
+import com.example.Model.Item.Ingredients;
+import com.example.Model.Item.Item;
+import com.example.Model.Item.MineralItem;
+import com.example.Model.Tile.Animal;
+import com.example.Model.Tile.Minreal;
 import com.example.Model.Tile.Tile;
+import com.example.Model.Tile.Trees;
 import com.example.Model.Tools.Hoe;
 import com.example.Model.Tools.Pepolee;
+import com.example.Model.Tools.WaterCan;
 
 import javax.tools.Tool;
 
@@ -35,36 +43,183 @@ public class UseToolController {
             return "You Cant Use How in that Place";
         }
     }
-    public void ApplyPickaxe()
-    {
 
-    }
-    public void ApplyAxe()
+    public String ApplyPickaxe(int x , int y)
     {
-
+        int NewX = App.ReturnCurrentPlayer().getX() + x;
+        int NewY = App.ReturnCurrentPlayer().getY() + y;
+        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
+        Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
+        if(CurrentPepolee.getFarm().getGround()[NewX][NewY].getEntitity() == Entitity.STONE)
+        {
+            TempGround[NewX][NewY].setEntitity(null);
+            TempGround[NewX][NewY].setTerrain(Terrain.DIRT);
+            Minreal ourmineral = (Minreal) TempGround[NewX][NewY];
+            Item newitem = new MineralItem(20 , ourmineral.getMineral().name());
+            CurrentPepolee.getInventory().AddItem(newitem);
+            CurrentPepolee.getFarm().setGround(TempGround);
+            return "Mineral Collected";
+        }
+        else
+        {
+            if(CurrentPepolee.getFarm().getGround()[NewX][NewY].getTerrain() == Terrain.DIRT)
+            {
+                TempGround[NewX][NewY].setHow(false);
+                CurrentPepolee.getFarm().setGround(TempGround);
+                return "Success UnShokhm";
+            }
+            else
+            {
+                return "You Cant Use Pickaxe in that Place";
+            }
+        }
     }
-    public void ApplyWaterCan()
+
+    public String ApplyAxe(int x , int y)
     {
-
+        int NewX = App.ReturnCurrentPlayer().getX() + x;
+        int NewY = App.ReturnCurrentPlayer().getY() + y;
+        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
+        Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
+        if(TempGround[NewX][NewY].getEntitity() == Entitity.TREE)
+        {
+            Trees tree = (Trees) TempGround[NewX][NewY];
+            CurrentPepolee.setWood(CurrentPepolee.getWood() + 100);
+            TempGround[NewX][NewY].setEntitity(null);
+            TempGround[NewX][NewY].setTerrain(Terrain.DIRT);
+            CurrentPepolee.setEnergy(CurrentPepolee.getEnergy() - CurrentPepolee.getInventory().getCurrentTool().getEnergyCost());
+            return "Success Using Axe";
+        }
+        else
+        {
+            return "You Cant Use Axe in that Place";
+        }
     }
-    public void ApplyFishingPole()
+
+    public String ApplyWaterCan(int x , int y)
     {
-
+        int NewX = App.ReturnCurrentPlayer().getX() + x;
+        int NewY = App.ReturnCurrentPlayer().getY() + y;
+        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
+        Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
+        if(CurrentPepolee.getFarm().getGround()[NewX][NewY].getTerrain() == Terrain.WATER)
+        {
+            WaterCan ourwatercan = (WaterCan) CurrentPepolee.getInventory().getCurrentTool();
+            ourwatercan.setWater(Math.min(ourwatercan.getWater() + 50 , ourwatercan.getWatercan().Limit));
+            CurrentPepolee.setEnergy(CurrentPepolee.getEnergy() - ourwatercan.getEnergyCost());
+            return "Watercan filled";
+        }
+        else
+        {
+            return "You Cant Use Water in that Place";
+        }
     }
-    public void ApplySeythe()
+
+    public String ApplyFishingPole(int x ,int y)
     {
-
+        int NewX = App.ReturnCurrentPlayer().getX() + x;
+        int NewY = App.ReturnCurrentPlayer().getY() + y;
+        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
+        Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
+        if(TempGround[NewX][NewY].getTerrain() == Terrain.WATER)
+        {
+            int RandomSucsses = App.random.nextInt() % 3;
+            if(RandomSucsses != 0)
+            {
+                int Randomfish = App.random.nextInt() % Fishes.values().length;
+                int count = 0;
+                for(Fishes f : Fishes.values())
+                {
+                    if(count == Randomfish)
+                    {
+                        FishItem fishitem = new FishItem(count, f.toString());
+                        CurrentPepolee.getInventory().AddItem(fishitem);
+                    }
+                    count++;
+                }
+                return "Fish Added To your inventory";
+            }
+            else
+            {
+                return "Fishing Pole failed to catch fish";
+            }
+        }
+        else
+        {
+            return "You Cant Use Fishing Pole in that Place";
+        }
     }
-    public void ApplyMilkPail()
+
+    public String ApplySeythe()
     {
-
+        int NewX = App.ReturnCurrentPlayer().getX();
+        int NewY = App.ReturnCurrentPlayer().getY();
+        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
+        Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
+        if(TempGround[NewX][NewY].getTerrain() == Terrain.GRASS)
+        {
+            TempGround[NewX][NewY].setTerrain(Terrain.DIRT);
+            return "Success Cutting Grass";
+        }
+        CurrentPepolee.setEnergy(CurrentPepolee.getEnergy() - 2);
+        return null;
     }
-    public void ApplyShear()
+
+    public String ApplyMilkPail()
     {
-
+        int NewX = App.ReturnCurrentPlayer().getX();
+        int NewY = App.ReturnCurrentPlayer().getY();
+        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
+        Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
+        Ingredients newingredient = new Ingredients(0 , null  , null);
+        if(TempGround[NewX][NewY].getEntitity() == Entitity.ANIMAL)
+        {
+            Animal OurAnimal = (Animal) TempGround[NewX][NewY];
+            //TO Check If it has Milk
+            if(OurAnimal.getAnimalType() == Animals.Cow)
+            {
+                newingredient = new Ingredients(1 , "abbas" , com.example.Model.Enums.Ingredients.CowMilk);
+            }
+            if(OurAnimal.getAnimalType() == Animals.Goat)
+            {
+                newingredient = new Ingredients(1 , "abbas" , com.example.Model.Enums.Ingredients.GoatMilk);
+            }
+            CurrentPepolee.getInventory().AddItem(newingredient);
+            return "Success Milking";
+        }
+        else
+        {
+            return "You Cant Use Milk Pail in that Place";
+        }
     }
+
+    public String ApplyShear(int x , int y)
+    {
+        int NewX = App.ReturnCurrentPlayer().getX();
+        int NewY = App.ReturnCurrentPlayer().getY();
+        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
+        Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
+        if(TempGround[NewX][NewY].getEntitity() == Entitity.ANIMAL)
+        {
+            Animal ourAnimal = (Animal) TempGround[NewX][NewY];
+            if(ourAnimal.getAnimalType() == Animals.Sheep)
+            {
+                //To check If HAs Pashm
+                Ingredients newingrdient = new Ingredients(5 , null  , com.example.Model.Enums.Ingredients.SheepCotton);
+                CurrentPepolee.getInventory().AddItem(newingrdient);
+                return "Success CuttinPashm";
+            }
+            return "You Cant Use Sheep Pail in this Animal";
+        }
+        else
+        {
+            return "cut Pashm please";
+        }
+    }
+
     public void ApplyTRashCan()
     {
 
     }
+
 }
