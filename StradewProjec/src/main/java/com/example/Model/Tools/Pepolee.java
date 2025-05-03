@@ -172,5 +172,9 @@ public class Pepolee {
         Energy += count;
     }
 
+    public void applyBuff(){
+
+    }
+
     //Set Energy
 }

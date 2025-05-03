@@ -25,11 +25,37 @@ public class PokhtOPazController {
     }
     public boolean EnoughItemsFromRef(String ItemName)
     {
-        return false;
+        Ref ref = App.ReturnCurrentPlayer().getFarm().getCabin().getRefrigerator();
+        Foods foods = getFoodByName(ItemName);
+        int i = 0;
+        for (String ingredient: foods.Ingredient){
+            Item item = ref.getItem(ingredient);
+            if (item == null){
+                return false;
+            }
+            if (item.getCount() < foods.IngredientCount.get(i)){
+                return false;
+            }
+            i++;
+        }
+        return true;
     }
     public boolean EnoughItemsFromInventory(String ItemName)
     {
-        return false;
+        Inventory inventory = App.ReturnCurrentPlayer().getInventory();
+        Foods foods = getFoodByName(ItemName);
+        int i = 0;
+        for (String ingredient: foods.Ingredient){
+            Item item = inventory.getItemByName(ingredient);
+            if (item == null){
+                return false;
+            }
+            if (item.getCount() < foods.IngredientCount.get(i)){
+                return false;
+            }
+            i++;
+        }
+        return true;
     }
     public boolean EnoughSkill(String ItemName)
     {
@@ -39,10 +65,6 @@ public class PokhtOPazController {
                 return true;
             }
         }
-        return false;
-    }
-    public boolean EnoughIngredient()
-    {
         return false;
     }
 
@@ -56,10 +78,14 @@ public class PokhtOPazController {
         return null;
     }
     public void removeIngredientsFromInventory(String ingredientName, int count){
-
+        Inventory inventory = App.ReturnCurrentPlayer().getInventory();
+        Item item = inventory.getItemByName(ingredientName);
+        item.addCount(-1 * count);
     }
     public void removeIngredientsFromRef(String ingredientName, int count){
-
+        Ref ref = App.ReturnCurrentPlayer().getFarm().getCabin().getRefrigerator();
+        Item item = ref.getItem(ingredientName);
+        item.addCount(-1 * count);
     }
     public void ApplyPokhtingOPazing(String ItemName)
     {

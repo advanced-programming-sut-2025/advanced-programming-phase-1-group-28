@@ -18,9 +18,10 @@ public class Ref {
         this.items = items;
     }
 
-    public Item findItem(Item item){
+
+    public Item getItem(String itemName){
         for (Item item1: items){
-            if (item1.getName().equals(item.getName())){
+            if (item1.getName().equals(itemName)){
                 return item1;
             }
         }
@@ -28,7 +29,7 @@ public class Ref {
     }
 
     public void AddItem(Item item){
-        Item newItem = findItem(item);
+        Item newItem = getItem(item);
         if (newItem != null){
             newItem.addCount(item.getCount());
             return;

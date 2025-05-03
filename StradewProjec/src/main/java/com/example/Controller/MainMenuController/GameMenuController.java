@@ -100,4 +100,8 @@ public class GameMenuController {
         //use above function
         //USer random Foraging
     }
+    public void ApplyChangeHour(){
+        //TODO buff, time
+        // App.getCurrentGame().getTime().jumpAheadOneHour();
+    }
 }

@@ -104,7 +104,7 @@ public class Inventory {
     }
 
     public boolean canAddNewItem(){
-        return items.size() + tools.size() < inventoryCapacity;
+        return items.size() + tools.size() + seeds.size() < inventoryCapacity;
     }
 
     public boolean isItemAvailable(String itemName){
