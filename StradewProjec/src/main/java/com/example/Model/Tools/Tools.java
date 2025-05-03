@@ -8,7 +8,6 @@ public class Tools {
     protected int Id;
     protected boolean IsExist;
     protected int EnergyCost;
-    protected int Level = 1;
     protected Skills skillRelated;
 
     public String getName() {
@@ -49,14 +48,6 @@ public class Tools {
 
     public void setEnergyCost(int energyCost) {
         EnergyCost = energyCost;
-    }
-
-    public int getLevel() {
-        return Level;
-    }
-
-    public void setLevel(int level) {
-        Level = level;
     }
 
     public Skills getSkillRelated() {
