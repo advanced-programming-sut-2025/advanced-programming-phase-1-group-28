@@ -7,10 +7,13 @@ import java.util.ArrayList;
 
 public class Inventory {
     //Fill the Inventory with our Tools
+    private int inventoryCapacity = 12;
     private int WhichTool;
     private ArrayList<Tools> tools = new ArrayList<>();
     private Tools CurrentTool;
     private Item CurrentItem;
+    private ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<Seeds> seeds = new ArrayList<>();
 
     public Inventory() {
         WhichTool = 0;
@@ -30,10 +33,6 @@ public class Inventory {
             this.items.add(item);
         }
     }
-
-    private ArrayList<Item> items = new ArrayList<>();
-
-    private ArrayList<Seeds> seeds = new ArrayList<>();
 
     public ArrayList<Seeds> getSeeds() {
         return seeds;
@@ -67,6 +66,14 @@ public class Inventory {
         this.items = items;
     }
 
+    public int getInventoryCapacity() {
+        return inventoryCapacity;
+    }
+
+    public void setInventoryCapacity(int inventoryCapacity) {
+        this.inventoryCapacity = inventoryCapacity;
+    }
+
     public int getWhichTool() {
         return WhichTool;
     }
@@ -94,5 +101,25 @@ public class Inventory {
 
     public void addItem(Item item){
         items.add(item);
+    }
+
+    public boolean canAddNewItem(){
+        return items.size() + tools.size() + seeds.size() < inventoryCapacity;
+    }
+
+    public boolean isItemAvailable(String itemName){
+        if (this.getItemByName(itemName) == null){
+            return false;
+        }
+        return true;
+    }
+
+    public void removeItem(Item item){
+        this.items.remove(item);
+    }
+
+    public void increaseItemQuantity(Item item, int count){
+        Item myItem = getItemByName(item.getName());
+        myItem.addCount(count);
     }
 }

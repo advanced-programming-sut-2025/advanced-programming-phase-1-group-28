@@ -1,6 +1,7 @@
 package com.example.Model.Tools;
 
 import com.example.Model.*;
+import com.example.Model.Enums.Foods;
 import com.example.Model.Places.Farm;
 
 import java.util.ArrayList;
@@ -19,6 +20,21 @@ public class Pepolee {
     private ArrayList<Gift> upcomingGifts = new ArrayList<>();
     private ArrayList<Trade> upcomingTrade = new ArrayList<>();
     private ArrayList<Trade> tradeHistory = new ArrayList<>();
+    private ArrayList<Foods> knownRecipes = new ArrayList<>();
+
+    {
+        knownRecipes.add(Foods.FriedEgg);
+        knownRecipes.add(Foods.BakedFish);
+        knownRecipes.add(Foods.Salad);
+    }
+
+    public ArrayList<Foods> getKnownRecipes() {
+        return knownRecipes;
+    }
+
+    public void setKnownRecipes(ArrayList<Foods> knownRecipes) {
+        this.knownRecipes = knownRecipes;
+    }
 
     public User getCharacterUser() {
         return CharacterUser;
@@ -150,6 +166,14 @@ public class Pepolee {
 
     public void addCoin(int amount){
         Coin += amount;
+    }
+
+    public void addEnergy(int count){
+        Energy += count;
+    }
+
+    public void applyBuff(){
+
     }
 
     //Set Energy
