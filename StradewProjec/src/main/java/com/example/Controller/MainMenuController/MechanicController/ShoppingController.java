@@ -3,6 +3,7 @@ package com.example.Controller.MainMenuController.MechanicController;
 import com.example.Model.App;
 import com.example.Model.Enums.*;
 import com.example.Model.Enums.Tools.Trashcans;
+import com.example.Model.Item.Craft;
 import com.example.Model.Item.Ingredient;
 import com.example.Model.Item.Item;
 import com.example.Model.Places.AnimalHouse;
@@ -410,7 +411,14 @@ public class ShoppingController {
                     {
                         UnlimitedIngredientBuying(myItem.Ingredient , count , myItem.Price);
                     }
+                    else if(myItem.saplings != null)
+                    {
+                        UnlimitedSaplingBuying(myItem.saplings , count , myItem.Price);
+                    }
+                    else if(myItem.crafts != null)
+                    {
 
+                    }
                 }
                 else if(myItem.LimitIndex < 2)
                 {
@@ -1022,5 +1030,51 @@ public class ShoppingController {
         }
         App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price * count);
         System.out.println(newIngredient.name() + " purchased");
+    }
+    public void UnlimitedSaplingBuying(Saplings newSapling , int count , int Price)
+    {
+        // check for price
+        if(Price * count > App.ReturnCurrentPlayer().getCoin())
+        {
+            System.out.println("Not enough money bro");
+            return;
+        }
+        // pay the price
+        App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price * count);
+        // add saplings
+        ArrayList<Saplings> newSaplings = App.ReturnCurrentPlayer().getInventory().getSaplings();
+        while(count > 0)
+        {
+            newSaplings.add(newSapling);
+            count--;
+        }
+        App.ReturnCurrentPlayer().getInventory().setSaplings(newSaplings);
+        System.out.println(newSapling.name() + " purchased");
+    }
+    public void UnlimitedCraftBuying(Crafts newCraft , int count , int Price)
+    {
+        // check for price
+        if(Price * count > App.ReturnCurrentPlayer().getCoin())
+        {
+            System.out.println("Not enough money bro");
+            return;
+        }
+        // pay the price
+        App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price * count);
+        boolean CraftExists = false;
+        for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
+        {
+            if(item instanceof Craft && ((Craft) item).getCrafts().equals(newCraft))
+            {
+                CraftExists = true;
+                item.setCount(item.getCount() + count);
+                break;
+            }
+        }
+        if(!CraftExists)
+        {
+            App.ReturnCurrentPlayer().getInventory().addItem(new Craft(count , newCraft));
+        }
+        System.out.println(newCraft.name() + " purchased");
     }
 }

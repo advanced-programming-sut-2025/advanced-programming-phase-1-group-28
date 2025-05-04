@@ -1,8 +1,10 @@
 package com.example.Model;
 
+import com.example.Model.Enums.Saplings;
 import com.example.Model.Enums.Seeds;
 import com.example.Model.Item.Item;
 import com.example.Model.Tools.Tools;
+
 import java.util.ArrayList;
 
 public class Inventory {
@@ -14,6 +16,7 @@ public class Inventory {
     private Item CurrentItem;
     private ArrayList<Item> items = new ArrayList<>();
     private ArrayList<Seeds> seeds = new ArrayList<>();
+    private ArrayList<Saplings> saplings = new ArrayList<>();
 
     public Inventory() {
         WhichTool = 0;
@@ -104,7 +107,7 @@ public class Inventory {
     }
 
     public boolean canAddNewItem(){
-        return items.size() + tools.size() + seeds.size() < inventoryCapacity;
+        return items.size() + tools.size() + seeds.size() + saplings.size() < inventoryCapacity;
     }
 
     public boolean isItemAvailable(String itemName){
@@ -125,5 +128,13 @@ public class Inventory {
 
     public void addTool(Tools tool){
         this.tools.add(tool);
+    }
+
+    public ArrayList<Saplings> getSaplings() {
+        return saplings;
+    }
+
+    public void setSaplings(ArrayList<Saplings> saplings) {
+        this.saplings = saplings;
     }
 }

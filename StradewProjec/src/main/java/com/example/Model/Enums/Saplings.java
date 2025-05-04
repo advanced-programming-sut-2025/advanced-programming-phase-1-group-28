@@ -1,0 +1,26 @@
+package com.example.Model.Enums;
+
+public enum Saplings {
+    APRICOT_SAPLING(Tree.APRICOT_TREE),
+    CHERRY_SAPLING(Tree.CHERRY_TREE),
+    BANANA_SAPLING(Tree.BANANA_TREE),
+    MANGO_SAPLING(Tree.MANGO_TREE),
+    ORANGE_SAPLING(Tree.ORANGE_TREE),
+    PEACH_SAPLING(Tree.PEACH_TREE),
+    APPLE_SAPLING(Tree.APPLE_TREE),
+    POMEGRANATE_SAPLING(Tree.POMEGRANATE_TREE),
+    ACORNS(Tree.OAK_TREE),
+    MAPLE_SEEDS(Tree.MAPLE_TREE),
+    PINE_CONES(Tree.PINE_TREE),
+    MAHOGANY_SEEDS(Tree.MAHOGANY_TREE),
+    MUSHROOM_TREE_SEEDS(Tree.MUSHROOM_TREE),
+    MYSTIC_TREE_SEEDS(Tree.MYSTIC_TREE)
+    ;
+
+
+    Tree tree;
+
+    Saplings(Tree tree) {
+        this.tree = tree;
+    }
+}
