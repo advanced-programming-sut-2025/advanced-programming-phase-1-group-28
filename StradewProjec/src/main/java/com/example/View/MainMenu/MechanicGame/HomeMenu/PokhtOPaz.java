@@ -2,6 +2,8 @@ package com.example.View.MainMenu.MechanicGame.HomeMenu;
 
 import com.example.Controller.MainMenuController.HomeMenucontroller.PokhtOPazController;
 import com.example.Model.App;
+import com.example.Model.Item.Food;
+import com.example.Model.Item.Item;
 import com.example.Model.Ref;
 import com.example.Model.Tools.Pepolee;
 
@@ -42,6 +44,16 @@ public class PokhtOPaz {
     }
     public void Eating(String ItemName)
     {
-
+        Item item = App.ReturnCurrentPlayer().getInventory().getItemByName(ItemName);
+        if (item == null){
+            System.out.println("Unfortunately you don't have this one.");
+            return;
+        }
+        if (!(item instanceof Food)){
+            System.out.println("Your stomach will thank if you skip that.");
+            return;
+        }
+        pokhtOPazController.ApplyEatingFood(ItemName);
+        System.out.println("You ate some food.");
     }
 }

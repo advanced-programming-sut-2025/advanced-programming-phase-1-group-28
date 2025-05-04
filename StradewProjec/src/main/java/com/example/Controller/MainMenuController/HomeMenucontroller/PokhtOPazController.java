@@ -111,6 +111,16 @@ public class PokhtOPazController {
     }
     public void ApplyEatingFood(String ItemName)
     {
-
+        Pepolee currentPlayer = App.ReturnCurrentPlayer();
+        Inventory inventory = App.ReturnCurrentPlayer().getInventory();
+        Item item = inventory.getItemByName(ItemName);
+        if (item == null){
+            return;
+        }if (!(item instanceof Food)){
+            return;
+        }
+        item.addCount(-1);
+        currentPlayer.addEnergy(((Food) item).getFood().Energy);
+        // buff effect
     }
 }
