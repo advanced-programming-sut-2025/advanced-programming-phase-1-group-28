@@ -1,7 +1,7 @@
 package com.example.Model.Tools;
 
-import com.example.Model.*;
 import com.example.Model.Enums.Foods;
+import com.example.Model.*;
 import com.example.Model.Item.Item;
 import com.example.Model.Places.Farm;
 
@@ -189,8 +189,8 @@ public class Pepolee {
         this.overflowItems = overflowItems;
     }
 
-    public void addFoodRecipe(Foods food){
-        knownRecipes.add(food);
+    public void addRecipe(Foods foods){
+        knownRecipes.add(foods);
     }
     //Set Energy
 }

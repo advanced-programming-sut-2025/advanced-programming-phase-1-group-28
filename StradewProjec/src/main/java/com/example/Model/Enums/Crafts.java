@@ -26,7 +26,7 @@ public enum Crafts {
     FishSmoker(new ArrayList<>(Arrays.asList("Wood" , "Iron Bar" , "Coal")) , new ArrayList<>(Arrays.asList(50 , 3 , 10)) ,null , 0  , 0),
     //MysticTreeSeed(new ArrayList<>(Arrays.asList("")) ,),
     // in Shop
-    SpeedGrow(new ArrayList<>(Arrays.asList()), new ArrayList<>(Arrays.asList()) , null ,  0 ,  0);
+    SpeedGro(new ArrayList<>(Arrays.asList()), new ArrayList<>(Arrays.asList()) , null ,  0 ,  0);
 
     public final ArrayList<String> Ingredients;
     public final ArrayList<Integer> Count;

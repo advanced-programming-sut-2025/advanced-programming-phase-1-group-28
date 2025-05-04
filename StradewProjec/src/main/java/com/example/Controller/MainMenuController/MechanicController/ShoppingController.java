@@ -990,7 +990,7 @@ public class ShoppingController {
         // pay the price
         App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price * count);
         // add the recipe
-        App.ReturnCurrentPlayer().addFoodRecipe(newFood);
+        App.ReturnCurrentPlayer().addRecipe(newFood);
         System.out.println("Recipe has been added");
         return limit - count;
     }
