@@ -122,4 +122,8 @@ public class Inventory {
         Item myItem = getItemByName(item.getName());
         myItem.addCount(count);
     }
+
+    public void addTool(Tools tool){
+        this.tools.add(tool);
+    }
 }

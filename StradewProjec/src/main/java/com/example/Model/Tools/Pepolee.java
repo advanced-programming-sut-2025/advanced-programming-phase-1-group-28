@@ -2,6 +2,7 @@ package com.example.Model.Tools;
 
 import com.example.Model.*;
 import com.example.Model.Enums.Foods;
+import com.example.Model.Item.Item;
 import com.example.Model.Places.Farm;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class Pepolee {
     private ArrayList<Trade> upcomingTrade = new ArrayList<>();
     private ArrayList<Trade> tradeHistory = new ArrayList<>();
     private ArrayList<Foods> knownRecipes = new ArrayList<>();
-
+    private ArrayList<Item> overflowItems = new ArrayList<>();
     {
         knownRecipes.add(Foods.FriedEgg);
         knownRecipes.add(Foods.BakedFish);
@@ -176,5 +177,20 @@ public class Pepolee {
 
     }
 
+    public void addOverflowItem(Item item){
+        overflowItems.add(item);
+    }
+
+    public ArrayList<Item> getOverflowItems() {
+        return overflowItems;
+    }
+
+    public void setOverflowItems(ArrayList<Item> overflowItems) {
+        this.overflowItems = overflowItems;
+    }
+
+    public void addFoodRecipe(Foods food){
+        knownRecipes.add(food);
+    }
     //Set Energy
 }

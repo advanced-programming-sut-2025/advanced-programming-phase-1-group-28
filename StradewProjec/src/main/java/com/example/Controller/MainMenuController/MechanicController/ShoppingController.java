@@ -3,14 +3,15 @@ package com.example.Controller.MainMenuController.MechanicController;
 import com.example.Model.App;
 import com.example.Model.Enums.*;
 import com.example.Model.Enums.Tools.Trashcans;
-import com.example.Model.Game;
+import com.example.Model.Item.Ingredient;
 import com.example.Model.Item.Item;
 import com.example.Model.Places.AnimalHouse;
 import com.example.Model.Tile.Animal;
+import com.example.Model.Tools.MilkPail;
+import com.example.Model.Tools.Shear;
 import com.example.Model.Tools.Tools;
 import com.example.Model.Tools.TrashCan;
 
-import javax.tools.Tool;
 import java.util.ArrayList;
 
 public class ShoppingController {
@@ -115,14 +116,20 @@ public class ShoppingController {
         {
             int count = Integer.parseInt(CountOrName);
             int newLimits[] = App.dailyLimits.getMarineRanch();
-            newLimits[0] = LimitedBuying("Milk Pail" , count , 1000 , newLimits[0]);
+            MilkPail newMilkPail = new MilkPail();
+            newMilkPail.setCount(count);
+            newMilkPail.setExist(true);
+            newLimits[0] = BuyTool(newMilkPail , count , 1000 , newLimits[0]);
             App.dailyLimits.setMarineRanch(newLimits);
         }
         else if(ProductName.equals("Shears"))
         {
             int count = Integer.parseInt(CountOrName);
             int newLimits[] = App.dailyLimits.getMarineRanch();
-            newLimits[1] = LimitedBuying("Shears" , count , 1000 , newLimits[1]);
+            Shear newShear = new Shear();
+            newShear.setCount(count);
+            newShear.setExist(true);
+            newLimits[1] = BuyTool(newShear , count , 1000 , newLimits[1]);
             App.dailyLimits.setMarineRanch(newLimits);
         }
         else if(ProductName.equals("Chicken"))
@@ -207,55 +214,55 @@ public class ShoppingController {
         else if(ProductName.equals("Hashbrowns Recipe"))
         {
             int newLimits[] = App.dailyLimits.getStarDropSaloon();
-            newLimits[0] = LimitedBuying(ProductName , count , 50 , newLimits[0]);
+            newLimits[0] = BuyRecipe(Foods.HashBrowns , count , 50 , newLimits[0]);
             App.dailyLimits.setStarDropSaloon(newLimits);
         }
         else if(ProductName.equals("Omlete Recipe"))
         {
             int newLimits[] = App.dailyLimits.getStarDropSaloon();
-            newLimits[1] = LimitedBuying(ProductName , count , 100 , newLimits[1]);
+            newLimits[1] = BuyRecipe(Foods.Olmelet , count , 100 , newLimits[1]);
             App.dailyLimits.setStarDropSaloon(newLimits);
         }
         else if(ProductName.equals("Pancakes Recipe"))
         {
             int newLimits[] = App.dailyLimits.getStarDropSaloon();
-            newLimits[2] = LimitedBuying(ProductName , count , 100 , newLimits[2]);
+            newLimits[2] = BuyRecipe(Foods.Pancakes , count , 100 , newLimits[2]);
             App.dailyLimits.setStarDropSaloon(newLimits);
         }
         else if(ProductName.equals("Bread Recipe"))
         {
             int newLimits[] = App.dailyLimits.getStarDropSaloon();
-            newLimits[3] = LimitedBuying(ProductName , count , 100 , newLimits[3]);
+            newLimits[3] = BuyRecipe(Foods.Bread , count , 100 , newLimits[3]);
             App.dailyLimits.setStarDropSaloon(newLimits);
         }
         else if(ProductName.equals("Tortilla Recipe"))
         {
             int newLimits[] = App.dailyLimits.getStarDropSaloon();
-            newLimits[4] = LimitedBuying(ProductName , count , 100 , newLimits[4]);
+            newLimits[4] = BuyRecipe(Foods.Tortilla , count , 100 , newLimits[4]);
             App.dailyLimits.setStarDropSaloon(newLimits);
         }
         else if(ProductName.equals("Pizza Recipe"))
         {
             int newLimits[] = App.dailyLimits.getStarDropSaloon();
-            newLimits[5] = LimitedBuying(ProductName , count , 150 , newLimits[5]);
+            newLimits[5] = BuyRecipe(Foods.Pizza , count , 150 , newLimits[5]);
             App.dailyLimits.setStarDropSaloon(newLimits);
         }
         else if(ProductName.equals("Maki Roll Recipe"))
         {
             int newLimits[] = App.dailyLimits.getStarDropSaloon();
-            newLimits[6] = LimitedBuying(ProductName , count , 300 , newLimits[6]);
+            newLimits[6] = BuyRecipe(Foods.MakiRoll , count , 300 , newLimits[6]);
             App.dailyLimits.setStarDropSaloon(newLimits);
         }
         else if(ProductName.equals("Triple Shot Espresso Recipe"))
         {
             int newLimits[] = App.dailyLimits.getStarDropSaloon();
-            newLimits[7] = LimitedBuying(ProductName , count , 5000 , newLimits[7]);
+            newLimits[7] = BuyRecipe(Foods.TripleShotEspresso , count , 5000 , newLimits[7]);
             App.dailyLimits.setStarDropSaloon(newLimits);
         }
         else if(ProductName.equals("Cookie Recipe"))
         {
             int newLimits[] = App.dailyLimits.getStarDropSaloon();
-            newLimits[8] = LimitedBuying(ProductName , count , 300 , newLimits[8]);
+            newLimits[8] = BuyRecipe(Foods.Cookie , count , 300 , newLimits[8]);
             App.dailyLimits.setStarDropSaloon(newLimits);
         }
         else
@@ -340,15 +347,15 @@ public class ShoppingController {
         }
         else if(ProductName.equals("Sugar"))
         {
-            UnlimitedBuying(ProductName , count, 125);
+            UnlimitedIngredientBuying(Ingredients.Sugar , count , 125);
         }
-        else if(ProductName.equals("White Flour"))
+        else if(ProductName.equals("Wheat Flour"))
         {
-            UnlimitedBuying(ProductName , count, 125);
+            UnlimitedIngredientBuying(Ingredients.Wheat_Flour , count , 125);
         }
         else if(ProductName.equals("Rice"))
         {
-            UnlimitedBuying(ProductName , count, 250);
+            UnlimitedIngredientBuying(Ingredients.Rice , count , 250);
         }
         else
         {
@@ -359,9 +366,9 @@ public class ShoppingController {
                 {
                     seedExists = true;
                     int newLimits[] = App.dailyLimits.getJojaMart();
-                    if(newLimits[mySeed.LimitIndex] == 0)
+                    if(newLimits[mySeed.LimitIndex] - count < 0)
                     {
-                        System.out.println("You have used your daily limit for this item");
+                        System.out.println("You have reached the daily limit for this item");
                         return;
                     }
                     if(count * mySeed.Price > App.ReturnCurrentPlayer().getCoin())
@@ -369,7 +376,7 @@ public class ShoppingController {
                         System.out.println("Not enough money bro");
                         return;
                     }
-                    newLimits[mySeed.LimitIndex]--;
+                    newLimits[mySeed.LimitIndex] -= count;
                     App.dailyLimits.setJojaMart(newLimits);
                     App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - count * mySeed.Price);
                     ArrayList<Seeds> newSeeds = App.ReturnCurrentPlayer().getInventory().getSeeds();
@@ -379,6 +386,7 @@ public class ShoppingController {
                         count--;
                     }
                     App.ReturnCurrentPlayer().getInventory().setSeeds(newSeeds);
+                    System.out.println("Seed added");
                     break;
                 }
             }
@@ -398,24 +406,142 @@ public class ShoppingController {
                 itemExists = true;
                 if(myItem.LimitIndex < 0)
                 {
-                    UnlimitedBuying(ProductName , count , myItem.Price);
+                    if(myItem.Ingredient != null)
+                    {
+                        UnlimitedIngredientBuying(myItem.Ingredient , count , myItem.Price);
+                    }
+
                 }
-                else if(myItem.LimitIndex < 5)
+                else if(myItem.LimitIndex < 2)
                 {
                     int newLimits[] = App.dailyLimits.getPierreStore();
                     newLimits[myItem.LimitIndex] = LimitedBuying(ProductName , count , myItem.Price , newLimits[myItem.LimitIndex]);
                     App.dailyLimits.setPierreStore(newLimits);
                 }
+                else if(myItem.LimitIndex == 2 || myItem.LimitIndex == 3)
+                {
+                    // check for limit
+                    int newLimits[] = App.dailyLimits.getPierreStore();
+                    if(newLimits[myItem.LimitIndex] - count < 0)
+                    {
+                        System.out.println("You have reached the daily limit for this item");
+                        return;
+                    }
+                    // check for price
+                    if(count * myItem.Price > App.ReturnCurrentPlayer().getCoin())
+                    {
+                        System.out.println("Not enough money bro");
+                        return;
+                    }
+                    // set new limtis
+                    newLimits[myItem.LimitIndex] -= count;
+                    App.dailyLimits.setPierreStore(newLimits);
+                    // pay the price
+                    App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - count * myItem.Price);
+                    // adding the overflowing item
+                    for(Item item : App.ReturnCurrentPlayer().getOverflowItems())
+                    {
+                        if(item.getName().equals(ProductName))
+                        {
+                            item.setCount(item.getCount() + count);
+                            System.out.println(ProductName + " purchased");
+                            return;
+                        }
+                    }
+                    App.ReturnCurrentPlayer().addOverflowItem(new Item(count , ProductName));
+                    System.out.println(ProductName + " purchased");
+                    return;
+                }
+                else if(myItem.LimitIndex == 4)
+                {
+                    // make the pack/inventory large
+                    // check for limit
+                    int newLimits[] = App.dailyLimits.getPierreStore();
+                    if(newLimits[myItem.LimitIndex] - count < 0)
+                    {
+                        System.out.println("You have reached the daily limit for this item");
+                        return;
+                    }
+                    // check for enough money
+                    if(count * myItem.Price > App.ReturnCurrentPlayer().getCoin())
+                    {
+                        System.out.println("Not enough money bro");
+                        return;
+                    }
+                    // set new limits
+                    newLimits[myItem.LimitIndex] -= count;
+                    App.dailyLimits.setPierreStore(newLimits);
+                    // pay the price
+                    App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - count * myItem.Price);
+                    // add capacity
+                    App.ReturnCurrentPlayer().getInventory().setInventoryCapacity(App.ReturnCurrentPlayer().getInventory().getInventoryCapacity() + 12);
+                    System.out.println("Pack Upgraded");
+                }
                 else if(myItem.LimitIndex == 5)
                 {
-                    boolean itemExists2 = false;
-                    for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
+                    // make the pack/inventory large
+                    // check for limit
+                    int newLimits[] = App.dailyLimits.getPierreStore();
+                    if(newLimits[myItem.LimitIndex] - count < 0)
                     {
-                        if(item.getName().equals("Large Pack"))
+                        System.out.println("You have reached the daily limit for this item");
+                        return;
                     }
+                    // check for enough money
+                    if(count * myItem.Price > App.ReturnCurrentPlayer().getCoin())
+                    {
+                        System.out.println("Not enough money bro");
+                        return;
+                    }
+                    // set new limits
+                    newLimits[myItem.LimitIndex] -= count;
+                    App.dailyLimits.setPierreStore(newLimits);
+                    // pay the price
+                    App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - count * myItem.Price);
+                    // add capacity
+                    App.ReturnCurrentPlayer().getInventory().setInventoryCapacity(App.ReturnCurrentPlayer().getInventory().getInventoryCapacity() + 100000);
+                    System.out.println("Pack Upgraded");
+                }
+                else
+                {
+                    // check for limits
+                    int newLimtis[] = App.dailyLimits.getPierreStore();
+                    if(newLimtis[myItem.LimitIndex] - count < 0)
+                    {
+                        System.out.println("You have reached the daily limit for this item");
+                        return;
+                    }
+                    double coefficient = 1;
+                    if(App.getCurrentGame().getTime().getSeason() != myItem.season)
+                    {
+                        coefficient = 1.5;
+                    }
+                    // check for money
+                    if(count * myItem.Price * coefficient > App.ReturnCurrentPlayer().getCoin())
+                    {
+                        System.out.println("Not enough money bro");
+                        return;
+                    }
+                    // apply the buying
+                    newLimtis[myItem.LimitIndex] -= count;
+                    App.dailyLimits.setPierreStore(newLimtis);
+                    App.ReturnCurrentPlayer().setCoin((int) (App.ReturnCurrentPlayer().getCoin() - (count * myItem.Price * coefficient)));
+                    ArrayList<Seeds> newSeeds = App.ReturnCurrentPlayer().getInventory().getSeeds();
+                    while(count > 0)
+                    {
+                        newSeeds.add(myItem.Seed);
+                        count--;
+                    }
+                    App.ReturnCurrentPlayer().getInventory().setSeeds(newSeeds);
+                    System.out.println("Seed added");
+                    return;
                 }
                 break;
             }
+        }
+        if(!itemExists)
+        {
+            System.out.println("Item not found");
         }
     }
     public void UnlimitedBuying(String ProductName , int count , int Price)
@@ -450,9 +576,9 @@ public class ShoppingController {
     public int LimitedBuying(String ProductName , int count , int Price , int limit)
     {
         // check for limit
-        if(limit == 0)
+        if(limit - count < 0)
         {
-            System.out.println("You have used your daily limit for this item");
+            System.out.println("You have reached the daily limit for this item");
             return limit;
         }
         // check for price
@@ -470,21 +596,21 @@ public class ShoppingController {
             {
                 item.setCount(item.getCount() + count);
                 System.out.println(ProductName + " purchased");
-                return limit - 1;
+                return limit - count;
             }
         }
         ArrayList<Item> newItems = App.ReturnCurrentPlayer().getInventory().getItems();
         newItems.add(new Item(count , ProductName));
         App.ReturnCurrentPlayer().getInventory().setItems(newItems);
         System.out.println(ProductName + " purchased");
-        return limit - 1;
+        return limit - count;
     }
     public int BuildBarn(String BarnType , int Capacity , int x , int y , int Price , int NeededWood , int NeededStone , int limit)
     {
         // check for limit
         if(limit == 0)
         {
-            System.out.println("You have used your daily limit for this item");
+            System.out.println("You have reached the daily limit for this item");
             return limit;
         }
         // check for price
@@ -568,7 +694,7 @@ public class ShoppingController {
         // check for limit
         if(limit == 0)
         {
-            System.out.println("You have used your daily limit for this item");
+            System.out.println("You have reached the daily limit for this item");
             return limit;
         }
         // check for price
@@ -650,9 +776,9 @@ public class ShoppingController {
     public int UpgradeTool(String ProductName , String Ingredient , int count , int Price , int limit)
     {
         // check for limit
-        if(limit == 0)
+        if(limit - count < 0)
         {
-            System.out.println("You have used your daily limit for this item");
+            System.out.println("You have reached the daily limit for this item");
             return limit;
         }
         // check for price
@@ -701,7 +827,7 @@ public class ShoppingController {
         }
         App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price * count);
         System.out.println(ProductName + " has been upgraded");
-        return limit - 1;
+        return limit - count;
     }
     public int UpgradeTrashCan(TrashCan trashCan , String Ingredient , int count , int Price , int limit , Trashcans NewTrashType , Trashcans OldTrashType)
     {
@@ -716,9 +842,9 @@ public class ShoppingController {
             return limit;
         }
         // check for limit
-        if(limit == 0)
+        if(limit - count < 0)
         {
-            System.out.println("You have used your daily limit for this item");
+            System.out.println("You have reached the daily limit for this item");
             return limit;
         }
         // check for price
@@ -752,7 +878,7 @@ public class ShoppingController {
         App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price);
         trashCan.setTrashcan(NewTrashType);
         System.out.println("Trashcan has been upgraded");
-        return limit - 1;
+        return limit - count;
     }
     public int BuyCoopAnimal(String AnimalName , String CoopType , Animals AnimalType , int limit , int Price)
     {
@@ -765,7 +891,7 @@ public class ShoppingController {
         // check for daily limit
         if(limit == 0)
         {
-            System.out.println("You have used your daily limit for this item");
+            System.out.println("You have reached the daily limit for this item");
             return limit;
         }
         // check for proper coop
@@ -801,7 +927,7 @@ public class ShoppingController {
         // check for daily limit
         if(limit == 0)
         {
-            System.out.println("You have used your daily limit for this item");
+            System.out.println("You have reached the daily limit for this item");
             return limit;
         }
         // check for proper coop
@@ -825,5 +951,76 @@ public class ShoppingController {
         }
         System.out.println("You don't own a proper coop");
         return limit;
+    }
+    public int BuyTool(Tools Tool , int count , int Price , int limit)
+    {
+        // check for limit
+        if(limit - count < 0)
+        {
+            System.out.println("You have reached the daily limit for this item");
+            return limit;
+        }
+        // check for price
+        if(Price * count > App.ReturnCurrentPlayer().getCoin())
+        {
+            System.out.println("Not enough money bro");
+            return limit;
+        }
+        // pay the price
+        App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price * count);
+        // add the tool to the inventory
+        App.ReturnCurrentPlayer().getInventory().addTool(Tool);
+        System.out.println("Tool has been added");
+        return limit - count;
+    }
+    public int BuyRecipe(Foods newFood , int count , int Price , int limit)
+    {
+        // check for limit
+        if(limit - count < 0)
+        {
+            System.out.println("You have reached the daily limit for this item");
+            return limit;
+        }
+        // check for price
+        if(Price * count > App.ReturnCurrentPlayer().getCoin())
+        {
+            System.out.println("Not enough money bro");
+            return limit;
+        }
+        // pay the price
+        App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price * count);
+        // add the recipe
+        App.ReturnCurrentPlayer().addFoodRecipe(newFood);
+        System.out.println("Recipe has been added");
+        return limit - count;
+    }
+    public void UnlimitedIngredientBuying(Ingredients newIngredient , int count , int Price)
+    {
+        // unlimited amount
+        // check for price
+        if(Price * count > App.ReturnCurrentPlayer().getCoin())
+        {
+            System.out.println("Not enough money bro");
+            return;
+        }
+        // Check if Item exists
+        boolean FoodExists = false;
+        for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
+        {
+            if(item instanceof Ingredient && ((Ingredient) item).getIngredient().equals(newIngredient))
+            {
+                FoodExists = true;
+                item.setCount(item.getCount() + count);
+                break;
+            }
+        }
+        if(!FoodExists)
+        {
+            ArrayList<Item> newItems = App.ReturnCurrentPlayer().getInventory().getItems();
+            newItems.add(new Ingredient(count , newIngredient));
+            App.ReturnCurrentPlayer().getInventory().setItems(newItems);
+        }
+        App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price * count);
+        System.out.println(newIngredient.name() + " purchased");
     }
 }

@@ -1,19 +1,15 @@
 package com.example.Controller.MainMenuController.MechanicController;
 
 import com.example.Model.App;
-import com.example.Model.Enums.*;
+import com.example.Model.Enums.Animals;
+import com.example.Model.Enums.Entitity;
+import com.example.Model.Enums.Fishes;
+import com.example.Model.Enums.Terrain;
 import com.example.Model.Item.*;
-import com.example.Model.Item.Ingredients;
-import com.example.Model.Tile.Animal;
-import com.example.Model.Tile.Minreal;
-import com.example.Model.Tile.Plants;
-import com.example.Model.Tile.Tile;
-import com.example.Model.Tile.Trees;
+import com.example.Model.Tile.*;
 import com.example.Model.Tools.Hoe;
 import com.example.Model.Tools.Pepolee;
 import com.example.Model.Tools.WaterCan;
-
-import javax.tools.Tool;
 
 public class UseToolController {
     public boolean EnoughEnergy()
@@ -204,18 +200,18 @@ public class UseToolController {
         int NewY = App.ReturnCurrentPlayer().getY();
         Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
         Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
-        Ingredients newingredient = new Ingredients(0 , null  , null);
+        Ingredient newingredient = new Ingredient(0 , null  , null);
         if(TempGround[NewX][NewY].getEntitity() == Entitity.ANIMAL)
         {
             Animal OurAnimal = (Animal) TempGround[NewX][NewY];
             //TO Check If it has Milk
             if(OurAnimal.getAnimalType() == Animals.Cow)
             {
-                newingredient = new Ingredients(1 , "abbas" , com.example.Model.Enums.Ingredients.CowMilk);
+                newingredient = new Ingredient(1 , "abbas" , com.example.Model.Enums.Ingredients.CowMilk);
             }
             if(OurAnimal.getAnimalType() == Animals.Goat)
             {
-                newingredient = new Ingredients(1 , "abbas" , com.example.Model.Enums.Ingredients.GoatMilk);
+                newingredient = new Ingredient(1 , "abbas" , com.example.Model.Enums.Ingredients.GoatMilk);
             }
             CurrentPepolee.getInventory().AddItem(newingredient);
             return "Success Milking";
@@ -238,7 +234,7 @@ public class UseToolController {
             if(ourAnimal.getAnimalType() == Animals.Sheep)
             {
                 //To check If HAs Pashm
-                Ingredients newingrdient = new Ingredients(5 , null  , com.example.Model.Enums.Ingredients.SheepCotton);
+                Ingredient newingrdient = new Ingredient(5 , null  , com.example.Model.Enums.Ingredients.SheepCotton);
                 CurrentPepolee.getInventory().AddItem(newingrdient);
                 return "Success CuttinPashm";
             }
