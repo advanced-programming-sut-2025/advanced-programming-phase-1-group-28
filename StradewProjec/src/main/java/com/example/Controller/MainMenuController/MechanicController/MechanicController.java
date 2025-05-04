@@ -4,10 +4,13 @@ import com.example.Main;
 import com.example.Model.App;
 import com.example.Model.Enums.Direction;
 import com.example.Model.Inventory;
+import com.example.Model.Item.Ingredient;
 import com.example.Model.Item.Item;
 import com.example.Model.Node;
 import com.example.Model.Tile.Animal;
+import com.example.Model.Tools.Pepolee;
 
+import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public class MechanicController {
@@ -207,18 +210,37 @@ public class MechanicController {
     {
 
     }
+
+    public void ApplyPetAnimal(Animal animal){
+        animal.addFriendship(15);
+        animal.setPettedToday(true);
+    }
+
+    public void ApplyFeedAnimal(Animal animal){
+        animal.setFed(true);
+    }
+
     public void ApplyMovingAnimal()
     {
 
     }
+
     public void SellAnimal(Animal animal)
     {
-
+        Pepolee currentPlayer = App.ReturnCurrentPlayer();
+        currentPlayer.addCoin(animal.getSellPrice());
+        currentPlayer.getFarm().removeAnimal(animal);
     }
+
     public void CollectAnimalProduce(Animal animal)
     {
-
+        Inventory inventory = App.ReturnCurrentPlayer().getInventory();
+        ArrayList<Ingredient> ingredients = animal.getProducts();
+        for (Ingredient ingredient: ingredients){
+            inventory.addItem(ingredient);
+        }
     }
+
     public boolean IsSellable(Item item)
     {
         return false;

@@ -200,18 +200,18 @@ public class UseToolController {
         int NewY = App.ReturnCurrentPlayer().getY();
         Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
         Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
-        Ingredient newingredient = new Ingredient(0 , null  , null);
+        Ingredient newingredient = new Ingredient(0  , null);
         if(TempGround[NewX][NewY].getEntitity() == Entitity.ANIMAL)
         {
             Animal OurAnimal = (Animal) TempGround[NewX][NewY];
             //TO Check If it has Milk
             if(OurAnimal.getAnimalType() == Animals.Cow)
             {
-                newingredient = new Ingredient(1 , "abbas" , com.example.Model.Enums.Ingredients.CowMilk);
+                newingredient = new Ingredient(1 ,  com.example.Model.Enums.Ingredients.CowMilk);
             }
             if(OurAnimal.getAnimalType() == Animals.Goat)
             {
-                newingredient = new Ingredient(1 , "abbas" , com.example.Model.Enums.Ingredients.GoatMilk);
+                newingredient = new Ingredient(1 ,  com.example.Model.Enums.Ingredients.GoatMilk);
             }
             CurrentPepolee.getInventory().AddItem(newingredient);
             return "Success Milking";
@@ -234,7 +234,7 @@ public class UseToolController {
             if(ourAnimal.getAnimalType() == Animals.Sheep)
             {
                 //To check If HAs Pashm
-                Ingredient newingrdient = new Ingredient(5 , null  , com.example.Model.Enums.Ingredients.SheepCotton);
+                Ingredient newingrdient = new Ingredient(5 ,  com.example.Model.Enums.Ingredients.SheepCotton);
                 CurrentPepolee.getInventory().AddItem(newingrdient);
                 return "Success CuttinPashm";
             }

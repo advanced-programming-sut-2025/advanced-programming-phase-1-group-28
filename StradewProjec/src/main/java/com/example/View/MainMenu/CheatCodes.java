@@ -1,10 +1,10 @@
 package com.example.View.MainMenu;
 
-import com.example.Controller.MainMenuController.GameMenuController;
 import com.example.Controller.MainMenuController.MechanicController.CheatCodeController;
 import com.example.Model.App;
 import com.example.Model.Enums.Weathers;
 import com.example.Model.Game;
+import com.example.Model.Tile.Animal;
 import com.example.Model.Time;
 import com.example.Model.Tools.Pepolee;
 import com.example.View.Appview;
@@ -63,9 +63,15 @@ public class CheatCodes {
     {
 
     }
-    public void SetFreindShip(String PetName , int Amount)
+    public void SetFriendShip(String PetName , int Amount)
     {
-
+        Animal animal = App.ReturnCurrentPlayer().getFarm().getAnimalByName(PetName);
+        if (animal == null){
+            System.out.println("animal not found.");
+            return;
+        }
+        cheatCodeController.SetFriendShip(animal, Amount);
+        System.out.println("Your friendship with " + PetName + " has been set successfully.");
     }
     public void SetMoney()
     {
