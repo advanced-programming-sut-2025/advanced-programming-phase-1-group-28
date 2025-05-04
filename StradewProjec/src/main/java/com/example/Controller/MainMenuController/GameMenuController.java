@@ -3,7 +3,9 @@ package com.example.Controller.MainMenuController;
 import com.example.Model.App;
 import com.example.Model.Enums.ConstantFarms;
 import com.example.Model.Enums.Direction;
+import com.example.Model.Enums.Skills;
 import com.example.Model.Game;
+import com.example.Model.Skill;
 import com.example.Model.Tools.Pepolee;
 import com.example.Model.User;
 import com.example.View.Appview;
@@ -30,6 +32,11 @@ public class GameMenuController {
             Pepolee NewPeople = new Pepolee();
             NewPeople.setCharacterUser(players.get(i));
             NewPeople.setId(i);
+            Skill[] S = new Skill[4];
+            S[0] = new Skill(Skills.Foraging);
+            S[1] = new Skill(Skills.Fishing);
+            S[2] = new Skill(Skills.Farming);
+            S[3] = new Skill(Skills.Mining);
             Characters.add(NewPeople);
         }
         newgame.setCharactersInGame(Characters);

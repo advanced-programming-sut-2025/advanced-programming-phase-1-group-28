@@ -1,9 +1,11 @@
 package com.example.Model;
 
+import com.example.Model.Enums.Skills;
+
 public class Skill {
     private int Xp = 0;
     private int Level = 1;
-    private String Name ;
+    private Skills skill;
 
     public void UpdateLevel()
     {
@@ -13,8 +15,16 @@ public class Skill {
         }
     }
 
-    public Skill(String Name) {
-        this.Name = Name;
+    public Skill(Skills Name) {
+        this.skill = Name;
+    }
+
+    public Skills getSkill() {
+        return skill;
+    }
+
+    public void setSkill(Skills skill) {
+        this.skill = skill;
     }
 
     public int getXp() {
@@ -34,11 +44,4 @@ public class Skill {
         Level = level;
     }
 
-    public String getName() {
-        return Name;
-    }
-
-    public void setName(String name) {
-        Name = name;
-    }
 }

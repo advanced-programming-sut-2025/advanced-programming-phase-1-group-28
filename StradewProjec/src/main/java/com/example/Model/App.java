@@ -3,6 +3,7 @@ package com.example.Model;
 import com.example.Controller.AllMenuCommandsController;
 import com.example.Controller.LoginController;
 import com.example.Controller.MainMenuController.GameMenuController;
+import com.example.Controller.MainMenuController.HomeMenucontroller.CraftingController;
 import com.example.Controller.MainMenuController.MechanicController.FarmingController;
 import com.example.Controller.MainMenuController.MechanicController.FriendShipController;
 import com.example.Controller.MainMenuController.MechanicController.MechanicController;
@@ -42,6 +43,7 @@ public class App {
     public static ProfileMenuController profileMenuController = new ProfileMenuController();
     public static MechanicController mechanicController = new MechanicController();
     public static FarmingController farmingController = new FarmingController();
+    public static CraftingController craftingController = new CraftingController();
     public static AllMenuCommandsController allMenuCommandsController = new AllMenuCommandsController();
     public static SignUpMenu signUpMenu = new SignUpMenu();
     public static ProfileMenu profileMenu = new ProfileMenu();
