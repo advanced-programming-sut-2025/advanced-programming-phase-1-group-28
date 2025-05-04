@@ -110,6 +110,6 @@ public class CraftingController {
 
     public void ApplyCrafting(Crafts craft)
     {
-        
+
     }
 }
