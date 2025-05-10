@@ -16,7 +16,7 @@ public class LoginMenu {
     {
         if((matcher = LoginMenuRejex.Login.getMatcher(Command)) != null)
         {
-            Login(matcher.group(1).trim() , matcher.group(2).trim() , matcher.group(3).trim());
+            Login(matcher.group(1).trim() , matcher.group(2).trim() , matcher.group(3));
         }
         else if((matcher = LoginMenuRejex.ForgetPassword.getMatcher(Command)) != null)
         {
@@ -44,6 +44,7 @@ public class LoginMenu {
             Stay = true;
         }
         App.loginController.ApplyLogin(UserName , Stay);
+        System.out.println("Login Successful");
     }
 
     public void  ForgotPassword(String UserName) {

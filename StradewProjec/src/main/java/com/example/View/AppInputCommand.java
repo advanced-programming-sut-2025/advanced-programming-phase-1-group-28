@@ -24,6 +24,25 @@ public class AppInputCommand {
             {
                 Appview.Situation = MenuName.SignUpMenu;
             }
+            if(matcher.group(1).trim().equals(MenuName.ProfileMenu.Name))
+            {
+                if(Appview.Situation == MenuName.MainMenu)
+                {
+                    Appview.Situation = MenuName.ProfileMenu;
+                }
+                else
+                {
+                    System.out.println("first go to the Main menu");
+                }
+            }
+            if(matcher.group(1).trim().equals(MenuName.GameMenu.name()))
+            {
+                if(Appview.Situation == MenuName.MainMenu)
+                {
+                    Appview.Situation = MenuName.GameMenu;
+                }
+                System.out.println("first go to the mainmenu");
+            }
             return true;
         }
         if((matcher = ForAllmenuRejex.ExitMenu.getMatcher(Command)) != null)

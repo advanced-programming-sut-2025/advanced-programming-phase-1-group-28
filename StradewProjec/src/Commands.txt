@@ -1,0 +1,4 @@
+register -u shirooz -p Passali Passali -n shirshah -e shir@gmail.com -g male
+register -u shirooz -p Passali#1 Passali#1 -n shirshah -e shir@gmail.com -g male
+pick question -q 3 -a No -c No
+login -u shiroo -p Passali#1 

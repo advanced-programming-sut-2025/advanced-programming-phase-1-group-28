@@ -142,6 +142,7 @@ public class SignUpController {
         String HashedPassword = HashAlghorithm.DecryptPassword(Password);
         User newuser = new User(Username , Password , HashedPassword , Email , App.Users.size() , NickName , Gender);
         App.Users.add(newuser);
+        Appview.UserLoggedInId = App.Users.size() - 1;
         Appview.Situation = MenuName.LoginMenu;
     }
 }
