@@ -3,6 +3,7 @@ package com.example.Controller.MainMenuController.HomeMenucontroller;
 import com.example.Model.App;
 import com.example.Model.Enums.Crafts;
 import com.example.Model.Enums.Skills;
+import com.example.Model.Item.Craft;
 import com.example.Model.Tools.Pepolee;
 
 public class CraftingController {
@@ -110,6 +111,20 @@ public class CraftingController {
 
     public void ApplyCrafting(Crafts craft)
     {
-
+        Pepolee currentPepolee = App.ReturnCurrentPlayer();
+        for(int i = 0;i < craft.Ingredients.size();i++)
+        {
+            for(int j = 0;j < currentPepolee.getInventory().getItems().size();j++)
+            {
+                if(currentPepolee.getInventory().getItems().get(j).getName().equals(craft.Ingredients.get(i)))
+                {
+                    currentPepolee.getInventory().getItems().get(j).setCount(currentPepolee.getInventory().getItems().get(j).getCount() - craft.Count.get(i));
+                }
+            }
+        }
+        currentPepolee.setCoin(currentPepolee.getCoin() - craft.SellPrice);
+        currentPepolee.setEnergy(currentPepolee.getEnergy() - 2);
+        Craft newcraft = new Craft(1 , craft);
+        currentPepolee.getInventory().AddItem(newcraft);
     }
 }

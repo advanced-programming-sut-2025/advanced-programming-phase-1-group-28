@@ -5,7 +5,8 @@ import java.util.regex.Pattern;
 
 public enum ForAllmenuRejex {
     ShowCurrentMenu("^show\\s+current\\s+menu$"),
-    GoTOMenu("^menu\\s+enter\\s+(.+)$");
+    GoTOMenu("^menu\\s+enter\\s+(.+)$"),
+    ExitMenu("^exit\\s+menu$");
     public String command;
     ForAllmenuRejex(String command) {
         this.command = command;
