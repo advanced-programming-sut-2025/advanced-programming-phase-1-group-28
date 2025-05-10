@@ -51,4 +51,11 @@ public class LoginController {
         App.Users.get(USerIndex).setPassword(NewPassword);
         App.Users.get(USerIndex).setHashedPassword(HashAlghorithm.DecryptPassword(NewPassword));
     }
+
+    public String ReturnPass(String Username)
+    {
+        int Userindex = App.ReturnUserIndex(Username);
+        return App.Users.get(Userindex).getPassword();
+    }
+
 }

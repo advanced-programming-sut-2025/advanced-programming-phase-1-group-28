@@ -60,6 +60,7 @@ public class SignUpMenu {
             return;
         }
         App.signUpController.ApplySignUp(Username , Password , NickName , Email , Gender);
+        System.out.println("please choose a Security question");
         ArrayList<String> Output = new ArrayList<>();
         Output = App.signUpController.ShowSecurityQuestions();
         for(String q : Output)
@@ -72,6 +73,7 @@ public class SignUpMenu {
             {
                 if(App.signUpController.SetQuestion(Integer.parseInt(matcher.group(1).trim()) , matcher.group(2).trim() , matcher.group(3).trim()).equals("Answer Submit Successful"))
                 {
+                    System.out.println("Answer Submit Successful");
                     break;
                 }
             }

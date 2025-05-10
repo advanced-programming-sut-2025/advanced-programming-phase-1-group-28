@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum LoginMenuRejex {
-    Login("^login\\s+-u\\s+(.+)\\s+-p\\s+(.+)( –stay-logged-in)?$"),
+    Login("^login\\s+-u\\s+(.+)\\s+-p\\s+(.+)(\\s+–stay-logged-in)?$"),
     ForgetPassword("^forget\\s+password\\s+-u\\s+(.+)$"),
     AnswerSecQuestion("^answer\\s+-a\\s+(.+)$")
     ;

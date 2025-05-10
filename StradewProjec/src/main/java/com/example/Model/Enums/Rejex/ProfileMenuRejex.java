@@ -4,10 +4,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum ProfileMenuRejex {
+    ShowInfo("^user\\s+info$"),
     ChangeUserName("^change\\s+username\\s+-u\\s+(.+)$"),
     ChangeNickName("^change\\s+nickname\\s+-u\\s+(.+)$"),
     ChangeEmail("^change\\s+email\\s+-e\\s+(.+)$"),
-    ChangePassword("^change\\s+password\\s+-p\\s+(.+)\\s+-o\\s+(.+)$");
+    ChangePassword("^change\\s+password\\s+-p\\s+(.+)\\s+-o\\s+(.+)$"),
+    Logout("^user\\s+logout$");
     public String Command;
     ProfileMenuRejex(String command)
     {

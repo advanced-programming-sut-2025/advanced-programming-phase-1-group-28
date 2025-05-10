@@ -8,8 +8,8 @@ import com.example.Model.Places.Farm;
 import java.util.ArrayList;
 
 public class Pepolee {
-    private int x;
-    private int y;
+    private int x = 1;
+    private int y = 1;
     private Farm Farm;
     private int Energy = 200;
     private int Id;

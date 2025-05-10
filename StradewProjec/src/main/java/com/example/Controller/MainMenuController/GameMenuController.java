@@ -1,11 +1,11 @@
 package com.example.Controller.MainMenuController;
 
 import com.example.Model.App;
-import com.example.Model.Enums.ConstantFarms;
-import com.example.Model.Enums.Direction;
-import com.example.Model.Enums.Skills;
+import com.example.Model.Enums.*;
 import com.example.Model.Game;
+import com.example.Model.Places.*;
 import com.example.Model.Skill;
+import com.example.Model.Tile.Animal;
 import com.example.Model.Tools.Pepolee;
 import com.example.Model.User;
 import com.example.View.Appview;
@@ -13,6 +13,10 @@ import com.example.View.Appview;
 import java.util.ArrayList;
 
 public class GameMenuController {
+    public void ApplyNextTurn()
+    {
+        App.getCurrentGame().setWhoseTurn(((App.getCurrentGame().getWhoseTurn() + 1)) % App.getCurrentGame().getCharactersInGame().size());
+    }
     public void ApplyPlayersToGame(ArrayList<String> PlayersInGame)
     {
         Game newgame = new Game(App.Games.size());
@@ -22,10 +26,7 @@ public class GameMenuController {
             int Userindex = App.ReturnUserIndex(PlayersInGame.get(i));
             players.add(App.Users.get(Userindex));
         }
-        for(int i = 0; i < PlayersInGame.size(); i++)
-        {
-            newgame.setPlayersInGame(players);
-        }
+        newgame.setPlayersInGame(players);
         ArrayList<Pepolee> Characters = new ArrayList<>();
         for(int i = 0;i < PlayersInGame.size() ; i++)
         {
@@ -42,12 +43,13 @@ public class GameMenuController {
         newgame.setCharactersInGame(Characters);
         for(int i = 0;i < PlayersInGame.size(); i++)
         {
-            newgame.getScores().set(i , 0);
+            newgame.getScores().add(0);
         }
         for(int i = 0;i < players.size();i++)
         {
             players.get(i).setGameId(newgame.getID());
         }
+        App.Games.add(newgame);
         Appview.CurrentGameID = newgame.getID();
         //first should Add Creator Id
         //define the Peoplee int the game
@@ -86,7 +88,22 @@ public class GameMenuController {
     }
 
     public void SetFarm(int Id , int FarmID) {
-        App.Games.get(Appview.CurrentGameID).getCharactersInGame().get(Id).setFarm(ReturnFarm(FarmID).farm);
+        ConstantFarms ourfarm = ConstantFarms.FirstFarm;
+        int count = 1;
+        for(ConstantFarms farm : ConstantFarms.values())
+        {
+            if(count == FarmID)
+            {
+                ourfarm = farm;
+            }
+            count++;
+        }
+        GreenHouse g = new GreenHouse(ourfarm.farm.getX_Coordinate() , ourfarm.farm.getY_Coordinate());
+        Cabin c = new Cabin(ourfarm.farm.getX_Coordinate() , ourfarm.farm.getY_Coordinate());
+        Lake lake = new Lake(ourfarm.farm.getX_Coordinate() , ourfarm.farm.getY_Coordinate());
+        Quarry quarry = new Quarry(ourfarm.farm.getX_Coordinate() , ourfarm.farm.getY_Coordinate());
+        Farm newfarm = new Farm(g, c, lake, quarry);
+        App.getCurrentGame().getCharactersInGame().get(Id).setFarm(newfarm);
     }
 
 
@@ -102,10 +119,85 @@ public class GameMenuController {
     {
 
     }
+
+    public Weathers WeatherForeCasting()
+    {
+        Season season = App.getCurrentGame().getTime().getSeason();
+        if(season == Season.SPRING)
+        {
+            int Rand = App.random.nextInt() % 5;
+            if(Rand == 0 || Rand == 1)
+            {
+                return Weathers.RAIN;
+            }
+            if(Rand == 2 || Rand == 3)
+            {
+                return Weathers.SUNNY;
+            }
+            if(Rand == 4)
+            {
+                return Weathers.STORM;
+            }
+        }
+        if(season == Season.SUMMER)
+        {
+            return Weathers.SUNNY;
+        }
+        if(season == Season.FALL)
+        {
+            int Rand = App.random.nextInt() % 5;
+            if(Rand == 0 || Rand == 1)
+            {
+                return Weathers.RAIN;
+            }
+            if(Rand == 2)
+            {
+                return Weathers.SNOW;
+            }
+            if(Rand == 4 || Rand == 3)
+            {
+                return Weathers.STORM;
+            }
+        }
+        if(season == Season.WINTER)
+        {
+            int Rand = App.random.nextInt() % 5;
+            if(Rand == 0 || Rand == 1)
+            {
+                return Weathers.STORM;
+            }
+            if(Rand == 2 || Rand == 3)
+            {
+                return Weathers.SNOW;
+            }
+            if(Rand == 4)
+            {
+                return Weathers.RAIN;
+            }
+        }
+        return Weathers.SUNNY;
+    }
+
+
     public void ApplyChangeDay()
     {
+        App.farmingController.ApplyRandomForagingInFarm();
+        App.getCurrentGame().setWeather(WeatherForeCasting());
         //use above function
         //USer random Foraging
+        // animals friendship effects
+        for (Pepolee pepolee: App.getCurrentGame().getCharactersInGame()){
+
+            for (Animal animal: pepolee.getFarm().getAnimals()){
+                if (!animal.isFed()){
+                    animal.addFriendship(-20);
+                }if (!animal.isPettedToday()){
+                    animal.addFriendship(animal.getFriendShip()/200 - 10);
+                }if (!animal.isInside()){
+                    animal.addFriendship(-20);
+                }
+            }
+        }
     }
     public void ApplyChangeHour(){
         //TODO buff, time

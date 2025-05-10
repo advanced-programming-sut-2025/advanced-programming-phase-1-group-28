@@ -1,0 +1,33 @@
+register -u shirooz -p Passali Passali -n shirshah -e shir@gmail.com -g male
+register -u Sepehr -p Passali#2 Passali#2 -n Sepi -e Sepi@gmail.com -g male
+pick question -q 1 -a sifid -c sifid
+menu enter SignUpMenu
+register -u mehrad -p Passali#3 Passali#3 -n morad -e morad@gmail.com -g female
+pick question -q 2 -a shir -c shir
+menu enter SignUpMenu
+register -u shirooz -p Passali#1 Passali#1 -n shirshah -e shir@gmail.com -g male
+pick question -q 3 -a No -c No
+login -u shiroo -p Passali#1 
+login -u shirooz -p Passali#1 
+menu enter ProfileMenu
+show current menu
+user info
+menu enter LoginMenu
+show current menu
+forget password -u shirooz 
+answer -a No
+login -u shirooz -p Passali#1
+menu enter GameMenu 
+game new -u Sepehr mehrad 
+1 
+1
+1
+time
+date
+day of the week
+datetime
+cheat advance time 15h
+cheat advance time 15h
+weather
+weather forecast
+greenhouse build

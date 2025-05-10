@@ -22,10 +22,9 @@ public class GreenHouse extends Place {
         Bucket_y_Coordinate = bucket_y_Coordinate;
     }
 
-    public GreenHouse(int ownerIndex , int x_Coordinate, int y_Coordinate){
+    public GreenHouse(int x_Coordinate, int y_Coordinate){
         Ground = new Tile[5][6];
         Locked = true;
-        OwnerIndex = ownerIndex;
         X_Coordinate = x_Coordinate;
         Y_Coordinate = y_Coordinate;
     }

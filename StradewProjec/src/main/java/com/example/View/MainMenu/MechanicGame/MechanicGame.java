@@ -1,11 +1,18 @@
 package com.example.View.MainMenu.MechanicGame;
 
+import com.example.Controller.MainMenuController.MechanicController.MechanicController;
 import com.example.Model.App;
 import com.example.Model.Item.Item;
 import com.example.Model.Tile.Animal;
 
 public class MechanicGame {
+    MechanicController mechanicController = App.mechanicController;
     public void BuildGreenHouse() {
+        if(!App.mechanicController.EnoughSourceForGreenhouse())
+        {
+            System.out.println("Akhe fahgir");
+            return;
+        }
 
     }
 
@@ -57,26 +64,61 @@ public class MechanicGame {
     {
 
     }
-    public void Pet(Animal animal)
-    {
 
-    }
-    public void Milking(Animal animal)
+    public void Pet(String animalName)
     {
-
+        Animal animal = App.ReturnCurrentPlayer().getFarm().getAnimalByName(animalName);
+        if (animal == null){
+            System.out.println("It seems your petting skills are so good, you're even making friends with nothing!");
+            return;
+        }
+        mechanicController.ApplyPetAnimal(animal);
+        System.out.println("Aww, so gentle!");
     }
-    public void furCutting()
+
+    public void getAnimalProducts(String animalName){
+        Animal animal = App.ReturnCurrentPlayer().getFarm().getAnimalByName(animalName);
+        if (animal == null){
+            System.out.println("No animal with that name exists here.");
+            return;
+        }
+        mechanicController.CollectAnimalProduce(animal);
+        System.out.println("You collect " + animalName + " products successfully.");
+    }
+
+    public void shepherdAnimal(String animalName , int x , int y)
     {
-
+        Animal animal = App.ReturnCurrentPlayer().getFarm().getAnimalByName(animalName);
+        if (animal == null){
+            System.out.println("No animal with that name exists here.");
+            return;
+        }
+        mechanicController.ApplyMovingAnimal(animal);
+        System.out.println("You moved " + animalName + " successfully.");
     }
-    public void shepherdAnimal(Animal animal , int x , int y)
+
+    public void FeedAnimal(String animalName)
     {
-
+        Animal animal = App.ReturnCurrentPlayer().getFarm().getAnimalByName(animalName);
+        if (animal == null){
+            System.out.println("You are phychologically ravani.");
+            System.out.println("No animal with that name exists here.");
+            return;
+        }
+        mechanicController.ApplyFeedAnimal(animal);
+        System.out.println("Animal fed successfully.");
     }
-    public void FeedAnimal()
-    {
 
+    public void SellAnimal(String animalName){
+        Animal animal = App.ReturnCurrentPlayer().getFarm().getAnimalByName(animalName);
+        if (animal == null){
+            System.out.println("No animal with that name exists here.");
+            return;
+        }
+        mechanicController.SellAnimal(animal);
+        System.out.println("You've sold " + animalName + ". It's sad to see them go, but you received " + animal.getSellPrice() + ".");
     }
+
     public void Fishing(int x , int y)
     {
         //we have USe Tool

@@ -4,6 +4,7 @@ import com.example.Model.*;
 import com.example.Model.Enums.Entitity;
 import com.example.Model.Enums.Foods;
 import com.example.Model.Item.Item;
+import com.example.Model.Tile.Animal;
 import com.example.Model.Tile.Plants;
 import com.example.Model.Tools.Pepolee;
 import com.example.Model.Tools.Tools;
@@ -44,7 +45,7 @@ public class ShowFigures {
     }
     public void PredictWeather()
     {
-        //Output here .
+        System.out.println(App.gameMenuController.WeatherForeCasting().toString());
     }
     public void PrintMap()
     {
@@ -89,6 +90,7 @@ public class ShowFigures {
         }
 
     }
+
     public void ShowCraft(int x , int y)
     {
         if(App.ReturnCurrentPlayer().getFarm().getGround()[x][y].getEntitity() == Entitity.PLANTS)
@@ -119,6 +121,7 @@ public class ShowFigures {
             System.out.println("There is no plant here");
         }
     }
+
     public void ShowPlant(int x, int y)
     {
 
@@ -149,7 +152,21 @@ public class ShowFigures {
     }
     public void ShowAnimals()
     {
-
+        ArrayList<Animal> animals = App.ReturnCurrentPlayer().getFarm().getAnimals();
+        for (Animal animal: animals){
+            System.out.println("Name: " + animal.getPetName());
+            System.out.println("Type: " + animal.getAnimalType().toString());
+            System.out.println("Friendship: " + animal.getFriendShip());
+            if (animal.isPettedToday()){
+                System.out.println("Has been petted today.");
+            }else {
+                System.out.println("Hasn't been petted today.");
+            }if (animal.isFed()){
+                System.out.println("Has been fed today.");
+            }else {
+                System.out.println("Hasn't been fed today.");
+            }
+        }
     }
     public void ShowProduces()
     {

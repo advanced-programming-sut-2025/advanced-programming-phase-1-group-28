@@ -6,7 +6,7 @@ public class Place{
     protected int X_Coordinate;
     protected int Y_Coordinate;
     protected Boolean Locked = false;
-    protected Tile[][] Ground ;
+    protected Tile[][] Ground;
     protected int OwnerIndex;
 
     public int getX_Coordinate() {

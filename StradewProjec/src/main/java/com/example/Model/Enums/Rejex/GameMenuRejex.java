@@ -4,7 +4,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum GameMenuRejex {
-    StartGame("game new -u(?:\\s+(\\w+)){1,3}"),
+    BuildGreenhouse("^greenhouse\\s+build$"),
+    ExitGame("^exit\\s+game$"),
+    StartGame("^game new -u(?:\\s+(\\w+)){1,3}$"),
     ShowTime("^time$"),
     ShowDate("^date$"),
     ShowDateTime("^datetime$"),

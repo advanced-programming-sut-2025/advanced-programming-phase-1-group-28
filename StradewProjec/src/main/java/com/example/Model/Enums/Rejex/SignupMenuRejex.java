@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum SignupMenuRejex {
-    Register("register\\s+-u\\s+(.+)\\s+-p\\s+(.+)\\s+(.+)\\s+-n\\s+(.+)\\s+-e\\s+(.+)\\s+-g\\s+(.+)"),
+    Register("^register\\s+-u\\s+(.+)\\s+-p\\s+(.+)\\s+(.+)\\s+-n\\s+(.+)\\s+-e\\s+(.+)\\s+-g\\s+(male|female)$"),
     ValidUser("^[a-zA-Z0-9-]+$"),
     ValidEmail("^(?![._-])[a-zA-Z0-9._-]+(?<![._-])@[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*\\.(?:org|com|net)$"),
     ValidPassword("^[a-zA-Z0-9?><#]+"),

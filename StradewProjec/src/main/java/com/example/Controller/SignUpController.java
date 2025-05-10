@@ -134,14 +134,31 @@ public class SignUpController {
         }
         QuestionId--;
         App.Users.get(Appview.getUserLoggedInId()).setAnswerIdQuestion(QuestionId);
-        App.Users.get(Appview.getUserLoggedInId()).setAnswer(Answer);
+        App.Users.get(Appview.getUserLoggedInId()).setAnswer(Answer.trim());
         return "Answer Submit Successful";
     }
+
+    public String ShowQuestion(String Username)
+    {
+        int Userid  = App.ReturnUserIndex(Username);
+        int count = 1;
+        for(SecurityQuestions question : SecurityQuestions.values())
+        {
+            if(count == App.Users.get(Userid).getAnswerIdQuestion())
+            {
+                return question.QuestionName;
+            }
+            count++;
+        }
+        return null;
+    }
+
     public void ApplySignUp(String Username , String Password , String NickName , String  Email , String Gender)
     {
         String HashedPassword = HashAlghorithm.DecryptPassword(Password);
         User newuser = new User(Username , Password , HashedPassword , Email , App.Users.size() , NickName , Gender);
         App.Users.add(newuser);
+        Appview.UserLoggedInId = App.Users.size() - 1;
         Appview.Situation = MenuName.LoginMenu;
     }
 }

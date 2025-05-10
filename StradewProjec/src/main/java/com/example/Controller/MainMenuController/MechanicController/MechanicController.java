@@ -4,21 +4,62 @@ import com.example.Main;
 import com.example.Model.App;
 import com.example.Model.Enums.Direction;
 import com.example.Model.Inventory;
+import com.example.Model.Item.Ingredient;
 import com.example.Model.Item.Item;
 import com.example.Model.Node;
 import com.example.Model.Tile.Animal;
+import com.example.Model.Tools.Pepolee;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class MechanicController {
     public boolean IsWalkable(int x , int y)
     {
+        if(x > 0 && y > 0 && x < 200 && y < 200) {
+            return true;
+        }
+        return false;
+    }
 
-        return true;
+    public boolean EnoughSourceForGreenhouse()
+    {
+        Pepolee currentpeople = App.ReturnCurrentPlayer();
+        if(currentpeople.getCoin() < 1000)
+        {
+            return false;
+        }
+        boolean ok = false;
+        for(Item item : currentpeople.getInventory().getItems())
+        {
+            if(item.getName().equals("Wood"))
+            {
+                if(item.getCount() >= 500)
+                {
+                    ok = true;
+                }
+            }
+        }
+        return ok;
+    }
+
+    public void ApplyBuildGreenhouse()
+    {
+        Pepolee currentpeople = App.ReturnCurrentPlayer();
+        currentpeople.setCoin(currentpeople.getCoin() - 1000);
+        for(Item item : currentpeople.getInventory().getItems())
+        {
+            if(item.getName().equals("Wood"))
+            {
+                item.setCount(item.getCount() - 500);
+            }
+        }
+        currentpeople.getFarm().getGreenHouse().setLocked(false);
     }
 
     public int BFS(int StartX , int StartY , int EndX , int EndY) {
-        StartX--;StartY--;EndX--;EndY--;
         Node [][] Check = new Node [200][200];
         for(int i = 0;i < 200 ; i++)
         {
@@ -31,33 +72,50 @@ public class MechanicController {
                     {
                         node.CostInEachDirection[k] = 0;
                     }
-                    node.CostInEachDirection[k] = -1;
+                    else {
+                        node.CostInEachDirection[k] = -1;
+                    }
                 }
                 Check[i][j] = node;
             }
         }
-        PriorityQueue<Node> BFSLayer = new PriorityQueue<>();
+        ArrayList<Node> BFSLayer = new ArrayList<>();
         BFSLayer.add(Check[StartX][StartY]);
         Check[StartX][StartY].Check = true;
 
         while (!BFSLayer.isEmpty()) {
-            PriorityQueue<Node> newBFSLayer = new PriorityQueue<>();
-            for(int i = 0 ;i < BFSLayer.size() ; i++)
+            ArrayList<Node> newBFSLayer = new ArrayList<>();
+            for(int i = BFSLayer.size() - 1; i >= 0 ; i--)
             {
-                Node currentNode = BFSLayer.poll();
+                Node currentNode = BFSLayer.get(i);
                 int count = 0;
                 for(Direction direction : Direction.values())
                 {
                     int NewX = currentNode.x + direction.x;
                     int NewY = currentNode.y + direction.y;
+                    //System.out.println(NewX + " " + NewY);
                     if(IsWalkable(NewX , NewY))
                     {
                         if(currentNode.CostInEachDirection[count] != -1) {
-                            Check[NewX][NewY].SetCost(count, Math.min(currentNode.ReturnMinCost() + 11, currentNode.CostInEachDirection[count] + 1));
+                            int Minimum = Math.min(currentNode.ReturnMinCost() + 11, currentNode.CostInEachDirection[count] + 1);
+                            if(Check[NewX][NewY].CostInEachDirection[count] != -1) {
+                                Check[NewX][NewY].SetCost(count, Math.min(Check[NewX][NewY].CostInEachDirection[count], Minimum));
+                            }
+                            else
+                            {
+                                Check[NewX][NewY].SetCost(count, Minimum);
+                            }
                         }
                         else
                         {
-                            Check[NewX][NewY].SetCost(count , currentNode.ReturnMinCost());
+                            int Minimum = currentNode.ReturnMinCost() + 11;
+                            if(Check[NewX][NewY].CostInEachDirection[count] != -1) {
+                                Check[NewX][NewY].SetCost(count, Math.min(currentNode.ReturnMinCost(), Minimum));
+                            }
+                            else
+                            {
+                                Check[NewX][NewY].SetCost(count, Minimum);
+                            }
                         }
                         if(!Check[NewX][NewY].Check) {
                             newBFSLayer.add(Check[NewX][NewY]);
@@ -68,14 +126,26 @@ public class MechanicController {
                 }
             }
             BFSLayer = newBFSLayer;
+            System.out.println("Salam");
+            for(int i =0; i < BFSLayer.size(); i++)
+            {
+                System.out.println(BFSLayer.get(i).x + " " + BFSLayer.get(i).y);
+            }
+            System.out.println("Salam");
         }
-        if(Check[EndX][EndY].ReturnMinCost() != Integer.MAX_VALUE)
-        {
-            if(Check[EndX][EndY].ReturnMinCost() / 20 > App.ReturnCurrentPlayer().getEnergy())
+        if(Check[EndX][EndY].Check) {
+            System.out.println("sagbar pedaret");
+            System.out.println(Check[EndX][EndY].ReturnMinCost());
+            if (Check[EndX][EndY].ReturnMinCost() != 1000000) {
+                /*if (Check[EndX][EndY].ReturnMinCost() / 20 > App.ReturnCurrentPlayer().getEnergy()) {
+                    return -1;
+                }*/
+                return Check[EndX][EndY].ReturnMinCost();
+            }
+            else
             {
                 return -1;
             }
-            return Check[EndX][EndY].ReturnMinCost();
         }
         else
         {
@@ -207,18 +277,37 @@ public class MechanicController {
     {
 
     }
-    public void ApplyMovingAnimal()
+
+    public void ApplyPetAnimal(Animal animal){
+        animal.addFriendship(15);
+        animal.setPettedToday(true);
+    }
+
+    public void ApplyFeedAnimal(Animal animal){
+        animal.setFed(true);
+    }
+
+    public void ApplyMovingAnimal(Animal animal)
     {
 
     }
+
     public void SellAnimal(Animal animal)
     {
-
+        Pepolee currentPlayer = App.ReturnCurrentPlayer();
+        currentPlayer.addCoin(animal.getSellPrice());
+        currentPlayer.getFarm().removeAnimal(animal);
     }
+
     public void CollectAnimalProduce(Animal animal)
     {
-
+        Inventory inventory = App.ReturnCurrentPlayer().getInventory();
+        ArrayList<Ingredient> ingredients = animal.getProducts();
+        for (Ingredient ingredient: ingredients){
+            inventory.addItem(ingredient);
+        }
     }
+
     public boolean IsSellable(Item item)
     {
         return false;

@@ -16,8 +16,8 @@ public class Node {
     }
     public int ReturnMinCost()
     {
-        int minCost = Integer.MAX_VALUE;
-        for(int i = 0; i < CostInEachDirection.length; i++)
+        int minCost = 1000000;
+        for(int i = 0; i < 8 ; i++)
         {
             if(CostInEachDirection[i] != -1) {
                 minCost = Math.min(minCost, CostInEachDirection[i]);

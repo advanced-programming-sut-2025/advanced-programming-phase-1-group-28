@@ -16,7 +16,7 @@ public class LoginMenu {
     {
         if((matcher = LoginMenuRejex.Login.getMatcher(Command)) != null)
         {
-            Login(matcher.group(1).trim() , matcher.group(2).trim() , matcher.group(3).trim());
+            Login(matcher.group(1).trim() , matcher.group(2).trim() , matcher.group(3));
         }
         else if((matcher = LoginMenuRejex.ForgetPassword.getMatcher(Command)) != null)
         {
@@ -44,26 +44,23 @@ public class LoginMenu {
             Stay = true;
         }
         App.loginController.ApplyLogin(UserName , Stay);
+        System.out.println("Login Successful");
     }
 
     public void  ForgotPassword(String UserName) {
         if(!App.loginController.IsUsernameValid(UserName)) {
             System.out.println("Username Does Not Exist");
+            return;
         }
         App.loginController.PrintQuestion(UserName);
         while(true)
         {
+            App.loginController.PrintQuestion(UserName);
             String AnswerGet = App.scanner.nextLine();
             if((matcher = LoginMenuRejex.AnswerSecQuestion.getMatcher(AnswerGet)) != null) {
-                if (App.loginController.CheckAnswer(UserName , AnswerGet))
+                if (App.loginController.CheckAnswer(UserName , matcher.group(1).trim()))
                 {
-                    System.out.println("enter your New Password");
-                    String NewPassword = App.scanner.nextLine();
-                    if(NewPassword.equals("Random"))
-                    {
-                        NewPassword = App.signUpController.RandomPassword();
-                    }
-                    App.loginController.ApplyChangePassword(UserName , NewPassword);
+                    System.out.println(App.loginController.ReturnPass(UserName));
                     break;
                 }
                 else

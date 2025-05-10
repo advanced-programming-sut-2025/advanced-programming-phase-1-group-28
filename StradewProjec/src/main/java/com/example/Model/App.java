@@ -15,6 +15,7 @@ import com.example.View.Appview;
 import com.example.View.LoginMenu;
 import com.example.View.MainMenu.CheatCodes;
 import com.example.View.MainMenu.GameMenu;
+import com.example.View.MainMenu.MechanicGame.MechanicGame;
 import com.example.View.MainMenu.ProfileMenu;
 import com.example.View.MainMenu.ShowFigures;
 import com.example.View.SignUpMenu;
@@ -42,6 +43,7 @@ public class App {
     public static GameMenuController gameMenuController = new GameMenuController();
     public static ProfileMenuController profileMenuController = new ProfileMenuController();
     public static MechanicController mechanicController = new MechanicController();
+    public static MechanicGame mechanicGame = new MechanicGame();
     public static FarmingController farmingController = new FarmingController();
     public static CraftingController craftingController = new CraftingController();
     public static AllMenuCommandsController allMenuCommandsController = new AllMenuCommandsController();
