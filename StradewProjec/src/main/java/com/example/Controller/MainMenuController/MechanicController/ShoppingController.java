@@ -2,26 +2,26 @@ package com.example.Controller.MainMenuController.MechanicController;
 
 import com.example.Model.App;
 import com.example.Model.Enums.*;
+import com.example.Model.Enums.Tools.FishingPoles;
 import com.example.Model.Enums.Tools.Trashcans;
 import com.example.Model.Item.Craft;
+import com.example.Model.Item.Food;
 import com.example.Model.Item.Ingredient;
 import com.example.Model.Item.Item;
 import com.example.Model.Places.AnimalHouse;
 import com.example.Model.Tile.Animal;
-import com.example.Model.Tools.MilkPail;
-import com.example.Model.Tools.Shear;
-import com.example.Model.Tools.Tools;
-import com.example.Model.Tools.TrashCan;
+import com.example.Model.Tools.*;
 
 import java.util.ArrayList;
 
 public class ShoppingController {
-    public void ApplyPurchase(){
-        //App.getCurrentUser().
-
-    }
     public void ApplyBlackSmithPurchase(String ProductName , int count)
     {
+        if(App.getCurrentGame().getTime().getHour() < 9 || App.getCurrentGame().getTime().getHour() > 16)
+        {
+            System.out.println("Store is closed");
+            return;
+        }
         // from 9 am to 4 pm
         // for mining
         // upgrading tools
@@ -108,6 +108,11 @@ public class ShoppingController {
     }
     public void ApplyMarineRanchPurchase(String ProductName , String CountOrName)
     {
+        if(App.getCurrentGame().getTime().getHour() < 9 || App.getCurrentGame().getTime().getHour() > 16)
+        {
+            System.out.println("Store is closed");
+            return;
+        }
         if(ProductName.equals("Hay"))
         {
             int count = Integer.parseInt(CountOrName);
@@ -188,29 +193,34 @@ public class ShoppingController {
     }
     public void ApplyStarDropSaloon(String ProductName , int count)
     {
+        if(App.getCurrentGame().getTime().getHour() < 12 || App.getCurrentGame().getTime().getHour() > 24)
+        {
+            System.out.println("Store is closed");
+            return;
+        }
         if(ProductName.equals("Beer"))
         {
-            UnlimitedBuying(ProductName , count , 400);
+            UnlimitedFoodBuying(new Food(count , Foods.Beer) , count , 400);
         }
         else if(ProductName.equals("Salad"))
         {
-            UnlimitedBuying(ProductName , count , 220);
+            UnlimitedFoodBuying(new Food(count , Foods.Salad) , count , 220);
         }
         else if(ProductName.equals("Bread"))
         {
-            UnlimitedBuying(ProductName , count , 120);
+            UnlimitedFoodBuying(new Food(count , Foods.Bread) , count , 120);
         }
         else if(ProductName.equals("Spaghetti"))
         {
-            UnlimitedBuying(ProductName , count , 240);
+            UnlimitedFoodBuying(new Food(count , Foods.Spaghetti) , count , 240);
         }
         else if(ProductName.equals("Pizza"))
         {
-            UnlimitedBuying(ProductName , count , 600);
+            UnlimitedFoodBuying(new Food(count , Foods.Pizza) , count , 600);
         }
         else if(ProductName.equals("Coffee"))
         {
-            UnlimitedBuying(ProductName , count , 300);
+            UnlimitedFoodBuying(new Food(count , Foods.TripleShotEspresso) , count , 300);
         }
         else if(ProductName.equals("Hashbrowns Recipe"))
         {
@@ -273,6 +283,11 @@ public class ShoppingController {
     }
     public void ApplyCarpenterShop(String ProductName , String CountOrCoordinate)
     {
+        if(App.getCurrentGame().getTime().getHour() < 9 || App.getCurrentGame().getTime().getHour() > 20)
+        {
+            System.out.println("Store is closed");
+            return;
+        }
         if(ProductName.equals("Wood"))
         {
             UnlimitedBuying(ProductName , Integer.parseInt(CountOrCoordinate), 10);
@@ -338,13 +353,18 @@ public class ShoppingController {
     }
     public void ApplyJojaMart(String ProductName , int count)
     {
+        if(App.getCurrentGame().getTime().getHour() < 9 || App.getCurrentGame().getTime().getHour() > 23)
+        {
+            System.out.println("Store is closed");
+            return;
+        }
         if(ProductName.equals("Joja Cola"))
         {
             UnlimitedBuying(ProductName , count, 75);
         }
         else if(ProductName.equals("Grass Starter"))
         {
-            UnlimitedBuying(ProductName , count, 125);
+            UnlimitedCraftBuying(Crafts.GrassStarter , count , 125);
         }
         else if(ProductName.equals("Sugar"))
         {
@@ -381,6 +401,22 @@ public class ShoppingController {
                     App.dailyLimits.setJojaMart(newLimits);
                     App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - count * mySeed.Price);
                     ArrayList<Seeds> newSeeds = App.ReturnCurrentPlayer().getInventory().getSeeds();
+                    boolean found = false;
+                    for(Seeds seed : newSeeds)
+                    {
+                        if(seed.equals(mySeed.Seed))
+                        {
+                            found = true;
+                        }
+                    }
+                    if(!found)
+                    {
+                        if(!App.ReturnCurrentPlayer().getInventory().canAddNewItem())
+                        {
+                            System.out.println("Inventory is full");
+                            return;
+                        }
+                    }
                     while(count > 0)
                     {
                         newSeeds.add(mySeed.Seed);
@@ -399,6 +435,11 @@ public class ShoppingController {
     }
     public void ApplyPierreStore(String ProductName , int count)
     {
+        if(App.getCurrentGame().getTime().getHour() < 9 || App.getCurrentGame().getTime().getHour() > 17)
+        {
+            System.out.println("Store is closed");
+            return;
+        }
         boolean itemExists = false;
         for(PierreStoreItems myItem : PierreStoreItems.values())
         {
@@ -417,7 +458,7 @@ public class ShoppingController {
                     }
                     else if(myItem.crafts != null)
                     {
-
+                        UnlimitedCraftBuying(myItem.crafts , count , myItem.Price);
                     }
                 }
                 else if(myItem.LimitIndex < 2)
@@ -441,7 +482,7 @@ public class ShoppingController {
                         System.out.println("Not enough money bro");
                         return;
                     }
-                    // set new limtis
+                    // set new limits
                     newLimits[myItem.LimitIndex] -= count;
                     App.dailyLimits.setPierreStore(newLimits);
                     // pay the price
@@ -535,6 +576,22 @@ public class ShoppingController {
                     App.dailyLimits.setPierreStore(newLimtis);
                     App.ReturnCurrentPlayer().setCoin((int) (App.ReturnCurrentPlayer().getCoin() - (count * myItem.Price * coefficient)));
                     ArrayList<Seeds> newSeeds = App.ReturnCurrentPlayer().getInventory().getSeeds();
+                    boolean found = false;
+                    for(Seeds seed : newSeeds)
+                    {
+                        if(seed.equals(myItem.Seed))
+                        {
+                            found = true;
+                        }
+                    }
+                    if(!found)
+                    {
+                        if(!App.ReturnCurrentPlayer().getInventory().canAddNewItem())
+                        {
+                            System.out.println("Inventory is full");
+                            return;
+                        }
+                    }
                     while(count > 0)
                     {
                         newSeeds.add(myItem.Seed);
@@ -550,6 +607,113 @@ public class ShoppingController {
         if(!itemExists)
         {
             System.out.println("Item not found");
+        }
+    }
+    public void ApplyFishShop(String ProductName , int count)
+    {
+        if(App.getCurrentGame().getTime().getHour() < 9 || App.getCurrentGame().getTime().getHour() > 17)
+        {
+            System.out.println("Store is closed");
+            return;
+        }
+        if(ProductName.equals("FISH_SMOKER_RECIPE"))
+        {
+            // check for limit
+            int newLimits[] = App.dailyLimits.getFishShop();
+            if(newLimits[0] - count < 0)
+            {
+                System.out.println("You have reached the daily limit for this item");
+                return;
+            }
+            // check for price
+            if(count * 10000 > App.ReturnCurrentPlayer().getCoin())
+            {
+                System.out.println("Not enough money bro");
+                return;
+            }
+            // set new limits
+            newLimits[0] -= count;
+            App.dailyLimits.setFishShop(newLimits);
+            // pay the price
+            App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - count * 10000);
+            // adding the overflowing item
+            for(Item item : App.ReturnCurrentPlayer().getOverflowItems())
+            {
+                if(item.getName().equals(ProductName))
+                {
+                    item.setCount(item.getCount() + count);
+                    System.out.println(ProductName + " purchased");
+                    return;
+                }
+            }
+            App.ReturnCurrentPlayer().addOverflowItem(new Item(count , ProductName));
+            System.out.println(ProductName + " purchased");
+        }
+        else if(ProductName.equals("TROUT_SOUP"))
+        {
+            // check for limit
+            int newLimits[] = App.dailyLimits.getFishShop();
+            if(newLimits[1] - count < 0)
+            {
+                System.out.println("You have reached the daily limit for this item");
+                return;
+            }
+            if(UnlimitedFoodBuying(new Food(count , Foods.TroutSoup) , count , 250))
+            {
+                newLimits[1] -= count;
+            }
+            App.dailyLimits.setFishShop(newLimits);
+        }
+        else if(ProductName.equals("TRAINING_ROD"))
+        {
+            int newLimits[] = App.dailyLimits.getFishShop();
+            if(count > 1)
+            {
+                System.out.println("You can do it once");
+                return;
+            }
+            if(newLimits[2] - count < 0)
+            {
+                System.out.println("You have reached the daily limit for this item");
+                return;
+            }
+            if(count * 25 > App.ReturnCurrentPlayer().getCoin())
+            {
+                System.out.println("Not enough money bro");
+                return;
+            }
+            if(!App.ReturnCurrentPlayer().getInventory().canAddNewItem())
+            {
+                System.out.println("Inventory is full");
+                return;
+            }
+            newLimits[2] -= count;
+            App.dailyLimits.setFishShop(newLimits);
+            App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - count * 25);
+            App.ReturnCurrentPlayer().getInventory().getTools().add(new FishingPole(FishingPoles.Normal));
+            System.out.println("Fishing pole added");
+        }
+        else if(ProductName.equals("BAMBOO_POLE"))
+        {
+            int newLimits[] = App.dailyLimits.getFishShop();
+            newLimits[3] = UpgradePole(FishingPoles.Normal , FishingPoles.Bamboo , count , 500 , 0 , newLimits[3]);
+            App.dailyLimits.setFishShop(newLimits);
+        }
+        else if(ProductName.equals("FIBERGLASS_ROD"))
+        {
+            int newLimits[] = App.dailyLimits.getFishShop();
+            newLimits[4] = UpgradePole(FishingPoles.Bamboo , FishingPoles.FiberGlass , count , 1800 , 2 , newLimits[4]);
+            App.dailyLimits.setFishShop(newLimits);
+        }
+        else if(ProductName.equals("IRIDIUM_ROD"))
+        {
+            int newLimits[] = App.dailyLimits.getFishShop();
+            newLimits[5] = UpgradePole(FishingPoles.FiberGlass , FishingPoles.Iridium , count , 7500 , 4 , newLimits[5]);
+            App.dailyLimits.setFishShop(newLimits);
+        }
+        else
+        {
+            System.out.println("Unrecognized product name");
         }
     }
     public void UnlimitedBuying(String ProductName , int count , int Price)
@@ -574,6 +738,11 @@ public class ShoppingController {
         }
         if(!FoodExists)
         {
+            if(!App.ReturnCurrentPlayer().getInventory().canAddNewItem())
+            {
+                System.out.println("Inventory is full");
+                return;
+            }
             ArrayList<Item> newItems = App.ReturnCurrentPlayer().getInventory().getItems();
             newItems.add(new Item(count , ProductName));
             App.ReturnCurrentPlayer().getInventory().setItems(newItems);
@@ -606,6 +775,11 @@ public class ShoppingController {
                 System.out.println(ProductName + " purchased");
                 return limit - count;
             }
+        }
+        if(!App.ReturnCurrentPlayer().getInventory().canAddNewItem())
+        {
+            System.out.println("Inventory is full");
+            return limit;
         }
         ArrayList<Item> newItems = App.ReturnCurrentPlayer().getInventory().getItems();
         newItems.add(new Item(count , ProductName));
@@ -688,8 +862,9 @@ public class ShoppingController {
         {
             for(int j = y ; j < y + 4 ; j++)
             {
-                App.getCurrentGame().getEntireMap()[i][j].setEntitity(Entitity.EMPTY);
+                App.getCurrentGame().getEntireMap()[i][j].setEntitity(null);
                 App.getCurrentGame().getEntireMap()[i][j].setPlaceType(PlaceType.BARN);
+                App.getCurrentGame().getEntireMap()[i][j].setTerrain(null);
             }
         }
 
@@ -772,8 +947,9 @@ public class ShoppingController {
         {
             for(int j = y ; j < y + 3 ; j++)
             {
-                App.getCurrentGame().getEntireMap()[i][j].setEntitity(Entitity.EMPTY);
+                App.getCurrentGame().getEntireMap()[i][j].setEntitity(null);
                 App.getCurrentGame().getEntireMap()[i][j].setPlaceType(PlaceType.COOP);
+                App.getCurrentGame().getEntireMap()[i][j].setTerrain(null);
             }
         }
 
@@ -796,6 +972,7 @@ public class ShoppingController {
             return limit;
         }
         boolean IngredientExists = false;
+        Item myitem = null;
         for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
         {
             if(item.getName().equals(Ingredient))
@@ -809,6 +986,7 @@ public class ShoppingController {
                 {
                     IngredientExists = true;
                     item.setCount(item.getCount() - 5 * count);
+                    myitem = item;
                 }
             }
         }
@@ -829,6 +1007,12 @@ public class ShoppingController {
         }
         if(!ItemExists)
         {
+            if(!App.ReturnCurrentPlayer().getInventory().canAddNewItem())
+            {
+                System.out.println("Inventory is full");
+                myitem.setCount(myitem.getCount() + 5 * count);
+                return limit;
+            }
             ArrayList<Item> newItems = App.ReturnCurrentPlayer().getInventory().getItems();
             newItems.add(new Item(count, ProductName));
             App.ReturnCurrentPlayer().getInventory().setItems(newItems);
@@ -974,6 +1158,11 @@ public class ShoppingController {
             System.out.println("Not enough money bro");
             return limit;
         }
+        if(!App.ReturnCurrentPlayer().getInventory().canAddNewItem())
+        {
+            System.out.println("Inventory is full");
+            return limit;
+        }
         // pay the price
         App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price * count);
         // add the tool to the inventory
@@ -1024,6 +1213,11 @@ public class ShoppingController {
         }
         if(!FoodExists)
         {
+            if(!App.ReturnCurrentPlayer().getInventory().canAddNewItem())
+            {
+                System.out.println("Inventory is full");
+                return;
+            }
             ArrayList<Item> newItems = App.ReturnCurrentPlayer().getInventory().getItems();
             newItems.add(new Ingredient(count , newIngredient));
             App.ReturnCurrentPlayer().getInventory().setItems(newItems);
@@ -1043,6 +1237,22 @@ public class ShoppingController {
         App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price * count);
         // add saplings
         ArrayList<Saplings> newSaplings = App.ReturnCurrentPlayer().getInventory().getSaplings();
+        boolean found = false;
+        for(Saplings sapling : newSaplings)
+        {
+            if(newSapling.equals(sapling))
+            {
+                found = true;
+            }
+        }
+        if(!found)
+        {
+            if(!App.ReturnCurrentPlayer().getInventory().canAddNewItem())
+            {
+                System.out.println("Inventory is full");
+                return;
+            }
+        }
         while(count > 0)
         {
             newSaplings.add(newSapling);
@@ -1076,5 +1286,82 @@ public class ShoppingController {
             App.ReturnCurrentPlayer().getInventory().addItem(new Craft(count , newCraft));
         }
         System.out.println(newCraft.name() + " purchased");
+    }
+    public boolean UnlimitedFoodBuying(Food newFood , int count , int Price)
+    {
+        // check for price
+        if(Price * count > App.ReturnCurrentPlayer().getCoin())
+        {
+            System.out.println("Not enough money bro");
+            return false;
+        }
+        boolean FoodExists = false;
+        for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
+        {
+            if(item instanceof Food && ((Food) item).getFood().equals(newFood))
+            {
+                FoodExists = true;
+                item.setCount(item.getCount() + count);
+                break;
+            }
+        }
+        if(!FoodExists)
+        {
+            if(!App.ReturnCurrentPlayer().getInventory().canAddNewItem())
+            {
+                System.out.println("Inventory is full");
+                return false;
+            }
+            ArrayList<Item> newItems = App.ReturnCurrentPlayer().getInventory().getItems();
+            newItems.add(newFood);
+            App.ReturnCurrentPlayer().getInventory().setItems(newItems);
+        }
+        App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price * count);
+        System.out.println("Food has been added");
+        return true;
+    }
+    public int UpgradePole(FishingPoles oldPole , FishingPoles newPole , int count , int Price , int NeededSkill , int limit)
+    {
+        if(count > 1)
+        {
+            System.out.println("You can do it once");
+            return limit;
+        }
+        FishingPole newFishingPole = null;
+        for(Tools tools : App.ReturnCurrentPlayer().getInventory().getTools())
+        {
+            if(tools instanceof FishingPole)
+            {
+                newFishingPole = (FishingPole) tools;
+                break;
+            }
+        }
+        if(newFishingPole == null || newFishingPole.getFishingPole() != oldPole)
+        {
+            System.out.println("Fishing pole level doesn't match the upgrade");
+            return limit;
+        }
+        // check for limit
+        if(limit - count < 0)
+        {
+            System.out.println("You have reached the daily limit for this item");
+            return limit;
+        }
+        if(Price > App.ReturnCurrentPlayer().getCoin())
+        {
+            System.out.println("Not enough money bro");
+            return limit;
+        }
+        if(App.ReturnCurrentPlayer().getSkills()[1].getLevel() < NeededSkill)
+        {
+            System.out.println("Skill issue bro");
+            return limit;
+        }
+        App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price);
+        newFishingPole.setFishingPole(newPole);
+        newFishingPole.setEnergyCost(newPole.Energycost);
+        limit -= count;
+        System.out.println("Fishing pole has been upgraded");
+        return limit;
     }
 }

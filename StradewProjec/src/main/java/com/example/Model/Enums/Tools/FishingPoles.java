@@ -1,13 +1,13 @@
 package com.example.Model.Enums.Tools;
 
-public enum FishingPole {
+public enum FishingPoles {
     Normal(8),
     Bamboo(8),
     FiberGlass(6),
     Iridium(4);
     public final int Energycost;
 
-    FishingPole(int energycost) {
+    FishingPoles(int energycost) {
         Energycost = energycost;
     }
 }

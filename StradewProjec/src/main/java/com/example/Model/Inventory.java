@@ -110,6 +110,50 @@ public class Inventory {
         return items.size() + tools.size() + seeds.size() + saplings.size() < inventoryCapacity;
     }
 
+    public int calculateSeedsSize()
+    {
+        int seedsSize = 0;
+        for(int i = 0 ; i < this.seeds.size() ; i++)
+        {
+            boolean AlreadyExists = false;
+            for(int j = i - 1 ; j >= 0 ; j--)
+            {
+                if(seeds.get(i).equals(seeds.get(j)))
+                {
+                    AlreadyExists = true;
+                    break;
+                }
+            }
+            if(!AlreadyExists)
+            {
+                seedsSize++;
+            }
+        }
+        return seedsSize;
+    }
+
+    public int calculateSaplingsSize()
+    {
+        int saplingsSize = 0;
+        for(int i = 0 ; i < this.saplings.size() ; i++)
+        {
+            boolean AlreadyExists = false;
+            for(int j = i - 1 ; j >= 0 ; j--)
+            {
+                if(saplings.get(i).equals(saplings.get(j)))
+                {
+                    AlreadyExists = true;
+                    break;
+                }
+            }
+            if(!AlreadyExists)
+            {
+                saplingsSize++;
+            }
+        }
+        return saplingsSize;
+    }
+
     public boolean isItemAvailable(String itemName){
         if (this.getItemByName(itemName) == null){
             return false;

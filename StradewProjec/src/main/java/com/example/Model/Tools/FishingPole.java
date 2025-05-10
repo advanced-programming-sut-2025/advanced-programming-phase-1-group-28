@@ -1,14 +1,25 @@
 package com.example.Model.Tools;
 
 import com.example.Model.Enums.Skills;
+import com.example.Model.Enums.Tools.FishingPoles;
 
 public class FishingPole extends Tools{
-    public FishingPole(){
+    FishingPoles fishingPole;
+    public FishingPole(FishingPoles fishingPole){
         name = "FishingPole";
-        count = 0;
-        IsExist = false;
+        count = 1;
+        IsExist = true;
         Id = 5;
         skillRelated = Skills.Fishing;
-        EnergyCost = 8;
+        this.fishingPole = fishingPole;
+        EnergyCost = fishingPole.Energycost;
+    }
+
+    public FishingPoles getFishingPole() {
+        return fishingPole;
+    }
+
+    public void setFishingPole(FishingPoles fishingPole) {
+        this.fishingPole = fishingPole;
     }
 }

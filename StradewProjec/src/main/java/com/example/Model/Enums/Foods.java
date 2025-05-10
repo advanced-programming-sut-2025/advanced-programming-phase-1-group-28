@@ -1,11 +1,27 @@
 package com.example.Model.Enums;
 
-import com.example.Model.Item.Item;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public enum Foods {
+    Beer(
+            "Beer",
+            null,
+            null,
+            50,
+            null,
+            "Stardrop Saloon",
+            200
+    ),
+    TroutSoup(
+            "Trout Soup",
+            null,
+            null,
+            50,
+            null,
+            "Fish Shop",
+            125
+    ),
     FriedEgg(
             "Fried Egg",
             new ArrayList<>(Arrays.asList("egg")),
