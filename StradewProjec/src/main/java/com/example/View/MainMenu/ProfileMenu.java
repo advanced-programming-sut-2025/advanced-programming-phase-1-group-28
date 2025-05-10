@@ -25,7 +25,9 @@ public class ProfileMenu {
             ChangeEmail(matcher.group(1));
         } else if ((matcher = ProfileMenuRejex.ChangePassword.getMatcher(command)) != null) {
             ChangePassword(matcher.group(1), matcher.group(2));
-        }else {
+        } else if ((matcher = ProfileMenuRejex.Logout.getMatcher(command)) != null) {
+            Logout();
+        } else {
             System.out.println("invalid command");
         }
     }
@@ -81,6 +83,11 @@ public class ProfileMenu {
         System.out.println("highest score: " + TempUser.getHighestScore());
         System.out.println("games played: " + TempUser.getGamesPlayed());
         //Print Info
+    }
+
+    public void Logout(){
+        profileMenuController.ApplyLogout();
+        System.out.println("You logged out successfully.");
     }
 
 }

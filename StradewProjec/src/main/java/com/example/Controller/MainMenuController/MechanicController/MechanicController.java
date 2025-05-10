@@ -220,7 +220,7 @@ public class MechanicController {
         animal.setFed(true);
     }
 
-    public void ApplyMovingAnimal()
+    public void ApplyMovingAnimal(Animal animal)
     {
 
     }
