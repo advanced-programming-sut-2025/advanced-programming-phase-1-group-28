@@ -81,9 +81,15 @@ public class MechanicGame {
         System.out.println("You collect " + animalName + " products successfully.");
     }
 
-    public void shepherdAnimal(Animal animal , int x , int y)
+    public void shepherdAnimal(String animalName , int x , int y)
     {
-
+        Animal animal = App.ReturnCurrentPlayer().getFarm().getAnimalByName(animalName);
+        if (animal == null){
+            System.out.println("No animal with that name exists here.");
+            return;
+        }
+        mechanicController.ApplyMovingAnimal(animal);
+        System.out.println("You moved " + animalName + " successfully.");
     }
 
     public void FeedAnimal(String animalName)

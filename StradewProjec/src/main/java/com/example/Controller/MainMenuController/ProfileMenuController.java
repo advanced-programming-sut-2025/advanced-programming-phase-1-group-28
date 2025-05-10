@@ -1,7 +1,9 @@
 package com.example.Controller.MainMenuController;
 
 import com.example.Model.App;
+import com.example.Model.Enums.MenuName;
 import com.example.Model.User;
+import com.example.View.Appview;
 
 public class ProfileMenuController {
     public void ApplyChangeUsername(String NewUserName) {
@@ -19,5 +21,10 @@ public class ProfileMenuController {
     public void ApplyChangeNickname(String NewNickname) {
         User myUser = App.getCurrentUser();
         myUser.setNickname(NewNickname);
+    }
+
+    public void ApplyLogout(){
+        Appview.UserLoggedInId = -1;
+        Appview.Situation = MenuName.SignUpMenu;
     }
 }
