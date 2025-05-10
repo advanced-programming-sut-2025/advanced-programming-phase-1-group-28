@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum ProfileMenuRejex {
+    ShowInfo("^user\\s+info$"),
     ChangeUserName("^change\\s+username\\s+-u\\s+(.+)$"),
     ChangeNickName("^change\\s+nickname\\s+-u\\s+(.+)$"),
     ChangeEmail("^change\\s+email\\s+-e\\s+(.+)$"),

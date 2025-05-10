@@ -40,6 +40,7 @@ public class AppInputCommand {
                 if(Appview.Situation == MenuName.MainMenu)
                 {
                     Appview.Situation = MenuName.GameMenu;
+                    return true;
                 }
                 System.out.println("first go to the mainmenu");
             }
@@ -75,12 +76,12 @@ public class AppInputCommand {
         }
         if(Appview.Situation == MenuName.ProfileMenu)
         {
-            App.loginMenu.Input(Command);
+            App.profileMenu.Input(Command);
             return true;
         }
         if(Appview.Situation == MenuName.GameMenu)
         {
-            App.loginMenu.Input(Command);
+            App.gameMenu.Input(Command);
             return true;
         }
         if(2 == 3)

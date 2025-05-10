@@ -120,9 +120,9 @@ public class Time {
 
     public String showHour(){
         if (hour <= 12){
-            return String.format("%d.p.m", hour);
+            return String.format("%d.A.M", hour);
         }else {
-            return String.format("%d.A.M", (hour % 12));
+            return String.format("%d.P.M", (hour % 12));
         }
     }
 

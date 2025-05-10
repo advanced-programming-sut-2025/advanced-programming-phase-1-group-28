@@ -45,7 +45,7 @@ public class ShowFigures {
     }
     public void PredictWeather()
     {
-        //Output here .
+        System.out.println(App.gameMenuController.WeatherForeCasting().toString());
     }
     public void PrintMap()
     {
@@ -90,6 +90,7 @@ public class ShowFigures {
         }
 
     }
+
     public void ShowCraft(int x , int y)
     {
         if(App.ReturnCurrentPlayer().getFarm().getGround()[x][y].getEntitity() == Entitity.PLANTS)
@@ -120,6 +121,7 @@ public class ShowFigures {
             System.out.println("There is no plant here");
         }
     }
+
     public void ShowPlant(int x, int y)
     {
 

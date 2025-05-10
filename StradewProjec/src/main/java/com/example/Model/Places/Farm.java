@@ -1,12 +1,15 @@
 package com.example.Model.Places;
 
+import com.example.Model.Enums.PlaceType;
+import com.example.Model.Enums.Terrain;
 import com.example.Model.Tile.Animal;
+import com.example.Model.Tile.Tile;
 
 import java.util.ArrayList;
 
 public class Farm extends Place {
 
-    private ArrayList<Animal> Animals;
+    private ArrayList<Animal> Animals = new ArrayList<>();
     private GreenHouse greenHouse;
     private Cabin cabin; // attention if we construct in Cabin Class then Apply Here
     private Lake lake;
@@ -80,6 +83,54 @@ public class Farm extends Place {
         this.cabin = cabin;
         this.lake = lake;
         this.quarry = quarry;
+        setGround(new Tile[500][500]);
+        for(int i = 0;i < 500 ;i++)
+        {
+            for(int j = 0;j < 500 ;j++)
+            {
+                getGround()[i][j] = new Tile(Terrain.DIRT , null , null);
+            }
+        }
+        for(int i = 0;i < PlaceType.GREENHOUSE.XLength ; i++)
+        {
+            for(int j = 0;j < PlaceType.GREENHOUSE.YLength ;j++)
+            {
+                int Newi = i + greenHouse.X_Coordinate;
+                int Newj = j + greenHouse.Y_Coordinate;
+                getGround()[Newi][Newj].setTerrain(null);
+                getGround()[Newi][Newj].setPlaceType(PlaceType.GREENHOUSE);
+            }
+        }
+        for(int i = 0 ; i < PlaceType.CABIN.XLength ; i++)
+        {
+            for(int j = 0 ;j < PlaceType.CABIN.YLength ;j++)
+            {
+                int Newi = i + cabin.X_Coordinate;
+                int Newj = j + cabin.Y_Coordinate;
+                getGround()[Newi][Newj].setTerrain(null);
+                getGround()[Newi][Newj].setPlaceType(PlaceType.CABIN);
+            }
+        }
+        for(int i = 0 ; i < PlaceType.LAKE.XLength ; i++)
+        {
+            for(int j = 0 ;j < PlaceType.LAKE.YLength ;j++)
+            {
+                int Newi = i + lake.X_Coordinate;
+                int Newj = j + lake.Y_Coordinate;
+                getGround()[Newi][Newj].setTerrain(null);
+                getGround()[Newi][Newj].setPlaceType(PlaceType.LAKE);
+            }
+        }
+        for(int i = 0 ; i < PlaceType.QUARRY.XLength ; i++)
+        {
+            for(int j = 0 ;j < PlaceType.QUARRY.YLength ;j++)
+            {
+                int Newi = i + quarry.X_Coordinate;
+                int Newj = j + quarry.Y_Coordinate;
+                getGround()[Newi][Newj].setTerrain(null);
+                getGround()[Newi][Newj].setPlaceType(PlaceType.QUARRY);
+            }
+        }
     }
 
     public Animal getAnimalByName(String name){

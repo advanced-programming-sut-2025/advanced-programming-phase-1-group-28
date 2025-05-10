@@ -27,6 +27,8 @@ public class ProfileMenu {
             ChangePassword(matcher.group(1), matcher.group(2));
         } else if ((matcher = ProfileMenuRejex.Logout.getMatcher(command)) != null) {
             Logout();
+        } else if((matcher = ProfileMenuRejex.ShowInfo.getMatcher(command)) != null) {
+            ShowInfo();
         } else {
             System.out.println("invalid command");
         }

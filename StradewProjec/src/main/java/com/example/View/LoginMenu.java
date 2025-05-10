@@ -50,21 +50,17 @@ public class LoginMenu {
     public void  ForgotPassword(String UserName) {
         if(!App.loginController.IsUsernameValid(UserName)) {
             System.out.println("Username Does Not Exist");
+            return;
         }
         App.loginController.PrintQuestion(UserName);
         while(true)
         {
+            App.loginController.PrintQuestion(UserName);
             String AnswerGet = App.scanner.nextLine();
             if((matcher = LoginMenuRejex.AnswerSecQuestion.getMatcher(AnswerGet)) != null) {
-                if (App.loginController.CheckAnswer(UserName , AnswerGet))
+                if (App.loginController.CheckAnswer(UserName , matcher.group(1).trim()))
                 {
-                    System.out.println("enter your New Password");
-                    String NewPassword = App.scanner.nextLine();
-                    if(NewPassword.equals("Random"))
-                    {
-                        NewPassword = App.signUpController.RandomPassword();
-                    }
-                    App.loginController.ApplyChangePassword(UserName , NewPassword);
+                    System.out.println(App.loginController.ReturnPass(UserName));
                     break;
                 }
                 else

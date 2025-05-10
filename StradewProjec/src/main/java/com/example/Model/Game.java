@@ -14,7 +14,7 @@ public class Game {
     private ArrayList<User> PlayersInGame = new ArrayList<>();
     private ArrayList<Pepolee> CharactersInGame = new ArrayList<>();
     private int ID;
-    private Time Time;
+    private Time Time = new Time();
     private ArrayList<Integer> Scores = new ArrayList<>();
     private int WhoseTurn = 0;
     private Weathers Weather = Weathers.SUNNY;

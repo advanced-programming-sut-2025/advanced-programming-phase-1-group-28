@@ -1,7 +1,7 @@
 package com.example.Model.Enums;
 
 public enum MenuName {
-    SignUpMenu("SignupMenu") ,
+    SignUpMenu("SignUpMenu") ,
     LoginMenu("LoginMenu") ,
     MainMenu("MainMenu") ,
     ProfileMenu("ProfileMenu") ,

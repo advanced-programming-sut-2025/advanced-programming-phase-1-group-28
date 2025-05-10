@@ -8,6 +8,11 @@ import com.example.Model.Tile.Animal;
 public class MechanicGame {
     MechanicController mechanicController = App.mechanicController;
     public void BuildGreenHouse() {
+        if(!App.mechanicController.EnoughSourceForGreenhouse())
+        {
+            System.out.println("Akhe fahgir");
+            return;
+        }
 
     }
 
