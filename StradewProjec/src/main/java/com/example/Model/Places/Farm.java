@@ -81,4 +81,17 @@ public class Farm extends Place {
         this.lake = lake;
         this.quarry = quarry;
     }
+
+    public Animal getAnimalByName(String name){
+        for (Animal animal: Animals){
+            if (animal.getPetName().equals(name)){
+                return animal;
+            }
+        }
+        return null;
+    }
+
+    public void removeAnimal(Animal animal){
+        Animals.remove(animal);
+    }
 }

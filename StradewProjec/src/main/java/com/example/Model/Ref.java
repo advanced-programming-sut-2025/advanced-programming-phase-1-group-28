@@ -29,7 +29,7 @@ public class Ref {
     }
 
     public void AddItem(Item item){
-        Item newItem = getItem(item);
+        Item newItem = getItem(item.getName());
         if (newItem != null){
             newItem.addCount(item.getCount());
             return;

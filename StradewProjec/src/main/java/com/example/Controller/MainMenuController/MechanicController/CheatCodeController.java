@@ -4,6 +4,7 @@ import com.example.Controller.MainMenuController.GameMenuController;
 import com.example.Model.App;
 import com.example.Model.Enums.Weathers;
 import com.example.Model.Game;
+import com.example.Model.Tile.Animal;
 import com.example.Model.Time;
 import com.example.Model.Tools.Pepolee;
 import com.example.View.Appview;
@@ -69,9 +70,9 @@ public class CheatCodeController {
 
     }
 
-    public void SetFreindShip(String PetName , int Amount)
+    public void SetFriendShip(Animal animal, int amount)
     {
-
+        animal.setFriendShip(amount);
     }
 
     public void SetMoney()

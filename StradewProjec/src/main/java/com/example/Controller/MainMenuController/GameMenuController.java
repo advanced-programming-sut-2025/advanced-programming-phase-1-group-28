@@ -5,7 +5,9 @@ import com.example.Model.Enums.ConstantFarms;
 import com.example.Model.Enums.Direction;
 import com.example.Model.Enums.Skills;
 import com.example.Model.Game;
+import com.example.Model.Places.Farm;
 import com.example.Model.Skill;
+import com.example.Model.Tile.Animal;
 import com.example.Model.Tools.Pepolee;
 import com.example.Model.User;
 import com.example.View.Appview;
@@ -106,6 +108,19 @@ public class GameMenuController {
     {
         //use above function
         //USer random Foraging
+
+        // animals friendship effects
+        for (Pepolee pepolee: App.getCurrentGame().getCharactersInGame()){
+            for (Animal animal: pepolee.getFarm().getAnimals()){
+                if (!animal.isFed()){
+                    animal.addFriendship(-20);
+                }if (!animal.isPettedToday()){
+                    animal.addFriendship(animal.getFriendShip()/200 - 10);
+                }if (!animal.isInside()){
+                    animal.addFriendship(-20);
+                }
+            }
+        }
     }
     public void ApplyChangeHour(){
         //TODO buff, time

@@ -36,8 +36,33 @@ public class Time {
     //--------------------------------------------- update time
 
     public Time DifreenceTime(Time time1) {
-        //TODO
-        return time1;
+        int thisTotalHours = this.year * 12 * 28 * 24 + this.month * 28 * 24 + this.day * 24 + this.hour;
+        int otherTotalHours = time1.year * 12 * 28 * 24 + time1.month * 28 * 24 + time1.day * 24 + time1.hour;
+
+        int resultTotalHours = Math.abs(thisTotalHours - otherTotalHours);
+
+        Time result = new Time();
+        result.setYear(resultTotalHours / 12 * 28 * 24);
+        resultTotalHours %= 12 * 28 * 24;
+        result.setMonth(resultTotalHours / 28 * 24);
+        resultTotalHours %= 28 * 24;
+        result.setDay(resultTotalHours / 24);
+        resultTotalHours %= 24;
+        result.setHour(resultTotalHours);
+
+
+        if (result.month >= 1 && result.month <= 3){
+            result.setSeason(Season.SPRING);
+        } else if (result.month >= 4 && result.month <= 6) {
+            result.setSeason(Season.SUMMER);
+        } else if (result.month >= 7 && result.month <= 9) {
+            result.setSeason(Season.FALL);
+        }else {
+            result.setSeason(Season.WINTER);
+        }
+
+
+        return result;
     }
 
     public void jumpAheadOneHour(){
