@@ -5,6 +5,8 @@ import com.example.Model.Enums.Plants;
 import com.example.Model.Item.Item;
 import com.example.Model.Tools.Pepolee;
 
+import java.util.ArrayList;
+
 public class FriendShipController {
     public boolean arePlayersCloseEnough(Pepolee playerOne, Pepolee playerTwo){
         if (Math.abs(playerOne.getX() - playerTwo.getX()) > 2){
@@ -35,6 +37,16 @@ public class FriendShipController {
         return true;
     }
 
+    public boolean isThereAnyMarriageRequest(String username){
+        ArrayList<Gift> upcomingGifts = App.ReturnCurrentPlayer().getUpcomingGifts();
+        for (Gift gift: upcomingGifts){
+            if (gift.isMarriageRing() && gift.getSender() == App.getCurrentGame().getPlayerByUsername(username)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void ApplyTalk(String Username , String Message)
     {
         Game game = App.getCurrentGame();
@@ -43,6 +55,14 @@ public class FriendShipController {
         FriendShip secondFriendShip = game.getFriedShipBetweenPlayers(Username, currentUser.getUsername());
         firstFriendShip.applyTalk(Message);
         secondFriendShip.applyTalk(Message);
+
+        // marriage effect
+        if (firstFriendShip.getLevel() == 4){
+            Pepolee currentPlayer = App.ReturnCurrentPlayer();
+            Pepolee otherPlayer = game.getPlayerByUsername(Username);
+            currentPlayer.addEnergy(50);
+            otherPlayer.addEnergy(50);
+        }
     }
     public void ApplyExchange(String UsernameSeller , String UsernameBuyer , Item item)
     {
@@ -62,6 +82,12 @@ public class FriendShipController {
         secondFriendShip.addGift(gift);
         receiverPlayer.addGift(gift);
         // remove item from inventory
+
+        // marriage effect
+        if (firstFriendShip.getLevel() == 4){
+            currentPlayer.addEnergy(50);
+            receiverPlayer.addEnergy(50);
+        }
     }
 
     public void ApplyRateGift(Gift gift, int rate){
@@ -85,6 +111,14 @@ public class FriendShipController {
         FriendShip secondFriendShip = game.getFriedShipBetweenPlayers(username, currentUser.getUsername());
         firstFriendShip.applyHug();
         secondFriendShip.applyHug();
+
+        // marriage effect
+        if (firstFriendShip.getLevel() == 4){
+            Pepolee currentPlayer = App.ReturnCurrentPlayer();
+            Pepolee otherPlayer = game.getPlayerByUsername(username);
+            currentPlayer.addEnergy(50);
+            otherPlayer.addEnergy(50);
+        }
     }
     public void ApplyFlower(String username)
     {
@@ -107,6 +141,12 @@ public class FriendShipController {
         Item gift = flower.getCopy();
         gift.setCount(1);
         otherPlayer.getInventory().addOrIncreaseCount(gift, 1);
+
+        // marriage effect
+        if (firstFriendShip.getLevel() == 4){
+            currentPlayer.addEnergy(50);
+            otherPlayer.addEnergy(50);
+        }
     }
 
     public void sentMarriageRequest(String username, String ringName){
@@ -132,7 +172,17 @@ public class FriendShipController {
         FriendShip secondFriendShip = game.getFriedShipBetweenPlayers(username, currentUser.getUsername());
         firstFriendShip.applyMarriage();
         secondFriendShip.applyMarriage();
-        // marriage main effects
+    }
+
+    public void rejectMarriage(String username){
+        Game game = App.getCurrentGame();
+        User currentUser = App.getCurrentUser();
+        FriendShip firstFriendShip = game.getFriedShipBetweenPlayers(currentUser.getUsername(), username);
+        FriendShip secondFriendShip = game.getFriedShipBetweenPlayers(username, currentUser.getUsername());
+        firstFriendShip.setXP(0);
+        firstFriendShip.setLevel(0);
+        secondFriendShip.setXP(0);
+        secondFriendShip.setLevel(0);
     }
 
     public void tradeRequest(String username, String type, String offerItemName,
@@ -142,6 +192,8 @@ public class FriendShipController {
                 price, targetItemName, targetAmount);
         Pepolee receiverPlayer = App.getCurrentGame().getPlayerByUsername(username);
         receiverPlayer.addTrade(trade);
+
+
     }
 
     public void removeTrade(int id){
@@ -186,6 +238,12 @@ public class FriendShipController {
         FriendShip secondFriendShip = game.getFriedShipBetweenPlayers(otherPlayer.getCharacterUser().getUsername(), currentUser.getUsername());
         firstFriendShip.applyAcceptTrade();
         secondFriendShip.applyAcceptTrade();
+
+        // marriage effect
+        if (firstFriendShip.getLevel() == 4){
+            currentPlayer.addEnergy(50);
+            otherPlayer.addEnergy(50);
+        }
     }
 
     public void rejectTrade(Trade trade){

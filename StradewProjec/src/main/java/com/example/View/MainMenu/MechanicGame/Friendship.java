@@ -136,6 +136,25 @@ public class Friendship {
         System.out.println("your marriage request sent successfully.");
     }
 
+    public void responseMarriageRequest(String accept, String username){
+        int usernameID = App.getCurrentGame().getPlayerIDByUsername(username);
+        if (usernameID == -1){
+            System.out.println("User not found");
+            return;
+        }
+        if (!friendShipController.isThereAnyMarriageRequest(username)){
+            System.out.println("akhe ki mikhad toro begire???");
+            return;
+        }
+        if (accept.equals("-accept")){
+            friendShipController.ApplyMarriage(username);
+            System.out.println("Single status: GONE! You are now married to " + username + "!");
+        } else if (accept.equals("-reject")) {
+            friendShipController.rejectMarriage(username);
+            System.out.println("A wolf is always alone.");
+        }
+    }
+
     public void tradeRequest(String username, String type, String offerItemName,
                              int offerAmount, int price, String targetItemName, int targetAmount){
         int usernameID = App.getCurrentGame().getPlayerIDByUsername(username);

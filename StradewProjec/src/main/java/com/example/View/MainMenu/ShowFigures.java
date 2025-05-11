@@ -180,9 +180,21 @@ public class ShowFigures {
     {
 
     }
-    public void ShowTalkHistory()
+    public void ShowTalkHistory(String username)
     {
-
+        int usernameID = App.getCurrentGame().getPlayerIDByUsername(username);
+        if (usernameID == -1){
+            System.out.println("User not found");
+            return;
+        }
+        Game game = App.getCurrentGame();
+        User currentUser = App.getCurrentUser();
+        FriendShip friendShip = game.getFriedShipBetweenPlayers(currentUser.getUsername(), username);
+        ArrayList<String> talkHistory = friendShip.getTalkHistory();
+        System.out.println("Your talk history with " + username);
+        for (String talk: talkHistory){
+            System.out.println(talk);
+        }
     }
     public void ShowUpcomingGifts()
     {
@@ -241,7 +253,22 @@ public class ShowFigures {
     }
     public void ShowGiftsFromDreamMan(String Username)
     {
-
+        int usernameID = App.getCurrentGame().getPlayerIDByUsername(Username);
+        if (usernameID == -1){
+            System.out.println("User not found");
+            return;
+        }
+        Game game = App.getCurrentGame();
+        User currentUser = App.getCurrentUser();
+        FriendShip friendShip = game.getFriedShipBetweenPlayers(currentUser.getUsername(), Username);
+        int i = 0;
+        for (Gift gift: friendShip.getGifts()){
+            System.out.println("Gift number: " + i);
+            System.out.println("Sender: " + gift.getSender());
+            System.out.println("Item: " + gift.getItem().getName());
+            System.out.println("Count: " + gift.getCount());
+            i++;
+        }
     }
     public void GiftRating(int Rate)
     {
