@@ -128,10 +128,6 @@ public class MechanicController {
                 }
             }
             BFSLayer = newBFSLayer;
-            for(int i =0; i < BFSLayer.size(); i++)
-            {
-                System.out.println(BFSLayer.get(i).x + " " + BFSLayer.get(i).y);
-            }
         }
         if(Check[EndX][EndY].Check) {
             System.out.println(Check[EndX][EndY].ReturnMinCost());

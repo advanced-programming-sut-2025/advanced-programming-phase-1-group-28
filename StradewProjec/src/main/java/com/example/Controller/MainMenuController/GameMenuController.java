@@ -1,12 +1,18 @@
 package com.example.Controller.MainMenuController;
 
-import com.example.Model.*;
+import com.example.Model.App;
 import com.example.Model.Enums.*;
+import com.example.Model.Game;
 import com.example.Model.Places.*;
+import com.example.Model.Skill;
 import com.example.Model.Tile.Animal;
 import com.example.Model.Tile.Plants;
 import com.example.Model.Tile.Tile;
+import com.example.Model.Tile.Trees;
+import com.example.Model.Tile.Plants;
+import com.example.Model.Tile.Tile;
 import com.example.Model.Tools.Pepolee;
+import com.example.Model.User;
 import com.example.View.Appview;
 
 import java.util.ArrayList;
@@ -184,20 +190,6 @@ public class GameMenuController {
         App.getCurrentGame().setWeather(WeatherForeCasting());
         //use above function
         //USer random Foraging
-
-        // change plants Stage
-        for (Tile[] row: App.ReturnCurrentPlayer().getFarm().getGround()){
-            for (Tile tile: row){
-                if (tile instanceof Plants){
-                    if (((Plants) tile).getCurrentStage() == -1){
-                        continue;
-                    }
-                    if (App.getCurrentGame().getTime().getDay() - ((Plants) tile).getBornTime().getDay() >= ((Plants) tile).getCurrentStage()){
-                        ((Plants) tile).setStage(((Plants) tile).getStage() + 1);
-                    }
-                }
-            }
-        }
         // animals friendship effects
         for (Pepolee pepolee: App.getCurrentGame().getCharactersInGame()){
 

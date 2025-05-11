@@ -96,6 +96,9 @@ public class GameMenu {
             App.friendship.tradeResponse(matcher.group(1).equals("-accept"), Integer.parseInt(matcher.group(2)));
         } else if ((matcher = GameMenuRejex.TradeHistory.getMatcher(command)) != null) {
             App.showFigures.showTradeHistory();
+        } else if((matcher = GameMenuRejex.PrintMap.getMatcher(command)) != null)
+        {
+            App.showFigures.PrintMap(Integer.parseInt(matcher.group(1)) , Integer.parseInt(matcher.group(2)) , Integer.parseInt(matcher.group(3)));
         }
     }
     public void StartGame(ArrayList<String> PlayersInGame)

@@ -11,6 +11,15 @@ public class Trees extends Tile {
     private int HowOldAreYou;
     private boolean IsAttackingWithCrow = false;
     private boolean Iscooded = false;
+    private boolean ISLightend = false;
+
+    public boolean isISLightend() {
+        return ISLightend;
+    }
+
+    public void setISLightend(boolean ISLightend) {
+        this.ISLightend = ISLightend;
+    }
 
     public boolean isIscooded() {
         return Iscooded;

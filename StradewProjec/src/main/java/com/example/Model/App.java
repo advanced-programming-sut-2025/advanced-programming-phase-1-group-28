@@ -26,6 +26,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Random;
@@ -38,8 +39,16 @@ public class App {
     public static FriendShipController friendShipController = new FriendShipController();
     public static ShowFigures showFigures = new ShowFigures();
     public static CheatCodes cheatCodes = new CheatCodes();
-    public static Scanner scanner = new Scanner(System.in);
-    public static SignUpController signUpController = new SignUpController();
+    public static File Commands = new File("Commands.txt");
+    public static Scanner scanner;
+    static {
+        try {
+            scanner = new Scanner(Commands);
+        }catch (FileNotFoundException e)
+        {
+            System.out.println("bas kon");
+        }
+    }    public static SignUpController signUpController = new SignUpController();
     public static LoginController loginController = new LoginController();
     public static GameMenuController gameMenuController = new GameMenuController();
     public static ProfileMenuController profileMenuController = new ProfileMenuController();

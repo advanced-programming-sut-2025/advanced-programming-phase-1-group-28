@@ -3,9 +3,12 @@ package com.example.View.MainMenu;
 import com.example.Model.*;
 import com.example.Model.Enums.Entitity;
 import com.example.Model.Enums.Foods;
+import com.example.Model.Enums.MapReading;
+import com.example.Model.Enums.PlaceType;
 import com.example.Model.Item.Item;
 import com.example.Model.Tile.Animal;
 import com.example.Model.Tile.Plants;
+import com.example.Model.Tile.Tile;
 import com.example.Model.Tools.Pepolee;
 import com.example.Model.Tools.Tools;
 
@@ -47,13 +50,50 @@ public class ShowFigures {
     {
         System.out.println(App.gameMenuController.WeatherForeCasting().toString());
     }
-    public void PrintMap()
+    public void PrintMap(int x, int y, int l)
     {
+        Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
+        for(int i = 0; i < 500; i++)
+        {
+            for(int j = 0 ;j < 500 ;j++)
+            {
+                if(TempGround[i][j].getPlaceType() == PlaceType.GREENHOUSE || TempGround[i][j].getPlaceType() == PlaceType.CABIN)
+                {
+                    System.out.println("Mashtoo");
+                }
+                /*for(MapReading mapReading : MapReading.values())
+                {
+                    if(TempGround[i][j].getPlaceType() != null)
+                    {
+                        if(TempGround[i][j].getPlaceType() == mapReading.placeType)
+                        {
+                            System.out.printf("%c" , mapReading.Show);
+                        }
+                    }
+                    else if(TempGround[i][j].getEntitity() != null)
+                    {
+                        if(TempGround[i][j].getEntitity() == mapReading.entitity)
+                        {
+                            System.out.printf("%c" , mapReading.Show);
+                        }
+                    } else if (TempGround[i][j].getTerrain() != null)
+                    {
+                        if(TempGround[i][j].getTerrain() == mapReading.terrain)
+                        {
+                            System.out.printf("%c" , mapReading.Show);
+                        }
+                    }
+                }*/
+            }
+        }
         //Print ColorFull Emtiazi
     }
     public void ShowHelpReadingMap()
     {
-
+        for(MapReading mapReading : MapReading.values())
+        {
+            System.out.println(mapReading.toString() + " " + mapReading.Show);
+        }
     }
     public void ShowEnergy()
     {
