@@ -2,6 +2,7 @@ package com.example.View.MainMenu.MechanicGame;
 
 import com.example.Controller.MainMenuController.MechanicController.FriendShipController;
 import com.example.Model.*;
+import com.example.Model.Enums.Plants;
 import com.example.Model.Item.Item;
 import com.example.Model.Tools.Pepolee;
 
@@ -100,6 +101,9 @@ public class Friendship {
         }
         if (!friendShipController.haveEnoughFriendShipLevel(username, 2)){
             System.out.println("This action requires a deeper connection.");
+            return;
+        }if (!friendShipController.isItemAvailable(Plants.FAIRY_ROSE.toString())){
+            System.out.println("Looks like this person only accepts the " + Plants.FAIRY_ROSE.toString() + "! You'll have to find that one!");
             return;
         }
         friendShipController.ApplyFlower(username);

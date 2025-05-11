@@ -92,8 +92,11 @@ public class MechanicGame {
         if (animal == null){
             System.out.println("No animal with that name exists here.");
             return;
+        } else if (mechanicController.BFS(animal.getX(), animal.getY(), x, y) == -1) {
+            System.out.println("You can't reach there.");
+            return;
         }
-        mechanicController.ApplyMovingAnimal(animal);
+        mechanicController.ApplyMovingAnimal(animal, x, y);
         System.out.println("You moved " + animalName + " successfully.");
     }
 

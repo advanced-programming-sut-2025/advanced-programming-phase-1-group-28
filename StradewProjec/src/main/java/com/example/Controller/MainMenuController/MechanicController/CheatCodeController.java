@@ -14,23 +14,17 @@ public class CheatCodeController {
 
     public void ChangeHour(int Hour)
     {
-        Game currentGame = App.returnGame(Appview.CurrentGameID);
-        Time gameTime = currentGame.getTime();
         for (int i=0; i<Hour; i++){
-            gameTime.jumpAheadOneHour();
-            if (gameTime.isDayChanged()){
-                gameMenuController.ApplyChangeDay();
-            }
+            gameMenuController.ApplyChangeHour();
         }
     }
 
     public void ChangeDay(int Day)
     {
-        Game currentGame = App.returnGame(Appview.CurrentGameID);
-        Time gameTime = currentGame.getTime();
         for (int i = 0; i<Day; i++){
-            gameTime.jumpAheadOneDay();
-            gameMenuController.ApplyChangeDay();
+            for (int j = 0; j<24; j++){
+                gameMenuController.ApplyChangeHour();
+            }
         }
     }
 

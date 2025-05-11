@@ -1,6 +1,7 @@
 package com.example.Controller.MainMenuController.MechanicController;
 
 import com.example.Model.*;
+import com.example.Model.Enums.Plants;
 import com.example.Model.Item.Item;
 import com.example.Model.Tools.Pepolee;
 
@@ -87,12 +88,25 @@ public class FriendShipController {
     }
     public void ApplyFlower(String username)
     {
+        // friendship effects
         Game game = App.getCurrentGame();
         User currentUser = App.getCurrentUser();
         FriendShip firstFriendShip = game.getFriedShipBetweenPlayers(currentUser.getUsername(), username);
         FriendShip secondFriendShip = game.getFriedShipBetweenPlayers(username, currentUser.getUsername());
         firstFriendShip.applyFlower();
         secondFriendShip.applyFlower();
+
+        // remove and add flower
+        Pepolee currentPlayer = App.ReturnCurrentPlayer();
+        Pepolee otherPlayer = game.getPlayerByUsername(username);
+        Item flower = currentPlayer.getInventory().getItemByName(Plants.FAIRY_ROSE.toString());
+        flower.addCount(-1);
+        if (flower.getCount() == 0){
+            currentPlayer.getInventory().removeItem(flower);
+        }
+        Item gift = flower.getCopy();
+        gift.setCount(1);
+        otherPlayer.getInventory().addOrIncreaseCount(gift, 1);
     }
 
     public void sentMarriageRequest(String username, String ringName){
