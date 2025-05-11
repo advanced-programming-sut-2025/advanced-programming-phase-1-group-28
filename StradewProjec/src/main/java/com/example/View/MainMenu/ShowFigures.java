@@ -152,40 +152,54 @@ public class ShowFigures {
 
     }
 
-    public void ShowCraft(int x , int y)
+    public void ShowCraft(String name)
     {
-        if(App.ReturnCurrentPlayer().getFarm().getGround()[x][y].getEntitity() == Entitity.PLANTS)
-        {
-            Plants ourplant = (Plants) App.ReturnCurrentPlayer().getFarm().getGround()[x][y];
-            System.out.println("Name : " + ourplant.getPlant().toString());
-            System.out.println("Source : " + ourplant.getPlant().Source);
-            System.out.println("Stages : " + ourplant.getPlant().stage);
-            System.out.println("TotalHarvestTime : " + ourplant.getPlant().TotalTimeHarvest);
-            System.out.println("On Time : " + ourplant.getPlant().OnTime);
-            if(ourplant.getPlant().RegrowthTime == 0)
-            {
-                System.out.println("Regrowth time is : ");
+        for(com.example.Model.Enums.Plants plant : com.example.Model.Enums.Plants.values()) {
+            if(plant.toString().equals(name)) {
+                Plants ourplant = new Plants(plant);
+                System.out.println("Name : " + ourplant.getPlant().toString());
+                System.out.println("Source : " + ourplant.getPlant().Source);
+                System.out.println("Stages : " + ourplant.getPlant().stage);
+                System.out.println("TotalHarvestTime : " + ourplant.getPlant().TotalTimeHarvest);
+                System.out.println("On Time : " + ourplant.getPlant().OnTime);
+                if (ourplant.getPlant().RegrowthTime == 0) {
+                    System.out.println("Regrowth time is : ");
+                } else {
+                    System.out.println("Regrowth time is : " + ourplant.getPlant().RegrowthTime);
+                }
+                System.out.println("Base Sell Price : " + ourplant.getPlant().BasePrice);
+                System.out.println("Is Edible :" + ourplant.getPlant().IsEdible);
+                System.out.println("Base Energy : " + ourplant.getPlant().energy);
+                //System.out.println("Base Health : " + ourplant.getPlant().);
+                System.out.println("Seoson : " + ourplant.getPlant().season);
+                System.out.println("Can become Giant" + ourplant.getPlant().CanBecomeGiant);
             }
-            else
-            {
-                System.out.println("Regrowth time is : " + ourplant.getPlant().RegrowthTime);
-            }
-            System.out.println("Base Sell Price : " + ourplant.getPlant().BasePrice);
-            System.out.println("Is Edible :" + ourplant.getPlant().IsEdible);
-            System.out.println("Base Energy : " + ourplant.getPlant().energy);
-            //System.out.println("Base Health : " + ourplant.getPlant().);
-            System.out.println("Seoson : " + ourplant.getPlant().season);
-            System.out.println("Can become Giant" + ourplant.getPlant().CanBecomeGiant);
-        }
-        else
-        {
-            System.out.println("There is no plant here");
         }
     }
 
     public void ShowPlant(int x, int y)
     {
-
+        Pepolee currentPlayer = App.ReturnCurrentPlayer();
+        Tile[][] Tempground = currentPlayer.getFarm().getGround();
+        if(Tempground[x][y].getEntitity() == Entitity.PLANTS)
+        {
+            Plants ourplanr = (Plants) Tempground[x][y];
+            System.out.println("Name" + ourplanr.getPlant().toString());
+            System.out.println("Time to harvest" + (Math.min(0 , ourplanr.getPlant().TotalTimeHarvest - ourplanr.getBornTime().DifreenceTime(App.getCurrentGame().getTime()).getDay())));
+            System.out.println("IS Codded" + ourplanr.isISCooded());
+            if(ourplanr.getLastTimeWatering().getDay() == App.getCurrentGame().getTime().getDay())
+            {
+                System.out.println("Is waterd today");
+            }
+            else
+            {
+                System.out.println("Doesnt watered today");
+            }
+        }
+        else
+        {
+            System.out.println("There is no seed here");
+        }
     }
     public void HowMuchWater()
     {

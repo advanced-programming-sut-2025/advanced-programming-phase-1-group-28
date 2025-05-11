@@ -111,6 +111,9 @@ public class GameMenu {
             App.showFigures.ShowAvailableTools();
         } else if((matcher = GameMenuRejex.ToolUse.getMatcher(command)) != null) {
             App.UseTool.Usetool(Integer.parseInt(matcher.group(1)) , Integer.parseInt(matcher.group(2)));
+        } else if((matcher = GameMenuRejex.ShowCraft.getMatcher(command)) != null) {
+            App.showFigures.ShowCraft(matcher.group(1).trim());
+        } else if((matcher = GameMenuRejex.ShowCraft.getMatcher(command)) != null) {
         }
     }
     public void StartGame(ArrayList<String> PlayersInGame)

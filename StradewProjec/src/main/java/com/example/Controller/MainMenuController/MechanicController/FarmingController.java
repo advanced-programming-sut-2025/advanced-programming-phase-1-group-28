@@ -153,4 +153,40 @@ public class FarmingController {
         }
     }
 
+    public void CrowAttack()
+    {
+        for(int i = 0 ;i < App.getCurrentGame().getCharactersInGame().size();i++)
+        {
+            Pepolee nowpeolee = App.getCurrentGame().getCharactersInGame().get(i);
+            Tile[][] Tempground = nowpeolee.getFarm().getGround();
+            for(int x = 0 ;x < PlaceType.FARM.XLength ; x++)
+            {
+                for(int y = 0;y < PlaceType.FARM.YLength ;y++)
+                {
+                    if(Tempground[x][y].getEntitity() == Entitity.PLANTS)
+                    {
+                        int Randx = App.random.nextInt() % 24;
+                        if(Randx == 0)
+                        {
+                            Plants ourplant = (Plants)Tempground[x][y];
+                            if(ourplant.getPlant().OnTime)
+                            {
+                                Tempground[x][y].setTerrain(Terrain.DIRT);
+                                Tempground[x][y].setEntitity(null);
+                                Tempground[x][y].setPlaceType(null);
+                                Tempground[x][y].setHow(false);
+                            }
+                            else
+                            {
+                                Tempground[x][y].setISAttackedByCrow(true);
+                            }
+                        }
+                    }
+                }
+            }
+            nowpeolee.getFarm().setGround(Tempground);
+        }
+
+    }
+
 }
