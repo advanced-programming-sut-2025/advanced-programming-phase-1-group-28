@@ -199,4 +199,17 @@ public class Time {
     public void setDayChanged(boolean dayChanged) {
         isDayChanged = dayChanged;
     }
+
+    public Time getCopy(){
+        Time time = new Time();
+        time.setSeason(season);
+        time.setHour(hour);
+        time.setDay(day);
+        time.setYear(year);
+        time.setMonth(month);
+        time.setDayOfWeek(dayOfWeek);
+        time.setGame(game);
+        time.setDayChanged(isDayChanged);
+        return time;
+    }
 }
