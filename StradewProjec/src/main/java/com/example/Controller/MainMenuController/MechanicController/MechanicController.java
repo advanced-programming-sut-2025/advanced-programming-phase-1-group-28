@@ -126,15 +126,12 @@ public class MechanicController {
                 }
             }
             BFSLayer = newBFSLayer;
-            System.out.println("Salam");
             for(int i =0; i < BFSLayer.size(); i++)
             {
                 System.out.println(BFSLayer.get(i).x + " " + BFSLayer.get(i).y);
             }
-            System.out.println("Salam");
         }
         if(Check[EndX][EndY].Check) {
-            System.out.println("sagbar pedaret");
             System.out.println(Check[EndX][EndY].ReturnMinCost());
             if (Check[EndX][EndY].ReturnMinCost() != 1000000) {
                 /*if (Check[EndX][EndY].ReturnMinCost() / 20 > App.ReturnCurrentPlayer().getEnergy()) {
