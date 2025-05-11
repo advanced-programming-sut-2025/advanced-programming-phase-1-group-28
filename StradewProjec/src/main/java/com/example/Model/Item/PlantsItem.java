@@ -16,6 +16,7 @@ public class PlantsItem extends Item{
 
     public void setPlant(Plants plant) {
         this.plant = plant;
+        this.name = plant.toString();
     }
 
     @Override

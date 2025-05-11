@@ -201,6 +201,9 @@ public class GameMenuController {
     }
     public void ApplyChangeHour(){
         //TODO buff, time
-        // App.getCurrentGame().getTime().jumpAheadOneHour();
+        App.getCurrentGame().getTime().jumpAheadOneHour();
+        if (App.getCurrentGame().getTime().isDayChanged()){
+            ApplyChangeDay();
+        }
     }
 }

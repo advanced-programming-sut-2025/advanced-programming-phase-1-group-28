@@ -3,10 +3,12 @@ package com.example.Controller.MainMenuController.MechanicController;
 import com.example.Main;
 import com.example.Model.App;
 import com.example.Model.Enums.Direction;
+import com.example.Model.Enums.PlaceType;
 import com.example.Model.Inventory;
 import com.example.Model.Item.Ingredient;
 import com.example.Model.Item.Item;
 import com.example.Model.Node;
+import com.example.Model.Places.Farm;
 import com.example.Model.Tile.Animal;
 import com.example.Model.Tools.Pepolee;
 
@@ -284,9 +286,17 @@ public class MechanicController {
         animal.setFed(true);
     }
 
-    public void ApplyMovingAnimal(Animal animal)
+    public void ApplyMovingAnimal(Animal animal,int x,int y)
     {
-
+        animal.setX(x);
+        animal.setY(y);
+        Farm farm = App.ReturnCurrentPlayer().getFarm();
+        if (farm.getGround()[x][y].getPlaceType() == PlaceType.BARN || farm.getGround()[x][y].getPlaceType() == PlaceType.COOP){
+            animal.setInside(true);
+        }else {
+            animal.setInside(false);
+            animal.addFriendship(8);
+        }
     }
 
     public void SellAnimal(Animal animal)

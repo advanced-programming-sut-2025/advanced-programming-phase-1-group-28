@@ -33,6 +33,10 @@ public class DailyLimits {
                     5 , 5 , 5 , 5 , 5 ,
                     5 , 5 , 5 , 5
             };
+    private int FishShop[] = new int[]
+            {
+                    1 , 1 , 1 , 1 , 1 , 1
+            };
 
     public int[] getBlackSmithLimits() {
         return BlackSmithLimits;
@@ -80,5 +84,13 @@ public class DailyLimits {
 
     public void setPierreStore(int pierreStore[]) {
         PierreStore = pierreStore;
+    }
+
+    public int[] getFishShop() {
+        return FishShop;
+    }
+
+    public void setFishShop(int fishShop[]) {
+        FishShop = fishShop;
     }
 }
