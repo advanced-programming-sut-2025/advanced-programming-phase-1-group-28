@@ -79,7 +79,6 @@ public class Farm extends Place {
     }
 
     public Farm(GreenHouse greenHouse, Cabin cabin, Lake lake, Quarry quarry) {
-        System.out.println("what the fuck");
         this.greenHouse = greenHouse;
         this.cabin = cabin;
         this.lake = lake;
@@ -130,16 +129,6 @@ public class Farm extends Place {
                 int Newj = j + quarry.Y_Coordinate;
                 getGround()[Newi][Newj].setTerrain(null);
                 getGround()[Newi][Newj].setPlaceType(PlaceType.QUARRY);
-            }
-        }
-        for(int i = 0;i < 500 ;i++)
-        {
-            for(int j = 0;j < 500 ;j ++)
-            {
-                if(getGround()[i][j].getPlaceType() == PlaceType.CABIN)
-                {
-                    System.out.println(i + " " + j);
-                }
             }
         }
     }

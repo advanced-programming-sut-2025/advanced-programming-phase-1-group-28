@@ -87,10 +87,6 @@ public class AppInputCommand {
             App.gameMenu.Input(Command);
             return true;
         }
-        if(2 == 3)
-        {
-
-        }
         return true;
     }
 }

@@ -1,10 +1,7 @@
 package com.example.View.MainMenu;
 
 import com.example.Model.*;
-import com.example.Model.Enums.Entitity;
-import com.example.Model.Enums.Foods;
-import com.example.Model.Enums.MapReading;
-import com.example.Model.Enums.PlaceType;
+import com.example.Model.Enums.*;
 import com.example.Model.Item.Item;
 import com.example.Model.Tile.Animal;
 import com.example.Model.Tile.Plants;
@@ -53,38 +50,62 @@ public class ShowFigures {
     public void PrintMap(int x, int y, int l)
     {
         Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
-        for(int i = 0; i < 500; i++)
+        for(int i = x; i < x + l; i++)
         {
-            for(int j = 0 ;j < 500 ;j++)
+            for(int j = y ;j < y + l ;j++)
             {
-                if(TempGround[i][j].getPlaceType() == PlaceType.GREENHOUSE || TempGround[i][j].getPlaceType() == PlaceType.CABIN)
+                if(App.ReturnCurrentPlayer().getX() == i && App.ReturnCurrentPlayer().getY() == j)
                 {
-                    System.out.println("Mashtoo");
+                    System.out.printf( "%c",MapReading.PEOPEELE.Show);
                 }
-                /*for(MapReading mapReading : MapReading.values())
+                else
                 {
-                    if(TempGround[i][j].getPlaceType() != null)
+                    if(TempGround[i][j].getTerrain() == Terrain.DIRT)
                     {
-                        if(TempGround[i][j].getPlaceType() == mapReading.placeType)
+                        if(TempGround[i][j].isHow())
                         {
-                            System.out.printf("%c" , mapReading.Show);
+                            System.out.printf("S");
+                        }
+                        else
+                        {
+                            System.out.printf("D");
                         }
                     }
-                    else if(TempGround[i][j].getEntitity() != null)
+                    else
                     {
-                        if(TempGround[i][j].getEntitity() == mapReading.entitity)
+                        if(TempGround[i][j].getPlaceType() == PlaceType.CABIN)
                         {
-                            System.out.printf("%c" , mapReading.Show);
+                            System.out.printf("C");
                         }
-                    } else if (TempGround[i][j].getTerrain() != null)
-                    {
-                        if(TempGround[i][j].getTerrain() == mapReading.terrain)
+                        else
                         {
-                            System.out.printf("%c" , mapReading.Show);
+                            if(TempGround[i][j].getPlaceType() == PlaceType.LAKE)
+                            {
+                                System.out.printf("L");
+                            }
+                            else
+                            {
+                                if(TempGround[i][j].getPlaceType() == PlaceType.GREENHOUSE)
+                                {
+                                    System.out.printf("G");
+                                }
+                                else
+                                {
+                                    if(TempGround[i][j].getEntitity() == Entitity.TREE)
+                                    {
+                                        System.out.printf("T");
+                                    }
+                                    else if(TempGround[i][j].getEntitity() == Entitity.PLANTS)
+                                    {
+                                        System.out.printf("P");
+                                    }
+                                }
+                            }
                         }
                     }
-                }*/
+                }
             }
+            System.out.println();
         }
         //Print ColorFull Emtiazi
     }
@@ -103,7 +124,7 @@ public class ShowFigures {
     public void ShowTool()
     {
         if(App.ReturnCurrentPlayer().getInventory().getCurrentTool() != null) {
-            System.out.println(App.ReturnCurrentPlayer().getInventory().getCurrentTool());
+            System.out.println(App.ReturnCurrentPlayer().getInventory().getCurrentTool().getName());
         }
         else
         {

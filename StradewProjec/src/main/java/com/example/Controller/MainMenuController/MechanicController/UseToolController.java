@@ -7,24 +7,75 @@ import com.example.Model.Enums.Fishes;
 import com.example.Model.Enums.Terrain;
 import com.example.Model.Item.*;
 import com.example.Model.Tile.*;
-import com.example.Model.Tools.Hoe;
-import com.example.Model.Tools.Pepolee;
-import com.example.Model.Tools.WaterCan;
+import com.example.Model.Tools.*;
+
+import javax.tools.Tool;
 
 public class UseToolController {
     public boolean EnoughEnergy()
     {
         return false;
     }
-    public void ApplyUsing()
+
+    public void EquipTool(String ToolName)
     {
-        //everything
+        Pepolee currentPepolee = App.ReturnCurrentPlayer();
+        Tools OurTool = currentPepolee.getInventory().getToolbyname(ToolName);
+        if(OurTool!=null)
+        {
+            currentPepolee.getInventory().setCurrentTool(OurTool);
+        }
     }
-    public String ApplyHoe(int x , int y , Hoe hoe)
+
+    public String ApplyUsing(int x, int y)
+    {
+        Pepolee currentPepolee = App.ReturnCurrentPlayer();
+        Tools ourtool = currentPepolee.getInventory().getCurrentTool();
+        if(ourtool instanceof Hoe)
+        {
+            return ApplyHoe(x , y);
+        }
+        if(ourtool instanceof Axe)
+        {
+            return ApplyAxe(x , y);
+        }
+        if(ourtool instanceof FishingPole)
+        {
+            return ApplyFishingPole(x , y);
+        }
+        if(ourtool instanceof MilkPail)
+        {
+            return ApplyMilkPail(x , y);
+        }
+        if(ourtool instanceof Pickaxe)
+        {
+            return ApplyPickaxe(x , y);
+        }
+        if(ourtool instanceof Seythe)
+        {
+            return ApplySeythe(x , y);
+        }
+        if(ourtool instanceof Shear)
+        {
+            return ApplyShear(x , y);
+        }
+        if(ourtool instanceof TrashCan)
+        {
+            ApplyTRashCan();
+        }
+        if(ourtool instanceof WaterCan)
+        {
+            return ApplyWaterCan(x , y);
+        }
+        return null;
+    }
+    public String ApplyHoe(int x , int y )
     {
         Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
         int NewX = App.ReturnCurrentPlayer().getX() + x;
         int NewY = App.ReturnCurrentPlayer().getY() + y;
+        System.out.println(NewX + " " + NewY);
+        Hoe hoe = (Hoe) CurrentPepolee.getInventory().getCurrentTool();
         if(CurrentPepolee.getFarm().getGround()[NewX][NewY].getTerrain() == Terrain.DIRT)
         {
             Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
@@ -160,10 +211,10 @@ public class UseToolController {
         }
     }
 
-    public String ApplySeythe()
+    public String ApplySeythe(int x , int y)
     {
-        int NewX = App.ReturnCurrentPlayer().getX();
-        int NewY = App.ReturnCurrentPlayer().getY();
+        int NewX = App.ReturnCurrentPlayer().getX() + x;
+        int NewY = App.ReturnCurrentPlayer().getY() + y;
         Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
         Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
         CurrentPepolee.setEnergy(CurrentPepolee.getEnergy() - 2);
@@ -194,10 +245,10 @@ public class UseToolController {
         return null;
     }
 
-    public String ApplyMilkPail()
+    public String ApplyMilkPail(int x , int y)
     {
-        int NewX = App.ReturnCurrentPlayer().getX();
-        int NewY = App.ReturnCurrentPlayer().getY();
+        int NewX = App.ReturnCurrentPlayer().getX() + x;
+        int NewY = App.ReturnCurrentPlayer().getY() + y;
         Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
         Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
         Ingredient newingredient = new Ingredient(0  , null);

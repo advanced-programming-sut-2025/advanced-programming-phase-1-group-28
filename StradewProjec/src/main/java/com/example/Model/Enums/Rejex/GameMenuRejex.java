@@ -4,6 +4,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum GameMenuRejex {
+    ToolUse("tools\\s+use\\s+-d\\s+(\\d+)\\s+(\\d+)"),
+    ToolsShowAvailable("^tools\\s+show\\s+available$"),
+    ToolsShowCurrent("^tools\\s+show\\s+current$"),
+    Equiptool("^tools\\s+equip\\s+(.+)$"),
     Printmap("print\\s+map\\s+-l\\s+(\\d+),(\\d+)\\s+-s\\s+(\\d+)"),
     BuildGreenhouse("^greenhouse\\s+build$"),
     ExitGame("^exit\\s+game$"),
