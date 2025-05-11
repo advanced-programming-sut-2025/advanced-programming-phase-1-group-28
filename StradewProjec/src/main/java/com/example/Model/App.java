@@ -15,6 +15,7 @@ import com.example.View.Appview;
 import com.example.View.LoginMenu;
 import com.example.View.MainMenu.CheatCodes;
 import com.example.View.MainMenu.GameMenu;
+import com.example.View.MainMenu.MechanicGame.Friendship;
 import com.example.View.MainMenu.MechanicGame.MechanicGame;
 import com.example.View.MainMenu.ProfileMenu;
 import com.example.View.MainMenu.ShowFigures;
@@ -51,6 +52,7 @@ public class App {
     public static ProfileMenu profileMenu = new ProfileMenu();
     public static GameMenu gameMenu = new GameMenu();
     public static LoginMenu loginMenu = new LoginMenu();
+    public static Friendship friendship = new Friendship();
     public static Random random = new Random();
     public static DailyLimits dailyLimits = new DailyLimits();
     static {

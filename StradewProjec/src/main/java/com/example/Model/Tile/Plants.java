@@ -9,6 +9,7 @@ import com.example.Model.Time;
 public class Plants extends Tile{
     private com.example.Model.Enums.Plants plant;
     private int Stage = 0;
+    private int[] daysNeededForStage = new int[6];
     private Time BornTime;
     private boolean ISCooded = false;
     private Time LastTimeWatering;
@@ -46,6 +47,17 @@ public class Plants extends Tile{
     public Plants(com.example.Model.Enums.Plants plant) {
         super(Terrain.GRASS , PlaceType.NORMAL , Entitity.PLANTS);
         this.plant = plant;
+        if (plant.stage == null){
+            return;
+        }
+        int i = 0;
+        int count = 0;
+        for (String s: plant.stage.split("-")){
+            count += Integer.parseInt(s);
+            daysNeededForStage[i] = count;
+            i++;
+        }
+        daysNeededForStage[i] = -1;
     }
 
     public com.example.Model.Enums.Plants getPlant() {
@@ -62,6 +74,10 @@ public class Plants extends Tile{
 
     public void setStage(int stage) {
         Stage = stage;
+    }
+
+    public int getCurrentStage(){
+        return daysNeededForStage[Stage];
     }
 
 }
