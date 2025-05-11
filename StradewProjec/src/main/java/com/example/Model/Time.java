@@ -36,14 +36,14 @@ public class Time {
     //--------------------------------------------- update time
 
     public Time DifreenceTime(Time time1) {
-        int thisTotalHours = this.year * 12 * 28 * 24 + this.month * 28 * 24 + this.day * 24 + this.hour;
-        int otherTotalHours = time1.year * 12 * 28 * 24 + time1.month * 28 * 24 + time1.day * 24 + time1.hour;
+        int thisTotalHours = this.year * 4 * 28 * 24 + this.month * 28 * 24 + this.day * 24 + this.hour;
+        int otherTotalHours = time1.year * 4 * 28 * 24 + time1.month * 28 * 24 + time1.day * 24 + time1.hour;
 
         int resultTotalHours = Math.abs(thisTotalHours - otherTotalHours);
 
         Time result = new Time();
-        result.setYear(resultTotalHours / 12 * 28 * 24);
-        resultTotalHours %= 12 * 28 * 24;
+        result.setYear(resultTotalHours / 4 * 28 * 24);
+        resultTotalHours %= 4 * 28 * 24;
         result.setMonth(resultTotalHours / 28 * 24);
         resultTotalHours %= 28 * 24;
         result.setDay(resultTotalHours / 24);
@@ -51,11 +51,11 @@ public class Time {
         result.setHour(resultTotalHours);
 
 
-        if (result.month >= 1 && result.month <= 3){
+        if (result.month == 1){
             result.setSeason(Season.SPRING);
-        } else if (result.month >= 4 && result.month <= 6) {
+        } else if (result.month == 2) {
             result.setSeason(Season.SUMMER);
-        } else if (result.month >= 7 && result.month <= 9) {
+        } else if (result.month == 3) {
             result.setSeason(Season.FALL);
         }else {
             result.setSeason(Season.WINTER);
@@ -92,17 +92,17 @@ public class Time {
 
     public void jumpAheadOneMonth(){
         month += 1;
-        if (month == 13){
+        if (month == 5){
             month = 1;
             jumpAheadOneYear();
         }
         if (month == 1){
             season = Season.SPRING;
-        }else if (month == 4){
+        }else if (month == 2){
             season = Season.SUMMER;
-        } else if (month == 7) {
+        } else if (month == 3) {
             season = Season.FALL;
-        } else if (month == 10) {
+        } else if (month == 4) {
             season = Season.WINTER;
         }
     }

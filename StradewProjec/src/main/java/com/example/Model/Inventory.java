@@ -106,6 +106,15 @@ public class Inventory {
         items.add(item);
     }
 
+    public void addOrIncreaseCount(Item item, int count){
+        Item currentItem = getItemByName(item.getName());
+        if (currentItem != null){
+            currentItem.addCount(count);
+            return;
+        }
+        addItem(item);
+    }
+
     public boolean canAddNewItem(){
         return items.size() + tools.size() + seeds.size() + saplings.size() < inventoryCapacity;
     }
