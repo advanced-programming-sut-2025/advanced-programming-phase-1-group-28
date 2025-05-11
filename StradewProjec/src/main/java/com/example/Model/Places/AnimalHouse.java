@@ -8,7 +8,6 @@ public class AnimalHouse extends Place{
         Y_Coordinate = y;
         this.AnimalHouse = animalHouse;
         this.Capacity = Capacity;
-
     }
 
     public String getAnimalHouse() {
