@@ -103,6 +103,7 @@ public class GameMenu {
     }
     public void StartGame(ArrayList<String> PlayersInGame)
     {
+        PlayersInGame.add(0, App.getCurrentUser().getUsername());
         for(int i = 0 ;i < PlayersInGame.size();i++) {
             if (!signUpController.IsUsernameTaken(PlayersInGame.get(i))) {
                 System.out.println(PlayersInGame.get(i) + " is not a valid username");
@@ -117,7 +118,6 @@ public class GameMenu {
         for(int i = 0;i < PlayersInGame.size();i++) {
             System.out.println(PlayersInGame.get(i));
         }
-        PlayersInGame.add(0, App.getCurrentUser().getUsername());
         gameMenuController.ApplyPlayersToGame(PlayersInGame);
         for(int i = 0 ;i < PlayersInGame.size();i++) {
             while (true)

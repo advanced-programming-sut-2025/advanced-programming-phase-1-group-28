@@ -34,7 +34,7 @@ public class CheatCodes {
     }
     public void Thor(int x , int y)
     {
-        App.gameMenuController.Applylightning(x , y , App.getCurrentGame().getWhoseTurn());
+        //App.gameMenuController.Applylightning(x , y , App.getCurrentGame().getWhoseTurn());
     }
     public void SetWeather(String Weather)
     {

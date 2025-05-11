@@ -60,6 +60,7 @@ public class GameMenuController {
         //define the Peoplee int the game
         //please Define dasti the Skills
     }
+
     public boolean IsInAnotherGame(ArrayList<String> PlayersInGame)
     {
         for(int i = 0; i<PlayersInGame.size(); i++)
@@ -93,25 +94,15 @@ public class GameMenuController {
     }
 
     public void SetFarm(int Id , int FarmID) {
-        ConstantFarms ourfarm = ConstantFarms.FirstFarm;
-        int count = 1;
-        for(ConstantFarms farm : ConstantFarms.values())
+        if(FarmID == 1)
         {
-            if(count == FarmID)
-            {
-                ourfarm = farm;
-            }
-            count++;
+            App.getCurrentGame().getCharactersInGame().get(Id).setFarm(new Farm(new GreenHouse( 8 , 8) , new Cabin(10 , 25) , new Lake(25 , 15) , new Quarry(30 , 25)));
         }
-        GreenHouse g = new GreenHouse(ourfarm.farm.getX_Coordinate() , ourfarm.farm.getY_Coordinate());
-        Cabin c = new Cabin(ourfarm.farm.getX_Coordinate() , ourfarm.farm.getY_Coordinate());
-        Lake lake = new Lake(ourfarm.farm.getX_Coordinate() , ourfarm.farm.getY_Coordinate());
-        Quarry quarry = new Quarry(ourfarm.farm.getX_Coordinate() , ourfarm.farm.getY_Coordinate());
-        Farm newfarm = new Farm(g, c, lake, quarry);
-        App.getCurrentGame().getCharactersInGame().get(Id).setFarm(newfarm);
+        if(FarmID == 2)
+        {
+            App.getCurrentGame().getCharactersInGame().get(Id).setFarm(new Farm(new GreenHouse( 25 , 8) , new Cabin(5 , 5) , new Lake(30 , 30) , new Quarry(25 , 8)));
+        }
     }
-
-
     public void ApplyDeleteGame()
     {
         //Dont delete in ArrayList
