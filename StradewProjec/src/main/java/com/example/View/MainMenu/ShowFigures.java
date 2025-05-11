@@ -53,14 +53,12 @@ public class ShowFigures {
     public void PrintMap(int x, int y, int l)
     {
         Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
+        System.out.println(TempGround);
         for(int i = 0; i < 500; i++)
         {
             for(int j = 0 ;j < 500 ;j++)
             {
-                if(TempGround[i][j].getPlaceType() == PlaceType.GREENHOUSE || TempGround[i][j].getPlaceType() == PlaceType.CABIN)
-                {
-                    System.out.println("Mashtoo");
-                }
+
                 /*for(MapReading mapReading : MapReading.values())
                 {
                     if(TempGround[i][j].getPlaceType() != null)

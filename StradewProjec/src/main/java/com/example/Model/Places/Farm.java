@@ -132,16 +132,6 @@ public class Farm extends Place {
                 getGround()[Newi][Newj].setPlaceType(PlaceType.QUARRY);
             }
         }
-        for(int i = 0;i < 500 ;i++)
-        {
-            for(int j = 0;j < 500 ;j ++)
-            {
-                if(getGround()[i][j].getPlaceType() == PlaceType.CABIN)
-                {
-                    System.out.println(i + " " + j);
-                }
-            }
-        }
     }
 
     public Animal getAnimalByName(String name){
