@@ -18,6 +18,10 @@ public class FriendShip {
         this.gifts = gifts;
     }
 
+    public ArrayList<Gift> getGifts() {
+        return gifts;
+    }
+
     public int getXP() {
         return XP;
     }

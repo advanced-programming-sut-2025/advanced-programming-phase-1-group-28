@@ -5,6 +5,9 @@ import com.example.Model.Enums.MenuName;
 import com.example.Model.Enums.Rejex.ForAllmenuRejex;
 import com.example.Model.Enums.Rejex.SignupMenuRejex;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class AppInputCommand {

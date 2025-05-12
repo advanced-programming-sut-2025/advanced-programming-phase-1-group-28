@@ -69,10 +69,41 @@ public class GameMenu {
         } else if((matcher = GameMenuRejex.Walk.getMatcher(command)) != null)
         {
             App.mechanicGame.walk(App.ReturnCurrentPlayer().getX() , App.ReturnCurrentPlayer().getY() , Integer.parseInt(matcher.group(1)) , Integer.parseInt(matcher.group(2)));
+        } else if ((matcher = GameMenuRejex.TalkToSomeone.getMatcher(command)) != null) {
+            App.friendship.Talk(matcher.group(1), matcher.group(2));
+        } else if ((matcher = GameMenuRejex.TalkHistory.getMatcher(command)) != null) {
+            App.showFigures.ShowTalkHistory(matcher.group(1));
+        } else if ((matcher = GameMenuRejex.GiftSomeone.getMatcher(command)) != null) {
+            App.friendship.Gifting(matcher.group(1), matcher.group(2), Integer.parseInt(matcher.group(3)));
+        } else if ((matcher = GameMenuRejex.GiftList.getMatcher(command)) != null) {
+            App.showFigures.ShowUpcomingGifts();
+        } else if ((matcher = GameMenuRejex.GiftRate.getMatcher(command)) != null) {
+            App.friendship.rateGift(Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2)));
+        } else if ((matcher = GameMenuRejex.GiftHistory.getMatcher(command)) != null) {
+            App.showFigures.ShowGiftsFromDreamMan(matcher.group(1));
+        }else if ((matcher = GameMenuRejex.Hug.getMatcher(command)) != null){
+            App.friendship.Hug(matcher.group(1));
+        } else if ((matcher = GameMenuRejex.Flower.getMatcher(command)) != null) {
+            App.friendship.Flowering(matcher.group(1));
+        } else if ((matcher = GameMenuRejex.AskMarriage.getMatcher(command)) != null) {
+            App.friendship.marriageRequest(matcher.group(1), matcher.group(2));
+        } else if ((matcher = GameMenuRejex.TradeSomeone.getMatcher(command)) != null) {
+            App.friendship.tradeRequest(matcher.group(1), matcher.group(2), matcher.group(3), Integer.parseInt(matcher.group(4)),
+                    Integer.parseInt(matcher.group(5)), matcher.group(6), Integer.parseInt(matcher.group(7)));
+        } else if ((matcher = GameMenuRejex.TradeList.getMatcher(command)) != null) {
+            App.showFigures.showTradeList();
+        } else if ((matcher = GameMenuRejex.TradeResponse.getMatcher(command)) != null) {
+            App.friendship.tradeResponse(matcher.group(1).equals("-accept"), Integer.parseInt(matcher.group(2)));
+        } else if ((matcher = GameMenuRejex.TradeHistory.getMatcher(command)) != null) {
+            App.showFigures.showTradeHistory();
+        } else if((matcher = GameMenuRejex.PrintMap.getMatcher(command)) != null)
+        {
+            App.showFigures.PrintMap(Integer.parseInt(matcher.group(1)) , Integer.parseInt(matcher.group(2)) , Integer.parseInt(matcher.group(3)));
         }
     }
     public void StartGame(ArrayList<String> PlayersInGame)
     {
+        PlayersInGame.add(0, App.getCurrentUser().getUsername());
         for(int i = 0 ;i < PlayersInGame.size();i++) {
             if (!signUpController.IsUsernameTaken(PlayersInGame.get(i))) {
                 System.out.println(PlayersInGame.get(i) + " is not a valid username");
@@ -87,7 +118,6 @@ public class GameMenu {
         for(int i = 0;i < PlayersInGame.size();i++) {
             System.out.println(PlayersInGame.get(i));
         }
-        PlayersInGame.add(0, App.getCurrentUser().getUsername());
         gameMenuController.ApplyPlayersToGame(PlayersInGame);
         for(int i = 0 ;i < PlayersInGame.size();i++) {
             while (true)

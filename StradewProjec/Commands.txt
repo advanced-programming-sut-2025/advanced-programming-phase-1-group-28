@@ -5,7 +5,7 @@ menu enter SignUpMenu
 register -u mehrad -p Passali#3 Passali#3 -n morad -e morad@gmail.com -g female
 pick question -q 2 -a shir -c shir
 menu enter SignUpMenu
-register -u shiraz -p Passali#1 Passali#1 -n shirshah -e shir@gmail.com -g male
+register -u shirooz -p Passali#1 Passali#1 -n shirshah -e shir@gmail.com -g male
 pick question -q 3 -a No -c No
 login -u shiroo -p Passali#1 
 login -u shirooz -p Passali#1 
@@ -31,6 +31,4 @@ cheat advance time 15h
 weather
 weather forecast
 greenhouse build
-walk -l 4,4
-no
 print map -l 5,5 -s 200

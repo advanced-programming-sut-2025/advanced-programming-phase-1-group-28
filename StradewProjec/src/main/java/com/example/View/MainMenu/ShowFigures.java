@@ -3,9 +3,12 @@ package com.example.View.MainMenu;
 import com.example.Model.*;
 import com.example.Model.Enums.Entitity;
 import com.example.Model.Enums.Foods;
+import com.example.Model.Enums.MapReading;
+import com.example.Model.Enums.PlaceType;
 import com.example.Model.Item.Item;
 import com.example.Model.Tile.Animal;
 import com.example.Model.Tile.Plants;
+import com.example.Model.Tile.Tile;
 import com.example.Model.Tools.Pepolee;
 import com.example.Model.Tools.Tools;
 
@@ -47,13 +50,48 @@ public class ShowFigures {
     {
         System.out.println(App.gameMenuController.WeatherForeCasting().toString());
     }
-    public void PrintMap()
+    public void PrintMap(int x, int y, int l)
     {
+        Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
+        System.out.println(TempGround);
+        for(int i = 0; i < 500; i++)
+        {
+            for(int j = 0 ;j < 500 ;j++)
+            {
+
+                /*for(MapReading mapReading : MapReading.values())
+                {
+                    if(TempGround[i][j].getPlaceType() != null)
+                    {
+                        if(TempGround[i][j].getPlaceType() == mapReading.placeType)
+                        {
+                            System.out.printf("%c" , mapReading.Show);
+                        }
+                    }
+                    else if(TempGround[i][j].getEntitity() != null)
+                    {
+                        if(TempGround[i][j].getEntitity() == mapReading.entitity)
+                        {
+                            System.out.printf("%c" , mapReading.Show);
+                        }
+                    } else if (TempGround[i][j].getTerrain() != null)
+                    {
+                        if(TempGround[i][j].getTerrain() == mapReading.terrain)
+                        {
+                            System.out.printf("%c" , mapReading.Show);
+                        }
+                    }
+                }*/
+            }
+        }
         //Print ColorFull Emtiazi
     }
     public void ShowHelpReadingMap()
     {
-
+        for(MapReading mapReading : MapReading.values())
+        {
+            System.out.println(mapReading.toString() + " " + mapReading.Show);
+        }
     }
     public void ShowEnergy()
     {
@@ -180,9 +218,21 @@ public class ShowFigures {
     {
 
     }
-    public void ShowTalkHistory()
+    public void ShowTalkHistory(String username)
     {
-
+        int usernameID = App.getCurrentGame().getPlayerIDByUsername(username);
+        if (usernameID == -1){
+            System.out.println("User not found");
+            return;
+        }
+        Game game = App.getCurrentGame();
+        User currentUser = App.getCurrentUser();
+        FriendShip friendShip = game.getFriedShipBetweenPlayers(currentUser.getUsername(), username);
+        ArrayList<String> talkHistory = friendShip.getTalkHistory();
+        System.out.println("Your talk history with " + username);
+        for (String talk: talkHistory){
+            System.out.println(talk);
+        }
     }
     public void ShowUpcomingGifts()
     {
@@ -241,7 +291,22 @@ public class ShowFigures {
     }
     public void ShowGiftsFromDreamMan(String Username)
     {
-
+        int usernameID = App.getCurrentGame().getPlayerIDByUsername(Username);
+        if (usernameID == -1){
+            System.out.println("User not found");
+            return;
+        }
+        Game game = App.getCurrentGame();
+        User currentUser = App.getCurrentUser();
+        FriendShip friendShip = game.getFriedShipBetweenPlayers(currentUser.getUsername(), Username);
+        int i = 0;
+        for (Gift gift: friendShip.getGifts()){
+            System.out.println("Gift number: " + i);
+            System.out.println("Sender: " + gift.getSender());
+            System.out.println("Item: " + gift.getItem().getName());
+            System.out.println("Count: " + gift.getCount());
+            i++;
+        }
     }
     public void GiftRating(int Rate)
     {
