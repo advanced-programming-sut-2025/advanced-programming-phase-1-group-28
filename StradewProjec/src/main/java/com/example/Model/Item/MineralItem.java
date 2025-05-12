@@ -14,13 +14,18 @@ public class MineralItem extends Item{
         this.name = mineral.toString();
     }
 
-    public MineralItem(int count, String name) {
-        super(count, name);
+    //public MineralItem(int count, String name) {
+      //  super(count, name);
+    //}
+
+    public MineralItem(int count , Minerals mineral) {
+        super(count, mineral.name());
+        this.mineral = mineral;
     }
 
     @Override
     public MineralItem getCopy(){
-        MineralItem result = new MineralItem(count, name);
+        MineralItem result = new MineralItem(count, mineral);
         result.setMineral(mineral);
         return result;
     }

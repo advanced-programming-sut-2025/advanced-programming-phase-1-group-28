@@ -4,6 +4,218 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public enum Foods {
+    GrapeWine(
+            "GrapeWine",
+            new ArrayList<>(Arrays.asList("Grape")),
+            new ArrayList<>(Arrays.asList(1)),
+            (int)(Plants.GRAPE.energy * 1.75),
+            null,
+            "Keg Artisan",
+            3 * Fruits.APRICOT.baseCellPrice
+    ),
+    ApricotWine(
+            "ApricotWine",
+            new ArrayList<>(Arrays.asList("Apricot")),
+            new ArrayList<>(Arrays.asList(1)),
+            (int)(Fruits.APRICOT.Energy * 1.75),
+            null,
+            "Keg Artisan",
+            3 * Fruits.APRICOT.baseCellPrice
+    ),
+    CherryWine(
+            "CherryWine",
+            new ArrayList<>(Arrays.asList("Cherry")),
+            new ArrayList<>(Arrays.asList(1)),
+            (int)(Fruits.CHERRY.Energy * 1.75),
+            null,
+            "Keg Artisan",
+            3 * Fruits.CHERRY.baseCellPrice
+    ),
+    BananaWine(
+            "BananaWine",
+            new ArrayList<>(Arrays.asList("Banana")),
+            new ArrayList<>(Arrays.asList(1)),
+            (int)(Fruits.BANANA.Energy * 1.75),
+            null,
+            "Keg Artisan",
+            3 * Fruits.BANANA.baseCellPrice
+    ),
+    MangoWine(
+            "MangoWine",
+            new ArrayList<>(Arrays.asList("Mango")),
+            new ArrayList<>(Arrays.asList(1)),
+            (int)(Fruits.MANGO.Energy * 1.75),
+            null,
+            "Keg Artisan",
+            3 * Fruits.MANGO.baseCellPrice
+    ),
+    OrangeWine(
+            "OrangeWine",
+            new ArrayList<>(Arrays.asList("Orange")),
+            new ArrayList<>(Arrays.asList(1)),
+            (int)(Fruits.ORANGE.Energy * 1.75),
+            null,
+            "Keg Artisan",
+            3 * Fruits.ORANGE.baseCellPrice
+    ),
+
+    PeachWine(
+            "PeachWine",
+            new ArrayList<>(Arrays.asList("Peach")),
+            new ArrayList<>(Arrays.asList(1)),
+            (int)(Fruits.PEACH.Energy * 1.75),
+            null,
+            "Keg Artisan",
+            3 * Fruits.PEACH.baseCellPrice
+    ),
+
+    AppleWine(
+            "AppleWine",
+            new ArrayList<>(Arrays.asList("Apple")),
+            new ArrayList<>(Arrays.asList(1)),
+            (int)(Fruits.APPLE.Energy * 1.75),
+            null,
+            "Keg Artisan",
+            3 * Fruits.APPLE.baseCellPrice
+    ),
+
+    PomegranateWine(
+            "PomegranateWine",
+            new ArrayList<>(Arrays.asList("Pomegranate")),
+            new ArrayList<>(Arrays.asList(1)),
+            (int)(Fruits.POMEGRANATE.Energy * 1.75),
+            null,
+            "Keg Artisan",
+            3 * Fruits.POMEGRANATE.baseCellPrice
+    ),
+
+    MahoganyWine(
+            "MahoganyWine",
+            new ArrayList<>(Arrays.asList("Sap")),
+            new ArrayList<>(Arrays.asList(1)),
+            (int)(Fruits.MAHOGANY.Energy * 1.75),
+            null,
+            "Keg Artisan",
+            3 * Fruits.MAHOGANY.baseCellPrice
+    ),
+
+    MushroomWine(
+            "MushroomWine",
+            new ArrayList<>(Arrays.asList("Common Mushroom")),
+            new ArrayList<>(Arrays.asList(1)),
+            (int)(Fruits.MUSHROOM.Energy * 1.75),
+            null,
+            "Keg Artisan",
+            3 * Fruits.MUSHROOM.baseCellPrice
+    ),
+    MysticWine(
+            "MysticWine",
+            new ArrayList<>(Arrays.asList("Mystic Syrup")),
+            new ArrayList<>(Arrays.asList(1)),
+            (int)(Fruits.MYSTIC.Energy * 1.75),
+            null,
+            "Keg Artisan",
+            3 * Fruits.MYSTIC.baseCellPrice
+    ),
+    BlueJazzPickle(
+            "BlueJazzPickle",
+            new ArrayList<>(Arrays.asList("BlueJazz")),
+            new ArrayList<>(Arrays.asList(1)),
+            (int)(Plants.BLUE_JAZZ.energy * 1.75),
+            null,
+            "Preserves Jar",
+            2 * Plants.BLUE_JAZZ.BasePrice + 50
+    ),
+    CarrotPickle(
+            "CarrotPickle",
+            new ArrayList<>(Arrays.asList("Carrot")),
+            new ArrayList<>(Arrays.asList(1)),
+            (int)(Plants.CARROT.energy * 1.75),
+            null,
+            "Preserves Jar",
+            2 * Plants.CARROT.BasePrice + 50
+    ),
+    CauliflowerPickle(
+            "CauliflowerPickle",
+            new ArrayList<>(Arrays.asList("Cauliflower")),
+            new ArrayList<>(Arrays.asList(1)),
+            (int)(Plants.CAULIFLOWER.energy * 1.75),
+            null,
+            "Preserves Jar",
+            2 * Plants.CAULIFLOWER.BasePrice + 50
+    ),
+    GarlicPickle(
+            "GarlicPickle",
+            new ArrayList<>(Arrays.asList("Garlic")),
+            new ArrayList<>(Arrays.asList(1)),
+            (int)(Plants.GARLIC.energy * 1.75),
+            null,
+            "Preserves Jar",
+            2 * Plants.GARLIC.BasePrice + 50
+    ),
+    GreenBeanPickle(
+            "GreenBeanPickle",
+            new ArrayList<>(Arrays.asList("GreenBean")),
+            new ArrayList<>(Arrays.asList(1)),
+            (int)(Plants.GREEN_BEAN.energy * 1.75),
+            null,
+            "Preserves Jar",
+            2 * Plants.GREEN_BEAN.BasePrice + 50
+    ),
+    KalePickle(
+            "KalePickle",
+            new ArrayList<>(Arrays.asList("Kale")),
+            new ArrayList<>(Arrays.asList(1)),
+            (int)(Plants.KALE.energy * 1.75),
+            null,
+            "Preserves Jar",
+            2 * Plants.KALE.BasePrice + 50
+    ),
+    ParsnipPickle(
+            "ParsnipPickle",
+            new ArrayList<>(Arrays.asList("Parsnip")),
+            new ArrayList<>(Arrays.asList(1)),
+            (int)(Plants.PARSNIP.energy * 1.75),
+            null,
+            "Preserves Jar",
+            2 * Plants.PARSNIP.BasePrice + 50
+    ),
+    PotatoPickle(
+            "PotatoPickle",
+            new ArrayList<>(Arrays.asList("Potato")),
+            new ArrayList<>(Arrays.asList(1)),
+            (int)(Plants.POTATO.energy * 1.75),
+            null,
+            "Preserves Jar",
+            2 * Plants.POTATO.BasePrice + 50
+    ),
+    RhubarbPickle(
+            "RhubarbPickle",
+            new ArrayList<>(Arrays.asList("Rhubarb")),
+            new ArrayList<>(Arrays.asList(1)),
+            (int)(Plants.RHUBARB.energy * 1.75),
+            null,
+            "Preserves Jar",
+            2 * Plants.RHUBARB.BasePrice + 50
+    ),
+    TomatoPickle(
+            "TomatoPickle",
+            new ArrayList<>(Arrays.asList("Tomato")),
+            new ArrayList<>(Arrays.asList(1)),
+            (int)(Plants.TOMATO.energy * 1.75),
+            null,
+            "Preserves Jar",
+            2 * Plants.TOMATO.BasePrice + 50
+    ),
+    CranberriesPickle(
+            "CranberriesPickle",
+            new ArrayList<>(Arrays.asList("Cranberries")),
+            new ArrayList<>(Arrays.asList(1)),
+            (int)(Plants.CRANBERRIES.energy * 1.75),
+            null,
+            "Preserves Jar",
+            2 * Plants.CRANBERRIES.BasePrice + 50
+    ),
     Beer(
             "Beer",
             null,
