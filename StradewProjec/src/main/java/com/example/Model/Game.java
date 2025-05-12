@@ -1,13 +1,15 @@
 package com.example.Model;
 
-import com.example.Model.Enums.Entitity;
-import com.example.Model.Enums.PlaceType;
-import com.example.Model.Enums.Terrain;
-import com.example.Model.Enums.Weathers;
+import com.example.Model.Enums.*;
+import com.example.Model.Item.Food;
+import com.example.Model.Item.Ingredient;
+import com.example.Model.Item.Item;
+import com.example.Model.Item.MineralItem;
 import com.example.Model.Tile.Tile;
 import com.example.Model.Tools.Pepolee;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Game {
     private FriendShip[][] FriendShips = new FriendShip[100][100];//0-3 peeplee , 4-8 npc
@@ -18,6 +20,7 @@ public class Game {
     private ArrayList<Integer> Scores = new ArrayList<>();
     private int WhoseTurn = 0;
     private Weathers Weather = Weathers.SUNNY;
+    private ArrayList<Npc> GameNPCs = new ArrayList<>();
 
     private Tile[][] EntireMap = new Tile[200][200];
 
@@ -27,6 +30,13 @@ public class Game {
                 FriendShips[i][j] = new FriendShip();
             }
         }
+        // initialize sebastian
+        GameNPCs.add(new Npc(4 , "Sebastian" , "Singer" , new ArrayList<String>(Arrays.asList("City of Stars")) ,
+                new ArrayList<Item>(Arrays.asList(new Food(1 , Foods.Pizza) , new Food(1 , Foods.PumpkinPie) , new Ingredient(1 , Ingredients.SheepCotton) , new Ingredient(1 , Ingredients.RabbitWool))) ,
+                new ArrayList<Quest>(Arrays.asList(new Quest(new Item(50 , "Iron Bar") , new Reward(0 , new MineralItem(2 , Minerals.Diamond) , 0 , null , null , null)),
+                        new Quest(new Food(1 , Foods.PumpkinPie) , new Reward(5000 , null , 0 , null , null , null)) ,
+                        new Quest(new Item(150 , "Stone") , new Reward(0 , new MineralItem(50 , Minerals.Quartz) , 0 , null , null , null)))) ,
+                60 , 60));
     }
     private void InitializeMap() {
         for (int i = 0; i < 200; i++) {
@@ -181,4 +191,6 @@ public class Game {
     }
 
     //Boolean IsEnd = false;
+
+
 }
