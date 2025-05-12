@@ -71,7 +71,7 @@ public class Npc {
         return 1;
     }
 
-    public boolean isFavoriteItem(String giftName){
+    public boolean isFavoriteItem(Item item){
         //TODO
         return true;
     }

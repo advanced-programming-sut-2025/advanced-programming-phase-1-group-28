@@ -1,9 +1,10 @@
 package com.example.Model;
 
-import com.example.Model.Enums.Entitity;
-import com.example.Model.Enums.PlaceType;
-import com.example.Model.Enums.Terrain;
-import com.example.Model.Enums.Weathers;
+import com.example.Model.Enums.*;
+import com.example.Model.Item.Food;
+import com.example.Model.Item.Ingredient;
+import com.example.Model.Item.Item;
+import com.example.Model.Item.MineralItem;
 import com.example.Model.Tile.Tile;
 import com.example.Model.Tools.Pepolee;
 
@@ -189,7 +190,14 @@ public class Game {
         EntireMap = entireMap;
     }
 
-    //Boolean IsEnd = false;
+    public ArrayList<Npc> getGameNPCs() {
+        return GameNPCs;
+    }
+
+    public void setGameNPCs(ArrayList<Npc> gameNPCs) {
+        GameNPCs = gameNPCs;
+    }
+//Boolean IsEnd = false;
 
     public Npc getNPCWithName(String npcName){
         //TODO
