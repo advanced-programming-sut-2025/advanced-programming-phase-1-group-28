@@ -2,6 +2,7 @@ package com.example.View.MainMenu.MechanicGame;
 
 import com.example.Model.App;
 import com.example.Model.Npc;
+import com.example.Model.Quest;
 
 public class NPCMenu {
     public void meetNPC(String npcName){
@@ -30,6 +31,24 @@ public class NPCMenu {
         }
         App.npcController.giftNpc(npc, itemName);
         System.out.println("dast shoma mercy");
+    }
+
+    public void finishQuest(int questID, int npcId){
+        Npc npc = App.getCurrentGame().getGameNPCs().get(npcId);
+        if (npc == null){
+            System.out.println("there is no npc with this name.");
+            return;
+        }
+        Quest quest = npc.getQuests().get(questID);
+        if (quest == null){
+            System.out.println("quest not found.");
+            return;
+        }
+        if (quest.getQuestLocked()[App.getCurrentGame().getPlayerIDByUsername(App.getCurrentUser().getUsername())]){
+            System.out.println("quest is locked.");
+            return;
+        }
+        System.out.println(App.npcController.finishQuest(npc, quest));
     }
 
 

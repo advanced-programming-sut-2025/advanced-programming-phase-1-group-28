@@ -3,6 +3,11 @@ package com.example.Model;
 import com.example.Model.Enums.*;
 import com.example.Model.Enums.Tools.Watercans;
 import com.example.Model.Item.*;
+import com.example.Model.Enums.*;
+import com.example.Model.Item.Food;
+import com.example.Model.Item.Ingredient;
+import com.example.Model.Item.Item;
+import com.example.Model.Item.MineralItem;
 import com.example.Model.Tile.Tile;
 import com.example.Model.Tools.Pepolee;
 import com.example.Model.Tools.WaterCan;
@@ -217,7 +222,14 @@ public class Game {
         EntireMap = entireMap;
     }
 
-    //Boolean IsEnd = false;
+    public ArrayList<Npc> getGameNPCs() {
+        return GameNPCs;
+    }
+
+    public void setGameNPCs(ArrayList<Npc> gameNPCs) {
+        GameNPCs = gameNPCs;
+    }
+//Boolean IsEnd = false;
 
     public Npc getNPCWithName(String npcName){
         for(Npc npc : GameNPCs)
