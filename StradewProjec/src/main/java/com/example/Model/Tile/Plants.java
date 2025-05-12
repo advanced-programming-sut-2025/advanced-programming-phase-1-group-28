@@ -13,7 +13,6 @@ public class Plants extends Tile{
     private Time BornTime;
     private boolean ISCooded = false;
     private Time LastTimeWatering;
-
     public boolean CanHarvest(){
         Time PassesTime = this.BornTime.DifreenceTime(App.getCurrentGame().getTime());
         //TODO check with the plant.totalharvesttime

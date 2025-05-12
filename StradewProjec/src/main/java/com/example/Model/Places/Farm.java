@@ -79,7 +79,6 @@ public class Farm extends Place {
     }
 
     public Farm(GreenHouse greenHouse, Cabin cabin, Lake lake, Quarry quarry) {
-        System.out.println("what the fuck");
         this.greenHouse = greenHouse;
         this.cabin = cabin;
         this.lake = lake;

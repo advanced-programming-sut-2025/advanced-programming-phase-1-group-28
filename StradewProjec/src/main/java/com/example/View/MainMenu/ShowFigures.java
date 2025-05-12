@@ -1,10 +1,7 @@
 package com.example.View.MainMenu;
 
 import com.example.Model.*;
-import com.example.Model.Enums.Entitity;
-import com.example.Model.Enums.Foods;
-import com.example.Model.Enums.MapReading;
-import com.example.Model.Enums.PlaceType;
+import com.example.Model.Enums.*;
 import com.example.Model.Item.Item;
 import com.example.Model.Tile.Animal;
 import com.example.Model.Tile.Plants;
@@ -53,36 +50,62 @@ public class ShowFigures {
     public void PrintMap(int x, int y, int l)
     {
         Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
-        System.out.println(TempGround);
-        for(int i = 0; i < 500; i++)
+        for(int i = x; i < x + l; i++)
         {
-            for(int j = 0 ;j < 500 ;j++)
+            for(int j = y ;j < y + l ;j++)
             {
-
-                /*for(MapReading mapReading : MapReading.values())
+                if(App.ReturnCurrentPlayer().getX() == i && App.ReturnCurrentPlayer().getY() == j)
                 {
-                    if(TempGround[i][j].getPlaceType() != null)
+                    System.out.printf( "%c",MapReading.PEOPEELE.Show);
+                }
+                else
+                {
+                    if(TempGround[i][j].getTerrain() == Terrain.DIRT)
                     {
-                        if(TempGround[i][j].getPlaceType() == mapReading.placeType)
+                        if(TempGround[i][j].isHow())
                         {
-                            System.out.printf("%c" , mapReading.Show);
+                            System.out.printf("S");
+                        }
+                        else
+                        {
+                            System.out.printf("D");
                         }
                     }
-                    else if(TempGround[i][j].getEntitity() != null)
+                    else
                     {
-                        if(TempGround[i][j].getEntitity() == mapReading.entitity)
+                        if(TempGround[i][j].getPlaceType() == PlaceType.CABIN)
                         {
-                            System.out.printf("%c" , mapReading.Show);
+                            System.out.printf("C");
                         }
-                    } else if (TempGround[i][j].getTerrain() != null)
-                    {
-                        if(TempGround[i][j].getTerrain() == mapReading.terrain)
+                        else
                         {
-                            System.out.printf("%c" , mapReading.Show);
+                            if(TempGround[i][j].getPlaceType() == PlaceType.LAKE)
+                            {
+                                System.out.printf("L");
+                            }
+                            else
+                            {
+                                if(TempGround[i][j].getPlaceType() == PlaceType.GREENHOUSE)
+                                {
+                                    System.out.printf("G");
+                                }
+                                else
+                                {
+                                    if(TempGround[i][j].getEntitity() == Entitity.TREE)
+                                    {
+                                        System.out.printf("T");
+                                    }
+                                    else if(TempGround[i][j].getEntitity() == Entitity.PLANTS)
+                                    {
+                                        System.out.printf("P");
+                                    }
+                                }
+                            }
                         }
                     }
-                }*/
+                }
             }
+            System.out.println();
         }
         //Print ColorFull Emtiazi
     }
@@ -101,7 +124,7 @@ public class ShowFigures {
     public void ShowTool()
     {
         if(App.ReturnCurrentPlayer().getInventory().getCurrentTool() != null) {
-            System.out.println(App.ReturnCurrentPlayer().getInventory().getCurrentTool());
+            System.out.println(App.ReturnCurrentPlayer().getInventory().getCurrentTool().getName());
         }
         else
         {
@@ -129,40 +152,54 @@ public class ShowFigures {
 
     }
 
-    public void ShowCraft(int x , int y)
+    public void ShowCraft(String name)
     {
-        if(App.ReturnCurrentPlayer().getFarm().getGround()[x][y].getEntitity() == Entitity.PLANTS)
-        {
-            Plants ourplant = (Plants) App.ReturnCurrentPlayer().getFarm().getGround()[x][y];
-            System.out.println("Name : " + ourplant.getPlant().toString());
-            System.out.println("Source : " + ourplant.getPlant().Source);
-            System.out.println("Stages : " + ourplant.getPlant().stage);
-            System.out.println("TotalHarvestTime : " + ourplant.getPlant().TotalTimeHarvest);
-            System.out.println("On Time : " + ourplant.getPlant().OnTime);
-            if(ourplant.getPlant().RegrowthTime == 0)
-            {
-                System.out.println("Regrowth time is : ");
+        for(com.example.Model.Enums.Plants plant : com.example.Model.Enums.Plants.values()) {
+            if(plant.toString().equals(name)) {
+                Plants ourplant = new Plants(plant);
+                System.out.println("Name : " + ourplant.getPlant().toString());
+                System.out.println("Source : " + ourplant.getPlant().Source);
+                System.out.println("Stages : " + ourplant.getPlant().stage);
+                System.out.println("TotalHarvestTime : " + ourplant.getPlant().TotalTimeHarvest);
+                System.out.println("On Time : " + ourplant.getPlant().OnTime);
+                if (ourplant.getPlant().RegrowthTime == 0) {
+                    System.out.println("Regrowth time is : ");
+                } else {
+                    System.out.println("Regrowth time is : " + ourplant.getPlant().RegrowthTime);
+                }
+                System.out.println("Base Sell Price : " + ourplant.getPlant().BasePrice);
+                System.out.println("Is Edible :" + ourplant.getPlant().IsEdible);
+                System.out.println("Base Energy : " + ourplant.getPlant().energy);
+                //System.out.println("Base Health : " + ourplant.getPlant().);
+                System.out.println("Seoson : " + ourplant.getPlant().season);
+                System.out.println("Can become Giant" + ourplant.getPlant().CanBecomeGiant);
             }
-            else
-            {
-                System.out.println("Regrowth time is : " + ourplant.getPlant().RegrowthTime);
-            }
-            System.out.println("Base Sell Price : " + ourplant.getPlant().BasePrice);
-            System.out.println("Is Edible :" + ourplant.getPlant().IsEdible);
-            System.out.println("Base Energy : " + ourplant.getPlant().energy);
-            //System.out.println("Base Health : " + ourplant.getPlant().);
-            System.out.println("Seoson : " + ourplant.getPlant().season);
-            System.out.println("Can become Giant" + ourplant.getPlant().CanBecomeGiant);
-        }
-        else
-        {
-            System.out.println("There is no plant here");
         }
     }
 
     public void ShowPlant(int x, int y)
     {
-
+        Pepolee currentPlayer = App.ReturnCurrentPlayer();
+        Tile[][] Tempground = currentPlayer.getFarm().getGround();
+        if(Tempground[x][y].getEntitity() == Entitity.PLANTS)
+        {
+            Plants ourplanr = (Plants) Tempground[x][y];
+            System.out.println("Name" + ourplanr.getPlant().toString());
+            System.out.println("Time to harvest" + (Math.min(0 , ourplanr.getPlant().TotalTimeHarvest - ourplanr.getBornTime().DifreenceTime(App.getCurrentGame().getTime()).getDay())));
+            System.out.println("IS Codded" + ourplanr.isISCooded());
+            if(ourplanr.getLastTimeWatering().getDay() == App.getCurrentGame().getTime().getDay())
+            {
+                System.out.println("Is waterd today");
+            }
+            else
+            {
+                System.out.println("Doesnt watered today");
+            }
+        }
+        else
+        {
+            System.out.println("There is no seed here");
+        }
     }
     public void HowMuchWater()
     {
@@ -314,6 +351,10 @@ public class ShowFigures {
     }
     public void ShowNPCFriendShips()
     {
-
+        System.out.println("npc id: friendship level");
+        int userId = App.getCurrentGame().getPlayerIDByUsername(App.getCurrentUser().getUsername());
+        for (int i = 4; i<=8; i++){
+            System.out.println(i + ": " + App.getCurrentGame().getFriendShips()[userId][i].getLevel());
+        }
     }
 }

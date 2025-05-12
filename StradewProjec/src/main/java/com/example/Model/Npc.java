@@ -60,4 +60,19 @@ public class Npc {
     public void setQuests(ArrayList<Quest> quests) {
         Quests = quests;
     }
+
+    public String getDialog(){
+        //TODO
+        return "";
+    }
+
+    public int getId(){
+        //TODO
+        return 1;
+    }
+
+    public boolean isFavoriteItem(String giftName){
+        //TODO
+        return true;
+    }
 }

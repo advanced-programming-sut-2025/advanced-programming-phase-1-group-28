@@ -95,7 +95,6 @@ public class MechanicController {
                 {
                     int NewX = currentNode.x + direction.x;
                     int NewY = currentNode.y + direction.y;
-                    //System.out.println(NewX + " " + NewY);
                     if(IsWalkable(NewX , NewY))
                     {
                         if(currentNode.CostInEachDirection[count] != -1) {

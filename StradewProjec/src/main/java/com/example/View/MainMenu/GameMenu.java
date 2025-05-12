@@ -99,6 +99,21 @@ public class GameMenu {
         } else if((matcher = GameMenuRejex.PrintMap.getMatcher(command)) != null)
         {
             App.showFigures.PrintMap(Integer.parseInt(matcher.group(1)) , Integer.parseInt(matcher.group(2)) , Integer.parseInt(matcher.group(3)));
+        } else if((matcher = GameMenuRejex.HelpReadingMap.getMatcher(command)) != null)
+        {
+            App.showFigures.ShowHelpReadingMap();
+        } else if((matcher = GameMenuRejex.Equiptool.getMatcher(command)) != null)
+        {
+            App.UseTool.Equiptool(matcher.group(1).trim());
+        } else if ((matcher = GameMenuRejex.ToolsShowCurrent.getMatcher(command)) != null) {
+            App.showFigures.ShowTool();
+        } else if ((matcher = GameMenuRejex.ToolsShowAvailable.getMatcher(command)) != null) {
+            App.showFigures.ShowAvailableTools();
+        } else if((matcher = GameMenuRejex.ToolUse.getMatcher(command)) != null) {
+            App.UseTool.Usetool(Integer.parseInt(matcher.group(1)) , Integer.parseInt(matcher.group(2)));
+        } else if((matcher = GameMenuRejex.ShowCraft.getMatcher(command)) != null) {
+            App.showFigures.ShowCraft(matcher.group(1).trim());
+        } else if((matcher = GameMenuRejex.ShowCraft.getMatcher(command)) != null) {
         }
     }
     public void StartGame(ArrayList<String> PlayersInGame)

@@ -6,7 +6,8 @@ public enum MapReading {
     Greenhouse(null , PlaceType.GREENHOUSE ,null ,  'G'),
     Cabin(null , PlaceType.CABIN ,null ,  'C'),
     Lake(null , PlaceType.LAKE ,null ,  'L'),
-    Dirt(Terrain.DIRT , null , null , ' ');
+    Dirt(Terrain.DIRT , null , null , ' '),
+    PEOPEELE(null , null , null , '@');
     public final Terrain terrain;
     public final PlaceType placeType;
     public final Entitity entitity;

@@ -39,7 +39,7 @@ public class Time {
         int thisTotalHours = this.year * 4 * 28 * 24 + this.month * 28 * 24 + this.day * 24 + this.hour;
         int otherTotalHours = time1.year * 4 * 28 * 24 + time1.month * 28 * 24 + time1.day * 24 + time1.hour;
 
-        int resultTotalHours = Math.abs(thisTotalHours - otherTotalHours);
+        int resultTotalHours = otherTotalHours - thisTotalHours;
 
         Time result = new Time();
         result.setYear(resultTotalHours / 4 * 28 * 24);
@@ -60,8 +60,6 @@ public class Time {
         }else {
             result.setSeason(Season.WINTER);
         }
-
-
         return result;
     }
 

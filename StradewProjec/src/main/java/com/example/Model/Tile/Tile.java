@@ -7,6 +7,7 @@ import com.example.Model.Enums.Terrain;
 
 public class Tile {
     private boolean IsHow = false;
+    private boolean ISAttackedByCrow = false;
     private Terrain terrain;
     private PlaceType placeType;
     private Entitity entitity;
@@ -16,6 +17,14 @@ public class Tile {
         this.terrain = terrain;
         this.placeType = placeType;
         this.entitity = entitity;
+    }
+
+    public boolean isISAttackedByCrow() {
+        return ISAttackedByCrow;
+    }
+
+    public void setISAttackedByCrow(boolean ISAttackedByCrow) {
+        this.ISAttackedByCrow = ISAttackedByCrow;
     }
 
     public boolean isHow() {
