@@ -31,4 +31,20 @@ cheat advance time 15h
 weather
 weather forecast
 greenhouse build
-print map -l 5,5 -s 200
+show current menu
+walk -l 1,2
+Yes
+print map -l 1,1 -s 100
+help reading map
+energy show
+inventory show
+tools show current
+print map -l 1,1 -s 80
+tools use -d 1 1 
+print map -l 1,1 -s 80
+energy show
+tools equip Pickaxe
+
+
+
+

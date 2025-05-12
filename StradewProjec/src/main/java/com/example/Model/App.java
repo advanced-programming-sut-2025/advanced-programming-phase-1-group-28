@@ -7,6 +7,7 @@ import com.example.Controller.MainMenuController.HomeMenucontroller.CraftingCont
 import com.example.Controller.MainMenuController.MechanicController.FarmingController;
 import com.example.Controller.MainMenuController.MechanicController.FriendShipController;
 import com.example.Controller.MainMenuController.MechanicController.MechanicController;
+import com.example.Controller.MainMenuController.MechanicController.UseToolController;
 import com.example.Controller.MainMenuController.MechanicController.NPC_Controller;
 import com.example.Controller.MainMenuController.ProfileMenuController;
 import com.example.Controller.SignUpController;
@@ -19,6 +20,7 @@ import com.example.View.MainMenu.GameMenu;
 import com.example.View.MainMenu.MechanicGame.Friendship;
 import com.example.View.MainMenu.MechanicGame.MechanicGame;
 import com.example.View.MainMenu.MechanicGame.NPCMenu;
+import com.example.View.MainMenu.MechanicGame.UseTool;
 import com.example.View.MainMenu.ProfileMenu;
 import com.example.View.MainMenu.ShowFigures;
 import com.example.View.SignUpMenu;
@@ -59,6 +61,8 @@ public class App {
     public static MechanicGame mechanicGame = new MechanicGame();
     public static FarmingController farmingController = new FarmingController();
     public static CraftingController craftingController = new CraftingController();
+    public static UseToolController useToolController = new UseToolController();
+    public static UseTool UseTool = new UseTool();
     public static AllMenuCommandsController allMenuCommandsController = new AllMenuCommandsController();
     public static SignUpMenu signUpMenu = new SignUpMenu();
     public static ProfileMenu profileMenu = new ProfileMenu();

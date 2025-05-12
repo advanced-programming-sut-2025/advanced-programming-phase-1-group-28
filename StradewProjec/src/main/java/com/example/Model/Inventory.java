@@ -3,6 +3,8 @@ package com.example.Model;
 import com.example.Model.Enums.Saplings;
 import com.example.Model.Enums.Seeds;
 import com.example.Model.Item.Item;
+import com.example.Model.Tools.Hoe;
+import com.example.Model.Tools.Pickaxe;
 import com.example.Model.Tools.Tools;
 
 import java.util.ArrayList;
@@ -19,6 +21,9 @@ public class Inventory {
     private ArrayList<Saplings> saplings = new ArrayList<>();
 
     public Inventory() {
+        this.tools.add(new Hoe());
+        this.tools.add(new Pickaxe());
+        CurrentTool = tools.get(0);
         WhichTool = 0;
     }
 
@@ -35,6 +40,16 @@ public class Inventory {
         if(!IsHere) {
             this.items.add(item);
         }
+    }
+
+    public Tools getToolbyname(String Toolname)
+    {
+        for(int i = 0;i < this.tools.size();i++) {
+            if(this.tools.get(i).getName().equals(Toolname)) {
+                return this.tools.get(i);
+            }
+        }
+        return null;
     }
 
     public ArrayList<Seeds> getSeeds() {

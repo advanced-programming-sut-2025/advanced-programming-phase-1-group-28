@@ -4,6 +4,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum GameMenuRejex {
+    Planting("plant\\s+-s\\s+<seed>\\s+-d\\s+(\\d+),(\\d+)"),
+    ShowCraft("craftinfo\\s+-n\\s+(.+)"),
+    ToolUse("tools\\s+use\\s+-d\\s+(\\d+)\\s+(\\d+)"),
+    ToolsShowAvailable("^tools\\s+show\\s+available$"),
+    ToolsShowCurrent("^tools\\s+show\\s+current$"),
+    Equiptool("^tools\\s+equip\\s+(.+)$"),
     Printmap("print\\s+map\\s+-l\\s+(\\d+),(\\d+)\\s+-s\\s+(\\d+)"),
     BuildGreenhouse("^greenhouse\\s+build$"),
     ExitGame("^exit\\s+game$"),
