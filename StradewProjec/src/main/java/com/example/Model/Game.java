@@ -10,7 +10,7 @@ import com.example.Model.Tools.Pepolee;
 import java.util.ArrayList;
 
 public class Game {
-    private FriendShip[][] FriendShips = new FriendShip[100][100];
+    private FriendShip[][] FriendShips = new FriendShip[100][100];//0-3 peeplee , 4-8 npc
     private ArrayList<User> PlayersInGame = new ArrayList<>();
     private ArrayList<Pepolee> CharactersInGame = new ArrayList<>();
     private int ID;
@@ -21,6 +21,13 @@ public class Game {
 
     private Tile[][] EntireMap = new Tile[200][200];
 
+    {
+        for (int i = 0; i<10; i++){
+            for (int j = 0; j<10; j++){
+                FriendShips[i][j] = new FriendShip();
+            }
+        }
+    }
     private void InitializeMap() {
         for (int i = 0; i < 200; i++) {
             for (int j = 0; j < 200; j++) {

@@ -1,40 +1,33 @@
 package com.example.Model.Enums;
 
 public enum Tree {
-    APRICOT_TREE("Apricot Sapling", "7-7-7-7", 28, "Apricot", 1, 59, true, 38, "Spring"),
-    CHERRY_TREE("Cherry Sapling", "7-7-7-7", 28, "Cherry", 1, 80, true, 38, "Spring"),
-    BANANA_TREE("Banana Sapling", "7-7-7-7", 28, "Banana", 1, 150, true, 75, "Summer"),
-    MANGO_TREE("Mango Sapling", "7-7-7-7", 28, "Mango", 1, 130, true, 100, "Summer"),
-    ORANGE_TREE("Orange Sapling", "7-7-7-7", 28, "Orange", 1, 100, true, 38, "Summer"),
-    PEACH_TREE("Peach Sapling", "7-7-7-7", 28, "Peach", 1, 140, true, 38, "Summer"),
-    APPLE_TREE("Apple Sapling", "7-7-7-7", 28, "Apple", 1, 100, true, 38, "Fall"),
-    POMEGRANATE_TREE("Pomegranate Sapling", "7-7-7-7", 28, "Pomegranate", 1, 140, true, 38, "Fall"),
-    OAK_TREE("Acorns", "7-7-7-7", 28, "Oak Resin", 7, 150, false, 0, "Special"),
-    MAPLE_TREE("Maple Seeds", "7-7-7-7", 28, "Maple Syrup", 9, 200, false, 0, "Special"),
-    PINE_TREE("Pine Cones", "7-7-7-7", 28, "Pine Tar", 5, 100, false, 0, "Special"),
-    MAHOGANY_TREE("Mahogany Seeds", "7-7-7-7", 28, "Sap", 1, 2, true, -2, "Special"),
-    MUSHROOM_TREE("Mushroom Tree Seeds", "7-7-7-7", 28, "Common Mushroom", 1, 40, true, 38, "Special"),
-    MYSTIC_TREE("Mystic Tree Seeds", "7-7-7-7", 28, "Mystic Syrup", 7, 1000, true, 500, "Special");
+    APRICOT_TREE("Apricot Sapling", "7-7-7-7", 28, Fruits.APRICOT, 1),
+    CHERRY_TREE("Cherry Sapling", "7-7-7-7", 28, Fruits.CHERRY, 1),
+    BANANA_TREE("Banana Sapling", "7-7-7-7", 28, Fruits.BANANA, 1),
+    MANGO_TREE("Mango Sapling", "7-7-7-7", 28, Fruits.MANGO, 1),
+    ORANGE_TREE("Orange Sapling", "7-7-7-7", 28, Fruits.ORANGE, 1),
+    PEACH_TREE("Peach Sapling", "7-7-7-7", 28, Fruits.PEACH, 1),
+    APPLE_TREE("Apple Sapling", "7-7-7-7", 28, Fruits.APPLE, 1),
+    POMEGRANATE_TREE("Pomegranate Sapling", "7-7-7-7", 28, Fruits.POMEGRANATE, 1),
+    OAK_TREE("Acorns", "7-7-7-7", 28, Fruits.OAK, 7),
+    MAPLE_TREE("Maple Seeds", "7-7-7-7", 28, Fruits.MAPLE, 9),
+    PINE_TREE("Pine Cones", "7-7-7-7", 28, Fruits.PINE, 5),
+    MAHOGANY_TREE("Mahogany Seeds", "7-7-7-7", 28, Fruits.MAHOGANY, 1),
+    MUSHROOM_TREE("Mushroom Tree Seeds", "7-7-7-7", 28, Fruits.MUSHROOM, 1),
+    MYSTIC_TREE("Mystic Tree Seeds", "7-7-7-7", 28, Fruits.MYSTIC, 7);
 
 
     public final String Source;
     public final String stage;
     public final int TotalTimeHarvest;
-    public final String Fruit;
+    public final Fruits fruits;
     public final int HarvestCycle;
-    public final int BaseSellPrice;
-    public final boolean IsFruitEdible;
-    public final int energy;
-    public final String season;
-    Tree(String source, String stage, int totalTimeHarvest, String fruit, int harvestCycle, int baseSellPrice, boolean isFruitEdible, int energy, String season) {
+
+    Tree(String source, String stage, int totalTimeHarvest, Fruits fruits, int harvestCycle) {
         Source = source;
         this.stage = stage;
         TotalTimeHarvest = totalTimeHarvest;
-        Fruit = fruit;
+        this.fruits = fruits;
         HarvestCycle = harvestCycle;
-        BaseSellPrice = baseSellPrice;
-        IsFruitEdible = isFruitEdible;
-        this.energy = energy;
-        this.season = season;
     }
 }
