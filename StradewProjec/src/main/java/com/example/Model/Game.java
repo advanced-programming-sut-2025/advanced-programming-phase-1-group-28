@@ -181,4 +181,9 @@ public class Game {
     }
 
     //Boolean IsEnd = false;
+
+    public Npc getNPCWithName(String npcName){
+        //TODO
+        return null;
+    }
 }

@@ -16,4 +16,19 @@ public class Npc {
     public void setNpc(NPC npc) {
         this.npc = npc;
     }
+
+    public String getDialog(){
+        //TODO
+        return "";
+    }
+
+    public int getId(){
+        //TODO
+        return 1;
+    }
+
+    public boolean isFavoriteItem(String giftName){
+        //TODO
+        return true;
+    }
 }

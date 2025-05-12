@@ -7,6 +7,7 @@ import com.example.Controller.MainMenuController.HomeMenucontroller.CraftingCont
 import com.example.Controller.MainMenuController.MechanicController.FarmingController;
 import com.example.Controller.MainMenuController.MechanicController.FriendShipController;
 import com.example.Controller.MainMenuController.MechanicController.MechanicController;
+import com.example.Controller.MainMenuController.MechanicController.NPC_Controller;
 import com.example.Controller.MainMenuController.ProfileMenuController;
 import com.example.Controller.SignUpController;
 import com.example.Model.Tools.Pepolee;
@@ -17,6 +18,7 @@ import com.example.View.MainMenu.CheatCodes;
 import com.example.View.MainMenu.GameMenu;
 import com.example.View.MainMenu.MechanicGame.Friendship;
 import com.example.View.MainMenu.MechanicGame.MechanicGame;
+import com.example.View.MainMenu.MechanicGame.NPCMenu;
 import com.example.View.MainMenu.ProfileMenu;
 import com.example.View.MainMenu.ShowFigures;
 import com.example.View.SignUpMenu;
@@ -53,6 +55,7 @@ public class App {
     public static GameMenuController gameMenuController = new GameMenuController();
     public static ProfileMenuController profileMenuController = new ProfileMenuController();
     public static MechanicController mechanicController = new MechanicController();
+    public static NPC_Controller npcController = new NPC_Controller();
     public static MechanicGame mechanicGame = new MechanicGame();
     public static FarmingController farmingController = new FarmingController();
     public static CraftingController craftingController = new CraftingController();
@@ -61,6 +64,7 @@ public class App {
     public static ProfileMenu profileMenu = new ProfileMenu();
     public static GameMenu gameMenu = new GameMenu();
     public static LoginMenu loginMenu = new LoginMenu();
+    public static NPCMenu npcMenu = new NPCMenu();
     public static Friendship friendship = new Friendship();
     public static Random random = new Random();
     public static DailyLimits dailyLimits = new DailyLimits();

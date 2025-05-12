@@ -314,6 +314,10 @@ public class ShowFigures {
     }
     public void ShowNPCFriendShips()
     {
-
+        System.out.println("npc id: friendship level");
+        int userId = App.getCurrentGame().getPlayerIDByUsername(App.getCurrentUser().getUsername());
+        for (int i = 4; i<=8; i++){
+            System.out.println(i + ": " + App.getCurrentGame().getFriendShips()[userId][i].getLevel());
+        }
     }
 }
