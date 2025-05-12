@@ -3,25 +3,23 @@ package com.example.Model;
 import com.example.Model.Enums.Foods;
 import com.example.Model.Item.Item;
 import com.example.Model.Places.AnimalHouse;
+import com.example.Model.Tools.Tools;
 
-import javax.tools.Tool;
 import java.util.ArrayList;
 
 public class Reward {
     private int Coins;
     private Item item;
     private int FriendShip;
-    private Tool tool;
+    private Tools tool;
     private Foods foodRecipe;
-    private ArrayList<AnimalHouse> BeeHouses;
 
-    public Reward(int coins, Item item, int friendShip, Tool tool, Foods foodRecipe, ArrayList<AnimalHouse> beeHouses) {
+    public Reward(int coins, Item item, int friendShip, Tools tool, Foods foodRecipe) {
         Coins = coins;
         this.item = item;
         FriendShip = friendShip;
         this.tool = tool;
         this.foodRecipe = foodRecipe;
-        BeeHouses = beeHouses;
     }
 
     public int getCoins() {
@@ -36,7 +34,7 @@ public class Reward {
         return FriendShip;
     }
 
-    public Tool getTool() {
+    public Tools getTool() {
         return tool;
     }
 

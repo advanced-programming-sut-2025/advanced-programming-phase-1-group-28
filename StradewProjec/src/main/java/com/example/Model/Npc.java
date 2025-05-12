@@ -25,7 +25,7 @@ public class Npc {
         this.y_position = y_position;
     }
 
-    public int getID() {
+    public int getId() {
         return ID;
     }
 
@@ -66,13 +66,12 @@ public class Npc {
         return "";
     }
 
-    public int getId(){
-        //TODO
-        return 1;
-    }
-
-    public boolean isFavoriteItem(String giftName){
-        //TODO
-        return true;
+    public boolean isFavoriteItem(Item item) {
+        for(Item myitem : FavouriteItems){
+            if(myitem.getName().equals(item.getName())){
+                return true;
+            }
+        }
+        return false;
     }
 }
