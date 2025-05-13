@@ -1,34 +1,12 @@
 package com.example.Controller.MainMenuController.MechanicController;
 
 import com.example.Model.*;
+import com.example.Model.Item.Food;
 import com.example.Model.Item.Item;
+import com.example.Model.Item.PlantsItem;
 import com.example.Model.Tools.Pepolee;
 
 public class NPC_Controller {
-    private void ApplySebastianQuest(int QuestNumber)
-    {
-        if(QuestNumber == 1)
-        {
-
-        }
-        else if(QuestNumber == 2)
-        {
-            if(App.getCurrentGame().getFriendShips()[4][App.getCurrentGame().getWhoseTurn()].getLevel() == 0)
-            {
-                System.out.println("Not in Seb's yet");
-                return;
-            }
-
-        }
-        else if(QuestNumber == 3)
-        {
-
-        }
-        else
-        {
-            System.out.println("Invalid quest number");
-        }
-    }
 
     public boolean isNpcCloseEnough(Npc npc){
         Pepolee currentPlayer = App.ReturnCurrentPlayer();
@@ -87,9 +65,33 @@ public class NPC_Controller {
 
         //remove needed item
         if (neededItem.getName().equals("plant")){
-
+            boolean enoughItems = false;
+            for(Item item : currentPlayer.getInventory().getItems())
+            {
+                if(item instanceof PlantsItem && item.getCount() >=  neededItem.getCount())
+                {
+                    enoughItems = true;
+                    item.addCount(-neededItem.getCount());
+                }
+            }
+            if(!enoughItems)
+            {
+                return "You don't have enough plants to finish quest";
+            }
         } else if (neededItem.getName().equals("wine")) {
-
+            boolean enoughItems = false;
+            for(Item item : currentPlayer.getInventory().getItems())
+            {
+                if(item instanceof Food && item.getName().toLowerCase().contains("wine") && item.getCount() >=  neededItem.getCount())
+                {
+                    enoughItems = true;
+                    item.addCount(-neededItem.getCount());
+                }
+            }
+            if(!enoughItems)
+            {
+                return "You don't have enough wine to finish quest";
+            }
         }else {
             Item playerItem = currentPlayer.getInventory().getItemByName(neededItem.getName());
             if (playerItem == null){
@@ -98,7 +100,7 @@ public class NPC_Controller {
             if (playerItem.getCount() < neededItem.getCount()){
                 return "you don't have enough items";
             }
-            playerItem.addCount(neededItem.getCount());
+            playerItem.addCount(-neededItem.getCount());
         }
 
         //get rewards

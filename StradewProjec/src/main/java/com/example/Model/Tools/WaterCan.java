@@ -13,6 +13,7 @@ public class WaterCan extends Tools{
 
     public void setWatercan(Watercans watercan) {
         this.watercan = watercan;
+        EnergyCost = watercan.EnergyCost;
     }
 
     public int getWater() {
