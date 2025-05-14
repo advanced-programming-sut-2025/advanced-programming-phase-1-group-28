@@ -128,6 +128,9 @@ public class Inventory {
             currentItem.addCount(count);
             return;
         }
+        if (getInventoryCapacity() >= inventoryCapacity){
+            return;
+        }
         addItem(item);
     }
 

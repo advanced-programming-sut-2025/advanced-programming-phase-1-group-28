@@ -1,14 +1,26 @@
 package com.example.Model.Tools;
 
 import com.example.Model.Enums.Skills;
+import com.example.Model.Enums.Tools.MilkPails;
 
 public class MilkPail extends Tools{
-    public MilkPail() {
+    MilkPails milkPailType;
+    public MilkPail(MilkPails milkPailType) {
         name = "MilkPail";
-        count = 0;
-        IsExist = false;
+        count = 1;
+        IsExist = true;
         Id = 7;
         skillRelated = Skills.Farming;
-        EnergyCost = 4;
+        EnergyCost = milkPailType.EnergyCost;
+        this.milkPailType = milkPailType;
+    }
+
+    public MilkPails getMilkPailType() {
+        return milkPailType;
+    }
+
+    public void setMilkPailType(MilkPails milkPailType) {
+        this.milkPailType = milkPailType;
+        EnergyCost = milkPailType.EnergyCost;
     }
 }

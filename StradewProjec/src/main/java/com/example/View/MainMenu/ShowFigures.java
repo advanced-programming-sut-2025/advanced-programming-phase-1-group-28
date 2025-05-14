@@ -354,6 +354,28 @@ public class ShowFigures {
     }
     public void ShowNPCFriendShips()
     {
+        System.out.println("npc id: friendship level");
+        int userId = App.getCurrentGame().getPlayerIDByUsername(App.getCurrentUser().getUsername());
+        for (int i = 4; i<=8; i++){
+            System.out.println(i + ": " + App.getCurrentGame().getFriendShips()[userId][i].getLevel());
+        }
+    }
 
+    public void ShowQuestsList(){
+        System.out.println("Your unlocked quests: ");
+        for (Npc npc: App.getCurrentGame().getGameNPCs()){
+            for (Quest quest: npc.getQuests()){
+                if (quest.getQuestLocked()[App.getCurrentGame().getPlayerIDByUsername(App.getCurrentUser().getUsername())]){
+                    continue;
+                }
+                System.out.println("NPC id: " + npc.getId());
+                System.out.println("Needed item: " + quest.getGivenItems().getName());
+                if (quest.getRewards().getItem() == null){
+                    System.out.println("Reward: " + quest.getRewards().getCoins() + " coins");
+                }else {
+                    System.out.println("Reward: " + quest.getRewards().getItem().getName());
+                }
+            }
+        }
     }
 }
