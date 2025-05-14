@@ -69,6 +69,7 @@ public class UseToolController {
         }
         return null;
     }
+
     public String ApplyHoe(int x , int y )
     {
         Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
@@ -101,7 +102,7 @@ public class UseToolController {
             TempGround[NewX][NewY].setEntitity(null);
             TempGround[NewX][NewY].setTerrain(Terrain.DIRT);
             Minreal ourmineral = (Minreal) TempGround[NewX][NewY];
-            Item newitem = new MineralItem(20 , ourmineral.getMineral().name());
+            Item newitem = new MineralItem(20 , ourmineral.getMineral());
             CurrentPepolee.getInventory().AddItem(newitem);
             CurrentPepolee.getFarm().setGround(TempGround);
             return "Mineral Collected";
@@ -187,16 +188,18 @@ public class UseToolController {
             int RandomSucsses = App.random.nextInt() % 3;
             if(RandomSucsses != 0)
             {
-                int Randomfish = App.random.nextInt() % Fishes.values().length;
-                int count = 0;
-                for(Fishes f : Fishes.values())
+                int Randomfish = App.random.nextInt() % 5;
+                int Count = 0;
+                for(Fishes fish : Fishes.values())
                 {
-                    if(count == Randomfish)
-                    {
-                        FishItem fishitem = new FishItem(count, f.toString());
-                        CurrentPepolee.getInventory().AddItem(fishitem);
+                    if(fish.season == App.getCurrentGame().getTime().getSeason()) {
+                        if(Count == Randomfish) {
+                            int num = (App.ReturnCurrentPlayer().getSkills()[1].getLevel() + 2) * App.getCurrentGame().getWeather().FishCofficent;
+                            FishItem newfish = new FishItem(num , fish);
+                            App.ReturnCurrentPlayer().getInventory().AddItem(newfish);
+                        }
+                        Count++;
                     }
-                    count++;
                 }
                 return "Fish Added To your inventory";
             }

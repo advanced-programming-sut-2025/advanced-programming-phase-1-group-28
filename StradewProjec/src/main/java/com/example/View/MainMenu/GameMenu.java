@@ -21,6 +21,14 @@ public class GameMenu {
 
     public void Input(String command){
         Matcher matcher;
+        if(Appview.CurrentGameID != -1)
+        {
+            if(App.ReturnCurrentPlayer().getEnergy() <= 0)
+            {
+                App.ReturnCurrentPlayer().setISFainted(true);
+                App.gameMenu.NextTurn();
+            }
+        }
         if ((matcher = GameMenuRejex.EnergyShow.getMatcher(command)) != null){
             showFigures.ShowEnergy();
         } else if ((matcher = GameMenuRejex.EnergySet.getMatcher(command)) != null) {
@@ -113,7 +121,16 @@ public class GameMenu {
             App.UseTool.Usetool(Integer.parseInt(matcher.group(1)) , Integer.parseInt(matcher.group(2)));
         } else if((matcher = GameMenuRejex.ShowCraft.getMatcher(command)) != null) {
             App.showFigures.ShowCraft(matcher.group(1).trim());
-        } else if((matcher = GameMenuRejex.ShowCraft.getMatcher(command)) != null) {
+        } else if((matcher = GameMenuRejex.Planting.getMatcher(command)) != null) {
+            App.farming.Planting(matcher.group(1).trim() , Integer.parseInt(matcher.group(2).trim()) , Integer.parseInt(matcher.group(3).trim()));
+        } else if((matcher = GameMenuRejex.ShowPlant.getMatcher(command)) != null) {
+            App.showFigures.ShowPlant(Integer.parseInt(matcher.group(1).trim()) , Integer.parseInt(matcher.group(2).trim()));
+        } else if ((matcher = GameMenuRejex.Fertilizing.getMatcher(command)) != null) {
+            App.farming.Cood(matcher.group(1).trim() , Integer.parseInt(matcher.group(2).trim()) , Integer.parseInt(matcher.group(3).trim()));
+        } else if((matcher = GameMenuRejex.Crafting.getMatcher(command)) != null) {
+            App.Crafting.CraftItem(matcher.group(1).trim());
+        } else if((matcher = GameMenuRejex.AddCraftCheatcode.getMatcher(command)) != null) {
+            App.cheatCodes.AddItemCheatCode(matcher.group(1).trim() , Integer.parseInt(matcher.group(2).trim()));
         }
     }
     public void StartGame(ArrayList<String> PlayersInGame)

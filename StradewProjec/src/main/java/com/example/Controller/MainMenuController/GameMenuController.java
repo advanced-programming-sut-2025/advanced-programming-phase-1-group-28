@@ -21,7 +21,12 @@ public class GameMenuController {
     public void ApplyNextTurn()
     {
         App.getCurrentGame().setWhoseTurn(((App.getCurrentGame().getWhoseTurn() + 1)) % App.getCurrentGame().getCharactersInGame().size());
+        if(App.getCurrentGame().getWhoseTurn() == 0)
+        {
+            App.getCurrentGame().getTime().jumpAheadOneHour();
+        }
     }
+
     public void ApplyPlayersToGame(ArrayList<String> PlayersInGame)
     {
         Game newgame = new Game(App.Games.size());
@@ -103,14 +108,17 @@ public class GameMenuController {
             App.getCurrentGame().getCharactersInGame().get(Id).setFarm(new Farm(new GreenHouse( 25 , 8) , new Cabin(5 , 5) , new Lake(30 , 30) , new Quarry(25 , 8)));
         }
     }
+
     public void ApplyDeleteGame()
     {
         //Dont delete in ArrayList
     }
+
     public void RandomAttackCrow()
     {
 
     }
+
     public void RandomForagingOnGird()
     {
 
@@ -177,8 +185,19 @@ public class GameMenuController {
 
     public void ApplyChangeDay()
     {
-        App.farmingController.ApplyRandomForagingInFarm();
         App.getCurrentGame().setWeather(WeatherForeCasting());
+        for(Pepolee pepolee : App.getCurrentGame().getCharactersInGame())
+        {
+            for(int i = 0;i < PlaceType.FARM.XLength ; i++)
+            {
+                for(int j =0 ;j < PlaceType.FARM.YLength ; j++)
+                {
+                    App.farmingController.RandomLightning(pepolee , i , j ,false);
+                }
+            }
+            App.farmingController.ApplyRandomForagingInFarm(pepolee);
+            pepolee.RefreshDay();
+        }
         //use above function
         //USer random Foraging
         // animals friendship effects

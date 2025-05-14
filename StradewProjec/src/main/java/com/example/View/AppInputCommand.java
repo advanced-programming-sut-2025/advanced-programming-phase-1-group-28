@@ -15,6 +15,7 @@ public class AppInputCommand {
     {
         String Command = App.scanner.nextLine();
         Command = Command.trim();
+        System.out.println(Command);
         Matcher matcher;
         //All Menus
         if((matcher = ForAllmenuRejex.GoTOMenu.getMatcher(Command)) != null)

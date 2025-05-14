@@ -44,7 +44,20 @@ tools use -d 1 1
 print map -l 1,1 -s 80
 energy show
 tools equip Pickaxe
-
-
-
-
+tools show current
+walk -l 4,4 
+Yes
+print map -l 1,1 -s 80
+plant -s chert -d 1,1
+tools equip Hoe
+tools use -d 1 1 
+print map -l 1,1 -s 80
+plant -s CarrotSeeds -d 1,1
+print map -l 1,1 -s 80
+showplant -l 6,6
+showplant -l 5,5
+cheat advance time 300h
+showplant -l 5,5
+fertilize -f  -d <direction>
+crafting craft abbas
+crafting craft Dehydrator

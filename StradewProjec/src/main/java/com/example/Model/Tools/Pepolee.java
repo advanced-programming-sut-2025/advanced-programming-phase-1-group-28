@@ -15,6 +15,7 @@ public class Pepolee {
     private int Id;
     private int Wood = 0;
     private int Coin = 0;
+    private boolean ISFainted = false;
     private Inventory inventory = new Inventory();
     private Skill[] Skills = new Skill[4];
     private User CharacterUser;
@@ -27,6 +28,30 @@ public class Pepolee {
         knownRecipes.add(Foods.FriedEgg);
         knownRecipes.add(Foods.BakedFish);
         knownRecipes.add(Foods.Salad);
+    }
+
+    public void RefreshDay()
+    {
+        if(this.ISFainted)
+        {
+            this.Energy = 150;
+        }
+        else
+        {
+            this.x = 1;
+            this.y = 1;
+            this.Energy = 200;
+        }
+        ISFainted = false;
+    }
+
+
+    public boolean isISFainted() {
+        return ISFainted;
+    }
+
+    public void setISFainted(boolean ISFainted) {
+        this.ISFainted = ISFainted;
     }
 
     public ArrayList<Foods> getKnownRecipes() {

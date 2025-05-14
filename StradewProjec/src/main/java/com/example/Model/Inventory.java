@@ -25,6 +25,7 @@ public class Inventory {
         this.tools.add(new Pickaxe());
         CurrentTool = tools.get(0);
         WhichTool = 0;
+        this.seeds.add(Seeds.CarrotSeeds);
     }
 
     public void AddItem(Item item) {

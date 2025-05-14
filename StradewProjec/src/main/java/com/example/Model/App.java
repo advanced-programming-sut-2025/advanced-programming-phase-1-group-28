@@ -16,17 +16,20 @@ import com.example.View.Appview;
 import com.example.View.LoginMenu;
 import com.example.View.MainMenu.CheatCodes;
 import com.example.View.MainMenu.GameMenu;
+import com.example.View.MainMenu.MechanicGame.Farming;
 import com.example.View.MainMenu.MechanicGame.Friendship;
+import com.example.View.MainMenu.MechanicGame.HomeMenu.Crafting;
 import com.example.View.MainMenu.MechanicGame.MechanicGame;
 import com.example.View.MainMenu.MechanicGame.UseTool;
 import com.example.View.MainMenu.ProfileMenu;
 import com.example.View.MainMenu.ShowFigures;
 import com.example.View.SignUpMenu;
+/*
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
+*/
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -57,8 +60,10 @@ public class App {
     public static MechanicController mechanicController = new MechanicController();
     public static MechanicGame mechanicGame = new MechanicGame();
     public static FarmingController farmingController = new FarmingController();
+    public static Farming farming = new Farming();
     public static CraftingController craftingController = new CraftingController();
     public static UseToolController useToolController = new UseToolController();
+    public static Crafting Crafting = new Crafting();
     public static UseTool UseTool = new UseTool();
     public static AllMenuCommandsController allMenuCommandsController = new AllMenuCommandsController();
     public static SignUpMenu signUpMenu = new SignUpMenu();
@@ -68,7 +73,7 @@ public class App {
     public static Friendship friendship = new Friendship();
     public static Random random = new Random();
     public static DailyLimits dailyLimits = new DailyLimits();
-    static {
+    /*static {
         Gson gson = new Gson();
         try (FileReader reader = new FileReader("Users.json")) {
         JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
@@ -81,7 +86,7 @@ public class App {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
     public static User ReturnUser(int index)
     {
         return Users.get(index);

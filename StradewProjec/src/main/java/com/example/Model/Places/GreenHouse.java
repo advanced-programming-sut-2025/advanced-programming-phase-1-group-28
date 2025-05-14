@@ -1,10 +1,15 @@
 package com.example.Model.Places;
 
+import com.example.Model.Tile.Plants;
 import com.example.Model.Tile.Tile;
+
+import java.util.ArrayList;
 
 public class GreenHouse extends Place {
     private int Bucket_x_Coordinate;
     private int Bucket_y_Coordinate;
+
+    public ArrayList<Plants> plants = new ArrayList<>();
 
     public int getBucket_x_Coordinate() {
         return Bucket_x_Coordinate;
@@ -22,6 +27,13 @@ public class GreenHouse extends Place {
         Bucket_y_Coordinate = bucket_y_Coordinate;
     }
 
+    public void Addplant(com.example.Model.Enums.Plants plan)
+    {
+        if(!this.getLocked())
+        {
+            plants.add(new Plants(plan));
+        }
+    }
     public GreenHouse(int x_Coordinate, int y_Coordinate){
         Ground = new Tile[5][6];
         Locked = true;

@@ -27,7 +27,6 @@ public enum Crafts {
     //MysticTreeSeed(new ArrayList<>(Arrays.asList("")) ,),
     // in Shop
     SpeedGro("SpeedGro" , new ArrayList<>(Arrays.asList()), new ArrayList<>(Arrays.asList()) , null ,  0 ,  0);
-
     public final String Name;
     public final ArrayList<String> Ingredients;
     public final ArrayList<Integer> Count;

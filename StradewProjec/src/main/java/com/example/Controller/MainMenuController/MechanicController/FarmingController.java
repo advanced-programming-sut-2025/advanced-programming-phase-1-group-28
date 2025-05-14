@@ -2,15 +2,40 @@ package com.example.Controller.MainMenuController.MechanicController;
 
 import com.example.Model.App;
 import com.example.Model.Enums.*;
+import com.example.Model.Item.Ingredient;
 import com.example.Model.Tile.Plants;
 import com.example.Model.Tile.Tile;
 import com.example.Model.Tile.Trees;
 import com.example.Model.Tools.Pepolee;
 
 public class FarmingController {
-    public void ApplyRandomForagingInFarm()
+
+    public void RandomLightning(Pepolee currentpepolee , int x  , int y , Boolean cheat)
     {
-        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
+        Tile[][] Tempground = currentpepolee.getFarm().getGround();
+                int Randomnumber = App.random.nextInt() % 10;
+                if(cheat)
+                {
+                    Randomnumber = 0;
+                }
+                if(Randomnumber == 0)
+                {
+                    if(Tempground[x][y].getEntitity() == Entitity.PLANTS)
+                    {
+                        Tempground[x][y] = new Tile(Terrain.DIRT , null , null);
+                    }
+                    if(Tempground[x][y].getEntitity() == Entitity.TREE)
+                    {
+                        Trees temptree = (Trees) Tempground[x][y];
+                        temptree.setISLightend(true);
+                    }
+                }
+                currentpepolee.getFarm().setGround(Tempground);
+    }
+
+    public void ApplyRandomForagingInFarm(Pepolee pepolee)
+    {
+        Pepolee CurrentPepolee = pepolee;
         Tile[][] TempGround = CurrentPepolee.getFarm().getGround();
         for(int x = 0 ; x < PlaceType.FARM.XLength ; x++)
         {
@@ -82,8 +107,36 @@ public class FarmingController {
 
     }
 
-    public void ApplyPlanting(Seeds Goalseed , int x , int y)
+    public Seeds returnseed(String Seedname)
     {
+        for(Seeds Seed : Seeds.values()) {
+            if(Seed.name().equalsIgnoreCase(Seedname))
+            {
+                return Seed;
+            }
+        }
+        return null;
+    }
+
+    public boolean IsSeedininventory(String Seedname)
+    {
+        Seeds Goalseed = returnseed(Seedname);
+        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
+        Tile[][] TempGround = CurrentPepolee.getFarm().getGround();
+        for(int i = 0;i < CurrentPepolee.getInventory().getSeeds().size(); i++)
+        {
+            if(CurrentPepolee.getInventory().getSeeds().get(i) == Goalseed)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public void ApplyPlanting(String Seedname , int x , int y)
+    {
+        Seeds Goalseed = returnseed(Seedname);
         Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
         Tile[][] TempGround = CurrentPepolee.getFarm().getGround();
         for(int i = 0;i < CurrentPepolee.getInventory().getSeeds().size(); i++)
@@ -91,6 +144,7 @@ public class FarmingController {
             if(CurrentPepolee.getInventory().getSeeds().get(i) == Goalseed)
             {
                 CurrentPepolee.getInventory().getSeeds().remove(i);
+                break;
             }
         }
         if(Goalseed == Seeds.MixedSeeds) {
@@ -135,12 +189,38 @@ public class FarmingController {
         return false;
     }
 
-    public void ApplyCooding(int x , int y)
+    public boolean ISIninventory(String coodname)
+    {
+        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
+        for(int i = 0;i < CurrentPepolee.getInventory().getItems().size(); i++)
+        {
+            if(CurrentPepolee.getInventory().getItems().get(i) instanceof Ingredient)
+            {
+                if(CurrentPepolee.getInventory().getItems().get(i).getName().equals(coodname))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void ApplyCooding(String coodname , int x , int y)
     {
         Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
         Tile[][] TempGround = CurrentPepolee.getFarm().getGround();
         int NewX = CurrentPepolee.getX() + x;
         int NewY = CurrentPepolee.getY() + y;
+        for(int i = 0;i < CurrentPepolee.getInventory().getItems().size(); i++)
+        {
+            if(CurrentPepolee.getInventory().getItems().get(i) instanceof Ingredient)
+            {
+                if(CurrentPepolee.getInventory().getItems().get(i).getName().equals(coodname))
+                {
+                    CurrentPepolee.getInventory().getItems().remove(i);
+                }
+            }
+        }
         if(TempGround[NewX][NewY].getEntitity() == Entitity.PLANTS)
         {
             Plants ourPlant = (Plants)TempGround[NewX][NewY];

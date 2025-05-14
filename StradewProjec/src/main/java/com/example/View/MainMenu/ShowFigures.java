@@ -56,7 +56,7 @@ public class ShowFigures {
             {
                 if(App.ReturnCurrentPlayer().getX() == i && App.ReturnCurrentPlayer().getY() == j)
                 {
-                    System.out.printf( "%c",MapReading.PEOPEELE.Show);
+                    System.out.print(MapReading.PEOPEELE.Show);
                 }
                 else
                 {
@@ -64,7 +64,7 @@ public class ShowFigures {
                     {
                         if(TempGround[i][j].isHow())
                         {
-                            System.out.printf("S");
+                            System.out.print("S");
                         }
                         else
                         {
@@ -75,29 +75,29 @@ public class ShowFigures {
                     {
                         if(TempGround[i][j].getPlaceType() == PlaceType.CABIN)
                         {
-                            System.out.printf("C");
+                            System.out.print(MapColors.RED.Colorname + 'C' + MapColors.Reset.Colorname);
                         }
                         else
                         {
                             if(TempGround[i][j].getPlaceType() == PlaceType.LAKE)
                             {
-                                System.out.printf("L");
+                                System.out.printf(MapColors.RED.Colorname + 'L' + MapColors.Reset.Colorname);
                             }
                             else
                             {
                                 if(TempGround[i][j].getPlaceType() == PlaceType.GREENHOUSE)
                                 {
-                                    System.out.printf("G");
+                                    System.out.printf(MapColors.RED.Colorname + 'G' + MapColors.Reset.Colorname);
                                 }
                                 else
                                 {
                                     if(TempGround[i][j].getEntitity() == Entitity.TREE)
                                     {
-                                        System.out.printf("T");
+                                        System.out.printf(MapColors.Green.Colorname + 'T' + MapColors.Reset.Colorname);
                                     }
                                     else if(TempGround[i][j].getEntitity() == Entitity.PLANTS)
                                     {
-                                        System.out.printf("P");
+                                        System.out.printf(MapColors.Green.Colorname + 'P' + MapColors.Reset.Colorname);
                                     }
                                 }
                             }
@@ -185,15 +185,18 @@ public class ShowFigures {
         {
             Plants ourplanr = (Plants) Tempground[x][y];
             System.out.println("Name" + ourplanr.getPlant().toString());
-            System.out.println("Time to harvest" + (Math.min(0 , ourplanr.getPlant().TotalTimeHarvest - ourplanr.getBornTime().DifreenceTime(App.getCurrentGame().getTime()).getDay())));
+            System.out.println("Time to harvest" + " " + (Math.max(0 , ourplanr.getPlant().TotalTimeHarvest - ourplanr.getBornTime().DifreenceTime(App.getCurrentGame().getTime()).getDay())));
             System.out.println("IS Codded" + ourplanr.isISCooded());
-            if(ourplanr.getLastTimeWatering().getDay() == App.getCurrentGame().getTime().getDay())
-            {
-                System.out.println("Is waterd today");
+            if(ourplanr.getLastTimeWatering() != null) {
+                if (ourplanr.getLastTimeWatering().getDay() == App.getCurrentGame().getTime().getDay()) {
+                    System.out.println("Is waterd today");
+                } else {
+                    System.out.println("Doesnt watered today");
+                }
             }
             else
             {
-                System.out.println("Doesnt watered today");
+                System.out.println("Does not water today");
             }
         }
         else
