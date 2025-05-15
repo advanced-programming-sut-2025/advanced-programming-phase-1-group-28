@@ -1,8 +1,10 @@
 package com.example.Controller.MainMenuController;
 
-import com.example.Model.*;
+import com.example.Model.App;
 import com.example.Model.Enums.*;
+import com.example.Model.Game;
 import com.example.Model.Places.*;
+import com.example.Model.Skill;
 import com.example.Model.Tile.Animal;
 import com.example.Model.Tile.Plants;
 import com.example.Model.Tile.Tile;
@@ -10,6 +12,7 @@ import com.example.Model.Tile.Trees;
 import com.example.Model.Tile.Plants;
 import com.example.Model.Tile.Tile;
 import com.example.Model.Tools.Pepolee;
+import com.example.Model.User;
 import com.example.View.Appview;
 
 import java.util.ArrayList;
@@ -105,14 +108,17 @@ public class GameMenuController {
             App.getCurrentGame().getCharactersInGame().get(Id).setFarm(new Farm(new GreenHouse( 25 , 8) , new Cabin(5 , 5) , new Lake(30 , 30) , new Quarry(25 , 8)));
         }
     }
+
     public void ApplyDeleteGame()
     {
         //Dont delete in ArrayList
     }
+
     public void RandomAttackCrow()
     {
 
     }
+
     public void RandomForagingOnGird()
     {
 
@@ -179,27 +185,7 @@ public class GameMenuController {
 
     public void ApplyChangeDay()
     {
-        //USer random Foraging
-        App.farmingController.ApplyRandomForagingInFarm();
-        //set weather
         App.getCurrentGame().setWeather(WeatherForeCasting());
-
-        // plants stage
-        for (Pepolee pepolee: App.getCurrentGame().getCharactersInGame()){
-            for (Tile[] tiles: pepolee.getFarm().getGround()){
-                for (Tile tile: tiles){
-                    if (tile instanceof Plants){
-                        if (((Plants) tile).getCurrentStage() == -1){
-                            continue;
-                        }
-                        int daysLeft = App.getCurrentGame().getTime().getDay() - ((Plants) tile).getBornTime().getDay();
-                        if (daysLeft > ((Plants) tile).getCurrentStage()){
-                            ((Plants) tile).setStage(((Plants) tile).getStage()+1);
-                        }
-                    }
-                }
-            }
-        }
         for(Pepolee pepolee : App.getCurrentGame().getCharactersInGame())
         {
             for(int i = 0;i < PlaceType.FARM.XLength ; i++)
@@ -213,15 +199,7 @@ public class GameMenuController {
             pepolee.RefreshDay();
         }
         //use above function
-        for (int i = 0; i<8; i++){
-            for (int j = 0; j<8; j++){
-                if (i <= 3 && j<= 3){
-                    continue;
-                }
-                App.getCurrentGame().getFriendShips()[i][j].setTalkedToday(false);
-            }
-        }
-
+        //USer random Foraging
         // animals friendship effects
         for (Pepolee pepolee: App.getCurrentGame().getCharactersInGame()){
 

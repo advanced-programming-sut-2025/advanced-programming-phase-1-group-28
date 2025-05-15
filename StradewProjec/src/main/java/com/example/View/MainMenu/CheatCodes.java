@@ -71,12 +71,14 @@ public class CheatCodes {
 
     public void AddItemCheatCode(String ItemName , int Count)
     {
+        boolean ok = false;
         for(Ingredients ingredient : Ingredients.values())
         {
             if(ingredient.toString().equals(ItemName))
             {
                 Ingredient newingredient = new Ingredient(Count , ingredient);
                 App.ReturnCurrentPlayer().getInventory().AddItem(newingredient);
+                ok = true;
             }
         }
         for(Crafts craft : Crafts.values())
@@ -85,6 +87,7 @@ public class CheatCodes {
             {
                 Craft newcraft = new Craft(Count , craft);
                 App.ReturnCurrentPlayer().getInventory().AddItem(newcraft);
+                ok = true;
             }
         }
         for(Fishes fishes : Fishes.values())
@@ -93,6 +96,7 @@ public class CheatCodes {
             {
                 FishItem newfish = new FishItem(Count , fishes);
                 App.ReturnCurrentPlayer().getInventory().AddItem(newfish);
+                ok = true;
             }
         }
         for(Minerals mineral : Minerals.values())
@@ -101,6 +105,7 @@ public class CheatCodes {
             {
                 MineralItem newmineral = new MineralItem(Count , mineral);
                 App.ReturnCurrentPlayer().getInventory().AddItem(newmineral);
+                ok = true;
             }
         }
         for(Plants plants : Plants.values())
@@ -108,7 +113,16 @@ public class CheatCodes {
             if(plants.toString().equals(ItemName)){
                 PlantsItem newplants = new PlantsItem(Count , plants);
                 App.ReturnCurrentPlayer().getInventory().AddItem(newplants);
+                ok = true;
             }
+        }
+        if(ItemName.equals("Wood"))
+        {
+            App.ReturnCurrentPlayer().getInventory().AddItem(new Item(Count , "Wood"));
+        }
+        if(!ok)
+        {
+            System.out.println("there is no such item");
         }
     }
 

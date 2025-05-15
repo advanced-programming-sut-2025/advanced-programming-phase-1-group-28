@@ -16,7 +16,13 @@ public class Plants extends Tile{
     public boolean CanHarvest(){
         Time PassesTime = this.BornTime.DifreenceTime(App.getCurrentGame().getTime());
         //TODO check with the plant.totalharvesttime
-        return true;
+        if(PassesTime.getDay() >= this.plant.TotalTimeHarvest)
+        {
+            if(this.plant.RegrowthTime == 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Time getLastTimeWatering() {

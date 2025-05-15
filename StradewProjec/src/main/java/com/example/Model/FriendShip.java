@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FriendShip {
-    private boolean isTalkedToday = false;
     private int XP = 0;
     private int level = 0;
     private ArrayList<String> TalkHistory = new ArrayList<>();
@@ -21,14 +20,6 @@ public class FriendShip {
 
     public ArrayList<Gift> getGifts() {
         return gifts;
-    }
-
-    public boolean isTalkedToday() {
-        return isTalkedToday;
-    }
-
-    public void setTalkedToday(boolean talkedToday) {
-        isTalkedToday = talkedToday;
     }
 
     public int getXP() {
@@ -96,13 +87,5 @@ public class FriendShip {
 
     public void applyRejectTrade(){
         this.addXp(-30);
-    }
-
-    public void meetNpc(){
-        if (isTalkedToday){
-            return;
-        }
-        isTalkedToday = true;
-        addXp(20);
     }
 }

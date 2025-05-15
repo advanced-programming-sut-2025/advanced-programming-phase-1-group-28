@@ -13,7 +13,6 @@ public class WaterCan extends Tools{
 
     public void setWatercan(Watercans watercan) {
         this.watercan = watercan;
-        EnergyCost = watercan.EnergyCost;
     }
 
     public int getWater() {
@@ -24,12 +23,11 @@ public class WaterCan extends Tools{
         Water = water;
     }
 
-    public WaterCan(Watercans watercan , int count)
+    public WaterCan()
     {
-        this.watercan = watercan;
-        EnergyCost = watercan.EnergyCost;
+        EnergyCost = 5;
         name = "WaterCan";
-        this.count = count;
+        count = 1;
         IsExist = true;
         Id = 4;
         skillRelated = Skills.Farming;

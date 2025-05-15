@@ -1,19 +1,13 @@
 package com.example.Model;
 
-import com.example.Model.Enums.*;
-import com.example.Model.Enums.Tools.Watercans;
-import com.example.Model.Item.*;
-import com.example.Model.Enums.*;
-import com.example.Model.Item.Food;
-import com.example.Model.Item.Ingredient;
-import com.example.Model.Item.Item;
-import com.example.Model.Item.MineralItem;
+import com.example.Model.Enums.Entitity;
+import com.example.Model.Enums.PlaceType;
+import com.example.Model.Enums.Terrain;
+import com.example.Model.Enums.Weathers;
 import com.example.Model.Tile.Tile;
 import com.example.Model.Tools.Pepolee;
-import com.example.Model.Tools.WaterCan;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Game {
     private FriendShip[][] FriendShips = new FriendShip[100][100];//0-3 peeplee , 4-8 npc
@@ -24,7 +18,6 @@ public class Game {
     private ArrayList<Integer> Scores = new ArrayList<>();
     private int WhoseTurn = 0;
     private Weathers Weather = Weathers.SUNNY;
-    private ArrayList<Npc> GameNPCs = new ArrayList<>();
 
     private Tile[][] EntireMap = new Tile[200][200];
 
@@ -34,41 +27,6 @@ public class Game {
                 FriendShips[i][j] = new FriendShip();
             }
         }
-        // initialize sebastian
-        GameNPCs.add(new Npc(4 , "Sebastian" , "Singer" , new ArrayList<String>(Arrays.asList("City of Stars")) ,
-                new ArrayList<Item>(Arrays.asList(new Food(1 , Foods.Pizza) , new Food(1 , Foods.PumpkinPie) , new Ingredient(1 , Ingredients.SheepCotton) , new Ingredient(1 , Ingredients.RabbitWool))) ,
-                new ArrayList<Quest>(Arrays.asList(new Quest(new Item(50 , "Iron Bar") , new Reward(0 , new MineralItem(2 , Minerals.Diamond) , 0 , null , null)),
-                        new Quest(new Food(1 , Foods.PumpkinPie) , new Reward(5000 , null , 0 , null , null)) ,
-                        new Quest(new Item(150 , "Stone") , new Reward(0 , new MineralItem(50 , Minerals.Quartz) , 0 , null , null)))) ,
-                60 , 60));
-        // initialize abigail
-        GameNPCs.add(new Npc(5 , "Abigail" , "Astronaut" , new ArrayList<String>(Arrays.asList("Abigail is GONE!")) ,
-                new ArrayList<Item>(Arrays.asList(new Item(1 , "Stone") , new MineralItem(1 , Minerals.Iron) , new Food(1 , Foods.TripleShotEspresso))) ,
-                new ArrayList<Quest>(Arrays.asList(new Quest(new Item(1 , "Gold Bar") , new Reward(0 , null , 1 , null , null)),
-                        new Quest(new PlantsItem(1 , Plants.PUMPKIN) , new Reward(500 , null , 0 , null , null)) ,
-                        new Quest(new PlantsItem(50 , Plants.WHEAT) , new Reward(0 , null, 0 , new WaterCan(Watercans.Iridium , 3), null)))) ,
-                70 , 70));
-        // initialize harvey
-        GameNPCs.add(new Npc(6 , "Harvy" , "Prosecutor" , new ArrayList<String>(Arrays.asList("You either die a hero or you live long enough to see yourself become the villain")) ,
-                new ArrayList<Item>(Arrays.asList(new Food(1 , Foods.TripleShotEspresso) , new Food(1 , Foods.AppleWine) , new Food(1 , Foods.PotatoPickle))),
-                new ArrayList<Quest>(Arrays.asList(new Quest(new Item(12 , "plant") , new Reward(750 , null , 0 , null , null)),
-                        new Quest(new FishItem(1 , Fishes.SALMON) , new Reward(0 , null , 1 , null , null)) ,
-                        new Quest(new Item(1 , "wine") , new Reward(0 , new Food(5 , Foods.Salad), 0 , null , null)))) ,
-                80 , 80));
-        // initialize leia
-        GameNPCs.add(new Npc(7 , "Leia" , "Princess of Alderan" , new ArrayList<String>(Arrays.asList("I know")) ,
-                new ArrayList<Item>(Arrays.asList(new Food(1 , Foods.Salad) , new PlantsItem(1 , Plants.GRAPE) , new Food(1 , Foods.GrapeWine))),
-                new ArrayList<Quest>(Arrays.asList(new Quest(new Item(10 , "Wood") , new Reward(500 , null , 0 , null , null)),
-                        new Quest(new FishItem(1 , Fishes.SALMON) , new Reward(0 , null , 0 , null , Foods.SalmonDinner)) ,
-                        new Quest(new Item(200 , "Wood") , new Reward(0 , new Craft(3, Crafts.DeluxeScarecrow) , 0 , null , null)))) ,
-                90 , 90));
-        // initialize robin
-        GameNPCs.add(new Npc(8 , "Robin" , "Journalist" , new ArrayList<String>(Arrays.asList("Everybody come and play")) ,
-                new ArrayList<Item>(Arrays.asList(new Food(1 , Foods.Spaghetti) , new Item(1 , "Wood") , new Item(1 , "Iron Bar"))),
-                new ArrayList<Quest>(Arrays.asList(new Quest(new Item(80 , "Wood") , new Reward(1000 , null , 0 , null , null)),
-                        new Quest(new Item(10 , "Iron Bar") , new Reward(10000 , null , 0 , null , null )) ,
-                        new Quest(new Item(1000 , "Wood") , new Reward(25000 , null , 0 , null , null)))) ,
-                100 , 100));
     }
     private void InitializeMap() {
         for (int i = 0; i < 200; i++) {
@@ -222,23 +180,5 @@ public class Game {
         EntireMap = entireMap;
     }
 
-    public ArrayList<Npc> getGameNPCs() {
-        return GameNPCs;
-    }
-
-    public void setGameNPCs(ArrayList<Npc> gameNPCs) {
-        GameNPCs = gameNPCs;
-    }
-//Boolean IsEnd = false;
-
-    public Npc getNPCWithName(String npcName){
-        for(Npc npc : GameNPCs)
-        {
-            if(npc.getName().equals(npcName))
-            {
-                return npc;
-            }
-        }
-        return null;
-    }
+    //Boolean IsEnd = false;
 }

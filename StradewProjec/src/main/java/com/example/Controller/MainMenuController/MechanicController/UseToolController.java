@@ -25,6 +25,10 @@ public class UseToolController {
         {
             currentPepolee.getInventory().setCurrentTool(OurTool);
         }
+        else
+        {
+            System.out.println("Tool not found");
+        }
     }
 
     public String ApplyUsing(int x, int y)
@@ -102,7 +106,8 @@ public class UseToolController {
             TempGround[NewX][NewY].setEntitity(null);
             TempGround[NewX][NewY].setTerrain(Terrain.DIRT);
             Minreal ourmineral = (Minreal) TempGround[NewX][NewY];
-            Item newitem = new MineralItem(20 , ourmineral.getMineral());
+            Item newitem = new MineralItem(CurrentPepolee.getSkills()[3].getLevel() * 20 , ourmineral.getMineral());
+            CurrentPepolee.getSkills()[3].setXp(CurrentPepolee.getSkills()[3].getXp() + 10);
             CurrentPepolee.getInventory().AddItem(newitem);
             CurrentPepolee.getFarm().setGround(TempGround);
             return "Mineral Collected";
@@ -197,6 +202,7 @@ public class UseToolController {
                             int num = (App.ReturnCurrentPlayer().getSkills()[1].getLevel() + 2) * App.getCurrentGame().getWeather().FishCofficent;
                             FishItem newfish = new FishItem(num , fish);
                             App.ReturnCurrentPlayer().getInventory().AddItem(newfish);
+                            App.ReturnCurrentPlayer().getSkills()[1].setXp(App.ReturnCurrentPlayer().getSkills()[1].getXp() + 10);
                         }
                         Count++;
                     }
@@ -232,7 +238,19 @@ public class UseToolController {
                 Plants ourplant = (Plants) TempGround[NewX][NewY];
                 if(ourplant.CanHarvest()) {
                     CurrentPepolee.getInventory().AddItem(new PlantsItem(1, ourplant.getPlant()));
+                    if(ourplant.getPlant().Source != null) {
+                        CurrentPepolee.getSkills()[2].setXp(CurrentPepolee.getSkills()[2].getXp() + 5);
+                    }
+                    else {
+                        CurrentPepolee.getSkills()[0].setXp(CurrentPepolee.getSkills()[0].getXp() + 10);
+                    }
                     System.out.println("Plant Added to your inventory");
+                    if(ourplant.getPlant().RegrowthTime == 0)
+                    {
+                        TempGround[NewX][NewY].setPlaceType(null);
+                        TempGround[NewX][NewY].setTerrain(Terrain.DIRT);
+                        TempGround[NewX][NewY].setEntitity(null);
+                    }
                 }
                 else
                 {
