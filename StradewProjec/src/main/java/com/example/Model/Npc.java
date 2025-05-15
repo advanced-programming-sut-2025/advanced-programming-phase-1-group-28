@@ -1,6 +1,9 @@
 package com.example.Model;
 
 import com.example.Model.Enums.NPC;
+import com.example.Model.Item.Item;
+
+import java.util.ArrayList;
 
 public class Npc {
     private int ID;
@@ -75,12 +78,13 @@ public class Npc {
     }
 
     public boolean isFavoriteItem(Item item) {
-        for(Item myitem : FavouriteItems){
-            if(myitem.getName().equals(item.getName())){
+        for (Item myitem : FavouriteItems) {
+            if (myitem.getName().equals(item.getName())) {
                 return true;
             }
         }
         return false;
+    }
     public void setNpc(NPC npc) {
         this.npc = npc;
     }

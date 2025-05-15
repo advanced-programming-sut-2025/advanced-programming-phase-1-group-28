@@ -76,6 +76,8 @@ public class App {
     public static GameMenu gameMenu = new GameMenu();
     public static LoginMenu loginMenu = new LoginMenu();
     public static Friendship friendship = new Friendship();
+    public static PokhtOPaz pokhtOPaz = new PokhtOPaz();
+    public static PokhtOPazController pokhtOPazController = new PokhtOPazController();
     public static Random random = new Random();
     public static DailyLimits dailyLimits = new DailyLimits();
     /*static {

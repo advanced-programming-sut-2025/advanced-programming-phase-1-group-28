@@ -180,17 +180,17 @@ public class GameMenuController {
     {
         Time gameTime = App.getCurrentGame().getTime();
         //USer random Foraging
-        App.farmingController.ApplyRandomForagingInFarm();
         //set weather
         App.getCurrentGame().setWeather(WeatherForeCasting());
         for(Pepolee pepolee : App.getCurrentGame().getCharactersInGame())
         {
             for(int i = 0;i < PlaceType.FARM.XLength ; i++)
             {
-                for(int j =0 ;j < PlaceType.FARM.YLength ; j++)
-                {
-                    App.farmingController.RandomLightning(pepolee , i , j ,false);
-
+                for(int j =0 ;j < PlaceType.FARM.YLength ; j++) {
+                    App.farmingController.RandomLightning(pepolee, i, j, false);
+                }
+            }
+        }
         // plants stage
         for (Pepolee pepolee: App.getCurrentGame().getCharactersInGame()){
             for (Tile[] tiles: pepolee.getFarm().getGround()){
