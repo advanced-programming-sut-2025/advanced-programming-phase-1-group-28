@@ -42,7 +42,7 @@ public class Reward {
         return foodRecipe;
     }
 
-    public ArrayList<AnimalHouse> getBeeHouses() {
-        return BeeHouses;
-    }
+//    public ArrayList<AnimalHouse> getBeeHouses() {
+//        return BeeHouses;
+//    }
 }

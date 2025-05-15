@@ -2,6 +2,7 @@ package com.example.Model;
 
 import com.example.Model.Enums.Saplings;
 import com.example.Model.Enums.Seeds;
+import com.example.Model.Enums.Tools.Pickaxes;
 import com.example.Model.Item.Item;
 import com.example.Model.Tools.Hoe;
 import com.example.Model.Tools.Pickaxe;
@@ -22,7 +23,7 @@ public class Inventory {
 
     public Inventory() {
         this.tools.add(new Hoe());
-        this.tools.add(new Pickaxe());
+        this.tools.add(new Pickaxe(Pickaxes.Copper));
         CurrentTool = tools.get(0);
         WhichTool = 0;
     }
@@ -36,7 +37,9 @@ public class Inventory {
             }
         }
         //Check Limit of Items Count
-        //ToDo
+        if (!canAddNewItem()){
+            return;
+        }
         if(!IsHere) {
             this.items.add(item);
         }
@@ -127,7 +130,7 @@ public class Inventory {
             currentItem.addCount(count);
             return;
         }
-        if (getInventoryCapacity() >= inventoryCapacity){
+        if (!canAddNewItem()){
             return;
         }
         addItem(item);

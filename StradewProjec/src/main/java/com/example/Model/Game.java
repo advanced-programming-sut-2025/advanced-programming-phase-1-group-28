@@ -29,9 +29,13 @@ public class Game {
     private Tile[][] EntireMap = new Tile[200][200];
 
     {
+        // initialize friendships
         for (int i = 0; i<10; i++){
             for (int j = 0; j<10; j++){
                 FriendShips[i][j] = new FriendShip();
+                if (i > 3 || j > 3){
+                    FriendShips[i][j].setWithNpc(true);
+                }
             }
         }
         // initialize sebastian

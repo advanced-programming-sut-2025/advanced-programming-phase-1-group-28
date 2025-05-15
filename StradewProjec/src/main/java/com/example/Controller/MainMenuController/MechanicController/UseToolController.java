@@ -101,7 +101,7 @@ public class UseToolController {
             TempGround[NewX][NewY].setEntitity(null);
             TempGround[NewX][NewY].setTerrain(Terrain.DIRT);
             Minreal ourmineral = (Minreal) TempGround[NewX][NewY];
-            Item newitem = new MineralItem(20 , ourmineral.getMineral().name());
+            Item newitem = new MineralItem(20 , ourmineral.getMineral());
             CurrentPepolee.getInventory().AddItem(newitem);
             CurrentPepolee.getFarm().setGround(TempGround);
             return "Mineral Collected";
@@ -193,7 +193,7 @@ public class UseToolController {
                 {
                     if(count == Randomfish)
                     {
-                        FishItem fishitem = new FishItem(count, f.toString());
+                        FishItem fishitem = new FishItem(count, f);
                         CurrentPepolee.getInventory().AddItem(fishitem);
                     }
                     count++;

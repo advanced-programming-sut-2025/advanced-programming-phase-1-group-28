@@ -13,6 +13,7 @@ public class Npc {
     private ArrayList<Quest> Quests;
     private int x_position;
     private int y_position;
+    private int howManyDaysToUnlockQuest = (App.random.nextInt() % 60) + 30;
 
     public Npc(int ID , String name, String job, ArrayList<String> dialogues, ArrayList<Item> favouriteItems, ArrayList<Quest> quests , int x_position , int y_position) {
         this.ID = ID;
@@ -59,6 +60,14 @@ public class Npc {
 
     public void setQuests(ArrayList<Quest> quests) {
         Quests = quests;
+    }
+
+    public int getHowManyDaysToUnlockQuest() {
+        return howManyDaysToUnlockQuest;
+    }
+
+    public void setHowManyDaysToUnlockQuest(int howManyDaysToUnlockQuest) {
+        this.howManyDaysToUnlockQuest = howManyDaysToUnlockQuest;
     }
 
     public String getDialog(){
