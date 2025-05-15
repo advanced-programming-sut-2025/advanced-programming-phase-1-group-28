@@ -1,10 +1,8 @@
 package com.example.Controller.MainMenuController;
 
-import com.example.Model.App;
+import com.example.Model.*;
 import com.example.Model.Enums.*;
-import com.example.Model.Game;
 import com.example.Model.Places.*;
-import com.example.Model.Skill;
 import com.example.Model.Tile.Animal;
 import com.example.Model.Tile.Plants;
 import com.example.Model.Tile.Tile;
@@ -12,7 +10,6 @@ import com.example.Model.Tile.Trees;
 import com.example.Model.Tile.Plants;
 import com.example.Model.Tile.Tile;
 import com.example.Model.Tools.Pepolee;
-import com.example.Model.User;
 import com.example.View.Appview;
 
 import java.util.ArrayList;
@@ -26,7 +23,6 @@ public class GameMenuController {
             App.getCurrentGame().getTime().jumpAheadOneHour();
         }
     }
-
     public void ApplyPlayersToGame(ArrayList<String> PlayersInGame)
     {
         Game newgame = new Game(App.Games.size());
@@ -108,17 +104,14 @@ public class GameMenuController {
             App.getCurrentGame().getCharactersInGame().get(Id).setFarm(new Farm(new GreenHouse( 25 , 8) , new Cabin(5 , 5) , new Lake(30 , 30) , new Quarry(25 , 8)));
         }
     }
-
     public void ApplyDeleteGame()
     {
         //Dont delete in ArrayList
     }
-
     public void RandomAttackCrow()
     {
 
     }
-
     public void RandomForagingOnGird()
     {
 
@@ -185,6 +178,10 @@ public class GameMenuController {
 
     public void ApplyChangeDay()
     {
+        Time gameTime = App.getCurrentGame().getTime();
+        //USer random Foraging
+        App.farmingController.ApplyRandomForagingInFarm();
+        //set weather
         App.getCurrentGame().setWeather(WeatherForeCasting());
         for(Pepolee pepolee : App.getCurrentGame().getCharactersInGame())
         {
@@ -193,6 +190,20 @@ public class GameMenuController {
                 for(int j =0 ;j < PlaceType.FARM.YLength ; j++)
                 {
                     App.farmingController.RandomLightning(pepolee , i , j ,false);
+
+        // plants stage
+        for (Pepolee pepolee: App.getCurrentGame().getCharactersInGame()){
+            for (Tile[] tiles: pepolee.getFarm().getGround()){
+                for (Tile tile: tiles){
+                    if (tile instanceof Plants){
+                        if (((Plants) tile).getCurrentStage() == -1){
+                            continue;
+                        }
+                        int daysLeft = gameTime.getDay() - ((Plants) tile).getBornTime().getDay();
+                        if (daysLeft > ((Plants) tile).getCurrentStage()){
+                            ((Plants) tile).setStage(((Plants) tile).getStage()+1);
+                        }
+                    }
                 }
             }
             App.farmingController.ApplyRandomForagingInFarm(pepolee);
@@ -213,12 +224,45 @@ public class GameMenuController {
                 }
             }
         }
+
+        // random gift
+        FriendShip[][] allFriendships = App.getCurrentGame().getFriendShips();
+        for (Pepolee pepolee:App.getCurrentGame().getCharactersInGame()){
+            for (int i = 4; i<9; i++){
+                if (allFriendships[pepolee.getId()][i].getLevel() >= 3){
+                    int random = App.random.nextInt() % 2;
+                    if (random == 1){
+                        pepolee.addCoin(50 + (App.random.nextInt() % 25));
+                    }
+                }
+            }
+        }
+
+        // unlock quest
+        for (Pepolee pepolee: App.getCurrentGame().getCharactersInGame()){
+            for (Npc npc: App.getCurrentGame().getGameNPCs()){
+                if (npc.getHowManyDaysToUnlockQuest() > gameTime.getDay() + gameTime.getMonth() * 28){
+                    npc.getQuests().get(2).getQuestLocked()[pepolee.getId()] = false;
+                }
+            }
+        }
+
+        // animals produce
+        for (Pepolee pepolee: App.getCurrentGame().getCharactersInGame()){
+            for (Animal animal: pepolee.getFarm().getAnimals()){
+                animal.makeProduct();
+            }
+        }
     }
     public void ApplyChangeHour(){
         //TODO buff, time
-        App.getCurrentGame().getTime().jumpAheadOneHour();
-        if (App.getCurrentGame().getTime().isDayChanged()){
+        Game game = App.getCurrentGame();
+        game.getTime().jumpAheadOneHour();
+        if (game.getTime().isDayChanged()){
             ApplyChangeDay();
         }
+
+        // change turns
+        game.setWhoseTurn((game.getWhoseTurn() + 1) % game.getCharactersInGame().size());
     }
 }

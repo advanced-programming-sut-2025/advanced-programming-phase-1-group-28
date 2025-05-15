@@ -131,6 +131,38 @@ public class GameMenu {
             App.Crafting.CraftItem(matcher.group(1).trim());
         } else if((matcher = GameMenuRejex.AddCraftCheatcode.getMatcher(command)) != null) {
             App.cheatCodes.AddItemCheatCode(matcher.group(1).trim() , Integer.parseInt(matcher.group(2).trim()));
+        } else if((matcher = GameMenuRejex.ShowCraft.getMatcher(command)) != null) {
+        } else if ((matcher = GameMenuRejex.CookingRefrigerator.getMatcher(command)) != null) {
+            if (matcher.group(1).equals("put")){
+                App.pokhtOPaz.putInRef(matcher.group(2));
+            }else {
+                App.pokhtOPaz.PickFromRef(matcher.group(2));
+            }
+        } else if ((matcher = GameMenuRejex.CookingShowRecipes.getMatcher(command)) != null) {
+            App.showFigures.ShowRecipe();
+        } else if ((matcher = GameMenuRejex.CookingPrepare.getMatcher(command)) != null) {
+            App.pokhtOPaz.PokhtingOPazing(matcher.group(1));
+        } else if ((matcher = GameMenuRejex.Eat.getMatcher(command)) != null) {
+            App.pokhtOPaz.Eating(matcher.group(1));
+        } else if ((matcher = GameMenuRejex.Build.getMatcher(command)) != null) {
+        } else if ((matcher = GameMenuRejex.BuyAnimal.getMatcher(command)) != null) {
+
+        } else if ((matcher = GameMenuRejex.PetAnimal.getMatcher(command)) != null) {
+            App.mechanicGame.Pet(matcher.group(1));
+        } else if ((matcher = GameMenuRejex.CheatSetFriendshipWithAnimal.getMatcher(command)) != null) {
+            App.cheatCodes.SetFriendShip(matcher.group(1), Integer.parseInt(matcher.group(2)));
+        } else if ((matcher = GameMenuRejex.AnimalShow.getMatcher(command)) != null) {
+            App.showFigures.ShowAnimals();
+        } else if ((matcher = GameMenuRejex.ShepherdAnimal.getMatcher(command)) != null) {
+            App.mechanicGame.shepherdAnimal(matcher.group(1), Integer.parseInt(matcher.group(2)), Integer.parseInt(matcher.group(3)));
+        } else if ((matcher = GameMenuRejex.FeedHay.getMatcher(command)) != null) {
+            App.mechanicGame.FeedAnimal(matcher.group(1));
+        } else if ((matcher = GameMenuRejex.AnimalProduces.getMatcher(command)) != null) {
+            App.showFigures.ShowAllAvailableProducts();
+        } else if ((matcher = GameMenuRejex.CollectProduce.getMatcher(command)) != null) {
+            App.mechanicGame.getAnimalProducts(matcher.group(1));
+        } else if ((matcher = GameMenuRejex.SellAnimal.getMatcher(command)) != null) {
+            App.mechanicGame.SellAnimal(matcher.group(1));
         }
     }
     public void StartGame(ArrayList<String> PlayersInGame)

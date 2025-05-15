@@ -59,7 +59,21 @@ public enum GameMenuRejex {
     ),
     TradeList("^trade\\s+list"),
     TradeResponse("^trade\\s+response\\s+(-accept|-reject)\\s+-i\\s+(\\d)"),
-    TradeHistory("^trade\\s+history");
+    TradeHistory("^trade\\s+history"),
+    CookingRefrigerator("^cooking\\s+refrigerator\\s+(pick|put)\\s+(.+)$"),
+    CookingShowRecipes("^cooking\\s+show\\s+recipes$"),
+    CookingPrepare("^cooking\\s+prepare\\s+(.+)$"),
+    Eat("^eat\\s+(.+)$"),
+    Build("^build\\s+-a\\s+(.+)\\s+-l\\s+(\\d+),(\\d+)$"),
+    BuyAnimal("^buy\\s+animal\\s+-a\\s+(.+)\\s+-n\\s+(.+)$"),
+    PetAnimal("^pet\\s+-n\\s+(.+)$"),
+    CheatSetFriendshipWithAnimal("^cheat\\s+set\\s+friendship\\s+-n\\s+(.+)\\s+-c\\s+(\\d+)$"),
+    AnimalShow("^animals$"),
+    ShepherdAnimal("^shepherd\\s+animals\\s+-n\\s+(.+)\\s+-l(\\d+),(\\d+)$"),
+    FeedHay("^feed\\s+hay\\s+-n\\s+(.+)$"),
+    AnimalProduces("^produces$"),
+    CollectProduce("^collect\\s+produce\\s+-n\\s+(.+)$"),
+    SellAnimal("^sell\\s+animal\\s+-n\\s+(.+)$");
     public String command;
     GameMenuRejex(String command) {
         this.command = command;

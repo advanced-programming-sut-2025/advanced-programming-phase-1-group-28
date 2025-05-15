@@ -256,7 +256,15 @@ public class ShowFigures {
     }
     public void ShowAllAvailableProducts()
     {
-
+        Pepolee currentPlayer = App.ReturnCurrentPlayer();
+        System.out.println("Animal name: products");
+        for (Animal animal: currentPlayer.getFarm().getAnimals()){
+            System.out.println(animal.getPetName());
+            for (Item item: animal.getProducts()){
+                System.out.println(item.getName());
+            }
+            System.out.println("---------------------------------");
+        }
     }
     public void ShowTalkHistory(String username)
     {

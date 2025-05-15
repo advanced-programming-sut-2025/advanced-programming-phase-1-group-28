@@ -10,8 +10,17 @@ public class FriendShip {
     private int level = 0;
     private ArrayList<String> TalkHistory = new ArrayList<>();
     private ArrayList<Gift> gifts = new ArrayList<>();
+    private boolean isWithNpc = false;
 
     public FriendShip() {
+    }
+
+    public boolean isWithNpc() {
+        return isWithNpc;
+    }
+
+    public void setWithNpc(boolean withNpc) {
+        isWithNpc = withNpc;
     }
 
     public void setGifts(ArrayList<Gift> gifts) {
@@ -48,8 +57,15 @@ public class FriendShip {
 
     public void addXp(int amount){
         XP += amount;
-        if (XP > (level + 1) * 100  && level < 2){
-            level ++;
+        if (isWithNpc){
+            if (XP > (level + 1) * 200){
+                level ++;
+            }
+        }
+        else {
+            if (XP > (level + 1) * 100  && level < 2){
+                level ++;
+            }
         }
     }
 

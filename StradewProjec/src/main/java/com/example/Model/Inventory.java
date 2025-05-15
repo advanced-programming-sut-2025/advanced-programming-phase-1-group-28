@@ -2,6 +2,7 @@ package com.example.Model;
 
 import com.example.Model.Enums.Saplings;
 import com.example.Model.Enums.Seeds;
+import com.example.Model.Enums.Tools.Pickaxes;
 import com.example.Model.Item.Item;
 import com.example.Model.Tools.Hoe;
 import com.example.Model.Tools.Pickaxe;
@@ -37,7 +38,9 @@ public class Inventory {
             }
         }
         //Check Limit of Items Count
-        //ToDo
+        if (!canAddNewItem()){
+            return;
+        }
         if(!IsHere) {
             this.items.add(item);
         }
@@ -126,6 +129,9 @@ public class Inventory {
         Item currentItem = getItemByName(item.getName());
         if (currentItem != null){
             currentItem.addCount(count);
+            return;
+        }
+        if (!canAddNewItem()){
             return;
         }
         addItem(item);
