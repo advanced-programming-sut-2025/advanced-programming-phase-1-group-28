@@ -245,4 +245,8 @@ public class Game {
         }
         return null;
     }
+
+    public String returnHello(){
+        return "hello";
+    }
 }
