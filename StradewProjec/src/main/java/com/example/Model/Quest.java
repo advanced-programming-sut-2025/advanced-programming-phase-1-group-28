@@ -40,4 +40,8 @@ public class Quest {
     public void setQuestLocked(boolean[] questLocked) {
         QuestLocked = questLocked;
     }
+
+    public String returnHello(){
+        return "bye";
+    }
 }
