@@ -9,4 +9,8 @@ public class Quest {
     private ArrayList<Item> TakenItems;
     public Quest() {
     }
+
+    public String returnHello(){
+        return "bye";
+    }
 }
