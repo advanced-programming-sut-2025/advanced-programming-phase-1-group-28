@@ -51,6 +51,10 @@ public class NPCMenu {
         System.out.println(App.npcController.finishQuest(npc, quest));
     }
 
+    public void sayHello(){
+        System.out.println("hello");
+    }
+
 
 
 }

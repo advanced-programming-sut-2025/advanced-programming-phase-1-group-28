@@ -256,7 +256,7 @@ public class GameMenuController {
         if (game.getTime().isDayChanged()){
             ApplyChangeDay();
         }
-        
+
         // change turns
         game.setWhoseTurn((game.getWhoseTurn() + 1) % game.getCharactersInGame().size());
     }
