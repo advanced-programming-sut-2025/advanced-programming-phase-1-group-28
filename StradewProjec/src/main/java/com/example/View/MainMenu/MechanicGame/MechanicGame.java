@@ -46,6 +46,11 @@ public class MechanicGame {
 
     public void DeleteFromInventory(String ItemName , int Number)
     {
+        if(!mechanicController.EnoughItemInInventory(ItemName, Number))
+        {
+            System.out.println("there is not enough number of item in Inventory");
+            return;
+        }
         App.mechanicController.ApplyRemoveItem(ItemName, Number);
     }
     public void SetTool()
