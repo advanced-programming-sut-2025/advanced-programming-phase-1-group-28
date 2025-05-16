@@ -12,6 +12,7 @@ import com.example.Controller.MainMenuController.MechanicController.UseToolContr
 import com.example.Controller.MainMenuController.MechanicController.NPC_Controller;
 import com.example.Controller.MainMenuController.ProfileMenuController;
 import com.example.Controller.SignUpController;
+import com.example.Model.Enums.MenuName;
 import com.example.Model.Tools.Pepolee;
 import com.example.View.AppInputCommand;
 import com.example.View.Appview;
@@ -28,12 +29,12 @@ import com.example.View.MainMenu.MechanicGame.UseTool;
 import com.example.View.MainMenu.ProfileMenu;
 import com.example.View.MainMenu.ShowFigures;
 import com.example.View.SignUpMenu;
-/*
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-*/
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -92,6 +93,17 @@ public class App {
         }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        for(int i = 0;i < Users.size();i++) {
+            System.out.println(Users.get(i).getUsername());
+        }
+        for(int i = 0;i < Users.size() ; i++)
+        {
+            if(Users.get(i).isStayLoggedIn())
+            {
+                Appview.UserLoggedInId = i;
+                Appview.Situation = MenuName.MainMenu;
+            }
         }
     }*/
     public static User ReturnUser(int index)

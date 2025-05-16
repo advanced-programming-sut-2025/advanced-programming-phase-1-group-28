@@ -23,7 +23,7 @@ public class LoginController {
         Appview.Situation = MenuName.MainMenu;
         if(IfStaySituation)
         {
-            Appview.IfStaySituation = UserIndex;
+            App.Users.get(UserIndex).setStayLoggedIn(true);
         }
     }
     public String PrintQuestion(String UserName)

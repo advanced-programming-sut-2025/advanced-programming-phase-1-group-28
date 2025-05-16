@@ -60,8 +60,21 @@ public class ShowFigures {
                 }
                 else
                 {
-                    if(TempGround[i][j].getTerrain() == Terrain.DIRT)
+                    boolean ok = false;
+                    for(Animal animal : App.ReturnCurrentPlayer().getFarm().getAnimals())
                     {
+                        if(animal.getX() == i && animal.getY() == j)
+                        {
+                            System.out.print(MapColors.RED.Colorname + MapReading.Animal.Show + MapColors.Reset.Colorname);
+                            ok = true;
+                        }
+                    }
+                    if(ok)
+                    {
+
+                    } else if(TempGround[i][j].getEntitity() == Entitity.Minreal) {
+                        System.out.print(MapColors.RED.Colorname + MapReading.Mineral.Show + MapColors.Reset.Colorname);
+                    } else if(TempGround[i][j].getTerrain() == Terrain.DIRT) {
                         if(TempGround[i][j].isHow())
                         {
                             System.out.print("S");
@@ -75,29 +88,32 @@ public class ShowFigures {
                     {
                         if(TempGround[i][j].getPlaceType() == PlaceType.CABIN)
                         {
-                            System.out.print(MapColors.RED.Colorname + 'C' + MapColors.Reset.Colorname);
+                            System.out.print(MapColors.RED.Colorname + MapReading.Cabin.Show + MapColors.Reset.Colorname);
                         }
                         else
                         {
                             if(TempGround[i][j].getPlaceType() == PlaceType.LAKE)
                             {
-                                System.out.printf(MapColors.RED.Colorname + 'L' + MapColors.Reset.Colorname);
+                                System.out.printf(MapColors.RED.Colorname + MapReading.Lake.Show + MapColors.Reset.Colorname);
                             }
                             else
                             {
                                 if(TempGround[i][j].getPlaceType() == PlaceType.GREENHOUSE)
                                 {
-                                    System.out.printf(MapColors.RED.Colorname + 'G' + MapColors.Reset.Colorname);
+                                    System.out.printf(MapColors.RED.Colorname + MapReading.Greenhouse.Show + MapColors.Reset.Colorname);
                                 }
                                 else
                                 {
                                     if(TempGround[i][j].getEntitity() == Entitity.TREE)
                                     {
-                                        System.out.printf(MapColors.Green.Colorname + 'T' + MapColors.Reset.Colorname);
+                                        System.out.printf(MapColors.Green.Colorname + MapReading.Tree.Show + MapColors.Reset.Colorname);
                                     }
                                     else if(TempGround[i][j].getEntitity() == Entitity.PLANTS)
                                     {
-                                        System.out.printf(MapColors.Green.Colorname + 'P' + MapColors.Reset.Colorname);
+                                        System.out.printf(MapColors.Green.Colorname + MapReading.Plant.Show + MapColors.Reset.Colorname);
+                                    } else if(TempGround[i][j].getPlaceType() == PlaceType.QUARRY)
+                                    {
+                                        System.out.print(MapColors.RED.Colorname + MapReading.Quarry.Show + MapColors.Reset.Colorname);
                                     }
                                 }
                             }

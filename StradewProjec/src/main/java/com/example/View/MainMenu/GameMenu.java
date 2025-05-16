@@ -29,7 +29,19 @@ public class GameMenu {
                 App.gameMenu.NextTurn();
             }
         }
-        if ((matcher = GameMenuRejex.EnergyShow.getMatcher(command)) != null){
+        if((matcher = GameMenuRejex.StartGame.getMatcher(command)) != null) {
+            ArrayList<String> Usernames = new ArrayList<>();
+            String PlayerRejex = "\\w+";
+            Pattern Playerpattern = Pattern.compile(PlayerRejex);
+            Matcher playerMatcher = Playerpattern.matcher(command.substring(12));
+            while (playerMatcher.find()) {
+                Usernames.add(playerMatcher.group().trim());
+            }
+            StartGame(Usernames);
+        } else if(Appview.CurrentGameID == -1)
+        {
+            System.out.println("No game started yet");
+        } else if ((matcher = GameMenuRejex.EnergyShow.getMatcher(command)) != null){
             showFigures.ShowEnergy();
         } else if ((matcher = GameMenuRejex.EnergySet.getMatcher(command)) != null) {
             cheatCodes.SetEnergy(Integer.parseInt(matcher.group(1)));
@@ -59,15 +71,6 @@ public class GameMenu {
             showFigures.ShowDate();
         } else if ((matcher = GameMenuRejex.ShowTime.getMatcher(command)) != null) {
             showFigures.ShowTime();
-        } else if((matcher = GameMenuRejex.StartGame.getMatcher(command)) != null) {
-            ArrayList<String> Usernames = new ArrayList<>();
-            String PlayerRejex = "\\w+";
-            Pattern Playerpattern = Pattern.compile(PlayerRejex);
-            Matcher playerMatcher = Playerpattern.matcher(command.substring(12));
-            while (playerMatcher.find()) {
-                Usernames.add(playerMatcher.group().trim());
-            }
-            StartGame(Usernames);
         } else if((matcher = GameMenuRejex.ExitGame.getMatcher(command)) != null)
         {
             Appview.Situation = MenuName.LoginMenu;

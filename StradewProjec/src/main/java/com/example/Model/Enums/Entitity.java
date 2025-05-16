@@ -3,6 +3,7 @@ package com.example.Model.Enums;
 public enum Entitity {
     TOOL(true),
     PLANTS(true),
+    Minreal(true),
     STONE(false),
     TREE(false),
     ANIMAL(false),

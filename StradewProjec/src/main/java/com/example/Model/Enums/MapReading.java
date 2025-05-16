@@ -7,7 +7,13 @@ public enum MapReading {
     Cabin(null , PlaceType.CABIN ,null ,  'C'),
     Lake(null , PlaceType.LAKE ,null ,  'L'),
     Dirt(Terrain.DIRT , null , null , ' '),
-    PEOPEELE(null , null , null , '@');
+    PEOPEELE(null , null , null , '@'),
+    Animal(null , null , null , 'A'),
+    Quarry(null , PlaceType.QUARRY , null , 'Q'),
+    Mineral(null , PlaceType.QUARRY , Entitity.Minreal , 'M');
+
+
+
     public final Terrain terrain;
     public final PlaceType placeType;
     public final Entitity entitity;

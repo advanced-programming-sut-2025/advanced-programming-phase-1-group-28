@@ -6,14 +6,19 @@ import com.example.Model.Enums.Seeds;
 public class Farming {
     public void Planting(String Seedname , int x ,int y)
     {
-        if(!App.farmingController.CanPlant(x , y))
-        {
-            System.out.println("You can't plant here");
-            return;
-        }
         if(App.farmingController.returnseed(Seedname) == null)
         {
             System.out.println("There is no such seed");
+            return;
+        }
+        if(App.farmingController.BeinsidetheGreenhouse(Seedname , x , y))
+        {
+            System.out.println("You are in the Greenhouse");
+            return;
+        }
+        if(!App.farmingController.CanPlant(x , y))
+        {
+            System.out.println("You can't plant here");
             return;
         }
         if(!App.farmingController.IsSeedininventory(Seedname))
