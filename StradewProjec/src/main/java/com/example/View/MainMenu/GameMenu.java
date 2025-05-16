@@ -166,6 +166,16 @@ public class GameMenu {
             App.mechanicGame.getAnimalProducts(matcher.group(1));
         } else if ((matcher = GameMenuRejex.SellAnimal.getMatcher(command)) != null) {
             App.mechanicGame.SellAnimal(matcher.group(1));
+        } else if ((matcher = GameMenuRejex.MeetNpc.getMatcher(command)) != null) {
+            App.npcMenu.meetNPC(matcher.group(1));
+        } else if ((matcher = GameMenuRejex.GiftNpc.getMatcher(command)) != null) {
+            App.npcMenu.giftNPC(matcher.group(1), matcher.group(2));
+        } else if ((matcher = GameMenuRejex.FriendshipNpcList.getMatcher(command)) != null) {
+            App.showFigures.ShowNPCFriendShips();
+        } else if ((matcher = GameMenuRejex.QuestsList.getMatcher(command)) != null) {
+            App.showFigures.ShowQuestsList();
+        } else if ((matcher = GameMenuRejex.QuestsFinish.getMatcher(command)) != null) {
+            App.npcMenu.finishQuest(Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2)));
         }
     }
     public void StartGame(ArrayList<String> PlayersInGame)
