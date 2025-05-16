@@ -101,7 +101,7 @@ public class UseToolController {
         int NewY = App.ReturnCurrentPlayer().getY() + y;
         Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
         Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
-        if(CurrentPepolee.getFarm().getGround()[NewX][NewY].getEntitity() == Entitity.STONE)
+        if(CurrentPepolee.getFarm().getGround()[NewX][NewY].getEntitity() == Entitity.Minreal)
         {
             TempGround[NewX][NewY].setEntitity(null);
             TempGround[NewX][NewY].setTerrain(Terrain.DIRT);
@@ -114,15 +114,21 @@ public class UseToolController {
         }
         else
         {
-            if(CurrentPepolee.getFarm().getGround()[NewX][NewY].getTerrain() == Terrain.DIRT)
+            if(CurrentPepolee.getFarm().getGround()[NewX][NewY].getEntitity() == Entitity.STONE)
             {
-                TempGround[NewX][NewY].setHow(false);
+                TempGround[NewX][NewY].setEntitity(null);
+                TempGround[NewX][NewY].setTerrain(Terrain.DIRT);
                 CurrentPepolee.getFarm().setGround(TempGround);
-                return "Success UnShokhm";
+                return "Stone Removed";
             }
-            else
-            {
-                return "You Cant Use Pickaxe in that Place";
+            else {
+                if (CurrentPepolee.getFarm().getGround()[NewX][NewY].getTerrain() == Terrain.DIRT) {
+                    TempGround[NewX][NewY].setHow(false);
+                    CurrentPepolee.getFarm().setGround(TempGround);
+                    return "Success UnShokhm";
+                } else {
+                    return "You Cant Use Pickaxe in that Place";
+                }
             }
         }
     }
