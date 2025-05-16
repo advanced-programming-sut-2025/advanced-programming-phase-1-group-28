@@ -3,6 +3,7 @@ package com.example.Controller.MainMenuController.MechanicController;
 import com.example.Model.App;
 import com.example.Model.Enums.*;
 import com.example.Model.Item.Ingredient;
+import com.example.Model.Tile.Minreal;
 import com.example.Model.Tile.Plants;
 import com.example.Model.Tile.Tile;
 import com.example.Model.Tile.Trees;
@@ -20,7 +21,7 @@ public class FarmingController {
                 }
                 if(Randomnumber == 0)
                 {
-                    if(Tempground[x][y].getEntitity() == Entitity.PLANTS)
+                    if(Tempground[x][y].getEntitity() == Entitity.PLANTS || Tempground[x][y].getPlaceType() != PlaceType.GREENHOUSE)
                     {
                         Tempground[x][y] = new Tile(Terrain.DIRT , null , null);
                     }
@@ -87,6 +88,47 @@ public class FarmingController {
                 }
             }
         }
+        for(int x = 0; x < PlaceType.FARM.XLength ; x++)
+        {
+            for(int y = 0; y < PlaceType.FARM.YLength ; y++)
+            {
+                int RandomProb = App.random.nextInt() % 50;
+                if(RandomProb == 0 && TempGround[x][y].getPlaceType() == null &&  TempGround[x][y].getTerrain() == Terrain.DIRT)
+                {
+                    int RnadomTree = App.random.nextInt() % 14;
+                    int count = 0;
+                    for(Tree tree : Tree.values())
+                    {
+                        if(count == RnadomTree) {
+                            TempGround[x][y] = new Trees(tree);
+                            TempGround[x][y].setTerrain(null);
+                            TempGround[x][y].setPlaceType(null);
+                            TempGround[x][y].setEntitity(Entitity.TREE);
+                        }
+                        count++;
+                    }
+                }
+            }
+        }
+        for(int x = 0 ; x < PlaceType.FARM.XLength ; x++)
+        {
+            for(int y = 0; y < PlaceType.FARM.YLength ; y++)
+            {
+                if(TempGround[x][y].getPlaceType() == PlaceType.QUARRY)
+                {
+                    int RandomNumber = App.random.nextInt() % 5;
+                    if(RandomNumber == 0)
+                    {
+                        if(TempGround[x][y].getEntitity() != Entitity.Minreal)
+                        {
+                            Minreal newminreal = new Minreal(null , null , Entitity.Minreal);
+                            TempGround[x][y] = newminreal;
+                            TempGround[x][y].setPlaceType(PlaceType.QUARRY);
+                        }
+                    }
+                }
+            }
+        }
         CurrentPepolee.getFarm().setGround(TempGround);
     }
 
@@ -106,6 +148,28 @@ public class FarmingController {
     {
 
     }
+
+    public boolean BeinsidetheGreenhouse(String Seedname , int x , int y)
+    {
+        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
+        Tile[][] TempGround = CurrentPepolee.getFarm().getGround();
+        if(TempGround[CurrentPepolee.getX()][CurrentPepolee.getY()].getPlaceType() == PlaceType.GREENHOUSE)
+        {
+            int NewX = CurrentPepolee.getX() + x;
+            int NewY = CurrentPepolee.getY() + y;
+            if(TempGround[NewX][NewY].getEntitity() != Entitity.PLANTS)
+            {
+                Plants newplant = new Plants(returnseed(Seedname).Plant);
+                newplant.setBornTime(App.getCurrentGame().getTime());
+                System.out.println("plant Planted Succsesfully");
+                TempGround[NewX][NewY] = newplant;
+            }
+            CurrentPepolee.getFarm().setGround(TempGround);
+            return true;
+        }
+        return false;
+    }
+
 
     public Seeds returnseed(String Seedname)
     {

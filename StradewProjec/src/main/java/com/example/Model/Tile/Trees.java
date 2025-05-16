@@ -29,11 +29,9 @@ public class Trees extends Tile {
         Iscooded = iscooded;
     }
 
-    public Trees(Tree tree, int stage, int howOldAreYou) {
+    public Trees(Tree tree) {
         super(Terrain.GRASS , PlaceType.NORMAL , Entitity.TREE);
         this.tree = tree;
-        this.stage = stage;
-        HowOldAreYou = howOldAreYou;
     }
 
     public Tree getTree() {

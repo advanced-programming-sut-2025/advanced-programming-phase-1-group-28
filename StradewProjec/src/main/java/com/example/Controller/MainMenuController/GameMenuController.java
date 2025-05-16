@@ -18,6 +18,10 @@ public class GameMenuController {
     public void ApplyNextTurn()
     {
         App.getCurrentGame().setWhoseTurn(((App.getCurrentGame().getWhoseTurn() + 1)) % App.getCurrentGame().getCharactersInGame().size());
+        if(App.ReturnCurrentPlayer().isISFainted())
+        {
+            System.out.printf("%s is fainted next turn\n" , App.getCurrentGame().getPlayersInGame().get(App.getCurrentGame().getWhoseTurn()).getUsername());
+        }
         if(App.getCurrentGame().getWhoseTurn() == 0)
         {
             App.getCurrentGame().getTime().jumpAheadOneHour();
@@ -182,15 +186,29 @@ public class GameMenuController {
         //USer random Foraging
         //set weather
         App.getCurrentGame().setWeather(WeatherForeCasting());
-        for(Pepolee pepolee : App.getCurrentGame().getCharactersInGame())
-        {
-            for(int i = 0;i < PlaceType.FARM.XLength ; i++)
-            {
-                for(int j =0 ;j < PlaceType.FARM.YLength ; j++) {
-                    App.farmingController.RandomLightning(pepolee, i, j, false);
+        if(App.getCurrentGame().getWeather() == Weathers.STORM) {
+            for (Pepolee pepolee : App.getCurrentGame().getCharactersInGame()) {
+                for (int i = 0; i < PlaceType.FARM.XLength; i++) {
+                    for (int j = 0; j < PlaceType.FARM.YLength; j++) {
+                        App.farmingController.RandomLightning(pepolee, i, j, false);
+                    }
                 }
             }
         }
+        if(App.getCurrentGame().getWeather() == Weathers.RAIN) {
+            for(Pepolee pepolee : App.getCurrentGame().getCharactersInGame()) {
+                for(int i = 0; i < PlaceType.FARM.XLength; i++) {
+                    for(int j = 0; j < PlaceType.FARM.YLength; j++) {
+                        if(pepolee.getFarm().getGround()[i][j].getEntitity() == Entitity.PLANTS && pepolee.getFarm().getGround()[i][j].getPlaceType() != PlaceType.GREENHOUSE)
+                        {
+                            Plants ourplant = (Plants) pepolee.getFarm().getGround()[i][j];
+                            ourplant.setLastTimeWatering(App.getCurrentGame().getTime());
+                        }
+                    }
+                }
+            }
+        }
+
         // plants stage
         for (Pepolee pepolee: App.getCurrentGame().getCharactersInGame()){
             for (Tile[] tiles: pepolee.getFarm().getGround()){

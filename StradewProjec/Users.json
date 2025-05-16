@@ -1,0 +1,47 @@
+[
+  {
+    "Gender": "male",
+    "Nickname": "Sepi",
+    "Username": "Sepehr",
+    "Password": "Passali#2",
+    "HashedPassword": "4563f5292d4fb210c38c75533b54a0b76ad1caecb967472cd93472328abf2e80",
+    "Email": "Sepi@gmail.com",
+    "ID": 0,
+    "AnswerIdQuestion": 0,
+    "Answer": "sifid",
+    "HighestScore": 0,
+    "GamesPlayed": 0,
+    "GameId": 0,
+    "StayLoggedIn": false
+  },
+  {
+    "Gender": "female",
+    "Nickname": "morad",
+    "Username": "mehrad",
+    "Password": "Passali#3",
+    "HashedPassword": "57064ad0c92c189d51d6eb4d6c80b626176167956dc957b32c4dda7183b1b9bf",
+    "Email": "morad@gmail.com",
+    "ID": 1,
+    "AnswerIdQuestion": 1,
+    "Answer": "shir",
+    "HighestScore": 0,
+    "GamesPlayed": 0,
+    "GameId": 0,
+    "StayLoggedIn": false
+  },
+  {
+    "Gender": "male",
+    "Nickname": "shirshah",
+    "Username": "shirooz",
+    "Password": "Passali#1",
+    "HashedPassword": "30616701dc9d0aee8cfc07849ad3a2438a1a115cc48456be45a958a1c756cc85",
+    "Email": "shir@gmail.com",
+    "ID": 2,
+    "AnswerIdQuestion": 2,
+    "Answer": "No",
+    "HighestScore": 0,
+    "GamesPlayed": 0,
+    "GameId": 0,
+    "StayLoggedIn": false
+  }
+]
