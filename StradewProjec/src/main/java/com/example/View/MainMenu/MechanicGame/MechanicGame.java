@@ -108,6 +108,10 @@ public class MechanicGame {
             System.out.println("No animal with that name exists here.");
             return;
         }
+        if (!App.friendShipController.isItemAvailable("Hay")){
+            System.out.println("You have no hay.");
+            return;
+        }
         mechanicController.ApplyFeedAnimal(animal);
         System.out.println("Animal fed successfully.");
     }

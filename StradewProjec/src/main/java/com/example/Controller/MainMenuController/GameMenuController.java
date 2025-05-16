@@ -242,6 +242,9 @@ public class GameMenuController {
         for (Pepolee pepolee: App.getCurrentGame().getCharactersInGame()){
             for (Npc npc: App.getCurrentGame().getGameNPCs()){
                 if (npc.getHowManyDaysToUnlockQuest() > gameTime.getDay() + gameTime.getMonth() * 28){
+                    if (npc.getQuests().get(2).getQuestLockedForever()[pepolee.getId()]){
+                        continue;
+                    }
                     npc.getQuests().get(2).getQuestLocked()[pepolee.getId()] = false;
                 }
             }
