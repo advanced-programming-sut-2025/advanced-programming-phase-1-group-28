@@ -276,12 +276,37 @@ public class GameMenuController {
         }
     }
     public void ApplyChangeHour(){
-        //TODO buff, time
         Game game = App.getCurrentGame();
         game.getTime().jumpAheadOneHour();
         if (game.getTime().isDayChanged()){
             ApplyChangeDay();
         }
 
+
+        //buff effect
+        for (Pepolee pepolee: game.getCharactersInGame()){
+            Buff buff = pepolee.getBuff();
+            int[] hoursLeft = buff.getHoursLeft();
+            for (int hour: hoursLeft){
+                if (hour > 0){
+                    hour --;
+                }
+            }
+            if (hoursLeft[0] <= 0){
+                buff.setMaxEnergy(0);
+            }
+            if (hoursLeft[1] <= 0){
+                buff.setFarming(false);
+            }
+            if (hoursLeft[2] <= 0){
+                buff.setForaging(false);
+            }
+            if (hoursLeft[3] <= 0){
+                buff.setFishing(false);
+            }
+            if (hoursLeft[4] <= 0){
+                buff.setMining(false);
+            }
+        }
     }
 }

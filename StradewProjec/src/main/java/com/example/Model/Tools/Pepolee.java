@@ -11,6 +11,7 @@ public class Pepolee {
     private int x = 1;
     private int y = 1;
     private Farm Farm;
+    private int MaxEnergy = 200;
     private int Energy = 200;
     private int Id;
     private int Wood = 0;
@@ -19,6 +20,7 @@ public class Pepolee {
     private Inventory inventory = new Inventory();
     private Skill[] Skills = new Skill[4];
     private User CharacterUser;
+    private Buff buff = new Buff();
     private ArrayList<Gift> upcomingGifts = new ArrayList<>();
     private ArrayList<Trade> upcomingTrade = new ArrayList<>();
     private ArrayList<Trade> tradeHistory = new ArrayList<>();
@@ -40,7 +42,7 @@ public class Pepolee {
         {
             this.x = 1;
             this.y = 1;
-            this.Energy = 200;
+            this.Energy = this.getMaxEnergy();
         }
         ISFainted = false;
     }
@@ -84,6 +86,14 @@ public class Pepolee {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public Buff getBuff() {
+        return buff;
+    }
+
+    public void setBuff(Buff buff) {
+        this.buff = buff;
     }
 
     public com.example.Model.Places.Farm getFarm() {
@@ -162,6 +172,14 @@ public class Pepolee {
         upcomingGifts.add(gift);
     }
 
+    public int getMaxEnergy() {
+        return MaxEnergy + getBuff().getMaxEnergy();
+    }
+
+    public void setMaxEnergy(int maxEnergy) {
+        MaxEnergy = maxEnergy;
+    }
+
     public void removeUpcomingGift(Gift gift){
         upcomingGifts.remove(gift);
     }
@@ -196,6 +214,9 @@ public class Pepolee {
 
     public void addEnergy(int count){
         Energy += count;
+        if (Energy > getMaxEnergy()){
+            Energy = getMaxEnergy();
+        }
     }
 
     public void applyBuff(){

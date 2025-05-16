@@ -1,6 +1,7 @@
 package com.example.Controller.MainMenuController.HomeMenucontroller;
 
 import com.example.Model.App;
+import com.example.Model.Buff;
 import com.example.Model.Enums.Foods;
 import com.example.Model.Inventory;
 import com.example.Model.Item.Food;
@@ -123,5 +124,38 @@ public class PokhtOPazController {
         item.addCount(-1);
         currentPlayer.addEnergy(((Food) item).getFood().Energy);
         // buff effect
+        if (((Food) item).getFood().Buff != null){
+            int[] hoursLeft = currentPlayer.getBuff().getHoursLeft();
+            Buff buff = currentPlayer.getBuff();
+            Foods myFood = ((Food) item).getFood();
+            if (myFood == Foods.TripleShotEspresso){
+                buff.setMaxEnergy(100);
+                hoursLeft[0] = 5;
+            } else if (myFood == Foods.HashBrowns) {
+                buff.setFarming(true);
+                hoursLeft[1] = 5;
+            } else if (myFood == Foods.Pancakes) {
+                buff.setForaging(true);
+                hoursLeft[2] = 11;
+            } else if (myFood == Foods.RedPlate) {
+                buff.setMaxEnergy(50);
+                hoursLeft[0] = 3;
+            } else if (myFood == Foods.FarmersLunch) {
+                buff.setFarming(true);
+                hoursLeft[1] = 5;
+            } else if (myFood == Foods.SurvivalBurger) {
+                buff.setForaging(true);
+                hoursLeft[2] = 5;
+            } else if (myFood == Foods.DishOTheSea) {
+                buff.setFishing(true);
+                hoursLeft[3] = 5;
+            } else if (myFood == Foods.SeaformPudding) {
+                buff.setFishing(true);
+                hoursLeft[3] = 10;
+            } else if (myFood == Foods.MinersTreat) {
+                buff.setMining(true);
+                hoursLeft[4] = 5;
+            }
+        }
     }
 }

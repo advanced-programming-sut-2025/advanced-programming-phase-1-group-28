@@ -183,6 +183,9 @@ public class FriendShipController {
         firstFriendShip.setLevel(0);
         secondFriendShip.setXP(0);
         secondFriendShip.setLevel(0);
+        Pepolee otherUser = App.getCurrentGame().getPlayerByUsername(username);
+        otherUser.getBuff().setMaxEnergy(-100);
+        otherUser.getBuff().getHoursLeft()[0] = 7 * 24;
     }
 
     public void tradeRequest(String username, String type, String offerItemName,

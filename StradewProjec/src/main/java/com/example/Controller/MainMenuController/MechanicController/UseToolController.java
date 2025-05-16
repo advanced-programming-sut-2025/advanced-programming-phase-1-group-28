@@ -87,6 +87,9 @@ public class UseToolController {
             TempGround[NewX][NewY].setHow(true);
             CurrentPepolee.getFarm().setGround(TempGround);
             CurrentPepolee.setEnergy(CurrentPepolee.getEnergy() - hoe.getEnergyCost());
+            if (CurrentPepolee.getBuff().isFarming()){
+                CurrentPepolee.addEnergy(1);
+            }
             return "Success Shokhm";
         }
         else
@@ -110,6 +113,10 @@ public class UseToolController {
             CurrentPepolee.getSkills()[3].setXp(CurrentPepolee.getSkills()[3].getXp() + 10);
             CurrentPepolee.getInventory().AddItem(newitem);
             CurrentPepolee.getFarm().setGround(TempGround);
+            CurrentPepolee.addEnergy(-1 * CurrentPepolee.getInventory().getCurrentTool().getEnergyCost());
+            if (CurrentPepolee.getBuff().isMining()){
+                CurrentPepolee.addEnergy(1);
+            }
             return "Mineral Collected";
         }
         else
@@ -140,6 +147,9 @@ public class UseToolController {
             TempGround[NewX][NewY].setEntitity(null);
             TempGround[NewX][NewY].setTerrain(Terrain.DIRT);
             CurrentPepolee.setEnergy(CurrentPepolee.getEnergy() - CurrentPepolee.getInventory().getCurrentTool().getEnergyCost());
+            if (CurrentPepolee.getBuff().isForaging()){
+                CurrentPepolee.addEnergy(1);
+            }
             CurrentPepolee.getFarm().setGround(TempGround);
             return "Success Using Axe";
         }
@@ -160,6 +170,9 @@ public class UseToolController {
             WaterCan ourwatercan = (WaterCan) CurrentPepolee.getInventory().getCurrentTool();
             ourwatercan.setWater(Math.min(ourwatercan.getWater() + 50 , ourwatercan.getWatercan().Limit));
             CurrentPepolee.setEnergy(CurrentPepolee.getEnergy() - ourwatercan.getEnergyCost());
+            if (CurrentPepolee.getBuff().isFarming()){
+                CurrentPepolee.addEnergy(1);
+            }
             return "Watercan filled";
         }
         else
@@ -187,6 +200,10 @@ public class UseToolController {
         int NewX = App.ReturnCurrentPlayer().getX() + x;
         int NewY = App.ReturnCurrentPlayer().getY() + y;
         Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
+        CurrentPepolee.addEnergy(-1 * CurrentPepolee.getInventory().getCurrentTool().getEnergyCost());
+        if (CurrentPepolee.getBuff().isFishing()){
+            CurrentPepolee.addEnergy(1);
+        }
         Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
         if(TempGround[NewX][NewY].getTerrain() == Terrain.WATER)
         {
@@ -227,6 +244,9 @@ public class UseToolController {
         Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
         Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
         CurrentPepolee.setEnergy(CurrentPepolee.getEnergy() - 2);
+        if (CurrentPepolee.getBuff().isFarming()){
+            CurrentPepolee.addEnergy(1);
+        }
         if(TempGround[NewX][NewY].getTerrain() == Terrain.GRASS)
         {
             TempGround[NewX][NewY].setTerrain(Terrain.DIRT);
@@ -299,6 +319,7 @@ public class UseToolController {
         int NewX = App.ReturnCurrentPlayer().getX();
         int NewY = App.ReturnCurrentPlayer().getY();
         Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
+        CurrentPepolee.addEnergy(-4);
         Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
         if(TempGround[NewX][NewY].getEntitity() == Entitity.ANIMAL)
         {
