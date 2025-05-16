@@ -69,8 +69,8 @@ public class CheatCodeController {
         animal.setFriendShip(amount);
     }
 
-    public void SetMoney()
+    public void addMoney(int amount)
     {
-
+        App.ReturnCurrentPlayer().addCoin(amount);
     }
 }

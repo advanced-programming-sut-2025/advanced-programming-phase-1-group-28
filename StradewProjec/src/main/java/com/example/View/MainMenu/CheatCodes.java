@@ -138,8 +138,9 @@ public class CheatCodes {
         System.out.println("Your friendship with " + PetName + " has been set successfully.");
     }
 
-    public void SetMoney()
+    public void addMoney(int amount)
     {
-
+        cheatCodeController.addMoney(amount);
+        System.out.println("Now you have " + App.ReturnCurrentPlayer().getCoin() + " coins.");
     }
 }

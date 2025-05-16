@@ -75,6 +75,7 @@ public class App {
     public static SignUpMenu signUpMenu = new SignUpMenu();
     public static ProfileMenu profileMenu = new ProfileMenu();
     public static GameMenu gameMenu = new GameMenu();
+    public static NPCMenu npcMenu = new NPCMenu();
     public static LoginMenu loginMenu = new LoginMenu();
     public static Friendship friendship = new Friendship();
     public static PokhtOPaz pokhtOPaz = new PokhtOPaz();

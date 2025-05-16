@@ -62,6 +62,9 @@ public class ProfileMenu {
         } else if (CurrentPassword.equals(NewPassword)) {
             System.out.println("the new password cannot be the same as current password");
             return;
+        } else if (App.signUpController.IsPasswordWeak(NewPassword)) {
+            System.out.println("password is weak.");
+            return;
         }
         profileMenuController.ApplyChangePassword(NewPassword);
         System.out.println("your password changed to " + NewPassword + " successfully");
