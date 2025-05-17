@@ -9,7 +9,16 @@ public enum PlaceType {
     GREENHOUSE(true , 5 , 6),
     LAKE(false , 4 , 4),
     COOP(true , 6 , 3),
-    BARN(true , 7 , 4),;
+    BARN(true , 7 , 4),
+    SHIPPING_BIN(false , 1 , 1),
+    BlackSmith(true , 0 , 0),
+    CarpenterShop(true , 0 , 0),
+    FishShop(true , 0 , 0),
+    JojaMart(true , 0 , 0),
+    MarineRanch(true , 0 , 0),
+    PerrieGeneralStore(true , 0 , 0),
+    StarDropSaloon(true , 0 , 0);
+
     public final boolean isWalkable;
     public final int XLength;
     public final int YLength;

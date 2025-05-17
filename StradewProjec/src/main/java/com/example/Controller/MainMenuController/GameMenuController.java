@@ -10,6 +10,8 @@ import com.example.Model.Tile.Trees;
 import com.example.Model.Tile.Plants;
 import com.example.Model.Tile.Tile;
 import com.example.Model.Tools.Pepolee;
+import com.example.Model.Tools.ShippingBin;
+import com.example.Model.Tools.Tools;
 import com.example.View.Appview;
 
 import java.util.ArrayList;
@@ -251,6 +253,49 @@ public class GameMenuController {
         for (Pepolee pepolee: App.getCurrentGame().getCharactersInGame()){
             for (Animal animal: pepolee.getFarm().getAnimals()){
                 animal.makeProduct();
+            }
+        }
+
+        // apply daily limist
+        App.dailyLimits.setBlackSmithLimits(new int[]{1 , 1 , 1 , 1 , 1 , 1 , 1 , 1});
+        App.dailyLimits.setMarineRanch(new int[]{1 , 1 , 2 , 2 , 2 , 2 , 2 , 2 , 2 , 2});
+        App.dailyLimits.setStarDropSaloon(new int[]{1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1});
+        App.dailyLimits.setCarpenterShop(new int[]{1 , 1 , 1 , 1 , 1 , 1 , 1});
+        App.dailyLimits.setJojaMart(new int[]
+                {5 , 10 , 5 , 1 , 5 ,
+                        5 , 5 , 5 , 5 , 5 ,
+                        5 , 5 , 5 , 5 , 5 ,
+                        5 , 5 , 5 , 5 , 5 ,
+                        5 , 5 , 10 , 5 , 5 ,
+                        10 , 5 , 5 , 5 , 5 ,
+                        5 , 5 , 5 , 5 , 5 ,
+                        5 , 1 , 10 , 1 , 5});
+        App.dailyLimits.setPierreStore(new int[]
+                {
+                        2 , 2 , 1 , 1 , 1 ,
+                        1 , 5 , 5 , 5 , 5 ,
+                        5 , 5 , 5 , 5 , 5 ,
+                        5 , 5 , 5 , 5 , 5 ,
+                        5 , 5 , 5 , 5 , 5 ,
+                        5 , 5 , 5 , 5 , 5 ,
+                        5 , 5 , 5 , 5 , 5 ,
+                        5 , 5 , 5 , 5
+                });
+        App.dailyLimits.setFishShop(new int[]
+                {
+                        1 , 1 , 1 , 1 , 1 , 1
+                });
+
+        // empty shipping bin
+        for(Tools tools : App.ReturnCurrentPlayer().getInventory().getTools())
+        {
+            if(tools instanceof ShippingBin)
+            {
+                for(int i = ((ShippingBin) tools).getShippingBinItem().size() - 1 ; i >= 0 ; i--)
+                {
+                    App.ReturnCurrentPlayer().setCoin((int) (App.ReturnCurrentPlayer().getCoin() + ((ShippingBin) tools).getShippingBinItem().get(i).getCount() * ((ShippingBin) tools).getItemPrice().get(i) * ((ShippingBin) tools).ShippingBinType.coefficient));
+                    ((ShippingBin) tools).RemoveLast();
+                }
             }
         }
     }

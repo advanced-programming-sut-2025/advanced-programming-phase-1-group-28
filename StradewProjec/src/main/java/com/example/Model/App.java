@@ -24,6 +24,7 @@ import com.example.View.MainMenu.MechanicGame.HomeMenu.Crafting;
 import com.example.View.MainMenu.MechanicGame.HomeMenu.PokhtOPaz;
 import com.example.View.MainMenu.MechanicGame.MechanicGame;
 import com.example.View.MainMenu.MechanicGame.NPCMenu;
+import com.example.View.MainMenu.MechanicGame.ShopMenu.Shopping;
 import com.example.View.MainMenu.MechanicGame.UseTool;
 import com.example.View.MainMenu.ProfileMenu;
 import com.example.View.MainMenu.ShowFigures;
@@ -80,6 +81,7 @@ public class App {
     public static PokhtOPazController pokhtOPazController = new PokhtOPazController();
     public static Random random = new Random();
     public static DailyLimits dailyLimits = new DailyLimits();
+    public static Shopping shopMenu = new Shopping();
     /*static {
         Gson gson = new Gson();
         try (FileReader reader = new FileReader("Users.json")) {

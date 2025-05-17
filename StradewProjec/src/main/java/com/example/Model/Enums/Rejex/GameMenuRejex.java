@@ -4,6 +4,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum GameMenuRejex {
+    ShippingBinSell("sell\\s+(.+)\\s+-n\\s+(\\d+)"),
+    Showallproducts("^show\\s+all\\s+products$"),
+    purchase("^purchase\\s+(.+)\\s+-n\\s+(.+)$"),
     AddCraftCheatcode("cheat\\s+add\\s+item\\s+-n\\s+(.+)\\s+-c\\s+(\\d+)"),
     Crafting("crafting\\s+craft\\s+(.+)"),
     ShowRecipes("crafting\\s+show\\s+recipes"),

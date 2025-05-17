@@ -164,6 +164,15 @@ public class GameMenu {
         } else if ((matcher = GameMenuRejex.SellAnimal.getMatcher(command)) != null) {
             App.mechanicGame.SellAnimal(matcher.group(1));
         }
+        else if((matcher = GameMenuRejex.Showallproducts.getMatcher(command)) != null) {
+            App.shopMenu.availableProducts();
+        }
+        else if((matcher = GameMenuRejex.purchase.getMatcher(command)) != null) {
+            App.shopMenu.Buy(matcher.group(1) , matcher.group(2));
+        }
+        else if((matcher = GameMenuRejex.ShippingBinSell.getMatcher(command)) != null) {
+            App.shopMenu.shippingBinSells(matcher.group(1) , Integer.parseInt(matcher.group(2)));
+        }
     }
     public void StartGame(ArrayList<String> PlayersInGame)
     {

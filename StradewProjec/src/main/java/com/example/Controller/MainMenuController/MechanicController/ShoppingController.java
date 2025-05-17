@@ -2,8 +2,7 @@ package com.example.Controller.MainMenuController.MechanicController;
 
 import com.example.Model.App;
 import com.example.Model.Enums.*;
-import com.example.Model.Enums.Tools.FishingPoles;
-import com.example.Model.Enums.Tools.Trashcans;
+import com.example.Model.Enums.Tools.*;
 import com.example.Model.Item.Craft;
 import com.example.Model.Item.Food;
 import com.example.Model.Item.Ingredient;
@@ -41,22 +40,298 @@ public class ShoppingController {
         {
             UnlimitedBuying(ProductName , count , 150);
         }
-        else if(ProductName.equals("Copper Tool"))
+        else if(ProductName.equals("Copper Axe"))
         {
+            Axe newAxe = null;
+            for(Tools tools : App.ReturnCurrentPlayer().getInventory().getTools())
+            {
+                if(tools instanceof Axe)
+                {
+                    newAxe = (Axe) tools;
+                }
+            }
             int newLimits[] = App.dailyLimits.getBlackSmithLimits();
-            newLimits[0] = UpgradeTool(ProductName , "Copper Bar" , count , 2000 , newLimits[0]);
+            newLimits[0] = UpgradeAxe(newAxe , "Copper Bar" , count , 2000 , newLimits[0] , Axes.Normal , Axes.Copper);
             App.dailyLimits.setBlackSmithLimits(newLimits);
         }
-        else if(ProductName.equals("Steel Tool"))
+        else if(ProductName.equals("Steel Axe"))
         {
+            Axe newAxe = null;
+            for(Tools tools : App.ReturnCurrentPlayer().getInventory().getTools())
+            {
+                if(tools instanceof Axe)
+                {
+                    newAxe = (Axe) tools;
+                }
+            }
             int newLimits[] = App.dailyLimits.getBlackSmithLimits();
-            newLimits[1] = UpgradeTool(ProductName , "Iron Bar" , count , 5000 , newLimits[1]);
+            newLimits[1] = UpgradeAxe(newAxe , "Iron Bar" , count , 5000 , newLimits[1] , Axes.Copper , Axes.Iron);
             App.dailyLimits.setBlackSmithLimits(newLimits);
         }
-        else if(ProductName.equals("Gold Tool"))
+        else if(ProductName.equals("Gold Axe"))
         {
+            Axe newAxe = null;
+            for(Tools tools : App.ReturnCurrentPlayer().getInventory().getTools())
+            {
+                if(tools instanceof Axe)
+                {
+                    newAxe = (Axe) tools;
+                }
+            }
             int newLimits[] = App.dailyLimits.getBlackSmithLimits();
-            newLimits[2] = UpgradeTool(ProductName , "Gold Bar" , count , 10000 , newLimits[2]);
+            newLimits[2] = UpgradeAxe(newAxe , "Gold Bar" , count , 10000 , newLimits[2] , Axes.Iron , Axes.Gold);
+            App.dailyLimits.setBlackSmithLimits(newLimits);
+        }
+        else if(ProductName.equals("Copper Hoe"))
+        {
+            Hoe newHoe = null;
+            for(Tools tools : App.ReturnCurrentPlayer().getInventory().getTools())
+            {
+                if(tools instanceof Hoe)
+                {
+                    newHoe = (Hoe) tools;
+                }
+            }
+            int newLimits[] = App.dailyLimits.getBlackSmithLimits();
+            newLimits[0] = UpgradeHoe(newHoe , "Copper Bar" , count , 2000 , newLimits[0] , Hoes.Normal , Hoes.Copper);
+            App.dailyLimits.setBlackSmithLimits(newLimits);
+        }
+        else if(ProductName.equals("Steel Hoe"))
+        {
+            Hoe newHoe = null;
+            for(Tools tools : App.ReturnCurrentPlayer().getInventory().getTools())
+            {
+                if(tools instanceof Hoe)
+                {
+                    newHoe = (Hoe) tools;
+                }
+            }
+            int newLimits[] = App.dailyLimits.getBlackSmithLimits();
+            newLimits[1] = UpgradeHoe(newHoe , "Iron Bar" , count , 5000 , newLimits[1] , Hoes.Copper , Hoes.Iron);
+            App.dailyLimits.setBlackSmithLimits(newLimits);
+        }
+        else if(ProductName.equals("Gold Hoe"))
+        {
+            Hoe newHoe = null;
+            for(Tools tools : App.ReturnCurrentPlayer().getInventory().getTools())
+            {
+                if(tools instanceof Hoe)
+                {
+                    newHoe = (Hoe) tools;
+                }
+            }
+            int newLimits[] = App.dailyLimits.getBlackSmithLimits();
+            newLimits[2] = UpgradeHoe(newHoe , "Gold Bar" , count , 10000 , newLimits[2] , Hoes.Iron , Hoes.Gold);
+            App.dailyLimits.setBlackSmithLimits(newLimits);
+        }
+        else if(ProductName.equals("Copper MilkPail"))
+        {
+            MilkPail newMilkPail = null;
+            for(Tools tools : App.ReturnCurrentPlayer().getInventory().getTools())
+            {
+                if(tools instanceof MilkPail)
+                {
+                    newMilkPail = (MilkPail) tools;
+                }
+            }
+            int newLimits[] = App.dailyLimits.getBlackSmithLimits();
+            newLimits[0] = UpgradeMilkPail(newMilkPail , "Copper Bar" , count , 2000 , newLimits[0] , MilkPails.Normal , MilkPails.Copper);
+            App.dailyLimits.setBlackSmithLimits(newLimits);
+        }
+        else if(ProductName.equals("Steel MilkPail"))
+        {
+            MilkPail newMilkPail = null;
+            for(Tools tools : App.ReturnCurrentPlayer().getInventory().getTools())
+            {
+                if(tools instanceof MilkPail)
+                {
+                    newMilkPail = (MilkPail) tools;
+                }
+            }
+            int newLimits[] = App.dailyLimits.getBlackSmithLimits();
+            newLimits[1] = UpgradeMilkPail(newMilkPail , "Iron Bar" , count , 5000 , newLimits[1] , MilkPails.Copper , MilkPails.Iron);
+            App.dailyLimits.setBlackSmithLimits(newLimits);
+        }
+        else if(ProductName.equals("Gold MilkPail"))
+        {
+            MilkPail newMilkPail = null;
+            for(Tools tools : App.ReturnCurrentPlayer().getInventory().getTools())
+            {
+                if(tools instanceof MilkPail)
+                {
+                    newMilkPail = (MilkPail) tools;
+                }
+            }
+            int newLimits[] = App.dailyLimits.getBlackSmithLimits();
+            newLimits[2] = UpgradeMilkPail(newMilkPail , "Gold Bar" , count , 10000 , newLimits[2] , MilkPails.Iron , MilkPails.Gold);
+            App.dailyLimits.setBlackSmithLimits(newLimits);
+        }
+        else if(ProductName.equals("Copper WaterCan"))
+        {
+            WaterCan newWaterCan = null;
+            for(Tools tools : App.ReturnCurrentPlayer().getInventory().getTools())
+            {
+                if(tools instanceof WaterCan)
+                {
+                    newWaterCan = (WaterCan) tools;
+                }
+            }
+            int newLimits[] = App.dailyLimits.getBlackSmithLimits();
+            newLimits[0] = UpgradeWaterCan(newWaterCan , "Copper Bar" , count , 2000 , newLimits[0] , Watercans.Normal , Watercans.Copper);
+            App.dailyLimits.setBlackSmithLimits(newLimits);
+        }
+        else if(ProductName.equals("Steel WaterCan"))
+        {
+            WaterCan newWaterCan = null;
+            for(Tools tools : App.ReturnCurrentPlayer().getInventory().getTools())
+            {
+                if(tools instanceof WaterCan)
+                {
+                    newWaterCan = (WaterCan) tools;
+                }
+            }
+            int newLimits[] = App.dailyLimits.getBlackSmithLimits();
+            newLimits[1] = UpgradeWaterCan(newWaterCan , "Iron Bar" , count , 5000 , newLimits[1] , Watercans.Copper , Watercans.Iron);
+            App.dailyLimits.setBlackSmithLimits(newLimits);
+        }
+        else if(ProductName.equals("Gold WaterCan"))
+        {
+            WaterCan newWaterCan = null;
+            for(Tools tools : App.ReturnCurrentPlayer().getInventory().getTools())
+            {
+                if(tools instanceof WaterCan)
+                {
+                    newWaterCan = (WaterCan) tools;
+                }
+            }
+            int newLimits[] = App.dailyLimits.getBlackSmithLimits();
+            newLimits[2] = UpgradeWaterCan(newWaterCan , "Gold Bar" , count , 10000 , newLimits[2] , Watercans.Iron , Watercans.Gold);
+            App.dailyLimits.setBlackSmithLimits(newLimits);
+        }
+        else if(ProductName.equals("Copper Shear"))
+        {
+            Shear newShear = null;
+            for(Tools tools : App.ReturnCurrentPlayer().getInventory().getTools())
+            {
+                if(tools instanceof Shear)
+                {
+                    newShear = (Shear) tools;
+                }
+            }
+            int newLimits[] = App.dailyLimits.getBlackSmithLimits();
+            newLimits[0] = UpgradeShear(newShear , "Copper Bar" , count , 2000 , newLimits[0] , Shears.Normal , Shears.Copper);
+            App.dailyLimits.setBlackSmithLimits(newLimits);
+        }
+        else if(ProductName.equals("Steel Shear"))
+        {
+            Shear newShear = null;
+            for(Tools tools : App.ReturnCurrentPlayer().getInventory().getTools())
+            {
+                if(tools instanceof Shear)
+                {
+                    newShear = (Shear) tools;
+                }
+            }
+            int newLimits[] = App.dailyLimits.getBlackSmithLimits();
+            newLimits[1] = UpgradeShear(newShear , "Iron Bar" , count , 5000 , newLimits[1] , Shears.Copper , Shears.Iron);
+            App.dailyLimits.setBlackSmithLimits(newLimits);
+        }
+        else if(ProductName.equals("Gold Shear"))
+        {
+            Shear newShear = null;
+            for(Tools tools : App.ReturnCurrentPlayer().getInventory().getTools())
+            {
+                if(tools instanceof Shear)
+                {
+                    newShear = (Shear) tools;
+                }
+            }
+            int newLimits[] = App.dailyLimits.getBlackSmithLimits();
+            newLimits[2] = UpgradeShear(newShear , "Gold Bar" , count , 10000 , newLimits[2] , Shears.Iron , Shears.Gold);
+            App.dailyLimits.setBlackSmithLimits(newLimits);
+        }
+        else if(ProductName.equals("Copper Pickaxe"))
+        {
+            Pickaxe newPickaxe = null;
+            for(Tools tools : App.ReturnCurrentPlayer().getInventory().getTools())
+            {
+                if(tools instanceof Pickaxe)
+                {
+                    newPickaxe = (Pickaxe) tools;
+                }
+            }
+            int newLimits[] = App.dailyLimits.getBlackSmithLimits();
+            newLimits[0] = UpgradePickaxe(newPickaxe , "Copper Bar" , count , 2000 , newLimits[0] , Pickaxes.Normal , Pickaxes.Copper);
+            App.dailyLimits.setBlackSmithLimits(newLimits);
+        }
+        else if(ProductName.equals("Steel Pickaxe"))
+        {
+            Pickaxe newPickaxe = null;
+            for(Tools tools : App.ReturnCurrentPlayer().getInventory().getTools())
+            {
+                if(tools instanceof Pickaxe)
+                {
+                    newPickaxe = (Pickaxe) tools;
+                }
+            }
+            int newLimits[] = App.dailyLimits.getBlackSmithLimits();
+            newLimits[1] = UpgradePickaxe(newPickaxe , "Iron Bar" , count , 5000 , newLimits[1] , Pickaxes.Copper , Pickaxes.Iron);
+            App.dailyLimits.setBlackSmithLimits(newLimits);
+        }
+        else if(ProductName.equals("Gold Pickaxe"))
+        {
+            Pickaxe newPickaxe = null;
+            for(Tools tools : App.ReturnCurrentPlayer().getInventory().getTools())
+            {
+                if(tools instanceof Pickaxe)
+                {
+                    newPickaxe = (Pickaxe) tools;
+                }
+            }
+            int newLimits[] = App.dailyLimits.getBlackSmithLimits();
+            newLimits[2] = UpgradePickaxe(newPickaxe , "Gold Bar" , count , 10000 , newLimits[2] , Pickaxes.Iron , Pickaxes.Gold);
+            App.dailyLimits.setBlackSmithLimits(newLimits);
+        }
+        else if(ProductName.equals("Copper Seythe"))
+        {
+            Seythe newSeythe = null;
+            for(Tools tools : App.ReturnCurrentPlayer().getInventory().getTools())
+            {
+                if(tools instanceof Seythe)
+                {
+                    newSeythe = (Seythe) tools;
+                }
+            }
+            int newLimits[] = App.dailyLimits.getBlackSmithLimits();
+            newLimits[0] = UpgradeSeythe(newSeythe , "Copper Bar" , count , 2000 , newLimits[0] , Seythes.Normal , Seythes.Copper);
+            App.dailyLimits.setBlackSmithLimits(newLimits);
+        }
+        else if(ProductName.equals("Steel Seythe"))
+        {
+            Seythe newSeythe = null;
+            for(Tools tools : App.ReturnCurrentPlayer().getInventory().getTools())
+            {
+                if(tools instanceof Seythe)
+                {
+                    newSeythe = (Seythe) tools;
+                }
+            }
+            int newLimits[] = App.dailyLimits.getBlackSmithLimits();
+            newLimits[1] = UpgradeSeythe(newSeythe , "Iron Bar" , count , 5000 , newLimits[1] , Seythes.Copper , Seythes.Iron);
+            App.dailyLimits.setBlackSmithLimits(newLimits);
+        }
+        else if(ProductName.equals("Gold Seythe"))
+        {
+            Seythe newSeythe = null;
+            for(Tools tools : App.ReturnCurrentPlayer().getInventory().getTools())
+            {
+                if(tools instanceof Seythe)
+                {
+                    newSeythe = (Seythe) tools;
+                }
+            }
+            int newLimits[] = App.dailyLimits.getBlackSmithLimits();
+            newLimits[2] = UpgradeSeythe(newSeythe , "Gold Bar" , count , 10000 , newLimits[2] , Seythes.Iron , Seythes.Gold);
             App.dailyLimits.setBlackSmithLimits(newLimits);
         }
         else if(ProductName.equals("Copper Trash Can"))
@@ -122,7 +397,7 @@ public class ShoppingController {
         {
             int count = Integer.parseInt(CountOrName);
             int newLimits[] = App.dailyLimits.getMarineRanch();
-            MilkPail newMilkPail = new MilkPail();
+            MilkPail newMilkPail = new MilkPail(MilkPails.Normal);
             newMilkPail.setCount(count);
             newMilkPail.setExist(true);
             newLimits[0] = BuyTool(newMilkPail , count , 1000 , newLimits[0]);
@@ -132,7 +407,7 @@ public class ShoppingController {
         {
             int count = Integer.parseInt(CountOrName);
             int newLimits[] = App.dailyLimits.getMarineRanch();
-            Shear newShear = new Shear();
+            Shear newShear = new Shear(Shears.Normal);
             newShear.setCount(count);
             newShear.setExist(true);
             newLimits[1] = BuyTool(newShear , count , 1000 , newLimits[1]);
@@ -344,7 +619,8 @@ public class ShoppingController {
         }
         else if(ProductName.equals("Shipping Been"))
         {
-            //String parts[] = CountOrCoordinate.trim().split("\\s+");
+            String parts[] = CountOrCoordinate.trim().split("\\s+");
+            BuyShippingBin(250 , 150 , Integer.parseInt(parts[0]) , Integer.parseInt(parts[1]));
         }
         else
         {
@@ -383,6 +659,10 @@ public class ShoppingController {
             boolean seedExists = false;
             for(JojaMartItems mySeed : JojaMartItems.values())
             {
+                if(mySeed.LimitIndex < 0)
+                {
+                    continue;
+                }
                 if(mySeed.name().equals(ProductName) && mySeed.Price >= 0)
                 {
                     seedExists = true;
@@ -716,7 +996,105 @@ public class ShoppingController {
             System.out.println("Unrecognized product name");
         }
     }
-    public void UnlimitedBuying(String ProductName , int count , int Price)
+    public void SellProduct(ShippingBin myBin , String ProductName , int count)
+    {
+        boolean ItemFound = false;
+        Item myItem = null;
+        for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
+        {
+            if(item.getName().equals(ProductName))
+            {
+                ItemFound = true;
+                if(item.getCount() < count)
+                {
+                    System.out.println("Not enough item bro");
+                    return;
+                }
+                myItem = item;
+                break;
+            }
+        }
+        if(!ItemFound)
+        {
+            System.out.println("You don't have this item bro");
+            return;
+        }
+        ItemFound = false;
+        for(Item item : myBin.getShippingBinItem())
+        {
+            if(item.getName().equals(ProductName))
+            {
+                item.setCount(item.getCount() + count);
+                myItem.setCount(myItem.getCount() - count);
+                System.out.println("Item added");
+                ItemFound = true;
+                break;
+            }
+        }
+        if(!ItemFound)
+        {
+            int price = getPrice(ProductName);
+            if(price < 0)
+            {
+                System.out.println("Item can not be sold");
+            }
+            else
+            {
+                myItem.setCount(myItem.getCount() - count);
+                myBin.AddItem(new Item(count , ProductName) , price);
+                System.out.println("Item added");
+            }
+        }
+    }
+
+    private int getPrice(String ProductName)
+    {
+        int price = -1;
+        for(BlackSmithItems item : BlackSmithItems.values())
+        {
+            if(item.name.equals(ProductName))
+            {
+                price = item.Price;
+            }
+        }
+        for(CarpenterShopItems item : CarpenterShopItems.values())
+        {
+            if(item.name.equals(ProductName))
+            {
+                price = item.Price;
+            }
+        }
+        for(FishShopItems item : FishShopItems.values())
+        {
+            if(item.name.equals(ProductName))
+            {
+                price = item.price;
+            }
+        }
+        for(JojaMartItems item : JojaMartItems.values())
+        {
+            if(item.name().equals(ProductName) || item.Name.equals(ProductName))
+            {
+                price = item.Price;
+            }
+        }
+        for(MarineRanchItems item : MarineRanchItems.values())
+        {
+            if(item.name().equals(ProductName) || item.name.equals(ProductName))
+            {
+                price = item.Price;
+            }
+        }
+        for(StarDropSaloonItems item : StarDropSaloonItems.values())
+        {
+            if(item.name().equals(ProductName) || item.name.equals(ProductName))
+            {
+                price = item.Price;
+            }
+        }
+        return price;
+    }
+    private void UnlimitedBuying(String ProductName , int count , int Price)
     {
         // unlimited amount
         // check for price
@@ -750,7 +1128,7 @@ public class ShoppingController {
         App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price * count);
         System.out.println(ProductName + " purchased");
     }
-    public int LimitedBuying(String ProductName , int count , int Price , int limit)
+    private int LimitedBuying(String ProductName , int count , int Price , int limit)
     {
         // check for limit
         if(limit - count < 0)
@@ -787,7 +1165,7 @@ public class ShoppingController {
         System.out.println(ProductName + " purchased");
         return limit - count;
     }
-    public int BuildBarn(String BarnType , int Capacity , int x , int y , int Price , int NeededWood , int NeededStone , int limit)
+    private int BuildBarn(String BarnType , int Capacity , int x , int y , int Price , int NeededWood , int NeededStone , int limit)
     {
         // check for limit
         if(limit == 0)
@@ -826,7 +1204,7 @@ public class ShoppingController {
             for(int j = y ; j < y + 4 ; j++)
             {
                 if(App.getCurrentGame().getEntireMap()[i][j].getEntitity() != Entitity.EMPTY ||
-                App.getCurrentGame().getEntireMap()[i][j].getPlaceType() != PlaceType.FARM)
+                        App.getCurrentGame().getEntireMap()[i][j].getPlaceType() != PlaceType.FARM)
                 {
                     Empty = false;
                     break;
@@ -872,7 +1250,7 @@ public class ShoppingController {
         return limit - 1;
 
     }
-    public int BuildCoop(String CoopType , int Capacity , int x , int y , int Price , int NeededWood , int NeededStone , int limit)
+    private int BuildCoop(String CoopType , int Capacity , int x , int y , int Price , int NeededWood , int NeededStone , int limit)
     {
         // check for limit
         if(limit == 0)
@@ -957,8 +1335,18 @@ public class ShoppingController {
         return limit - 1;
 
     }
-    public int UpgradeTool(String ProductName , String Ingredient , int count , int Price , int limit)
+    private int UpgradeAxe(Axe newAxe , String Ingredient , int count , int Price , int limit , Axes newAxeType , Axes oldAxeType)
     {
+        if(count > 1)
+        {
+            System.out.println("You can do it once");
+            return limit;
+        }
+        if(newAxe.getAxeType() != oldAxeType)
+        {
+            System.out.println("Axe level doesn't match the upgrade");
+            return limit;
+        }
         // check for limit
         if(limit - count < 0)
         {
@@ -966,18 +1354,17 @@ public class ShoppingController {
             return limit;
         }
         // check for price
-        if(Price * count > App.ReturnCurrentPlayer().getCoin())
+        if(Price > App.ReturnCurrentPlayer().getCoin())
         {
             System.out.println("Not enough money bro");
             return limit;
         }
         boolean IngredientExists = false;
-        Item myitem = null;
         for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
         {
             if(item.getName().equals(Ingredient))
             {
-                if(item.getCount() < 5 * count)
+                if(item.getCount() < 5)
                 {
                     System.out.println("Not enough ingredients");
                     return limit;
@@ -985,8 +1372,7 @@ public class ShoppingController {
                 else
                 {
                     IngredientExists = true;
-                    item.setCount(item.getCount() - 5 * count);
-                    myitem = item;
+                    item.setCount(item.getCount() - 5);
                 }
             }
         }
@@ -995,33 +1381,328 @@ public class ShoppingController {
             System.out.println("Not enough ingredients");
             return limit;
         }
-        boolean ItemExists = false;
-        for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
-        {
-            if(item.getName().equals(ProductName))
-            {
-                item.setCount(item.getCount() + count);
-                ItemExists = true;
-                break;
-            }
-        }
-        if(!ItemExists)
-        {
-            if(!App.ReturnCurrentPlayer().getInventory().canAddNewItem())
-            {
-                System.out.println("Inventory is full");
-                myitem.setCount(myitem.getCount() + 5 * count);
-                return limit;
-            }
-            ArrayList<Item> newItems = App.ReturnCurrentPlayer().getInventory().getItems();
-            newItems.add(new Item(count, ProductName));
-            App.ReturnCurrentPlayer().getInventory().setItems(newItems);
-        }
-        App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price * count);
-        System.out.println(ProductName + " has been upgraded");
+        App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price);
+        newAxe.setAxeType(newAxeType);
+        System.out.println("Axe has been upgraded");
         return limit - count;
     }
-    public int UpgradeTrashCan(TrashCan trashCan , String Ingredient , int count , int Price , int limit , Trashcans NewTrashType , Trashcans OldTrashType)
+    private int UpgradeHoe(Hoe newHoe , String Ingredient , int count , int Price , int limit , Hoes newHoeType , Hoes oldHoeType)
+    {
+        if(count > 1)
+        {
+            System.out.println("You can do it once");
+            return limit;
+        }
+        if(newHoe.getHoeType() != oldHoeType)
+        {
+            System.out.println("Hoe level doesn't match the upgrade");
+            return limit;
+        }
+        // check for limit
+        if(limit - count < 0)
+        {
+            System.out.println("You have reached the daily limit for this item");
+            return limit;
+        }
+        // check for price
+        if(Price > App.ReturnCurrentPlayer().getCoin())
+        {
+            System.out.println("Not enough money bro");
+            return limit;
+        }
+        boolean IngredientExists = false;
+        for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
+        {
+            if(item.getName().equals(Ingredient))
+            {
+                if(item.getCount() < 5)
+                {
+                    System.out.println("Not enough ingredients");
+                    return limit;
+                }
+                else
+                {
+                    IngredientExists = true;
+                    item.setCount(item.getCount() - 5);
+                }
+            }
+        }
+        if(!IngredientExists)
+        {
+            System.out.println("Not enough ingredients");
+            return limit;
+        }
+        App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price);
+        newHoe.setHoeType(newHoeType);
+        System.out.println("Hoe has been upgraded");
+        return limit - count;
+    }
+    private int UpgradeMilkPail(MilkPail newMilkPail , String Ingredient , int count , int Price , int limit , MilkPails newmilkPail , MilkPails oldmilkPail)
+    {
+        if(newMilkPail == null)
+        {
+            System.out.println("You don't have a milk pail");
+            return limit;
+        }
+        if(count > 1)
+        {
+            System.out.println("You can do it once");
+            return limit;
+        }
+        if(newMilkPail.getMilkPailType() != oldmilkPail)
+        {
+            System.out.println("MilkPail level doesn't match the upgrade");
+            return limit;
+        }
+        // check for limit
+        if(limit - count < 0)
+        {
+            System.out.println("You have reached the daily limit for this item");
+            return limit;
+        }
+        // check for price
+        if(Price > App.ReturnCurrentPlayer().getCoin())
+        {
+            System.out.println("Not enough money bro");
+            return limit;
+        }
+        boolean IngredientExists = false;
+        for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
+        {
+            if(item.getName().equals(Ingredient))
+            {
+                if(item.getCount() < 5)
+                {
+                    System.out.println("Not enough ingredients");
+                    return limit;
+                }
+                else
+                {
+                    IngredientExists = true;
+                    item.setCount(item.getCount() - 5);
+                }
+            }
+        }
+        if(!IngredientExists)
+        {
+            System.out.println("Not enough ingredients");
+            return limit;
+        }
+        App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price);
+        newMilkPail.setMilkPailType(newmilkPail);
+        System.out.println("MilkPail has been upgraded");
+        return limit - count;
+    }
+    private int UpgradeWaterCan(WaterCan newWaterCan , String Ingredient , int count , int Price , int limit , Watercans newWaterCanType , Watercans oldWaterCanType)
+    {
+        if(count > 1)
+        {
+            System.out.println("You can do it once");
+            return limit;
+        }
+        if(newWaterCan.getWatercan() != oldWaterCanType)
+        {
+            System.out.println("WaterCan level doesn't match the upgrade");
+            return limit;
+        }
+        // check for limit
+        if(limit - count < 0)
+        {
+            System.out.println("You have reached the daily limit for this item");
+            return limit;
+        }
+        // check for price
+        if(Price > App.ReturnCurrentPlayer().getCoin())
+        {
+            System.out.println("Not enough money bro");
+            return limit;
+        }
+        boolean IngredientExists = false;
+        for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
+        {
+            if(item.getName().equals(Ingredient))
+            {
+                if(item.getCount() < 5)
+                {
+                    System.out.println("Not enough ingredients");
+                    return limit;
+                }
+                else
+                {
+                    IngredientExists = true;
+                    item.setCount(item.getCount() - 5);
+                }
+            }
+        }
+        if(!IngredientExists)
+        {
+            System.out.println("Not enough ingredients");
+            return limit;
+        }
+        App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price);
+        newWaterCan.setWatercan(newWaterCanType);
+        System.out.println("WaterCan has been upgraded");
+        return limit - count;
+    }
+    private int UpgradeShear(Shear newShear , String Ingredient , int count , int Price , int limit , Shears newShearType , Shears oldShearType)
+    {
+        if(count > 1)
+        {
+            System.out.println("You can do it once");
+            return limit;
+        }
+        if(newShear.getShearType() != oldShearType)
+        {
+            System.out.println("Shear level doesn't match the upgrade");
+            return limit;
+        }
+        // check for limit
+        if(limit - count < 0)
+        {
+            System.out.println("You have reached the daily limit for this item");
+            return limit;
+        }
+        // check for price
+        if(Price > App.ReturnCurrentPlayer().getCoin())
+        {
+            System.out.println("Not enough money bro");
+            return limit;
+        }
+        boolean IngredientExists = false;
+        for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
+        {
+            if(item.getName().equals(Ingredient))
+            {
+                if(item.getCount() < 5)
+                {
+                    System.out.println("Not enough ingredients");
+                    return limit;
+                }
+                else
+                {
+                    IngredientExists = true;
+                    item.setCount(item.getCount() - 5);
+                }
+            }
+        }
+        if(!IngredientExists)
+        {
+            System.out.println("Not enough ingredients");
+            return limit;
+        }
+        App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price);
+        newShear.setShearType(newShearType);
+        System.out.println("Shear has been upgraded");
+        return limit - count;
+    }
+    private int UpgradePickaxe(Pickaxe newPickaxe , String Ingredient , int count , int Price , int limit , Pickaxes newPickaxeType , Pickaxes oldPickaxeType)
+    {
+        if(newPickaxe == null)
+        {
+            System.out.println("You don't have a pickaxe");
+            return limit;
+        }
+        if(count > 1)
+        {
+            System.out.println("You can do it once");
+            return limit;
+        }
+        if(newPickaxe.getPickaxeType() != oldPickaxeType)
+        {
+            System.out.println("Hoe level doesn't match the upgrade");
+            return limit;
+        }
+        // check for limit
+        if(limit - count < 0)
+        {
+            System.out.println("You have reached the daily limit for this item");
+            return limit;
+        }
+        // check for price
+        if(Price > App.ReturnCurrentPlayer().getCoin())
+        {
+            System.out.println("Not enough money bro");
+            return limit;
+        }
+        boolean IngredientExists = false;
+        for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
+        {
+            if(item.getName().equals(Ingredient))
+            {
+                if(item.getCount() < 5)
+                {
+                    System.out.println("Not enough ingredients");
+                    return limit;
+                }
+                else
+                {
+                    IngredientExists = true;
+                    item.setCount(item.getCount() - 5);
+                }
+            }
+        }
+        if(!IngredientExists)
+        {
+            System.out.println("Not enough ingredients");
+            return limit;
+        }
+        App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price);
+        newPickaxe.setPickaxeType(newPickaxeType);
+        System.out.println("Pickaxe has been upgraded");
+        return limit - count;
+    }
+    private int UpgradeSeythe(Seythe newSeythe , String Ingredient , int count , int Price , int limit , Seythes newSeytheType , Seythes oldSeytheType)
+    {
+        if(count > 1)
+        {
+            System.out.println("You can do it once");
+            return limit;
+        }
+        if(newSeythe.getSeythesType() != oldSeytheType)
+        {
+            System.out.println("Hoe level doesn't match the upgrade");
+            return limit;
+        }
+        // check for limit
+        if(limit - count < 0)
+        {
+            System.out.println("You have reached the daily limit for this item");
+            return limit;
+        }
+        // check for price
+        if(Price > App.ReturnCurrentPlayer().getCoin())
+        {
+            System.out.println("Not enough money bro");
+            return limit;
+        }
+        boolean IngredientExists = false;
+        for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
+        {
+            if(item.getName().equals(Ingredient))
+            {
+                if(item.getCount() < 5)
+                {
+                    System.out.println("Not enough ingredients");
+                    return limit;
+                }
+                else
+                {
+                    IngredientExists = true;
+                    item.setCount(item.getCount() - 5);
+                }
+            }
+        }
+        if(!IngredientExists)
+        {
+            System.out.println("Not enough ingredients");
+            return limit;
+        }
+        App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price);
+        newSeythe.setSeythesType(newSeytheType);
+        System.out.println("Seythe has been upgraded");
+        return limit - count;
+    }
+    private int UpgradeTrashCan(TrashCan trashCan , String Ingredient , int count , int Price , int limit , Trashcans NewTrashType , Trashcans OldTrashType)
     {
         if(count > 1)
         {
@@ -1072,7 +1753,7 @@ public class ShoppingController {
         System.out.println("Trashcan has been upgraded");
         return limit - count;
     }
-    public int BuyCoopAnimal(String AnimalName , String CoopType , Animals AnimalType , int limit , int Price)
+    private int BuyCoopAnimal(String AnimalName , String CoopType , Animals AnimalType , int limit , int Price)
     {
         // check for enough money
         if(Price > App.ReturnCurrentPlayer().getCoin())
@@ -1108,7 +1789,7 @@ public class ShoppingController {
         System.out.println("You don't own a proper coop");
         return limit;
     }
-    public int BuyBarnAnimal(String AnimalName , String CoopType , Animals AnimalType , int limit , int Price)
+    private int BuyBarnAnimal(String AnimalName , String CoopType , Animals AnimalType , int limit , int Price)
     {
         // check for enough money
         if(Price > App.ReturnCurrentPlayer().getCoin())
@@ -1144,7 +1825,7 @@ public class ShoppingController {
         System.out.println("You don't own a proper coop");
         return limit;
     }
-    public int BuyTool(Tools Tool , int count , int Price , int limit)
+    private int BuyTool(Tools Tool , int count , int Price , int limit)
     {
         // check for limit
         if(limit - count < 0)
@@ -1170,7 +1851,7 @@ public class ShoppingController {
         System.out.println("Tool has been added");
         return limit - count;
     }
-    public int BuyRecipe(Foods newFood , int count , int Price , int limit)
+    private int BuyRecipe(Foods newFood , int count , int Price , int limit)
     {
         // check for limit
         if(limit - count < 0)
@@ -1191,7 +1872,7 @@ public class ShoppingController {
         System.out.println("Recipe has been added");
         return limit - count;
     }
-    public void UnlimitedIngredientBuying(Ingredients newIngredient , int count , int Price)
+    private void UnlimitedIngredientBuying(Ingredients newIngredient , int count , int Price)
     {
         // unlimited amount
         // check for price
@@ -1225,7 +1906,7 @@ public class ShoppingController {
         App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price * count);
         System.out.println(newIngredient.name() + " purchased");
     }
-    public void UnlimitedSaplingBuying(Saplings newSapling , int count , int Price)
+    private void UnlimitedSaplingBuying(Saplings newSapling , int count , int Price)
     {
         // check for price
         if(Price * count > App.ReturnCurrentPlayer().getCoin())
@@ -1261,7 +1942,7 @@ public class ShoppingController {
         App.ReturnCurrentPlayer().getInventory().setSaplings(newSaplings);
         System.out.println(newSapling.name() + " purchased");
     }
-    public void UnlimitedCraftBuying(Crafts newCraft , int count , int Price)
+    private void UnlimitedCraftBuying(Crafts newCraft , int count , int Price)
     {
         // check for price
         if(Price * count > App.ReturnCurrentPlayer().getCoin())
@@ -1287,7 +1968,7 @@ public class ShoppingController {
         }
         System.out.println(newCraft.name() + " purchased");
     }
-    public boolean UnlimitedFoodBuying(Food newFood , int count , int Price)
+    private boolean UnlimitedFoodBuying(Food newFood , int count , int Price)
     {
         // check for price
         if(Price * count > App.ReturnCurrentPlayer().getCoin())
@@ -1320,7 +2001,7 @@ public class ShoppingController {
         System.out.println("Food has been added");
         return true;
     }
-    public int UpgradePole(FishingPoles oldPole , FishingPoles newPole , int count , int Price , int NeededSkill , int limit)
+    private int UpgradePole(FishingPoles oldPole , FishingPoles newPole , int count , int Price , int NeededSkill , int limit)
     {
         if(count > 1)
         {
@@ -1364,4 +2045,41 @@ public class ShoppingController {
         System.out.println("Fishing pole has been upgraded");
         return limit;
     }
+    private void BuyShippingBin(int Price , int NeededWood , int x , int y)
+    {
+        if(App.getCurrentGame().getEntireMap()[x][y].getEntitity() != null
+                || App.getCurrentGame().getEntireMap()[x][y].getPlaceType() != null)
+        {
+            System.out.println("Position is already filled");
+            return;
+        }
+        if(App.ReturnCurrentPlayer().getCoin() < Price)
+        {
+            System.out.println("Not enough money bro");
+            return;
+        }
+        boolean enoughWood = false;
+        for(Item item : App.ReturnCurrentPlayer().getInventory().getItems())
+        {
+            if(item.getName().equals("Wood"))
+            {
+                if(item.getCount() >= NeededWood)
+                {
+                    item.setCount(item.getCount() - NeededWood);
+                    enoughWood = true;
+                }
+                break;
+            }
+        }
+        if(!enoughWood)
+        {
+            System.out.println("Not enough wood bro");
+            return;
+        }
+        App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price);
+        App.getCurrentGame().getEntireMap()[x][y].setPlaceType(PlaceType.SHIPPING_BIN);
+        App.ReturnCurrentPlayer().getInventory().addTool(new ShippingBin(x , y , ShippingBins.Regular));
+        System.out.println("Shipping Bin has been added");
+    }
+
 }

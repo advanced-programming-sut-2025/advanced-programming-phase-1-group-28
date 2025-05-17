@@ -23,7 +23,7 @@ public class Inventory {
 
     public Inventory() {
         this.tools.add(new Hoe());
-        this.tools.add(new Pickaxe());
+        this.tools.add(new Pickaxe(Pickaxes.Normal));
         CurrentTool = tools.get(0);
         WhichTool = 0;
         this.seeds.add(Seeds.CarrotSeeds);
