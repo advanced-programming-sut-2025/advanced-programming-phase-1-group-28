@@ -25,7 +25,11 @@ public class NPC_Controller {
         friendShip.meetNpc();
         otherFriendShip.meetNpc();
 
-        return npc.getDialog();
+        if (friendShip.getLevel() >= 2){
+            return npc.getDialog(2);
+        }
+
+        return npc.getDialog(friendShip.getLevel());
     }
 
     public void giftNpc(Npc npc, String giftName){
@@ -46,12 +50,14 @@ public class NPC_Controller {
             friendShip.addXp(200);
             otherFriendShip.addXp(200);
             if (friendShip.getLevel() == 1){
-                npc.getQuests().get(1).getQuestLocked()[currentGame.getPlayerIDByUsername(currentUser.getUsername())] = false;
+                if (!npc.getQuests().get(1).getQuestLockedForever()[currentGame.getPlayerIDByUsername(currentUser.getUsername())]){
+                    npc.getQuests().get(1).getQuestLocked()[currentGame.getPlayerIDByUsername(currentUser.getUsername())] = false;
+                }
             }
         }else {
             friendShip.addXp(50);
             otherFriendShip.addXp(50);
-            if (friendShip.getLevel() == 1){
+            if (friendShip.getLevel() == 1 && !npc.getQuests().get(1).getQuestLockedForever()[currentGame.getPlayerIDByUsername(currentUser.getUsername())]){
                 npc.getQuests().get(1).getQuestLocked()[currentGame.getPlayerIDByUsername(currentUser.getUsername())] = false;
             }
         }
@@ -114,6 +120,10 @@ public class NPC_Controller {
         friendShip.setLevel(friendShip.getLevel() + friendshipReward);
         otherFriendship.setLevel(otherFriendship.getLevel() + friendshipReward);
 
+        // lock quest forever
+        for (int i = 0; i < 4; i++){
+            quest.getQuestLockedForever()[i] = true;
+        }
 
         return "you get your rewards successfully";
     }

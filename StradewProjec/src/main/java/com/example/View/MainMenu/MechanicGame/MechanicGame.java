@@ -46,6 +46,11 @@ public class MechanicGame {
 
     public void DeleteFromInventory(String ItemName , int Number)
     {
+        if(!mechanicController.EnoughItemInInventory(ItemName, Number))
+        {
+            System.out.println("there is not enough number of item in Inventory");
+            return;
+        }
         App.mechanicController.ApplyRemoveItem(ItemName, Number);
     }
     public void SetTool()
@@ -106,6 +111,10 @@ public class MechanicGame {
         if (animal == null){
             System.out.println("You are phychologically ravani.");
             System.out.println("No animal with that name exists here.");
+            return;
+        }
+        if (!App.friendShipController.isItemAvailable("Hay")){
+            System.out.println("You have no hay.");
             return;
         }
         mechanicController.ApplyFeedAnimal(animal);

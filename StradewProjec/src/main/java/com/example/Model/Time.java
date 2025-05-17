@@ -42,9 +42,9 @@ public class Time {
         int resultTotalHours = otherTotalHours - thisTotalHours;
 
         Time result = new Time();
-        result.setYear(resultTotalHours / 4 * 28 * 24);
+        result.setYear(resultTotalHours / (4 * 28 * 24));
         resultTotalHours %= 4 * 28 * 24;
-        result.setMonth(resultTotalHours / 28 * 24);
+        result.setMonth(resultTotalHours / (28 * 24));
         resultTotalHours %= 28 * 24;
         result.setDay(resultTotalHours / 24);
         resultTotalHours %= 24;

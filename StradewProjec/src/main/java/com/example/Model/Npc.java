@@ -1,6 +1,8 @@
 package com.example.Model;
 
+import com.example.Model.Enums.Dialog;
 import com.example.Model.Enums.NPC;
+import com.example.Model.Enums.Weathers;
 import com.example.Model.Item.Item;
 
 import java.util.ArrayList;
@@ -72,10 +74,16 @@ public class Npc {
         this.howManyDaysToUnlockQuest = howManyDaysToUnlockQuest;
     }
 
-    public String getDialog(){
-        //TODO
-        return "";
+    public String getDialog(int friendshipLevel) {
+        Weathers currentWeather = App.getCurrentGame().getWeather();
+        for (Dialog d : Dialog.values()) {
+            if (d.matches(currentWeather, getId(), friendshipLevel)) {
+                return d.text;
+            }
+        }
+        return "They seem quiet today...";
     }
+
 
     public boolean isFavoriteItem(Item item) {
         for (Item myitem : FavouriteItems) {

@@ -20,6 +20,10 @@ public class GameMenuController {
     public void ApplyNextTurn()
     {
         App.getCurrentGame().setWhoseTurn(((App.getCurrentGame().getWhoseTurn() + 1)) % App.getCurrentGame().getCharactersInGame().size());
+        if(App.ReturnCurrentPlayer().isISFainted())
+        {
+            System.out.printf("%s is fainted next turn\n" , App.getCurrentGame().getPlayersInGame().get(App.getCurrentGame().getWhoseTurn()).getUsername());
+        }
         if(App.getCurrentGame().getWhoseTurn() == 0)
         {
             App.getCurrentGame().getTime().jumpAheadOneHour();
@@ -184,15 +188,29 @@ public class GameMenuController {
         //USer random Foraging
         //set weather
         App.getCurrentGame().setWeather(WeatherForeCasting());
-        for(Pepolee pepolee : App.getCurrentGame().getCharactersInGame())
-        {
-            for(int i = 0;i < PlaceType.FARM.XLength ; i++)
-            {
-                for(int j =0 ;j < PlaceType.FARM.YLength ; j++) {
-                    App.farmingController.RandomLightning(pepolee, i, j, false);
+        if(App.getCurrentGame().getWeather() == Weathers.STORM) {
+            for (Pepolee pepolee : App.getCurrentGame().getCharactersInGame()) {
+                for (int i = 0; i < PlaceType.FARM.XLength; i++) {
+                    for (int j = 0; j < PlaceType.FARM.YLength; j++) {
+                        App.farmingController.RandomLightning(pepolee, i, j, false);
+                    }
                 }
             }
         }
+        if(App.getCurrentGame().getWeather() == Weathers.RAIN) {
+            for(Pepolee pepolee : App.getCurrentGame().getCharactersInGame()) {
+                for(int i = 0; i < PlaceType.FARM.XLength; i++) {
+                    for(int j = 0; j < PlaceType.FARM.YLength; j++) {
+                        if(pepolee.getFarm().getGround()[i][j].getEntitity() == Entitity.PLANTS && pepolee.getFarm().getGround()[i][j].getPlaceType() != PlaceType.GREENHOUSE)
+                        {
+                            Plants ourplant = (Plants) pepolee.getFarm().getGround()[i][j];
+                            ourplant.setLastTimeWatering(App.getCurrentGame().getTime());
+                        }
+                    }
+                }
+            }
+        }
+
         // plants stage
         for (Pepolee pepolee: App.getCurrentGame().getCharactersInGame()){
             for (Tile[] tiles: pepolee.getFarm().getGround()){
@@ -244,6 +262,9 @@ public class GameMenuController {
         for (Pepolee pepolee: App.getCurrentGame().getCharactersInGame()){
             for (Npc npc: App.getCurrentGame().getGameNPCs()){
                 if (npc.getHowManyDaysToUnlockQuest() > gameTime.getDay() + gameTime.getMonth() * 28){
+                    if (npc.getQuests().get(2).getQuestLockedForever()[pepolee.getId()]){
+                        continue;
+                    }
                     npc.getQuests().get(2).getQuestLocked()[pepolee.getId()] = false;
                 }
             }
@@ -300,14 +321,37 @@ public class GameMenuController {
         }
     }
     public void ApplyChangeHour(){
-        //TODO buff, time
         Game game = App.getCurrentGame();
         game.getTime().jumpAheadOneHour();
         if (game.getTime().isDayChanged()){
             ApplyChangeDay();
         }
 
-        // change turns
-        game.setWhoseTurn((game.getWhoseTurn() + 1) % game.getCharactersInGame().size());
+
+        //buff effect
+        for (Pepolee pepolee: game.getCharactersInGame()){
+            Buff buff = pepolee.getBuff();
+            int[] hoursLeft = buff.getHoursLeft();
+            for (int hour: hoursLeft){
+                if (hour > 0){
+                    hour --;
+                }
+            }
+            if (hoursLeft[0] <= 0){
+                buff.setMaxEnergy(0);
+            }
+            if (hoursLeft[1] <= 0){
+                buff.setFarming(false);
+            }
+            if (hoursLeft[2] <= 0){
+                buff.setForaging(false);
+            }
+            if (hoursLeft[3] <= 0){
+                buff.setFishing(false);
+            }
+            if (hoursLeft[4] <= 0){
+                buff.setMining(false);
+            }
+        }
     }
 }

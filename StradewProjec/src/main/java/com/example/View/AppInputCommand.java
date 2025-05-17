@@ -4,9 +4,13 @@ import com.example.Model.App;
 import com.example.Model.Enums.MenuName;
 import com.example.Model.Enums.Rejex.ForAllmenuRejex;
 import com.example.Model.Enums.Rejex.SignupMenuRejex;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
@@ -18,6 +22,18 @@ public class AppInputCommand {
         System.out.println(Command);
         Matcher matcher;
         //All Menus
+        if(Command.equals("Exit"))
+        {
+            // Convert ArrayList to JSON
+            Gson gson = new GsonBuilder().setPrettyPrinting().create(); // Pretty-printing JSON
+            try (FileWriter writer = new FileWriter("users.json")) {
+                gson.toJson(App.Users, writer);
+                System.out.println("Users saved to JSON file successfully!");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
         if((matcher = ForAllmenuRejex.GoTOMenu.getMatcher(Command)) != null)
         {
             if(matcher.group(1).equals(MenuName.LoginMenu.name()))

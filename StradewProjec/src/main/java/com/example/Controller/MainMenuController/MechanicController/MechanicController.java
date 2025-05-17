@@ -5,12 +5,13 @@ import com.example.Model.App;
 import com.example.Model.Enums.Direction;
 import com.example.Model.Enums.PlaceType;
 import com.example.Model.Inventory;
-import com.example.Model.Item.Ingredient;
-import com.example.Model.Item.Item;
+import com.example.Model.Item.*;
 import com.example.Model.Node;
 import com.example.Model.Places.Farm;
 import com.example.Model.Tile.Animal;
 import com.example.Model.Tools.Pepolee;
+import com.example.Model.Tools.Tools;
+import com.example.Model.Tools.TrashCan;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -194,28 +195,80 @@ public class MechanicController {
         return false;
     }
 
+    public boolean EnoughItemInInventory(String ItemName , int number)
+    {
+       Inventory Tempinventory = App.ReturnCurrentPlayer().getInventory();
+       for(Item item : Tempinventory.getItems())
+       {
+           if(item.getName().equals(ItemName))
+           {
+               if(item.getCount() < number)
+               {
+                   return false;
+               }
+           }
+       }
+       return true;
+    }
+
     public boolean EnoughResources()
     {
         return false;
     }
     public void ApplyRemoveItem(String ItemName , int number)
     {
+        TrashCan ourtrasshcan  =  new TrashCan();
         Inventory TempInventory = App.ReturnCurrentPlayer().getInventory();
+        for(int i = 0;i < TempInventory.getTools().size();i++)
+        {
+            Tools tempTool = TempInventory.getTools().get(i);
+            if(tempTool instanceof TrashCan)
+            {
+                ourtrasshcan = (TrashCan)tempTool;
+            }
+        }
         for(int i = 0 ;i < TempInventory.getItems().size(); i++)
         {
             if(TempInventory.getItems().get(i).getName().equals(ItemName))
             {
+
+                Item item = TempInventory.getItems().get(i);
+                int Cost = item.ReturnCost();
+                /*if(item instanceof PlantsItem)
+                {
+                    PlantsItem tempPlantsItem = (PlantsItem)item;
+                    Cost = tempPlantsItem.getPlant().BasePrice;
+                }
+                if(item instanceof MineralItem)
+                {
+                    MineralItem tempMineralItem = (MineralItem)item;
+                    Cost = tempMineralItem.getMineral().Cost;
+                }
+                if(item instanceof FishItem)
+                {
+                    FishItem tempFishItem = (FishItem)item;
+                    Cost = tempFishItem.getFish().price;
+                }
+                if(item instanceof Food)
+                {
+                    Food tempFoodItem = (Food)item;
+                    Cost = tempFoodItem.getFood().SellPrice;
+                }*/
                 if(number == -1)
                 {
+                    App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() + (Cost * TempInventory.getItems().get(i).getCount() * ourtrasshcan.getTrashcan().ReturnPercentage / 100));
                     TempInventory.getItems().remove(i);
                 }
                 else
                 {
-                    TempInventory.getItems().get(i).setCount(TempInventory.getItems().get(i).getCount() - number);
+                    if(number < TempInventory.getItems().get(i).getCount()) {
+                        App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() + (Cost * number * ourtrasshcan.getTrashcan().ReturnPercentage / 100));
+                        TempInventory.getItems().get(i).setCount(TempInventory.getItems().get(i).getCount() - number);
+                    }
                 }
             }
         }
-        for(int i = 0 ;i < TempInventory.getTools().size(); i++)
+        /*for(int i = 0 ;i < TempInventory.getTools().size(); i++)
         {
             if(TempInventory.getTools().get(i).getName().equals(ItemName))
             {
@@ -228,7 +281,7 @@ public class MechanicController {
                     TempInventory.getTools().get(i).setCount(TempInventory.getTools().get(i).getCount() - number);
                 }
             }
-        }
+        }*/
     }
 
     public void ApplySetTool(String ItemName)
@@ -278,6 +331,11 @@ public class MechanicController {
     }
 
     public void ApplyFeedAnimal(Animal animal){
+        Item item = App.ReturnCurrentPlayer().getInventory().getItemByName("Hay");
+        item.addCount(-1);
+        if (item.getCount() == 0){
+            App.ReturnCurrentPlayer().getInventory().removeItem(item);
+        }
         animal.setFed(true);
     }
 

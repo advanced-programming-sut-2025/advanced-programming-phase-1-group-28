@@ -13,9 +13,18 @@ public class User {
     private int HighestScore = 0;
     private int GamesPlayed = 0;
     private int GameId = -1;
+    private boolean StayLoggedIn = false;
+
+    public boolean isStayLoggedIn() {
+        return StayLoggedIn;
+    }
+
+    public void setStayLoggedIn(boolean stayLoggedIn) {
+        StayLoggedIn = stayLoggedIn;
+    }
 
     public User(String username, String password, String hashedPassword, String email, int ID,
-                 String nickname, String Gender) {
+                String nickname, String Gender) {
         Username = username;
         Password = password;
         HashedPassword = hashedPassword;

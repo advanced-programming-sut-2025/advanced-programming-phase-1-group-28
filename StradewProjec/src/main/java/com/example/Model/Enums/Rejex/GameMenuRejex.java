@@ -76,7 +76,12 @@ public enum GameMenuRejex {
     FeedHay("^feed\\s+hay\\s+-n\\s+(.+)$"),
     AnimalProduces("^produces$"),
     CollectProduce("^collect\\s+produce\\s+-n\\s+(.+)$"),
-    SellAnimal("^sell\\s+animal\\s+-n\\s+(.+)$");
+    SellAnimal("^sell\\s+animal\\s+-n\\s+(.+)$"),
+    MeetNpc("^meet\\s+NPC\\s+(.+)$"),
+    GiftNpc("^gift\\s+NPC\\s+(.+)\\s+-i\\s+(.+)$"),
+    FriendshipNpcList("^friendship\\s+NPC\\s+list$"),
+    QuestsList("^quests\\s+list$"),
+    QuestsFinish("^quests\\s+finish\\s+-i\\s+(\\d+)\\s+-n\\s+(\\d+)$");// something different from doc
     public String command;
     GameMenuRejex(String command) {
         this.command = command;

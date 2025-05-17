@@ -60,8 +60,21 @@ public class ShowFigures {
                 }
                 else
                 {
-                    if(TempGround[i][j].getTerrain() == Terrain.DIRT)
+                    boolean ok = false;
+                    for(Animal animal : App.ReturnCurrentPlayer().getFarm().getAnimals())
                     {
+                        if(animal.getX() == i && animal.getY() == j)
+                        {
+                            System.out.print(MapColors.RED.Colorname + MapReading.Animal.Show + MapColors.Reset.Colorname);
+                            ok = true;
+                        }
+                    }
+                    if(ok)
+                    {
+
+                    } else if(TempGround[i][j].getEntitity() == Entitity.Minreal) {
+                        System.out.print(MapColors.RED.Colorname + MapReading.Mineral.Show + MapColors.Reset.Colorname);
+                    } else if(TempGround[i][j].getTerrain() == Terrain.DIRT) {
                         if(TempGround[i][j].isHow())
                         {
                             System.out.print("S");
@@ -75,29 +88,32 @@ public class ShowFigures {
                     {
                         if(TempGround[i][j].getPlaceType() == PlaceType.CABIN)
                         {
-                            System.out.print(MapColors.RED.Colorname + 'C' + MapColors.Reset.Colorname);
+                            System.out.print(MapColors.RED.Colorname + MapReading.Cabin.Show + MapColors.Reset.Colorname);
                         }
                         else
                         {
                             if(TempGround[i][j].getPlaceType() == PlaceType.LAKE)
                             {
-                                System.out.printf(MapColors.RED.Colorname + 'L' + MapColors.Reset.Colorname);
+                                System.out.printf(MapColors.RED.Colorname + MapReading.Lake.Show + MapColors.Reset.Colorname);
                             }
                             else
                             {
                                 if(TempGround[i][j].getPlaceType() == PlaceType.GREENHOUSE)
                                 {
-                                    System.out.printf(MapColors.RED.Colorname + 'G' + MapColors.Reset.Colorname);
+                                    System.out.printf(MapColors.RED.Colorname + MapReading.Greenhouse.Show + MapColors.Reset.Colorname);
                                 }
                                 else
                                 {
                                     if(TempGround[i][j].getEntitity() == Entitity.TREE)
                                     {
-                                        System.out.printf(MapColors.Green.Colorname + 'T' + MapColors.Reset.Colorname);
+                                        System.out.printf(MapColors.Green.Colorname + MapReading.Tree.Show + MapColors.Reset.Colorname);
                                     }
                                     else if(TempGround[i][j].getEntitity() == Entitity.PLANTS)
                                     {
-                                        System.out.printf(MapColors.Green.Colorname + 'P' + MapColors.Reset.Colorname);
+                                        System.out.printf(MapColors.Green.Colorname + MapReading.Plant.Show + MapColors.Reset.Colorname);
+                                    } else if(TempGround[i][j].getPlaceType() == PlaceType.QUARRY)
+                                    {
+                                        System.out.print(MapColors.RED.Colorname + MapReading.Quarry.Show + MapColors.Reset.Colorname);
                                     }
                                 }
                             }
@@ -362,6 +378,28 @@ public class ShowFigures {
     }
     public void ShowNPCFriendShips()
     {
+        System.out.println("npc id: friendship level");
+        int userId = App.getCurrentGame().getPlayerIDByUsername(App.getCurrentUser().getUsername());
+        for (int i = 4; i<=8; i++){
+            System.out.println(i + ": " + App.getCurrentGame().getFriendShips()[userId][i].getLevel());
+        }
+    }
 
+    public void ShowQuestsList(){
+        System.out.println("Your unlocked quests: ");
+        for (Npc npc: App.getCurrentGame().getGameNPCs()){
+            for (Quest quest: npc.getQuests()){
+                if (quest.getQuestLocked()[App.getCurrentGame().getPlayerIDByUsername(App.getCurrentUser().getUsername())]){
+                    continue;
+                }
+                System.out.println("NPC id: " + npc.getId());
+                System.out.println("Needed item: " + quest.getGivenItems().getName());
+                if (quest.getRewards().getItem() == null){
+                    System.out.println("Reward: " + quest.getRewards().getCoins() + " coins");
+                }else {
+                    System.out.println("Reward: " + quest.getRewards().getItem().getName());
+                }
+            }
+        }
     }
 }

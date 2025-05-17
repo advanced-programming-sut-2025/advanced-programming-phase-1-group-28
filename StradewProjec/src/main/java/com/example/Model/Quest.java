@@ -9,12 +9,14 @@ public class Quest {
     private final Reward Rewards;
     private boolean QuestCompleted;
     private boolean[] QuestLocked;
+    private boolean[] QuestLockedForever;
 
     public Quest(Item givenItems, Reward rewards) {
         GivenItems = givenItems;
         Rewards = rewards;
         QuestCompleted = false;
         QuestLocked = new boolean[]{true, true, true, true};
+        QuestLockedForever = new boolean[]{false, false, false, false};
     }
 
     public Item getGivenItems() {
@@ -39,6 +41,14 @@ public class Quest {
 
     public void setQuestLocked(boolean[] questLocked) {
         QuestLocked = questLocked;
+    }
+
+    public boolean[] getQuestLockedForever() {
+        return QuestLockedForever;
+    }
+
+    public void setQuestLockedForever(boolean[] questLockedForever) {
+        QuestLockedForever = questLockedForever;
     }
 
     public String returnHello(){
