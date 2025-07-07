@@ -1,0 +1,161 @@
+package com.Stradew.Controller.MainMenuController.HomeMenucontroller;
+
+import com.Stradew.Model.App;
+import com.Stradew.Model.Buff;
+import com.Stradew.Model.Enums.Foods;
+import com.Stradew.Model.Inventory;
+import com.Stradew.Model.Item.Food;
+import com.Stradew.Model.Item.Item;
+import com.Stradew.Model.Ref;
+import com.Stradew.Model.Tools.Pepolee;
+
+public class PokhtOPazController {
+
+    public void ApplyPickFromRef(String ItemName)
+    {
+        Ref ref = App.ReturnCurrentPlayer().getFarm().getCabin().getRefrigerator();
+        Item myItem = ref.pickItemByName(ItemName);
+        App.ReturnCurrentPlayer().getInventory().addItem(myItem);
+    }
+    public void ApplyPut(String ItemName)
+    {
+        Ref ref = App.ReturnCurrentPlayer().getFarm().getCabin().getRefrigerator();
+        Inventory inventory = App.ReturnCurrentPlayer().getInventory();
+        Item item = inventory.getItemByName(ItemName);
+        ref.AddItem(item);
+        inventory.removeItem(item);
+    }
+    public boolean EnoughItemsFromRef(String ItemName)
+    {
+        Ref ref = App.ReturnCurrentPlayer().getFarm().getCabin().getRefrigerator();
+        Foods foods = getFoodByName(ItemName);
+        int i = 0;
+        for (String ingredient: foods.Ingredient){
+            Item item = ref.getItem(ingredient);
+            if (item == null){
+                return false;
+            }
+            if (item.getCount() < foods.IngredientCount.get(i)){
+                return false;
+            }
+            i++;
+        }
+        return true;
+    }
+    public boolean EnoughItemsFromInventory(String ItemName)
+    {
+        Inventory inventory = App.ReturnCurrentPlayer().getInventory();
+        Foods foods = getFoodByName(ItemName);
+        int i = 0;
+        for (String ingredient: foods.Ingredient){
+            Item item = inventory.getItemByName(ingredient);
+            if (item == null){
+                return false;
+            }
+            if (item.getCount() < foods.IngredientCount.get(i)){
+                return false;
+            }
+            i++;
+        }
+        return true;
+    }
+    public boolean EnoughSkill(String ItemName)
+    {
+        Pepolee currentPlayer = App.ReturnCurrentPlayer();
+        for (Foods foods: currentPlayer.getKnownRecipes()){
+            if (foods.Name.equals(ItemName)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Foods getFoodByName(String foodName){
+        Pepolee currentPlayer = App.ReturnCurrentPlayer();
+        for (Foods foods: currentPlayer.getKnownRecipes()){
+            if (foods.Name.equals(foodName)){
+                return foods;
+            }
+        }
+        return null;
+    }
+    public void removeIngredientsFromInventory(String ingredientName, int count){
+        Inventory inventory = App.ReturnCurrentPlayer().getInventory();
+        Item item = inventory.getItemByName(ingredientName);
+        item.addCount(-1 * count);
+    }
+    public void removeIngredientsFromRef(String ingredientName, int count){
+        Ref ref = App.ReturnCurrentPlayer().getFarm().getCabin().getRefrigerator();
+        Item item = ref.getItem(ingredientName);
+        item.addCount(-1 * count);
+    }
+    public void ApplyPokhtingOPazing(String ItemName)
+    {
+        Pepolee currentPlayer = App.ReturnCurrentPlayer();
+        Foods myFood = getFoodByName(ItemName);
+        if (EnoughItemsFromInventory(ItemName)){
+            int i = 0;
+            for (String ingredient: myFood.Ingredient){
+                removeIngredientsFromInventory(ingredient, myFood.IngredientCount.get(i));
+                i++;
+            }
+        } else if (EnoughItemsFromRef(ItemName)) {
+            int i = 0;
+            for (String ingredient: myFood.Ingredient){
+                removeIngredientsFromRef(ingredient, myFood.IngredientCount.get(i));
+                i++;
+            }
+        }
+        Inventory inventory = currentPlayer.getInventory();
+        Food food = new Food(1, myFood);
+        inventory.addItem(food);
+        currentPlayer.addEnergy(-3);
+    }
+    public void ApplyEatingFood(String ItemName)
+    {
+        Pepolee currentPlayer = App.ReturnCurrentPlayer();
+        Inventory inventory = App.ReturnCurrentPlayer().getInventory();
+        Item item = inventory.getItemByName(ItemName);
+        if (item == null){
+            return;
+        }if (!(item instanceof Food)){
+            return;
+        }
+        item.addCount(-1);
+        currentPlayer.addEnergy(((Food) item).getFood().Energy);
+        // buff effect
+        if (((Food) item).getFood().Buff != null){
+            int[] hoursLeft = currentPlayer.getBuff().getHoursLeft();
+            Buff buff = currentPlayer.getBuff();
+            Foods myFood = ((Food) item).getFood();
+            if (myFood == Foods.TripleShotEspresso){
+                buff.setMaxEnergy(100);
+                hoursLeft[0] = 5;
+            } else if (myFood == Foods.HashBrowns) {
+                buff.setFarming(true);
+                hoursLeft[1] = 5;
+            } else if (myFood == Foods.Pancakes) {
+                buff.setForaging(true);
+                hoursLeft[2] = 11;
+            } else if (myFood == Foods.RedPlate) {
+                buff.setMaxEnergy(50);
+                hoursLeft[0] = 3;
+            } else if (myFood == Foods.FarmersLunch) {
+                buff.setFarming(true);
+                hoursLeft[1] = 5;
+            } else if (myFood == Foods.SurvivalBurger) {
+                buff.setForaging(true);
+                hoursLeft[2] = 5;
+            } else if (myFood == Foods.DishOTheSea) {
+                buff.setFishing(true);
+                hoursLeft[3] = 5;
+            } else if (myFood == Foods.SeaformPudding) {
+                buff.setFishing(true);
+                hoursLeft[3] = 10;
+            } else if (myFood == Foods.MinersTreat) {
+                buff.setMining(true);
+                hoursLeft[4] = 5;
+            }
+        }
+    }
+}

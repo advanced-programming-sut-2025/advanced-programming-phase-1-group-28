@@ -61,4 +61,20 @@ showplant -l 5,5
 fertilize -f  -d <direction>
 crafting craft abbas
 crafting craft Dehydrator
+energy unlimited
+walk -l 10,3
+Yes
+print map -l 1,1 -s 80
+crafting craft Cherry Bomb
+cheat add item -n Copper Ore -c 100
+cheat add item -n Coal -c 100
+crafting craft Cherry Bomb
+walk -l 5,5
+yes
+print map -l 1,1 -s 40
+walk -l 100 100
+no
+walk -l
+print map -l 1,1 -s 40
+eat MangoWine
 Exit

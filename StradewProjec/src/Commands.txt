@@ -34,3 +34,4 @@ greenhouse build
 walk -l 4,4
 no
 print map -l 5,5 -s 200
+eat
