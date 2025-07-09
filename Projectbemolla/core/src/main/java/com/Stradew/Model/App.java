@@ -65,7 +65,6 @@ public class App {
     public static Crafting Crafting = new Crafting();
     public static UseTool UseTool = new UseTool();
     public static AllMenuCommandsController allMenuCommandsController = new AllMenuCommandsController();
-    public static SignUpMenu signUpMenu = new SignUpMenu();
     public static ProfileMenu profileMenu = new ProfileMenu();
     public static GameMenu gameMenu = new GameMenu();
     public static NPCMenu npcMenu = new NPCMenu();

@@ -1,5 +1,7 @@
 package com.Stradew;
 
+import com.Stradew.Controller.StartmenuController;
+import com.Stradew.View.StartMenu;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -18,15 +20,13 @@ public class Main extends Game {
     public void create() {
         main = this;
         batch = new SpriteBatch();
-        image = new Texture("libgdx.png");
+        //image = new Texture("libgdx.png");
+        getMain().setScreen(new StartMenu(new StartmenuController()));
     }
 
     @Override
     public void render() {
-        ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
-        batch.begin();
-        batch.draw(image, 140, 210);
-        batch.end();
+        super.render();
     }
 
     @Override

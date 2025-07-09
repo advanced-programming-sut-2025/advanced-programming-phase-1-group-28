@@ -1,16 +1,28 @@
 package com.Stradew.Controller;
 
+import com.Stradew.Controller.MainMenuController.MainmenuController;
+import com.Stradew.Main;
 import com.Stradew.Model.App;
 import com.Stradew.Model.Enums.MenuName;
 import com.Stradew.Model.Enums.Rejex.SignupMenuRejex;
 import com.Stradew.Model.Enums.SecurityQuestions;
 import com.Stradew.Model.User;
 import com.Stradew.View.Appview;
+import com.Stradew.View.MainMenu.MainMenu;
+import com.Stradew.View.SignUpMenu;
+import com.badlogic.gdx.Gdx;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public class SignUpController {
+
+    SignUpMenu Menu;
+
+    public void setMenu(SignUpMenu menu) {
+        Menu = menu;
+    }
+
     public boolean IsUsernameValid(String Username)
     {
         Matcher UserMatcher = SignupMenuRejex.ValidUser.getMatcher(Username);
@@ -122,20 +134,11 @@ public class SignUpController {
         return Output;
     }
 
-    public String SetQuestion(int QuestionId , String Answer , String ConfirmAnswer)
+    public void SetQuestion(int QuestionId , String Answer)
     {
-        if(QuestionId > SecurityQuestions.values().length)
-        {
-            return "Invalid Security Question Index";
-        }
-        if(!Answer.equals(ConfirmAnswer))
-        {
-            return "Invalid Confirm Answer";
-        }
-        QuestionId--;
         App.Users.get(Appview.getUserLoggedInId()).setAnswerIdQuestion(QuestionId);
         App.Users.get(Appview.getUserLoggedInId()).setAnswer(Answer.trim());
-        return "Answer Submit Successful";
+       // return "Answer Submit Successful";
     }
 
     public String ShowQuestion(String Username)
@@ -160,6 +163,67 @@ public class SignUpController {
         App.Users.add(newuser);
         Appview.UserLoggedInId = App.Users.size() - 1;
         Appview.Situation = MenuName.LoginMenu;
+    }
+
+    public void Update()
+    {
+        if(Menu.getSignupTable().isVisible()) {
+            if (Menu.getConfirm().isChecked()) {
+                if (Menu.getUsername().getText().isEmpty()) {
+                    Menu.getErrorMessage().setText("Username feild is empty");
+                } else {
+                    if (Menu.getPassword().getText().isEmpty()) {
+                        Menu.getErrorMessage().setText("Password feild is empty");
+                    } else {
+                        if (!IsUsernameValid(Menu.getUsername().getText())) {
+                            Menu.getErrorMessage().setText("Username is invalid");
+                        } else {
+                            if (IsUsernameTaken(Menu.getUsername().getText())) {
+                                Menu.getErrorMessage().setText("Username already exists");
+                            } else {
+                                if (Menu.getEmail().getText().isEmpty() || !IsEmailValid(Menu.getEmail().getText())) {
+                                    Menu.getErrorMessage().setText("Email address is invalid");
+                                } else {
+                                    if (!IsPasswordWeak(Menu.getPassword().getText())) {
+                                        Menu.getErrorMessage().setText("Password is weak");
+                                    } else {
+                                        Menu.getSignupTable().setVisible(false);
+                                        Menu.getSequrityQuestions().setVisible(true);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if(Menu.getSequrityQuestions().isVisible())
+        {
+            if(Menu.getConfirmAnswer().isChecked())
+            {
+                if(Menu.getAnswer().getText().isEmpty())
+                {
+
+                }
+                else
+                {
+                    ApplySignUp(Menu.getUsername().getText() , Menu.getPassword().getText() ,Menu.getNickname().getText() , Menu.getEmail().getText() , Menu.getGender().getSelected());
+                    int QuestionId = 0;
+                    for(SecurityQuestions question : SecurityQuestions.values())
+                    {
+                        if(Menu.getQuestions().getSelected().toString().equals(question.toString()))
+                        {
+                            break;
+                        }
+                        QuestionId++;
+                    }
+                    SetQuestion(QuestionId , Menu.getAnswer().getText());
+                    Main.getMain().setScreen(new MainMenu(new MainmenuController()));
+                }
+            }
+        }
+        Menu.getConfirmAnswer().setChecked(false);
+        Menu.getConfirm().setChecked(false);
     }
 }
 
