@@ -3,6 +3,7 @@ package com.Stradew.Controller.MainMenuController.MechanicController;
 import com.Stradew.Model.App;
 import com.Stradew.Model.Enums.*;
 import com.Stradew.Model.Item.Ingredient;
+import com.Stradew.Model.PairChanges;
 import com.Stradew.Model.Tile.Plants;
 import com.Stradew.Model.Tile.Tile;
 import com.Stradew.Model.Tile.Trees;
@@ -55,8 +56,9 @@ public class FarmingController {
                                     newplant.setBornTime(App.getCurrentGame().getTime());
                                     TempGround[x][y] = newplant;
                                     TempGround[x][y].setHow(false);
-                                    TempGround[x][y].setTerrain(null);
+                                    TempGround[x][y].setTerrain(null);;
                                     TempGround[x][y].setEntitity(Entitity.PLANTS);
+                                    App.ReturnCurrentPlayer().getFarm().getChanges().add(new PairChanges(x , y));
                                 }
                                 count++;
                             }
@@ -75,7 +77,9 @@ public class FarmingController {
                                     newplant.setBornTime(App.getCurrentGame().getTime());
                                     TempGround[x][y] = newplant;
                                     TempGround[x][y].setHow(false);
+                                    TempGround[x][y].setTerrain(null);;
                                     TempGround[x][y].setEntitity(Entitity.PLANTS);
+                                    App.ReturnCurrentPlayer().getFarm().getChanges().add(new PairChanges(x , y));
                                 }
                                 if(plant.Source == null)
                                 {
@@ -92,7 +96,7 @@ public class FarmingController {
             for(int y = 0; y < PlaceType.FARM.YLength ; y++)
             {
                 int RandomProb = App.random.nextInt() % 50;
-                if(RandomProb == 0 && TempGround[x][y].getPlaceType() == null &&  TempGround[x][y].getTerrain() == Terrain.DIRT)
+                if(RandomProb == 0 && TempGround[x][y].getPlaceType() == null && TempGround[x][y].getTerrain() == Terrain.DIRT && TempGround[x][y].getPlaceType() != PlaceType.LAKE)
                 {
                     int RnadomTree = App.random.nextInt() % 14;
                     int count = 0;
@@ -103,6 +107,7 @@ public class FarmingController {
                             TempGround[x][y].setTerrain(null);
                             TempGround[x][y].setPlaceType(null);
                             TempGround[x][y].setEntitity(Entitity.TREE);
+                            App.ReturnCurrentPlayer().getFarm().getChanges().add(new PairChanges(x , y));
                         }
                         count++;
                     }
@@ -135,14 +140,14 @@ public class FarmingController {
 
     public boolean CanPlant(int x , int y)
     {
-        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
-        int NewX = CurrentPepolee.getX() + x;
-        int NewY = CurrentPepolee.getY() + y;
-        if(CurrentPepolee.getFarm().getGround()[NewX][NewY].isHow() && CurrentPepolee.getFarm().getGround()[NewX][NewY].getTerrain() == Terrain.DIRT)
-        {
-            return true;
-        }
-        return false;
+//        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
+//        int NewX = CurrentPepolee.getX() + x;
+//        int NewY = CurrentPepolee.getY() + y;
+//        if(CurrentPepolee.getFarm().getGround()[NewX][NewY].isHow() && CurrentPepolee.getFarm().getGround()[NewX][NewY].getTerrain() == Terrain.DIRT)
+//        {
+//            return true;
+//        }
+       return false;
     }
 
     public void ApplyGianting()
@@ -152,22 +157,22 @@ public class FarmingController {
 
     public boolean BeinsidetheGreenhouse(String Seedname , int x , int y)
     {
-        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
-        Tile[][] TempGround = CurrentPepolee.getFarm().getGround();
-        if(TempGround[CurrentPepolee.getX()][CurrentPepolee.getY()].getPlaceType() == PlaceType.GREENHOUSE)
-        {
-            int NewX = CurrentPepolee.getX() + x;
-            int NewY = CurrentPepolee.getY() + y;
-            if(TempGround[NewX][NewY].getEntitity() != Entitity.PLANTS)
-            {
-                Plants newplant = new Plants(returnseed(Seedname).Plant);
-                newplant.setBornTime(App.getCurrentGame().getTime());
-                System.out.println("plant Planted Succsesfully");
-                TempGround[NewX][NewY] = newplant;
-            }
-            CurrentPepolee.getFarm().setGround(TempGround);
-            return true;
-        }
+//        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
+//        Tile[][] TempGround = CurrentPepolee.getFarm().getGround();
+//        if(TempGround[CurrentPepolee.getX()][CurrentPepolee.getY()].getPlaceType() == PlaceType.GREENHOUSE)
+//        {
+//            int NewX = CurrentPepolee.getX() + x;
+//            int NewY = CurrentPepolee.getY() + y;
+//            if(TempGround[NewX][NewY].getEntitity() != Entitity.PLANTS)
+//            {
+//                Plants newplant = new Plants(returnseed(Seedname).Plant);
+//                newplant.setBornTime(App.getCurrentGame().getTime());
+//                System.out.println("plant Planted Succsesfully");
+//                TempGround[NewX][NewY] = newplant;
+//            }
+//            CurrentPepolee.getFarm().setGround(TempGround);
+//            return true;
+//        }
         return false;
     }
 
@@ -201,56 +206,56 @@ public class FarmingController {
 
     public void ApplyPlanting(String Seedname , int x , int y)
     {
-        Seeds Goalseed = returnseed(Seedname);
-        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
-        Tile[][] TempGround = CurrentPepolee.getFarm().getGround();
-        for(int i = 0;i < CurrentPepolee.getInventory().getSeeds().size(); i++)
-        {
-            if(CurrentPepolee.getInventory().getSeeds().get(i) == Goalseed)
-            {
-                CurrentPepolee.getInventory().getSeeds().remove(i);
-                break;
-            }
-        }
-        if(Goalseed == Seeds.MixedSeeds) {
-            Season OurSeason = App.getCurrentGame().getTime().getSeason();
-            for(MixedSeeds seed : MixedSeeds.values()) {
-                if(seed.season == OurSeason) {
-                    int Randomplant = App.random.nextInt() % seed.Plants.size();
-                    Plants newplant = new Plants(seed.Plants.get(Randomplant));
-                    newplant.setBornTime(App.getCurrentGame().getTime());
-                    int NewX = CurrentPepolee.getX() + x;
-                    int NewY = CurrentPepolee.getY() + y;
-                    TempGround[NewX][NewY] = newplant;
-                    TempGround[NewX][NewY].setHow(false);
-                    TempGround[NewX][NewY].setEntitity(Entitity.PLANTS);
-                    TempGround[NewX][NewY].setTerrain(null);
-                }
-            }
-        }
-        else {
-            Plants newplant = new Plants(Goalseed.Plant);
-            newplant.setBornTime(App.getCurrentGame().getTime());
-            int NewX = CurrentPepolee.getX() + x;
-            int NewY = CurrentPepolee.getY() + y;
-            TempGround[NewX][NewY] = newplant;
-            TempGround[NewX][NewY].setHow(false);
-            TempGround[NewX][NewY].setEntitity(Entitity.PLANTS);
-            TempGround[NewX][NewY].setTerrain(null);
-        }
-        CurrentPepolee.getFarm().setGround(TempGround);
+//        Seeds Goalseed = returnseed(Seedname);
+//        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
+//        Tile[][] TempGround = CurrentPepolee.getFarm().getGround();
+//        for(int i = 0;i < CurrentPepolee.getInventory().getSeeds().size(); i++)
+//        {
+//            if(CurrentPepolee.getInventory().getSeeds().get(i) == Goalseed)
+//            {
+//                CurrentPepolee.getInventory().getSeeds().remove(i);
+//                break;
+//            }
+//        }
+//        if(Goalseed == Seeds.MixedSeeds) {
+//            Season OurSeason = App.getCurrentGame().getTime().getSeason();
+//            for(MixedSeeds seed : MixedSeeds.values()) {
+//                if(seed.season == OurSeason) {
+//                    int Randomplant = App.random.nextInt() % seed.Plants.size();
+//                    Plants newplant = new Plants(seed.Plants.get(Randomplant));
+//                    newplant.setBornTime(App.getCurrentGame().getTime());
+//                    int NewX = CurrentPepolee.getX() + x;
+//                    int NewY = CurrentPepolee.getY() + y;
+//                    TempGround[NewX][NewY] = newplant;
+//                    TempGround[NewX][NewY].setHow(false);
+//                    TempGround[NewX][NewY].setEntitity(Entitity.PLANTS);
+//                    TempGround[NewX][NewY].setTerrain(null);
+//                }
+//            }
+//        }
+//        else {
+//            Plants newplant = new Plants(Goalseed.Plant);
+//            newplant.setBornTime(App.getCurrentGame().getTime());
+//            int NewX = CurrentPepolee.getX() + x;
+//            int NewY = CurrentPepolee.getY() + y;
+//            TempGround[NewX][NewY] = newplant;
+//            TempGround[NewX][NewY].setHow(false);
+//            TempGround[NewX][NewY].setEntitity(Entitity.PLANTS);
+//            TempGround[NewX][NewY].setTerrain(null);
+//        }
+//        CurrentPepolee.getFarm().setGround(TempGround);
     }
 
     public boolean CanCood(int x , int y)
     {
-        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
-        int NewX = CurrentPepolee.getX() + x;
-        int NewY = CurrentPepolee.getY() + y;
-        Tile[][] TempGround = CurrentPepolee.getFarm().getGround();
-        if(TempGround[NewX][NewY].getEntitity() == Entitity.PLANTS || TempGround[NewX][NewY].getEntitity() == Entitity.TREE)
-        {
-            return true;
-        }
+//        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
+//        int NewX = CurrentPepolee.getX() + x;
+//        int NewY = CurrentPepolee.getY() + y;
+//        Tile[][] TempGround = CurrentPepolee.getFarm().getGround();
+//        if(TempGround[NewX][NewY].getEntitity() == Entitity.PLANTS || TempGround[NewX][NewY].getEntitity() == Entitity.TREE)
+//        {
+//            return true;
+//        }
         return false;
     }
 
@@ -272,30 +277,30 @@ public class FarmingController {
 
     public void ApplyCooding(String coodname , int x , int y)
     {
-        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
-        Tile[][] TempGround = CurrentPepolee.getFarm().getGround();
-        int NewX = CurrentPepolee.getX() + x;
-        int NewY = CurrentPepolee.getY() + y;
-        for(int i = 0;i < CurrentPepolee.getInventory().getItems().size(); i++)
-        {
-            if(CurrentPepolee.getInventory().getItems().get(i) instanceof Ingredient)
-            {
-                if(CurrentPepolee.getInventory().getItems().get(i).getName().equals(coodname))
-                {
-                    CurrentPepolee.getInventory().getItems().remove(i);
-                }
-            }
-        }
-        if(TempGround[NewX][NewY].getEntitity() == Entitity.PLANTS)
-        {
-            Plants ourPlant = (Plants)TempGround[NewX][NewY];
-            ourPlant.setISCooded(true);
-        }
-        if(TempGround[NewX][NewY].getEntitity() == Entitity.TREE)
-        {
-            Trees ourTrees = (Trees)TempGround[NewX][NewY];
-            ourTrees.setIscooded(true);
-        }
+//        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
+//        Tile[][] TempGround = CurrentPepolee.getFarm().getGround();
+//        int NewX = CurrentPepolee.getX() + x;
+//        int NewY = CurrentPepolee.getY() + y;
+//        for(int i = 0;i < CurrentPepolee.getInventory().getItems().size(); i++)
+//        {
+//            if(CurrentPepolee.getInventory().getItems().get(i) instanceof Ingredient)
+//            {
+//                if(CurrentPepolee.getInventory().getItems().get(i).getName().equals(coodname))
+//                {
+//                    CurrentPepolee.getInventory().getItems().remove(i);
+//                }
+//            }
+//        }
+//        if(TempGround[NewX][NewY].getEntitity() == Entitity.PLANTS)
+//        {
+//            Plants ourPlant = (Plants)TempGround[NewX][NewY];
+//            ourPlant.setISCooded(true);
+//        }
+//        if(TempGround[NewX][NewY].getEntitity() == Entitity.TREE)
+//        {
+//            Trees ourTrees = (Trees)TempGround[NewX][NewY];
+//            ourTrees.setIscooded(true);
+//        }
     }
 
     public void CrowAttack()

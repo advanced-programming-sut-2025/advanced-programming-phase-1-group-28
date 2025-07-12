@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Game {
+    private TimeControlPannel timeControlPannel = new TimeControlPannel();
     private FriendShip[][] FriendShips = new FriendShip[100][100];//0-3 peeplee , 4-8 npc
     private ArrayList<User> PlayersInGame = new ArrayList<>();
     private ArrayList<Pepolee> CharactersInGame = new ArrayList<>();
@@ -24,6 +25,10 @@ public class Game {
     private int WhoseTurn = 0;
     private Weathers Weather = Weathers.SUNNY;
     private ArrayList<Npc> GameNPCs = new ArrayList<>();
+
+    public TimeControlPannel getTimeControlPannel() {
+        return timeControlPannel;
+    }
 
     private Tile[][] EntireMap = new Tile[200][200];
 

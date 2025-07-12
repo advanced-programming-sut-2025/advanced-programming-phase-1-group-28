@@ -4,12 +4,22 @@ import com.Stradew.Model.Enums.Foods;
 import com.Stradew.Model.*;
 import com.Stradew.Model.Item.Item;
 import com.Stradew.Model.Places.Farm;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import java.util.ArrayList;
 
 public class Pepolee {
-    private int x = 1;
-    private int y = 1;
+    private Texture PlayerTexture = new Texture("FirstMap/Lewis.png");
+    private Sprite PlayerSprite = new Sprite(PlayerTexture);
+
+    public Sprite getPlayerSprite() {
+        return PlayerSprite;
+    }
+
+    private float x = Gdx.graphics.getWidth()/2;
+    private float y = Gdx.graphics.getHeight()/2;
     private Farm Farm;
     private int MaxEnergy = 200;
     private int Energy = 200;
@@ -72,19 +82,19 @@ public class Pepolee {
         CharacterUser = characterUser;
     }
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(float x) {
         this.x = x;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
 
-    public void setY(int y) {
+    public void setY(float y) {
         this.y = y;
     }
 

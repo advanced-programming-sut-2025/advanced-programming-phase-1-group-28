@@ -2,12 +2,20 @@ package com.Stradew.Model.Places;
 
 import com.Stradew.Model.Enums.PlaceType;
 import com.Stradew.Model.Enums.Terrain;
+import com.Stradew.Model.PairChanges;
 import com.Stradew.Model.Tile.Animal;
 import com.Stradew.Model.Tile.Tile;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Farm extends Place {
+
+    private ArrayList<PairChanges> Changes = new ArrayList<>();
+
+    public ArrayList<PairChanges> getChanges() {
+        return Changes;
+    }
 
     private ArrayList<Animal> Animals = new ArrayList<>();
     private GreenHouse greenHouse;

@@ -16,7 +16,6 @@ import com.Stradew.Model.Tools.Pepolee;
 import com.Stradew.View.Appview;
 import com.Stradew.View.LoginMenu;
 import com.Stradew.View.MainMenu.CheatCodes;
-import com.Stradew.View.MainMenu.GameMenu;
 import com.Stradew.View.MainMenu.MechanicGame.Farming;
 import com.Stradew.View.MainMenu.MechanicGame.Friendship;
 import com.Stradew.View.MainMenu.MechanicGame.HomeMenu.Crafting;
@@ -41,7 +40,6 @@ public class App {
     public static ArrayList<Game> Games = new ArrayList<>();
     public static FriendShipController friendShipController = new FriendShipController();
     public static ShowFigures showFigures = new ShowFigures();
-    public static CheatCodes cheatCodes = new CheatCodes();
     public static File Commands = new File("Commands.txt");
     public static Scanner scanner;
     static {
@@ -53,7 +51,6 @@ public class App {
         }
     }    public static SignUpController signUpController = new SignUpController();
     public static LoginController loginController = new LoginController();
-    public static GameMenuController gameMenuController = new GameMenuController();
     public static ProfileMenuController profileMenuController = new ProfileMenuController();
     public static MechanicController mechanicController = new MechanicController();
     public static NPC_Controller npcController = new NPC_Controller();
@@ -66,7 +63,6 @@ public class App {
     public static UseTool UseTool = new UseTool();
     public static AllMenuCommandsController allMenuCommandsController = new AllMenuCommandsController();
     public static ProfileMenu profileMenu = new ProfileMenu();
-    public static GameMenu gameMenu = new GameMenu();
     public static NPCMenu npcMenu = new NPCMenu();
     public static LoginMenu loginMenu = new LoginMenu();
     public static Friendship friendship = new Friendship();

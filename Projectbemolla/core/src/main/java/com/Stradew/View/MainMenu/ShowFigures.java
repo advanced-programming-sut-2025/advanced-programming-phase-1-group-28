@@ -44,7 +44,7 @@ public class ShowFigures {
     }
     public void PredictWeather()
     {
-        System.out.println(App.gameMenuController.WeatherForeCasting().toString());
+        //System.out.println(App.gameMenuController.WeatherForeCasting().toString());
     }
     public void PrintMap(int x, int y, int l)
     {

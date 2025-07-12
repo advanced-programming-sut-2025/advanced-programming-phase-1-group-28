@@ -80,6 +80,7 @@ public enum Plants {
     public final boolean CanBecomeGiant;
 
     private static final ArrayList<Plants> loadedPlants = new ArrayList<>();
+    //private final String Picture;
 
     Plants(String source, String stage, int totalTimeHarvest, boolean onTime, int regrowthTime, int basePrice, boolean isEdible, int energy, String season, boolean canBecomeGiant) {
         Source = source;

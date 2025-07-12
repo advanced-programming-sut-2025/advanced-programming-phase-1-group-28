@@ -8,12 +8,11 @@ import com.Stradew.Model.Tile.Animal;
 import com.Stradew.Model.Tools.Pepolee;
 
 public class CheatCodeController {
-    GameMenuController gameMenuController = new GameMenuController();
 
     public void ChangeHour(int Hour)
     {
         for (int i=0; i<Hour; i++){
-            gameMenuController.ApplyChangeHour();
+            GameMenuController.ApplyChangeHour();
         }
     }
 
@@ -21,7 +20,7 @@ public class CheatCodeController {
     {
         for (int i = 0; i<Day; i++){
             for (int j = 0; j<24; j++){
-                gameMenuController.ApplyChangeHour();
+                GameMenuController.ApplyChangeHour();
             }
         }
     }

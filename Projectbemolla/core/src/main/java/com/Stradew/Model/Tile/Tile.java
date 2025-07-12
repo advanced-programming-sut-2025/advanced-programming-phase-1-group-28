@@ -9,7 +9,7 @@ public class Tile {
     private boolean IsHow = false;
     private boolean ISAttackedByCrow = false;
     private Terrain terrain;
-    private PlaceType placeType;
+    private PlaceType placeType = null;
     private Entitity entitity;
     protected int x;
     protected int y;

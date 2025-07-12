@@ -1,5 +1,7 @@
 package com.Stradew.Model.Enums;
 
+import com.badlogic.gdx.graphics.Texture;
+
 public enum Minerals {
     Quartz(25),
     EarthCrystal(50),
@@ -19,8 +21,9 @@ public enum Minerals {
     Iridium(100),
     Coal(15);
     public final int Cost;
-
+    //public final String MineralPicture;
     Minerals(int cost) {
         Cost = cost;
+        //this.MineralPicture = mineralPicture;
     }
 }

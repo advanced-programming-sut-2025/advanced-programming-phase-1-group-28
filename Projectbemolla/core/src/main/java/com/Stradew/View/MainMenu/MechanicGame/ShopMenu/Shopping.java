@@ -12,7 +12,7 @@ public class Shopping {
 
     public void Buy(String ProductName , String CountOrCoordinateOrName)
     {
-        PlaceType CurrentPlaceType = App.getCurrentGame().getEntireMap()[App.ReturnCurrentPlayer().getX()][App.ReturnCurrentPlayer().getY()].getPlaceType();
+        PlaceType CurrentPlaceType = PlaceType.BARN;
         if(CurrentPlaceType.equals(PlaceType.BlackSmith))
         {
             shoppingController.ApplyBlackSmithPurchase(ProductName , Integer.parseInt(CountOrCoordinateOrName));
@@ -52,7 +52,7 @@ public class Shopping {
     }
     public void availableProducts()
     {
-        PlaceType CurrentPlaceType = App.getCurrentGame().getEntireMap()[App.ReturnCurrentPlayer().getX()][App.ReturnCurrentPlayer().getY()].getPlaceType();
+        PlaceType CurrentPlaceType = PlaceType.BARN;
         if(CurrentPlaceType.equals(PlaceType.BlackSmith))
         {
             for(BlackSmithItems item : BlackSmithItems.values())

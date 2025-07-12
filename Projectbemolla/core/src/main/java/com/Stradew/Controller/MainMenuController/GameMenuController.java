@@ -1,5 +1,7 @@
 package com.Stradew.Controller.MainMenuController;
 
+import com.Stradew.Controller.PepoleeContoller;
+import com.Stradew.Controller.SignUpController;
 import com.Stradew.Model.*;
 import com.Stradew.Model.Enums.*;
 import com.Stradew.Model.Places.*;
@@ -10,10 +12,61 @@ import com.Stradew.Model.Tools.Pepolee;
 import com.Stradew.Model.Tools.ShippingBin;
 import com.Stradew.Model.Tools.Tools;
 import com.Stradew.View.Appview;
+import com.Stradew.View.MainMenu.GameMenu;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 
 import java.util.ArrayList;
 
 public class GameMenuController {
+
+    public static void StartGame(ArrayList<String> PlayersInGame)
+    {
+        PlayersInGame.add(0, App.getCurrentUser().getUsername());
+        SignUpController Abbas = new SignUpController();
+        for(int i = 0 ;i < PlayersInGame.size();i++) {
+            if (!Abbas.IsUsernameTaken(PlayersInGame.get(i))) {
+                System.out.println(PlayersInGame.get(i) + " is not a valid username");
+                return;
+            }
+        }
+        GameMenuController Abbas2 = new GameMenuController();
+        if(!Abbas2.IsInAnotherGame(PlayersInGame)) {
+            System.out.println("Your Friend are in the game");
+            return;
+        }
+
+        Abbas2.ApplyPlayersToGame(PlayersInGame);
+        for(int i = 0 ;i < PlayersInGame.size();i++) {
+
+            Abbas2.SetFarm(i , 1);
+        }
+    }
+
+    GameMenu menu;
+    PepoleeContoller pepoleeController = new PepoleeContoller();
+    MapController mapController = new MapController();
+    OptionsController optionsController = new OptionsController();
+
+    public MapController getMapController() {
+        return mapController;
+    }
+
+    public void setMenu(GameMenu menu) {
+        this.menu = menu;
+    }
+
+
+    public void Update(float v)
+    {
+        mapController.RenderMap(menu.getMapSprite() , menu.getMapFrameBuffer());
+
+        pepoleeController.Update(App.ReturnCurrentPlayer() , v);
+        optionsController.Update();
+        App.getCurrentGame().getTimeControlPannel().UpdateTimes(v);
+    }
+
+
     public void ApplyNextTurn()
     {
         App.getCurrentGame().setWhoseTurn(((App.getCurrentGame().getWhoseTurn() + 1)) % App.getCurrentGame().getCharactersInGame().size());
@@ -121,7 +174,7 @@ public class GameMenuController {
 
     }
 
-    public Weathers WeatherForeCasting()
+    public static Weathers WeatherForeCasting()
     {
         Season season = App.getCurrentGame().getTime().getSeason();
         if(season == Season.SPRING)
@@ -180,7 +233,7 @@ public class GameMenuController {
     }
 
 
-    public void ApplyChangeDay()
+    public static void ApplyChangeDay()
     {
         Time gameTime = App.getCurrentGame().getTime();
         //USer random Foraging
@@ -318,7 +371,7 @@ public class GameMenuController {
             }
         }
     }
-    public void ApplyChangeHour(){
+    public static void ApplyChangeHour(){
         Game game = App.getCurrentGame();
         game.getTime().jumpAheadOneHour();
         if (game.getTime().isDayChanged()){

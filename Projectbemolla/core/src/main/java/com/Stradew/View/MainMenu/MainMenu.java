@@ -1,5 +1,6 @@
 package com.Stradew.View.MainMenu;
 
+import com.Stradew.Controller.MainMenuController.GameMenuController;
 import com.Stradew.Controller.MainMenuController.MainmenuController;
 import com.Stradew.Main;
 import com.Stradew.Model.GameAssetsManager;
@@ -11,6 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class MainMenu implements Screen {
+    private Boolean GoToGameMenu = false;
+
+    public void setGoToGameMenu(Boolean goToGameMenu) {
+        GoToGameMenu = goToGameMenu;
+    }
 
     private MainmenuController controller;
     private TextButton GameMenu;
@@ -57,6 +63,10 @@ public class MainMenu implements Screen {
     @Override
     public void render(float v) {
         ScreenUtils.clear(250 , 250 , 250 , 1);
+        if(GoToGameMenu)
+        {
+            Main.getMain().setScreen(new GameMenu(new GameMenuController()));
+        }
         Main.getMain().getBatch().begin();
         controller.Update();
         Main.getMain().getBatch().end();
