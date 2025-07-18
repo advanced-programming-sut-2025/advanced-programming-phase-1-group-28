@@ -3,6 +3,7 @@ package com.Stradew.Model.Tools;
 import com.Stradew.Model.App;
 import com.Stradew.Model.Enums.Skills;
 import com.Stradew.Model.Enums.Weathers;
+import com.badlogic.gdx.graphics.Texture;
 
 public class Tools {
     protected String name;
@@ -11,6 +12,11 @@ public class Tools {
     protected boolean IsExist;
     protected int EnergyCost;
     protected Skills skillRelated;
+    protected Texture Image;
+
+    public Texture getImage() {
+        return Image;
+    }
 
     public String getName() {
         return name;

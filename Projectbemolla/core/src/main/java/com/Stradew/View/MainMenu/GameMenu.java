@@ -2,26 +2,27 @@ package com.Stradew.View.MainMenu;
 
 import com.Stradew.Controller.MainMenuController.GameMenuController;
 import com.Stradew.Controller.MainMenuController.MapController;
-import com.Stradew.Controller.SignUpController;
-import com.Stradew.Controller.StartmenuController;
+import com.Stradew.Controller.MainMenuController.MechanicController.InventorypannelController;
 import com.Stradew.Main;
 import com.Stradew.Model.App;
-import com.Stradew.Model.Enums.MenuName;
-import com.Stradew.Model.Enums.Rejex.GameMenuRejex;
-import com.Stradew.View.Appview;
-import com.Stradew.View.StartMenu;
+import com.Stradew.Model.GameAssetsManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
-
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class GameMenu implements Screen {
 
@@ -30,6 +31,96 @@ public class GameMenu implements Screen {
     private GameMenuController controller;
     private OrthographicCamera camera;
     private Stage stage;
+    private ParticleEffect Raineffect;
+    private Texture shadeTexture;
+    private Color shadeColor;
+    private TextButton GreenhouseHoverButton;
+    private Table BuyGreenhouseTable;
+    private ProgressBar EnergyBar;
+    public ParticleEffect getRaineffect() {
+        return Raineffect;
+    }
+
+    public Texture getShadeTexture() {
+        return shadeTexture;
+    }
+
+    public Table getBuyGreenhouseTable() {
+        return BuyGreenhouseTable;
+    }
+
+    public ProgressBar getEnergyBar() {
+        return EnergyBar;
+    }
+
+    private Table MainTable;
+    private Table InventoryTable;
+    private Table SkillTable;
+    private Table SocialTable;
+    private Table MapTable;
+    private Table SwitchTable;
+
+    private TextButton InventoryButton;
+    private TextButton SkillButton;
+    private TextButton SocialButton;
+    private TextButton MapButton;
+    private TextButton Backbutton;
+
+    public TextButton getBackbutton() {
+        return Backbutton;
+    }
+
+    public GameMenuController getController() {
+        return controller;
+    }
+
+    public TextButton getMapButton() {
+        return MapButton;
+    }
+
+    public TextButton getSocialButton() {
+        return SocialButton;
+    }
+
+    public TextButton getSkillButton() {
+        return SkillButton;
+    }
+
+    public TextButton getInventoryButton() {
+        return InventoryButton;
+    }
+
+    public Table getSwitchTable() {
+        return SwitchTable;
+    }
+
+    public Table getMapTable() {
+        return MapTable;
+    }
+
+    public Table getSocialTable() {
+        return SocialTable;
+    }
+
+    public Table getSkillTable() {
+        return SkillTable;
+    }
+
+    public Table getInventoryTable() {
+        return InventoryTable;
+    }
+
+    public Table getMainTable() {
+        return MainTable;
+    }
+
+    public TextButton getGreenhouseHoverButton() {
+        return GreenhouseHoverButton;
+    }
+
+    public Color getShadeColor() {
+        return shadeColor;
+    }
 
     public FrameBuffer getMapFrameBuffer() {
         return mapFrameBuffer;
@@ -44,20 +135,80 @@ public class GameMenu implements Screen {
         controller.setMenu(this);
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage = new Stage();
+        Raineffect = new ParticleEffect();
+        Raineffect.load(Gdx.files.internal("WetherEffects/CorrectRainWether.p") , Gdx.files.internal("WetherEffects"));
+        Raineffect.start();
+        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+        pixmap.setColor(Color.WHITE);
+        pixmap.fill();
+        shadeTexture = new Texture(pixmap);
+        pixmap.dispose();
+        shadeColor = new Color(0.0f, 0.0f, 0.2f, 0.4f);
+        GreenhouseHoverButton = new TextButton("Buy" , GameAssetsManager.getInstance().getSkin());
+        InventoryTable = new Table();
+        SkillTable = new Table();
+        SocialTable = new Table();
+        MapTable = new Table();
+        SwitchTable = new Table();
+        MainTable = new Table();
+        BuyGreenhouseTable = new Table();
+        InventoryButton = new TextButton("Inventory" , GameAssetsManager.getInstance().getSkin());
+        SkillButton = new TextButton("Skill" , GameAssetsManager.getInstance().getSkin());
+        SocialButton = new TextButton("Social" , GameAssetsManager.getInstance().getSkin());
+        MapButton = new TextButton("Map" , GameAssetsManager.getInstance().getSkin());
+        Backbutton = new TextButton("Back" , GameAssetsManager.getInstance().getSkin());
+        EnergyBar = new ProgressBar(0 , 250 , 1f , true , GameAssetsManager.getInstance().getSkin());
     }
 
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
+        InventoryTable.setFillParent(true);
+        SkillTable.setFillParent(true);
+        SocialTable.setFillParent(true);
+        MapTable.setFillParent(true);
+        SwitchTable.setFillParent(true);
+        InventoryTable.setVisible(false);
+        SkillTable.setVisible(false);
+        SocialTable.setVisible(false);
+        MapTable.setVisible(false);
+        SwitchTable.setVisible(false);
+        MainTable.setFillParent(true);
+        //SwitchTable.setBackground(abbas);
+        SwitchTable.center().top();
+        SwitchTable.add(InventoryButton);
+        SwitchTable.add(SkillButton);
+        SwitchTable.add(SocialButton);
+        SwitchTable.add(MapButton);
+        SwitchTable.add(Backbutton);
+        stage.addActor(SwitchTable);
+        Table EnergyTable = new Table();
+        EnergyTable.setFillParent(true);
+        //EnergyTable.right();
+        EnergyTable.add(EnergyBar);
+        MainTable.add(EnergyTable);
+        stage.addActor(MainTable);
 
-            int mapPixelWidth = MapController.MAP_COLS * MapController.TILE_SIZE;
-            int mapPixelHeight = MapController.MAP_ROWS * MapController.TILE_SIZE;
-            mapFrameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, mapPixelWidth, mapPixelHeight, false);
-            mapSprite = new Sprite(mapFrameBuffer.getColorBufferTexture());
-            mapSprite.flip(false, true);
-        Main.getMain().getBatch().begin();
+        stage.addActor(InventoryTable);
+
+        stage.addActor(SkillTable);
+        stage.addActor(MapTable);
+        stage.addActor(SocialTable);
+        int mapPixelWidth = MapController.MAP_COLS * MapController.TILE_SIZE;
+        int mapPixelHeight = MapController.MAP_ROWS * MapController.TILE_SIZE;
+        mapFrameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, mapPixelWidth, mapPixelHeight, false);
+        mapSprite = new Sprite(mapFrameBuffer.getColorBufferTexture());
+        mapSprite.flip(false, true);
         controller.getMapController().PrintInitialMap(mapFrameBuffer);
-        Main.getMain().getBatch().end();
+        //controller.getMapController().setGreenhouseHoverTextButton(GreenhouseHoverButton);
+        //GreenhouseHoverButton.setPosition(500 , 500);
+        controller.getMapController().setGreenhouseHoverTextButton();
+        BuyGreenhouseTable.setFillParent(true);
+        //BuyGreenhouseTable.setVisible(false);
+        BuyGreenhouseTable.left();
+        BuyGreenhouseTable.add(GreenhouseHoverButton);
+        stage.addActor(BuyGreenhouseTable);
+        //stage.addActor(GreenhouseHoverButton);
     }
 
     @Override
@@ -69,6 +220,8 @@ public class GameMenu implements Screen {
         Main.getMain().getBatch().setProjectionMatrix(camera.combined);
         controller.Update(v);
         Main.getMain().getBatch().end();
+        stage.act();
+        stage.draw();
     }
 
     @Override

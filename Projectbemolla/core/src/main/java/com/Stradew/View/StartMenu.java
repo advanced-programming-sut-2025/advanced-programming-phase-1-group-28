@@ -3,15 +3,19 @@ package com.Stradew.View;
 import com.Stradew.Controller.StartmenuController;
 import com.Stradew.Main;
 import com.Stradew.Model.GameAssetsManager;
+import com.Stradew.Model.Tools.Axe;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class StartMenu implements Screen {
@@ -24,6 +28,8 @@ public class StartMenu implements Screen {
     private TextButton SignUp;
     private TextButton Login;
     private Stage stage = new Stage();
+
+    private ImageButton Axebutton;
 
     public TextButton getExit() {
         return Exit;
@@ -43,6 +49,13 @@ public class StartMenu implements Screen {
         Exit = new TextButton("Exit" , GameAssetsManager.getInstance().getSkin());
         SignUp = new TextButton("SignUp" , GameAssetsManager.getInstance().getSkin());
         Login = new TextButton("Login" , GameAssetsManager.getInstance().getSkin());
+        Texture texture = new Texture(Gdx.files.internal("Tools/Axe/Axe.png"));
+        TextureRegion region = new TextureRegion(texture);
+        TextureRegionDrawable drawable = new TextureRegionDrawable(region);
+        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
+        style.up = drawable;
+        style.down = drawable;
+        Axebutton = new ImageButton(style);
     }
 
     @Override
@@ -56,6 +69,8 @@ public class StartMenu implements Screen {
         table.add(SignUp);
         table.row().padTop(5);
         table.add(Login);
+        table.row().padTop(5);
+        table.add(Axebutton).width(50);
         stage.addActor(table);
     }
 

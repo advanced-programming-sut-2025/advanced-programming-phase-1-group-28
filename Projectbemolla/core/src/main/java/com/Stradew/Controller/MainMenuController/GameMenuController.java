@@ -1,7 +1,10 @@
 package com.Stradew.Controller.MainMenuController;
 
+import com.Stradew.Controller.MainMenuController.MechanicController.InventorypannelController;
+import com.Stradew.Controller.MainMenuController.MechanicController.SocialPannelController;
 import com.Stradew.Controller.PepoleeContoller;
 import com.Stradew.Controller.SignUpController;
+import com.Stradew.Main;
 import com.Stradew.Model.*;
 import com.Stradew.Model.Enums.*;
 import com.Stradew.Model.Places.*;
@@ -15,6 +18,7 @@ import com.Stradew.View.Appview;
 import com.Stradew.View.MainMenu.GameMenu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.graphics.Color;
 
 import java.util.ArrayList;
 
@@ -43,27 +47,69 @@ public class GameMenuController {
         }
     }
 
-    GameMenu menu;
-    PepoleeContoller pepoleeController = new PepoleeContoller();
-    MapController mapController = new MapController();
-    OptionsController optionsController = new OptionsController();
+    public InventorypannelController getInventorypannelController() {
+        return inventorypannelController;
+    }
 
+    GameMenu menu;
+    private PepoleeContoller pepoleeController = new PepoleeContoller();
+    private MapController mapController = new MapController();
+    private OptionsController optionsController = new OptionsController();
+    private InventorypannelController inventorypannelController = new InventorypannelController();
     public MapController getMapController() {
         return mapController;
     }
+    private SkillPannelController skillPannelController = new SkillPannelController();
+    private SocialPannelController socialPannelController = new SocialPannelController();
+    private boolean ok = false;
 
     public void setMenu(GameMenu menu) {
         this.menu = menu;
     }
 
+    public void SetEnergyBar(GameMenu menu)
+    {
+
+    }
+
+
 
     public void Update(float v)
     {
-        mapController.RenderMap(menu.getMapSprite() , menu.getMapFrameBuffer());
+        if(!ok)
+        {
+            inventorypannelController.setInventorytable(menu.getInventoryTable());
+            inventorypannelController.firstTouch();
+            ok = true;
+        }
+        if(menu.getMainTable().isVisible()) {
+            mapController.HandleBuyGreenhouseButton(menu);
+            mapController.RenderMap(menu.getMapSprite(), menu.getMapFrameBuffer(), menu);
+            pepoleeController.Update(App.ReturnCurrentPlayer(), v);
+            optionsController.Update(menu.getGreenhouseHoverButton() , menu);
+            App.getCurrentGame().getTimeControlPannel().UpdateTimes(v);
+            menu.getRaineffect().setPosition(App.ReturnCurrentPlayer().getX()  -Gdx.graphics.getWidth() / 2, App.ReturnCurrentPlayer().getY() - Gdx.graphics.getHeight() / 2);
+            menu.getRaineffect().update(v);
+            menu.getRaineffect().draw(Main.getMain().getBatch());
+            Main.getMain().getBatch().setColor(menu.getShadeColor());
+            Main.getMain().getBatch().draw(menu.getShadeTexture() , App.ReturnCurrentPlayer().getX() - Gdx.graphics.getWidth()/2 , App.ReturnCurrentPlayer().getY() - Gdx.graphics.getHeight() / 2 , Gdx.graphics.getWidth() , Gdx.graphics.getHeight());
+            Main.getMain().getBatch().setColor(Color.WHITE);
+        }
+        if(menu.getSwitchTable().isVisible()) {
+            optionsController.SwitchBeetweenOptions(menu);
+        }
+        if(menu.getInventoryTable().isVisible()) {
+            inventorypannelController.Update();
+        }
+        if(menu.getSkillTable().isVisible()) {
+            skillPannelController.update();
+        }
+        if(menu.getMapTable().isVisible()) {
 
-        pepoleeController.Update(App.ReturnCurrentPlayer() , v);
-        optionsController.Update();
-        App.getCurrentGame().getTimeControlPannel().UpdateTimes(v);
+        }
+        if(menu.getSocialTable().isVisible()) {
+            socialPannelController.update();
+        }
     }
 
 
