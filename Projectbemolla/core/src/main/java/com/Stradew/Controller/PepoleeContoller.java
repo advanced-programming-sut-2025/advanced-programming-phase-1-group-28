@@ -37,6 +37,14 @@ public class PepoleeContoller {
                 cheatCodes.ChangeHour(7);
                 App.getCurrentGame().getTimeControlPannel().setCheatCodeUse(0);
             }
+            if(Gdx.input.isKeyPressed(Input.Keys.NUM_2)) {
+                cheatCodes.ChangeDay(10);
+                App.getCurrentGame().getTimeControlPannel().setCheatCodeUse(0);
+            }
+            if(Gdx.input.isKeyPressed(Input.Keys.NUM_3)) {
+                cheatCodes.SetEnergy(App.ReturnCurrentPlayer().getEnergy() + 50);
+                App.getCurrentGame().getTimeControlPannel().setCheatCodeUse(0);
+            }
         }
     }
 
