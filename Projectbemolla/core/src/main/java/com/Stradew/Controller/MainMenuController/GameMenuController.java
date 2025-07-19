@@ -108,7 +108,7 @@ public class GameMenuController {
 
         }
         if(menu.getSocialTable().isVisible()) {
-            socialPannelController.update();
+            socialPannelController.rebuild(menu.getSocialTable());
         }
     }
 

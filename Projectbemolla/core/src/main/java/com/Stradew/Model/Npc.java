@@ -4,11 +4,13 @@ import com.Stradew.Model.Enums.Dialog;
 import com.Stradew.Model.Enums.NPC;
 import com.Stradew.Model.Enums.Weathers;
 import com.Stradew.Model.Item.Item;
+import com.badlogic.gdx.graphics.Texture;
 
 import java.util.ArrayList;
 
 public class Npc {
     private int ID;
+    private Texture npcTexture = new Texture("sprites/Bouncer.png");
     private String name;
     private String job;
     private ArrayList<String> Dialogues;
@@ -64,6 +66,14 @@ public class Npc {
 
     public NPC getNpc() {
         return npc;
+    }
+
+    public Texture getNpcTexture() {
+        return npcTexture;
+    }
+
+    public void setNpcTexture(Texture npcTexture) {
+        this.npcTexture = npcTexture;
     }
 
     public int getHowManyDaysToUnlockQuest() {
