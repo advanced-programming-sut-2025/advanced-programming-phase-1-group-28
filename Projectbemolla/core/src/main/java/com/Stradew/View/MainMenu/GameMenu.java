@@ -23,6 +23,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.sun.tools.classfile.Opcode;
+
+import javax.swing.plaf.IconUIResource;
 
 public class GameMenu implements Screen {
 
@@ -37,8 +40,28 @@ public class GameMenu implements Screen {
     private TextButton GreenhouseHoverButton;
     private Table BuyGreenhouseTable;
     private ProgressBar EnergyBar;
+    private TextButton Setting;
+    private Table SettingTable;
+    private TextButton Exit;
+    private TextButton BackTogame;
     public ParticleEffect getRaineffect() {
         return Raineffect;
+    }
+
+    public TextButton getExit() {
+        return Exit;
+    }
+
+    public TextButton getBackTogame() {
+        return BackTogame;
+    }
+
+    public Table getSettingTable() {
+        return SettingTable;
+    }
+
+    public TextButton getSetting() {
+        return Setting;
     }
 
     public Texture getShadeTexture() {
@@ -158,6 +181,11 @@ public class GameMenu implements Screen {
         MapButton = new TextButton("Map" , GameAssetsManager.getInstance().getSkin());
         Backbutton = new TextButton("Back" , GameAssetsManager.getInstance().getSkin());
         EnergyBar = new ProgressBar(0 , 250 , 1f , true , GameAssetsManager.getInstance().getSkin());
+
+        Setting = new TextButton("Setting" , GameAssetsManager.getInstance().getSkin());
+        SettingTable = new Table();
+        Exit = new TextButton("Exit" , GameAssetsManager.getInstance().getSkin());
+        BackTogame = new TextButton("BackTogame" , GameAssetsManager.getInstance().getSkin());
     }
 
     @Override
@@ -182,12 +210,18 @@ public class GameMenu implements Screen {
         SwitchTable.add(MapButton);
         SwitchTable.add(Backbutton);
         stage.addActor(SwitchTable);
-        Table EnergyTable = new Table();
-        EnergyTable.setFillParent(true);
-        //EnergyTable.right();
-        EnergyTable.add(EnergyBar);
-        MainTable.add(EnergyTable);
+
+        MainTable.setPosition(-800  ,400);
+        MainTable.add(Setting);
+       //MainTable.setOrigin(900 , 400);
+        MainTable.add(EnergyBar);
         stage.addActor(MainTable);
+
+        SettingTable.setPosition(800 , 800);
+        SettingTable.add(Exit);
+        SettingTable.add(BackTogame);
+        SettingTable.setVisible(false);
+        stage.addActor(SettingTable);
 
         stage.addActor(InventoryTable);
 

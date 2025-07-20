@@ -5,12 +5,12 @@ import com.Stradew.Model.GameAssetsManager;
 import com.Stradew.Model.Item.Item;
 import com.Stradew.Model.Tools.Pickaxe;
 import com.Stradew.Model.Tools.Tools;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import sun.security.ec.ECDSAOperations;
 
 public class InventorySlot {
     private ImageButton button;
@@ -18,7 +18,7 @@ public class InventorySlot {
 
 
     public InventorySlot() {
-        Texture Axe = new Texture("Tools/Axe/Axe.png");
+        Texture Axe = new Texture("Pants/Baggy_Pants.png");
         TextureRegion region = new TextureRegion(Axe);
         TextureRegionDrawable drawable = new TextureRegionDrawable(region);
         ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
@@ -43,7 +43,8 @@ public class InventorySlot {
         }
         if(item instanceof Tools)
         {
-            buttonTexture = new Texture("Tools/Axe/Axe.png");
+            Tools tool = (Tools)item;
+            buttonTexture  = tool.getImage();
         }
         if(item instanceof Item)
         {
@@ -51,10 +52,14 @@ public class InventorySlot {
         }
         TextureRegion region = new TextureRegion(buttonTexture);
         TextureRegionDrawable drawable = new TextureRegionDrawable(region);
-        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
-        style.up = drawable;
-        style.down = drawable;
-        button = new ImageButton(style);
+        //ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
+        //style.up = drawable;
+        //style.down = drawable;
+       // mageButton newbutton  = new ImageButton(style);
+        //button = newbutton;
+        button.getStyle().up = drawable;
+        button.getStyle().down = drawable;
+
     }
 
 }

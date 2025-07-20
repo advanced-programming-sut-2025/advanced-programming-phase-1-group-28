@@ -2,10 +2,12 @@ package com.Stradew.Model.Tools;
 
 import com.Stradew.Model.Enums.Skills;
 import com.Stradew.Model.Enums.Tools.Pickaxes;
+import com.badlogic.gdx.graphics.Texture;
 
 public class Pickaxe extends Tools {
     private Pickaxes PickaxeType;
     public Pickaxe(Pickaxes PickaxeType) {
+        Image = new Texture("Tools/Pickaxe/Pickaxe.png");
         name = "Pickaxe";
         count = 1;
         Id = 2;

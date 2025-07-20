@@ -18,6 +18,10 @@ public class Tools {
         return Image;
     }
 
+    public void setImage(Texture image) {
+        Image = image;
+    }
+
     public String getName() {
         return name;
     }

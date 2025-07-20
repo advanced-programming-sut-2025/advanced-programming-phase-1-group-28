@@ -2,10 +2,12 @@ package com.Stradew.Model.Tools;
 
 import com.Stradew.Model.Enums.Skills;
 import com.Stradew.Model.Enums.Tools.Seythes;
+import com.badlogic.gdx.graphics.Texture;
 
 public class Seythe extends Tools{
     private Seythes SeythesType;
     public Seythe(Seythes SeythesType) {
+        Image  = new Texture("Tools/Scythe.png");
         this.SeythesType = SeythesType;
         name = "Seythe";
         count = 1;

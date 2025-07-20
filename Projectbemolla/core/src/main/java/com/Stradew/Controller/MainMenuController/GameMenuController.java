@@ -24,6 +24,11 @@ import java.util.ArrayList;
 
 public class GameMenuController {
 
+
+    public PepoleeContoller getPepoleeController() {
+        return pepoleeController;
+    }
+
     public static void StartGame(ArrayList<String> PlayersInGame)
     {
         PlayersInGame.add(0, App.getCurrentUser().getUsername());
@@ -72,10 +77,41 @@ public class GameMenuController {
 
     }
 
+    public void CheckSetting()
+    {
+        if(menu.getSettingTable().isVisible())
+        {
+            if(menu.getExit().isChecked())
+            {
+                Gdx.app.exit();
+            }
+            if(menu.getBackTogame().isChecked())
+            {
+                menu.getSettingTable().setVisible(false);
+                menu.getMainTable().setVisible(true);
+                menu.getBackTogame().setChecked(false);
+            }
+        }
+        else
+        {
+            if(menu.getSetting().isChecked())
+            {
+                menu.getMainTable().setVisible(false);
+                menu.getSettingTable().setVisible(true);
+                menu.getSetting().setChecked(false);
+            }
+        }
+    }
 
 
     public void Update(float v)
     {
+        if(App.ReturnCurrentPlayer().getEnergy() < 0)
+        {
+            App.ReturnCurrentPlayer().setEnergy(10);
+            ApplyNextTurn();
+        }
+        CheckSetting();
         if(!ok)
         {
             inventorypannelController.setInventorytable(menu.getInventoryTable());
@@ -99,7 +135,7 @@ public class GameMenuController {
             optionsController.SwitchBeetweenOptions(menu);
         }
         if(menu.getInventoryTable().isVisible()) {
-            inventorypannelController.Update();
+            inventorypannelController.Update(this);
         }
         if(menu.getSkillTable().isVisible()) {
             skillPannelController.update();
