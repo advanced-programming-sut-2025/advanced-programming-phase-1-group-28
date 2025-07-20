@@ -14,6 +14,10 @@ public class Pepolee {
     private Texture PlayerTexture = new Texture("FirstMap/Lewis.png");
     private Sprite PlayerSprite = new Sprite(PlayerTexture);
 
+    public Texture getPlayerTexture() {
+        return PlayerTexture;
+    }
+
     public Sprite getPlayerSprite() {
         return PlayerSprite;
     }

@@ -4,8 +4,15 @@ import com.Stradew.Model.App;
 import com.Stradew.Model.Enums.MenuName;
 import com.Stradew.Model.Enums.SecurityQuestions;
 import com.Stradew.View.Appview;
+import com.Stradew.View.LoginMenu;
 
 public class LoginController {
+    LoginMenu loginMenu;
+
+    public void setLoginMenu(LoginMenu loginMenu) {
+        this.loginMenu = loginMenu;
+    }
+
     public boolean IsUsernameValid(String username)
     {
         return App.signUpController.IsUsernameTaken(username);

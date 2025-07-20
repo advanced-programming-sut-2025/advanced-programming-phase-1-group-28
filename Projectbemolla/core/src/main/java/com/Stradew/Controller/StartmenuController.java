@@ -1,6 +1,7 @@
 package com.Stradew.Controller;
 
 import com.Stradew.Main;
+import com.Stradew.View.LoginMenu;
 import com.Stradew.View.SignUpMenu;
 import com.Stradew.View.StartMenu;
 import com.badlogic.gdx.Gdx;
@@ -25,7 +26,7 @@ public class StartmenuController {
         }
         if(menu.getLogin().isChecked())
         {
-
+            Main.getMain().setScreen(new LoginMenu(new LoginController()));
         }
     }
 
