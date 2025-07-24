@@ -4,11 +4,14 @@ import com.Stradew.Model.App;
 import com.Stradew.Model.GameAssetsManager;
 import com.Stradew.Model.Npc;
 import com.Stradew.Model.Tools.Pepolee;
+import com.Stradew.View.MainMenu.MechanicGame.Friendship;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
+
+import java.util.ArrayList;
 
 public class SocialPannelController {
     Texture oneHeart = new Texture("Heart/One_Hearts.png");
@@ -19,9 +22,11 @@ public class SocialPannelController {
     public void rebuild(Table socialTable){
         socialTable.clear();
         Skin skin = GameAssetsManager.getInstance().getSkin();
+        Friendship friendshipMenu = new Friendship(new FriendShipController(), App.ReturnCurrentPlayer());
 
         Label otherPepolee = new Label("Pepolees", skin);
         Label npc = new Label("npcs", skin);
+        Label feedback = new Label("", skin);
 
         socialTable.add(otherPepolee).row();
         int i = 0;
@@ -50,7 +55,27 @@ public class SocialPannelController {
                     love = new Image(nineHeart);
                     break;
             }
-            socialTable.add(love).row();
+            socialTable.add(love);
+
+            SelectBox<Integer> giftCount = new SelectBox<>(skin);
+            َArray<Integer> numbers = new Array<>();
+            for (int j = 1; j <= 10; j++) {
+                numbers.add(j);
+            }
+            giftCount.setItems(numbers);
+
+
+            TextButton giveGift = new TextButton("Give Gift", skin);
+            giveGift.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    feedback.setText(friendshipMenu.Gifting(pepolee.getCharacterUser().getUsername(),
+                        App.ReturnCurrentPlayer().getInventory().getCurrentItem().getName(), giftCount.getSelected()));
+                }
+            });
+
+            socialTable.add(giftCount);
+            socialTable.add(giveGift).row();
             i++;
         }
 
@@ -81,6 +106,7 @@ public class SocialPannelController {
                     break;
             }
             socialTable.add(love).row();
+            
             i++;
         }
     }

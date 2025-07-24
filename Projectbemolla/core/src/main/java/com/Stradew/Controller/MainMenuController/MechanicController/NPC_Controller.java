@@ -5,8 +5,14 @@ import com.Stradew.Model.Item.Food;
 import com.Stradew.Model.Item.Item;
 import com.Stradew.Model.Item.PlantsItem;
 import com.Stradew.Model.Tools.Pepolee;
+import com.Stradew.View.MainMenu.MechanicGame.NPCMenu;
 
 public class NPC_Controller {
+    NPCMenu npcMenu;
+
+    public void setNpcMenu(NPCMenu npcMenu) {
+        this.npcMenu = npcMenu;
+    }
 
     public boolean isNpcCloseEnough(Npc npc){
         Pepolee currentPlayer = App.ReturnCurrentPlayer();

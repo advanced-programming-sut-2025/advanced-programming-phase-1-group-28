@@ -1,8 +1,11 @@
 package com.Stradew.Model.Item;
 
+import com.badlogic.gdx.graphics.Texture;
+
 public class Item {
     protected String name;
     protected int count = 0;
+    protected Texture image;
 
     public Item(int count, String name) {
         this.count = count;
@@ -59,5 +62,13 @@ public class Item {
 
     public Item getCopy(){
         return new Item(count, name);
+    }
+
+    public Texture getImage() {
+        return image;
+    }
+
+    public void setImage(Texture image) {
+        this.image = image;
     }
 }

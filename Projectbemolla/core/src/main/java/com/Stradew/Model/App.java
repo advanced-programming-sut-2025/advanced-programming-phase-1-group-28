@@ -63,9 +63,9 @@ public class App {
     public static UseTool UseTool = new UseTool();
     public static AllMenuCommandsController allMenuCommandsController = new AllMenuCommandsController();
 //    public static ProfileMenu profileMenu = new ProfileMenu();
-    public static NPCMenu npcMenu = new NPCMenu();
+//    public static NPCMenu npcMenu = new NPCMenu();
 //    public static LoginMenu loginMenu = new LoginMenu();
-    public static Friendship friendship = new Friendship();
+//    public static Friendship friendship = new Friendship();
     public static PokhtOPaz pokhtOPaz = new PokhtOPaz();
     public static PokhtOPazController pokhtOPazController = new PokhtOPazController();
     public static Random random = new Random();

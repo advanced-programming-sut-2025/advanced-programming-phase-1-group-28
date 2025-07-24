@@ -4,10 +4,17 @@ import com.Stradew.Model.*;
 import com.Stradew.Model.Enums.Plants;
 import com.Stradew.Model.Item.Item;
 import com.Stradew.Model.Tools.Pepolee;
+import com.Stradew.View.MainMenu.MechanicGame.Friendship;
 
 import java.util.ArrayList;
 
 public class FriendShipController {
+    Friendship friendship;
+
+    public void setFriendship(Friendship friendship) {
+        this.friendship = friendship;
+    }
+
     public boolean arePlayersCloseEnough(Pepolee playerOne, Pepolee playerTwo){
         if (Math.abs(playerOne.getX() - playerTwo.getX()) > 2){
             return false;
