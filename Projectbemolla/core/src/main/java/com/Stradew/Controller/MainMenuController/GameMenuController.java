@@ -19,6 +19,7 @@ import com.Stradew.View.MainMenu.GameMenu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 
 import java.util.ArrayList;
 
@@ -120,7 +121,7 @@ public class GameMenuController {
         }
         if(menu.getMainTable().isVisible()) {
             mapController.HandleBuyGreenhouseButton(menu);
-            mapController.RenderMap(menu.getMapSprite(), menu.getMapFrameBuffer(), menu);
+            mapController.RenderMap(menu.getMapSprite(), menu.getMapFrameBuffer(), menu , menu.getFboCamera() , menu.getCamera());
             pepoleeController.Update(App.ReturnCurrentPlayer(), v);
             optionsController.Update(menu.getGreenhouseHoverButton() , menu);
             App.getCurrentGame().getTimeControlPannel().UpdateTimes(v);
@@ -146,6 +147,7 @@ public class GameMenuController {
         if(menu.getSocialTable().isVisible()) {
             socialPannelController.rebuild(menu.getSocialTable());
         }
+
     }
 
 

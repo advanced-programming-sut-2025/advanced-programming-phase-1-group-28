@@ -36,8 +36,16 @@ public class FarmingController {
 
     public void ApplyRandomForagingInFarm(Pepolee pepolee)
     {
+        Tile[][] TempGround = pepolee.getFarm().getGround();
+        Plants newplant1 = new Plants(com.Stradew.Model.Enums.Plants.BLUE_JAZZ);
+        newplant1.setBornTime(App.getCurrentGame().getTime());
+        TempGround[40][40] = newplant1;
+        TempGround[40][40].setHow(false);
+        TempGround[40][40].setTerrain(null);;
+        TempGround[40][40].setEntitity(Entitity.PLANTS);
+
+        App.ReturnCurrentPlayer().getFarm().getChanges().add(new PairChanges(40, 40));
         Pepolee CurrentPepolee = pepolee;
-        Tile[][] TempGround = CurrentPepolee.getFarm().getGround();
         for(int x = 0 ; x < PlaceType.FARM.XLength ; x++)
         {
             for(int y = 0; y < PlaceType.FARM.YLength ; y++)
@@ -80,6 +88,7 @@ public class FarmingController {
                                     TempGround[x][y].setTerrain(null);;
                                     TempGround[x][y].setEntitity(Entitity.PLANTS);
                                     App.ReturnCurrentPlayer().getFarm().getChanges().add(new PairChanges(x , y));
+                                    System.out.println(x  +  "," + y);
                                 }
                                 if(plant.Source == null)
                                 {
@@ -142,7 +151,7 @@ public class FarmingController {
     {
 //        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
 //        int NewX = CurrentPepolee.getX() + x;
-//        int NewY = CurrentPepolee.getY() + y;
+//         int NewY = CurrentPepolee.getY() + y;
 //        if(CurrentPepolee.getFarm().getGround()[NewX][NewY].isHow() && CurrentPepolee.getFarm().getGround()[NewX][NewY].getTerrain() == Terrain.DIRT)
 //        {
 //            return true;

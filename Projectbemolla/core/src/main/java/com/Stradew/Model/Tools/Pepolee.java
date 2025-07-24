@@ -22,8 +22,8 @@ public class Pepolee {
         return PlayerSprite;
     }
 
-    private float x = Gdx.graphics.getWidth()/2;
-    private float y = Gdx.graphics.getHeight()/2;
+    private float x = 1;
+    private float y = 1;
     private Farm Farm;
     private int MaxEnergy = 200;
     private int Energy = 200;
@@ -54,8 +54,8 @@ public class Pepolee {
         }
         else
         {
-            this.x = 1;
-            this.y = 1;
+            //this.x = 1;
+            //this.y = 1;
             this.Energy = this.getMaxEnergy();
         }
         ISFainted = false;

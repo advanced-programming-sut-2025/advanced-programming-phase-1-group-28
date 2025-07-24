@@ -2,7 +2,7 @@ package com.Stradew.Model.Enums;
 
 public enum PlaceType {
     NORMAL(true , 1 , 1),
-    FARM(true , 45 , 45),
+    FARM(true , 200 , 200),
     VILLAGE(true , 6 , 6),
     CABIN(true ,4 , 4),
     QUARRY(true , 5 , 5),

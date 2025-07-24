@@ -29,6 +29,10 @@ import javax.swing.plaf.IconUIResource;
 
 public class GameMenu implements Screen {
 
+
+    private Table Minigame;
+    private ProgressBar MinigameProgress;
+    private OrthographicCamera fboCamera;
     private FrameBuffer mapFrameBuffer;
     private Sprite mapSprite;
     private GameMenuController controller;
@@ -76,6 +80,10 @@ public class GameMenu implements Screen {
         return EnergyBar;
     }
 
+    public OrthographicCamera getCamera() {
+        return camera;
+    }
+
     private Table MainTable;
     private Table InventoryTable;
     private Table SkillTable;
@@ -103,6 +111,18 @@ public class GameMenu implements Screen {
 
     public TextButton getSocialButton() {
         return SocialButton;
+    }
+
+    public OrthographicCamera getFboCamera() {
+        return fboCamera;
+    }
+
+    public Table getMinigame() {
+        return Minigame;
+    }
+
+    public ProgressBar getMinigameProgress() {
+        return MinigameProgress;
     }
 
     public TextButton getSkillButton() {
@@ -186,7 +206,13 @@ public class GameMenu implements Screen {
         SettingTable = new Table();
         Exit = new TextButton("Exit" , GameAssetsManager.getInstance().getSkin());
         BackTogame = new TextButton("BackTogame" , GameAssetsManager.getInstance().getSkin());
+
+
+        Minigame = new Table();
+        MinigameProgress = new ProgressBar(0 , 250 , 1f , true , GameAssetsManager.getInstance().getSkin());
     }
+
+
 
     @Override
     public void show() {
@@ -217,6 +243,11 @@ public class GameMenu implements Screen {
         MainTable.add(EnergyBar);
         stage.addActor(MainTable);
 
+        Minigame.setFillParent(true);
+        Minigame.setVisible(false);
+        Minigame.add(MinigameProgress);
+        stage.addActor(Minigame);
+
         SettingTable.setPosition(800 , 800);
         SettingTable.add(Exit);
         SettingTable.add(BackTogame);
@@ -228,12 +259,19 @@ public class GameMenu implements Screen {
         stage.addActor(SkillTable);
         stage.addActor(MapTable);
         stage.addActor(SocialTable);
-        int mapPixelWidth = MapController.MAP_COLS * MapController.TILE_SIZE;
-        int mapPixelHeight = MapController.MAP_ROWS * MapController.TILE_SIZE;
-        mapFrameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, mapPixelWidth, mapPixelHeight, false);
-        mapSprite = new Sprite(mapFrameBuffer.getColorBufferTexture());
-        mapSprite.flip(false, true);
-        controller.getMapController().PrintInitialMap(mapFrameBuffer);
+        if(mapFrameBuffer == null) {
+            int mapPixelWidth = MapController.MAP_COLS * MapController.TILE_SIZE;
+            int mapPixelHeight = MapController.MAP_ROWS * MapController.TILE_SIZE;
+            mapFrameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, mapPixelWidth, mapPixelHeight, false);
+            mapSprite = new Sprite(mapFrameBuffer.getColorBufferTexture());
+            mapSprite.flip(false, true);
+
+            fboCamera = new OrthographicCamera(mapPixelWidth, mapPixelHeight);
+            fboCamera.setToOrtho(false, mapPixelWidth, mapPixelHeight);
+            fboCamera.update();
+            controller.getMapController().PrintInitialMap(mapFrameBuffer, fboCamera);
+
+        }
         //controller.getMapController().setGreenhouseHoverTextButton(GreenhouseHoverButton);
         //GreenhouseHoverButton.setPosition(500 , 500);
         controller.getMapController().setGreenhouseHoverTextButton();

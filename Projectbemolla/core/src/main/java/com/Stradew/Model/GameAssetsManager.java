@@ -13,7 +13,7 @@ public class GameAssetsManager {
     private final Texture Greenhouse = new Texture(Gdx.files.internal("FirstMap/greenhouse.png"));
     private final Texture Cabin = new Texture(Gdx.files.internal("FirstMap/Sheds.png"));
     private final Texture Clock = new Texture(Gdx.files.internal("Clock/ClockWithJournalwithoutnumber.png"));
-    private final Texture HowedDirt = new Texture(Gdx.files.internal("FirstMap/Stone_Index34.png"));
+    private final Texture HowedDirt = new Texture(Gdx.files.internal("FirstMap/Dirt Hoed - Copy.png"));
     private final Texture TreeTest = new Texture(Gdx.files.internal("FirstMap/Apple_Stage_2.png"));
     private final Texture PlantTest = new Texture(Gdx.files.internal("FirstMap/Leek.png"));
     private final Texture InventoryBar = new Texture(Gdx.files.internal("Inventory/RealInventory.png"));

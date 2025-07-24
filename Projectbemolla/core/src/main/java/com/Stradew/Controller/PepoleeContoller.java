@@ -1,7 +1,13 @@
 package com.Stradew.Controller;
 
+import com.Stradew.Controller.MainMenuController.MapController;
+import com.Stradew.Controller.MainMenuController.MechanicController.UseToolController;
 import com.Stradew.Main;
 import com.Stradew.Model.App;
+import com.Stradew.Model.Enums.Entitity;
+import com.Stradew.Model.PairChanges;
+import com.Stradew.Model.Tile.Plants;
+import com.Stradew.Model.Tile.Tile;
 import com.Stradew.Model.Tools.Pepolee;
 import com.Stradew.View.MainMenu.CheatCodes;
 import com.badlogic.gdx.Gdx;
@@ -13,9 +19,13 @@ public class PepoleeContoller {
     CheatCodes cheatCodes = new CheatCodes();
     Texture ToolTexture = null;
 
+    private UseToolController useToolController = new UseToolController();
+
     public void setToolTexture(Texture toolTexture) {
         ToolTexture = toolTexture;
     }
+
+
 
     public void PrintTool()
     {
@@ -59,6 +69,36 @@ public class PepoleeContoller {
         }
     }
 
+    public void UsingTool()
+    {
+        if(App.getCurrentGame().getTimeControlPannel().getUsingTool() > 1)
+        {
+            if(Gdx.input.isKeyPressed(Input.Keys.C))
+            {
+                int X =(int) (Math.floor(App.ReturnCurrentPlayer().getX() / MapController.TILE_SIZE));
+                int Y = (int) (Math.floor(App.ReturnCurrentPlayer().getY() / MapController.TILE_SIZE));
+                System.out.println(X + " " + Y);
+                if(X > 1 && X < 400 && Y > 1 && Y < 400)
+                 {
+                    App.getCurrentGame().getTimeControlPannel().setUsingTool(0);
+                    useToolController.ApplyUsing(X,Y);
+                }
+                /*Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
+                Plants newplant = new Plants(com.Stradew.Model.Enums.Plants.BLUE_JAZZ);
+                newplant.setBornTime(App.getCurrentGame().getTime());
+                TempGround[40][40] = newplant;
+                TempGround[40][40].setHow(false);
+                TempGround[40][40].setTerrain(null);;
+                TempGround[40][40].setEntitity(Entitity.PLANTS);
+                App.ReturnCurrentPlayer().getFarm().getChanges().add(new PairChanges(40 , 40));
+                App.ReturnCurrentPlayer().getFarm().setGround(TempGround);
+                App.getCurrentGame().getTimeControlPannel().setUsingTool(0);
+
+                 */
+            }
+        }
+    }
+
     public void CheatCodes()
     {
         if(App.getCurrentGame().getTimeControlPannel().getCheatCodeUse() > 1) {
@@ -81,6 +121,7 @@ public class PepoleeContoller {
     {
         HandleWalk(player , v);
         CheatCodes();
+        UsingTool();
         player.getPlayerSprite().setPosition(player.getX(), player.getY());
         player.getPlayerSprite().draw(Main.getMain().getBatch());
         player.getPlayerSprite().setSize(50 , 50);

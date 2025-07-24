@@ -5,10 +5,15 @@ import com.Stradew.Model.App;
 import com.Stradew.Model.Enums.*;
 import com.Stradew.Model.Game;
 import com.Stradew.Model.GameAssetsManager;
+import com.Stradew.Model.PairChanges;
+import com.Stradew.Model.Tile.Plants;
 import com.Stradew.Model.Tile.Tile;
+import com.Stradew.Model.Tile.Trees;
 import com.Stradew.View.MainMenu.GameMenu;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -16,10 +21,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 public class MapController {
 
 
-
-    public static final int TILE_SIZE = 30; // Ensure this matches your MapController
-    public static final int MAP_COLS = 200; // Based on your MapController loop
-    public static final int MAP_ROWS = 200;
+    BitmapFont font = new BitmapFont();
+    public static final int TILE_SIZE = 100; // Ensure this matches your MapController
+    public static final int MAP_COLS = 100; // Based on your MapController loop
+    public static final int MAP_ROWS = 100;
 
 
     public void HandleBuyGreenhouseButton(GameMenu menu)
@@ -58,10 +63,11 @@ public class MapController {
         App.ReturnCurrentPlayer().getFarm().getGreenHouse().setY_Coordinate((int) H);
     }
 
-    public void PrintInitialMap(FrameBuffer mapFrameBuffer)
+    public void PrintInitialMap(FrameBuffer mapFrameBuffer  , OrthographicCamera camera)
     {
         mapFrameBuffer.begin();
         Main.getMain().getBatch().begin();
+        Main.getMain().getBatch().setProjectionMatrix(camera.combined);
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(Gdx.gl.GL_COLOR_BUFFER_BIT);
         for(int i = 1; i <MAP_ROWS ; i++)
@@ -75,11 +81,12 @@ public class MapController {
         mapFrameBuffer.end();
     }
 
-    public void RenderMap(Sprite mapSprite , FrameBuffer mapFrameBuffer , GameMenu menu)
+    public void RenderMap(Sprite mapSprite , FrameBuffer mapFrameBuffer , GameMenu menu , OrthographicCamera camera , OrthographicCamera cam2)
     {
-        Main.getMain().getBatch().end();
+        Main.getMain().getBatch().flush();
         mapFrameBuffer.begin();
-        Main.getMain().getBatch().begin();
+        camera.update();
+        Main.getMain().getBatch().setProjectionMatrix(camera.combined);
         //Gdx.gl.glClearColor(0, 0, 0, 0);
         //Gdx.gl.glClear(Gdx.gl.GL_COLOR_BUFFER_BIT);
         for(int i = App.ReturnCurrentPlayer().getFarm().getChanges().size() - 1 ; i >= 0 ; i--)
@@ -87,9 +94,11 @@ public class MapController {
             Update(App.ReturnCurrentPlayer().getFarm().getChanges().get(i).getX() , App.ReturnCurrentPlayer().getFarm().getChanges().get(i).getY());
             App.ReturnCurrentPlayer().getFarm().getChanges().remove(i);
         }
-        Main.getMain().getBatch().end();
+
+        Main.getMain().getBatch().flush();
         mapFrameBuffer.end();
-        Main.getMain().getBatch().begin();
+        Main.getMain().getBatch().setProjectionMatrix(cam2.combined);
+        cam2.update();
         mapSprite.setPosition(0 , 0);
         mapSprite.draw(Main.getMain().getBatch());
 
@@ -119,16 +128,18 @@ public class MapController {
 
                     } else if(TempGround[i][j].getEntitity() == Entitity.Minreal) {
 
-                    } else if(TempGround[i][j].getTerrain() == Terrain.DIRT) {
+                    } else if (TempGround[i][j].getTerrain() == Terrain.DIRT) {
                         if(TempGround[i][j].isHow())
                         {
-                            Texture HowedDirt = new Texture(Gdx.files.internal("HowedDirt.png"));
-                            Main.getMain().getBatch().draw(HowedDirt , i * TILE_SIZE, j * TILE_SIZE , TILE_SIZE , TILE_SIZE);
+                            Texture HowedDirt = GameAssetsManager.getInstance().getHowedTexture();
+                            Main.getMain().getBatch().draw(HowedDirt , i * TILE_SIZE, j * TILE_SIZE , 100 , 100);
+                            //Gdx.app.exit();
                         }
                         else
                         {
                             Texture Dirt = GameAssetsManager.getInstance().DirtPicture();
                             Main.getMain().getBatch().draw(Dirt , i * TILE_SIZE, j * TILE_SIZE , TILE_SIZE , TILE_SIZE);
+                            font.draw(Main.getMain().getBatch(), String.valueOf(i) + "," + String.valueOf(j), i * TILE_SIZE, j * TILE_SIZE);
                         }
                     }
                     else
@@ -148,6 +159,10 @@ public class MapController {
                             if(TempGround[i][j].getPlaceType() == PlaceType.LAKE)
                             {
                                 Texture Water = GameAssetsManager.getInstance().WaterPicture();
+                                if(i%2 == 0 && j%2 == 0)
+                                {
+                                    Water = GameAssetsManager.getInstance().DirtPicture();
+                                }
                                 Main.getMain().getBatch().draw(Water , i * TILE_SIZE, j * TILE_SIZE , TILE_SIZE , TILE_SIZE);
                             }
                             else
@@ -168,16 +183,16 @@ public class MapController {
                                     {
                                         //Texture Dirt = GameAssetsManager.getInstance().DirtPicture();
                                         //Main.getMain().getBatch().draw(Dirt , i * TILE_SIZE, j * TILE_SIZE , TILE_SIZE , TILE_SIZE);
-                                        Texture Tree  = GameAssetsManager.getInstance().getTreeTest();
-                                        Main.getMain().getBatch().draw(Tree , i * TILE_SIZE, j * TILE_SIZE , TILE_SIZE , TILE_SIZE);
+                                        Texture Tree  = ((Trees) TempGround[i][j]).getTree().TreeTexture;
+                                        Main.getMain().getBatch().draw(Tree , i * TILE_SIZE, j * TILE_SIZE , 30 , 30);
 
                                     }
                                     else if(TempGround[i][j].getEntitity() == Entitity.PLANTS)
                                     {
                                         //Texture Dirt = GameAssetsManager.getInstance().DirtPicture();
                                         //Main.getMain().getBatch().draw(Dirt , i * TILE_SIZE, j * TILE_SIZE , TILE_SIZE , TILE_SIZE);
-                                        Texture Plant = GameAssetsManager.getInstance().getPlantTest();
-                                        Main.getMain().getBatch().draw(Plant , i * TILE_SIZE, j * TILE_SIZE , TILE_SIZE / 2 , TILE_SIZE / 2);
+                                        Texture Plant = ((Plants) TempGround[i][j]).getPlant().PlantTexture;
+                                        Main.getMain().getBatch().draw(Plant , i * TILE_SIZE, j * TILE_SIZE , 30 , 30);
                                     } else if(TempGround[i][j].getPlaceType() == PlaceType.QUARRY)
                                     {
                                     } else if(TempGround[i][j].getPlaceType() == PlaceType.Craft) {
@@ -186,6 +201,11 @@ public class MapController {
                                 }
                             }
                         }
+                    }
+                    if(TempGround[i][j].getTerrain() == Terrain.DIRT && TempGround[i][j].isHow())
+                    {
+                        Texture Dirt = GameAssetsManager.getInstance().getHowedTexture();
+                        Main.getMain().getBatch().draw(Dirt, i * TILE_SIZE , j * TILE_SIZE , TILE_SIZE , TILE_SIZE);
                     }
             }
 }
