@@ -286,21 +286,22 @@ public class ShowFigures {
         }
     }
 
-    public void ShowTalkHistory(String username)
+    public String ShowTalkHistory(String username)
     {
         int usernameID = App.getCurrentGame().getPlayerIDByUsername(username);
+        String message = "";
         if (usernameID == -1){
-            System.out.println("User not found");
-            return;
+            return ("User not found");
         }
         Game game = App.getCurrentGame();
         User currentUser = App.getCurrentUser();
         FriendShip friendShip = game.getFriedShipBetweenPlayers(currentUser.getUsername(), username);
         ArrayList<String> talkHistory = friendShip.getTalkHistory();
-        System.out.println("Your talk history with " + username);
+        message += ("Your talk history with " + username + "\n");
         for (String talk: talkHistory){
-            System.out.println(talk);
+            message += (talk + "\n");
         }
+        return message;
     }
     public void ShowUpcomingGifts()
     {
@@ -357,24 +358,25 @@ public class ShowFigures {
             }
         }
     }
-    public void ShowGiftsFromDreamMan(String Username)
+    public String ShowGiftsFromDreamMan(String Username)
     {
         int usernameID = App.getCurrentGame().getPlayerIDByUsername(Username);
+        String result = "";
         if (usernameID == -1){
-            System.out.println("User not found");
-            return;
+            return ("User not found");
         }
         Game game = App.getCurrentGame();
         User currentUser = App.getCurrentUser();
         FriendShip friendShip = game.getFriedShipBetweenPlayers(currentUser.getUsername(), Username);
         int i = 0;
         for (Gift gift: friendShip.getGifts()){
-            System.out.println("Gift number: " + i);
-            System.out.println("Sender: " + gift.getSender());
-            System.out.println("Item: " + gift.getItem().getName());
-            System.out.println("Count: " + gift.getCount());
+            result += ("Gift number: " + i + "\n");
+            result += ("Sender: " + gift.getSender() + "\n");
+            result += ("Item: " + gift.getItem().getName() + "\n");
+            result += ("Count: " + gift.getCount() + "\n");
             i++;
         }
+        return result;
     }
     public void GiftRating(int Rate)
     {

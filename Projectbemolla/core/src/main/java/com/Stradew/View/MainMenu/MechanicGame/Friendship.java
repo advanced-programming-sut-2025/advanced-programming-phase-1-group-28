@@ -140,18 +140,18 @@ public class Friendship implements Screen {
         return (Username + " received your gift successfully.");
     }
 
-    public void rateGift(int giftID, int rate){
+    public String rateGift(int giftID, int rate){
         Pepolee currentPlayer = App.ReturnCurrentPlayer();
         ArrayList<Gift> upcomingGifts = currentPlayer.getUpcomingGifts();
         Gift gift = upcomingGifts.get(giftID);
         if (gift == null){
-            System.out.println("Item not found.");
-            return;
+            return ("Item not found.");
         }
         if (gift.isMarriageRing()){
-            System.out.println("You can't rate a marriage ring.");
+            return ("You can't rate a marriage ring.");
         }
         friendShipController.ApplyRateGift(gift, rate);
+        return "You Rate Gift Successfully";
     }
 
     public void Hug(String username)

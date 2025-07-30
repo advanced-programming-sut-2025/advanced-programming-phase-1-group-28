@@ -3,9 +3,12 @@ package com.Stradew.View.MainMenu;
 import com.Stradew.Controller.MainMenuController.GameMenuController;
 import com.Stradew.Controller.MainMenuController.MapController;
 import com.Stradew.Controller.MainMenuController.MechanicController.InventorypannelController;
+import com.Stradew.Controller.MainMenuController.MechanicController.NotificationController;
 import com.Stradew.Main;
 import com.Stradew.Model.App;
 import com.Stradew.Model.GameAssetsManager;
+import com.Stradew.View.MainMenu.MechanicGame.NotificationDialog;
+import com.Stradew.View.MainMenu.MechanicGame.NotificationMenu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -22,6 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.sun.tools.classfile.Opcode;
 
@@ -48,8 +52,17 @@ public class GameMenu implements Screen {
     private Table SettingTable;
     private TextButton Exit;
     private TextButton BackTogame;
+    private TextButton notifications;
     public ParticleEffect getRaineffect() {
         return Raineffect;
+    }
+
+    public TextButton getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(TextButton notifications) {
+        this.notifications = notifications;
     }
 
     public TextButton getExit() {
@@ -210,6 +223,13 @@ public class GameMenu implements Screen {
 
         Minigame = new Table();
         MinigameProgress = new ProgressBar(0 , 250 , 1f , true , GameAssetsManager.getInstance().getSkin());
+        notifications = new TextButton(String.format("%d", App.ReturnCurrentPlayer().getNewMessages()), GameAssetsManager.getInstance().getSkin());
+        notifications.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                App.ReturnCurrentPlayer().setNewMessages(0);
+                new NotificationDialog(GameAssetsManager.getInstance().getSkin()).show(stage);            }
+        });
     }
 
 
@@ -241,6 +261,7 @@ public class GameMenu implements Screen {
         MainTable.add(Setting);
        //MainTable.setOrigin(900 , 400);
         MainTable.add(EnergyBar);
+        MainTable.add(notifications);
         stage.addActor(MainTable);
 
         Minigame.setFillParent(true);

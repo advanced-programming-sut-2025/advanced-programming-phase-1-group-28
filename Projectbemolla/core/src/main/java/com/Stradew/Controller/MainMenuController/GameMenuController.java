@@ -107,6 +107,7 @@ public class GameMenuController {
 
     public void Update(float v)
     {
+        menu.getNotifications().setText(String.format("%d", App.ReturnCurrentPlayer().getNewMessages()));
         if(App.ReturnCurrentPlayer().getEnergy() < 0)
         {
             App.ReturnCurrentPlayer().setEnergy(10);

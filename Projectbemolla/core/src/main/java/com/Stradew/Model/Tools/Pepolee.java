@@ -35,6 +35,7 @@ public class Pepolee {
     private Skill[] Skills = new Skill[5];
     private User CharacterUser;
     private Buff buff = new Buff();
+    private int newMessages = 0;
     private ArrayList<Gift> upcomingGifts = new ArrayList<>();
     private ArrayList<Trade> upcomingTrade = new ArrayList<>();
     private ArrayList<Trade> tradeHistory = new ArrayList<>();
@@ -253,4 +254,13 @@ public class Pepolee {
         knownRecipes.add(foods);
     }
     //Set Energy
+
+
+    public int getNewMessages() {
+        return newMessages;
+    }
+
+    public void setNewMessages(int newMessages) {
+        this.newMessages = newMessages;
+    }
 }

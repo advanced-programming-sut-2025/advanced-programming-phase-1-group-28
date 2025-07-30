@@ -58,15 +58,19 @@ public class FriendShipController {
     {
         Game game = App.getCurrentGame();
         User currentUser = App.getCurrentUser();
+        Pepolee otherPlayer = game.getPlayerByUsername(Username);
+
         FriendShip firstFriendShip = game.getFriedShipBetweenPlayers(currentUser.getUsername(), Username);
         FriendShip secondFriendShip = game.getFriedShipBetweenPlayers(Username, currentUser.getUsername());
         firstFriendShip.applyTalk(Message);
         secondFriendShip.applyTalk(Message);
 
+        //notif
+        otherPlayer.setNewMessages(otherPlayer.getNewMessages()+1);
+
         // marriage effect
         if (firstFriendShip.getLevel() == 4){
             Pepolee currentPlayer = App.ReturnCurrentPlayer();
-            Pepolee otherPlayer = game.getPlayerByUsername(Username);
             currentPlayer.addEnergy(50);
             otherPlayer.addEnergy(50);
         }
@@ -90,6 +94,10 @@ public class FriendShipController {
         secondFriendShip.addGift(gift);
         receiverPlayer.addGift(gift);
         // remove item from inventory
+
+
+        // notif
+        receiverPlayer.setNewMessages(receiverPlayer.getNewMessages() + 1);
 
         // marriage effect
         if (firstFriendShip.getLevel() == 4){
