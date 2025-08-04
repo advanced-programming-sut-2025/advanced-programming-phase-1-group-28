@@ -58,6 +58,7 @@ public class GameMenuController {
     }
 
     GameMenu menu;
+    private MinigameController minigameController = new MinigameController();
     private PepoleeContoller pepoleeController = new PepoleeContoller();
     private MapController mapController = new MapController();
     private OptionsController optionsController = new OptionsController();
@@ -122,12 +123,22 @@ public class GameMenuController {
         if(menu.getMainTable().isVisible()) {
             mapController.HandleBuyGreenhouseButton(menu);
             mapController.RenderMap(menu.getMapSprite(), menu.getMapFrameBuffer(), menu , menu.getFboCamera() , menu.getCamera());
-            pepoleeController.Update(App.ReturnCurrentPlayer(), v);
+            pepoleeController.Update(menu ,App.ReturnCurrentPlayer(), v);
             optionsController.Update(menu.getGreenhouseHoverButton() , menu);
             App.getCurrentGame().getTimeControlPannel().UpdateTimes(v);
             menu.getRaineffect().setPosition(App.ReturnCurrentPlayer().getX()  -Gdx.graphics.getWidth() / 2, App.ReturnCurrentPlayer().getY() - Gdx.graphics.getHeight() / 2);
+            menu.getSnowEffect().setPosition(App.ReturnCurrentPlayer().getX() - Gdx.graphics.getWidth() / 2 , App.ReturnCurrentPlayer().getY() - Gdx.graphics.getHeight() /2 );
+            menu.getLightning().setPosition(App.ReturnCurrentPlayer().getX() - Gdx.graphics.getWidth() / 2 , App.ReturnCurrentPlayer().getY() - Gdx.graphics.getHeight() / 2);
             menu.getRaineffect().update(v);
-            menu.getRaineffect().draw(Main.getMain().getBatch());
+            menu.getSnowEffect().update(v);
+            menu.getLightning().update(v);
+            menu.getLightning().draw(Main.getMain().getBatch());
+            if(App.getCurrentGame().getWeather() == Weathers.SNOW) {
+                menu.getSnowEffect().draw(Main.getMain().getBatch());
+            }
+            if(App.getCurrentGame().getWeather() == Weathers.RAIN) {
+                menu.getRaineffect().draw(Main.getMain().getBatch());
+            }
             Main.getMain().getBatch().setColor(menu.getShadeColor());
             Main.getMain().getBatch().draw(menu.getShadeTexture() , App.ReturnCurrentPlayer().getX() - Gdx.graphics.getWidth()/2 , App.ReturnCurrentPlayer().getY() - Gdx.graphics.getHeight() / 2 , Gdx.graphics.getWidth() , Gdx.graphics.getHeight());
             Main.getMain().getBatch().setColor(Color.WHITE);
@@ -146,6 +157,10 @@ public class GameMenuController {
         }
         if(menu.getSocialTable().isVisible()) {
             socialPannelController.rebuild(menu.getSocialTable());
+        }
+        if(menu.getMinigame().isVisible())
+        {
+            minigameController.update(menu , v);
         }
 
     }

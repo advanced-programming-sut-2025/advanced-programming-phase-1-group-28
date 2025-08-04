@@ -8,6 +8,7 @@ public class PlantsItem extends Item{
     public PlantsItem(int count, Plants plant) {
         super(count, plant.toString());
         this.plant = plant;
+        this.image = plant.PlantTexture;
     }
 
     public Plants getPlant() {

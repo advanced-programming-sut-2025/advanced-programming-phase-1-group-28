@@ -24,10 +24,12 @@ public class OptionsController {
         String Date = App.getCurrentGame().getTime().showDate();
         String Time = App.getCurrentGame().getTime().showHour();
         String Gold = String.valueOf(App.ReturnCurrentPlayer().getCoin());
+        String Seaosen = App.getCurrentGame().getTime().getSeason().toString();
         font.setColor(0 , 0 , 0 , 1);
         font.draw(Main.getMain().getBatch(), Gold , PlayerXPos + Gdx.graphics.getWidth() / 2 - 300 , PlayerYPos + Gdx.graphics.getHeight() / 2 - 280);
         font.draw(Main.getMain().getBatch(), Date , PlayerXPos + Gdx.graphics.getWidth() / 2 - 230 , PlayerYPos + Gdx.graphics.getHeight() / 2 - 100);
         font.draw(Main.getMain().getBatch(), Time , PlayerXPos + Gdx.graphics.getWidth() / 2 - 230 , PlayerYPos + Gdx.graphics.getHeight() / 2 - 210);
+        font.draw(Main.getMain().getBatch(), Seaosen , PlayerXPos + Gdx.graphics.getWidth() / 2 - 230 , PlayerYPos + Gdx.graphics.getHeight() / 2 - 50);
     }
 
     public void BuyGreenhouse(TextButton textButton , GameMenu menu)

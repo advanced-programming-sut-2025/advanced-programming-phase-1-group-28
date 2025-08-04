@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class Item {
     protected String name;
     protected int count = 0;
-    protected Texture image;
+    protected Texture image = null;
 
     public Item(int count, String name) {
         this.count = count;

@@ -11,7 +11,9 @@ import com.Stradew.Model.Tile.Tile;
 import com.Stradew.Model.Tile.Trees;
 import com.Stradew.View.MainMenu.GameMenu;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -25,6 +27,7 @@ public class MapController {
     public static final int TILE_SIZE = 100; // Ensure this matches your MapController
     public static final int MAP_COLS = 100; // Based on your MapController loop
     public static final int MAP_ROWS = 100;
+
 
 
     public void HandleBuyGreenhouseButton(GameMenu menu)
@@ -159,10 +162,6 @@ public class MapController {
                             if(TempGround[i][j].getPlaceType() == PlaceType.LAKE)
                             {
                                 Texture Water = GameAssetsManager.getInstance().WaterPicture();
-                                if(i%2 == 0 && j%2 == 0)
-                                {
-                                    Water = GameAssetsManager.getInstance().DirtPicture();
-                                }
                                 Main.getMain().getBatch().draw(Water , i * TILE_SIZE, j * TILE_SIZE , TILE_SIZE , TILE_SIZE);
                             }
                             else
@@ -186,6 +185,7 @@ public class MapController {
                                         Texture Tree  = ((Trees) TempGround[i][j]).getTree().TreeTexture;
                                         Main.getMain().getBatch().draw(Tree , i * TILE_SIZE, j * TILE_SIZE , 30 , 30);
 
+
                                     }
                                     else if(TempGround[i][j].getEntitity() == Entitity.PLANTS)
                                     {
@@ -193,6 +193,15 @@ public class MapController {
                                         //Main.getMain().getBatch().draw(Dirt , i * TILE_SIZE, j * TILE_SIZE , TILE_SIZE , TILE_SIZE);
                                         Texture Plant = ((Plants) TempGround[i][j]).getPlant().PlantTexture;
                                         Main.getMain().getBatch().draw(Plant , i * TILE_SIZE, j * TILE_SIZE , 30 , 30);
+                                        Plants plants = (Plants) TempGround[i][j];
+                                        if(plants.getLastTimeWatering() != null) {
+                                            if (plants.getLastTimeWatering().getDay() - App.getCurrentGame().getTime().getDay() > -1) {
+                                                Color Abas = new Color(0.0f, 0.3f, 0.7f, 0.2f);
+                                                Main.getMain().getBatch().setColor(Abas);
+                                                Main.getMain().getBatch().draw(GameAssetsManager.getInstance().GetWaterdTexture(), i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                                                Main.getMain().getBatch().setColor(Color.WHITE);
+                                            }
+                                        }
                                     } else if(TempGround[i][j].getPlaceType() == PlaceType.QUARRY)
                                     {
                                     } else if(TempGround[i][j].getPlaceType() == PlaceType.Craft) {

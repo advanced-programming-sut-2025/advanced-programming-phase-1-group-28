@@ -13,6 +13,7 @@ import com.Stradew.Controller.MainMenuController.MechanicController.NPC_Controll
 import com.Stradew.Controller.MainMenuController.ProfileMenuController;
 import com.Stradew.Controller.SignUpController;
 import com.Stradew.Model.Tools.Pepolee;
+import com.Stradew.Server.NetworkClient;
 import com.Stradew.View.Appview;
 import com.Stradew.View.LoginMenu;
 import com.Stradew.View.MainMenu.CheatCodes;
@@ -36,6 +37,7 @@ import java.util.Scanner;
 
 public class App {
     File UsersFile;
+    public static NetworkClient networkClient = null;
     public static ArrayList<User> Users = new ArrayList<>();
     public static ArrayList<Game> Games = new ArrayList<>();
     public static FriendShipController friendShipController = new FriendShipController();

@@ -88,7 +88,6 @@ public class FarmingController {
                                     TempGround[x][y].setTerrain(null);;
                                     TempGround[x][y].setEntitity(Entitity.PLANTS);
                                     App.ReturnCurrentPlayer().getFarm().getChanges().add(new PairChanges(x , y));
-                                    System.out.println(x  +  "," + y);
                                 }
                                 if(plant.Source == null)
                                 {

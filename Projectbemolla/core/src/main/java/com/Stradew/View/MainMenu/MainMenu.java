@@ -1,9 +1,13 @@
 package com.Stradew.View.MainMenu;
 
 import com.Stradew.Controller.MainMenuController.GameMenuController;
+import com.Stradew.Controller.MainMenuController.LobbyController;
 import com.Stradew.Controller.MainMenuController.MainmenuController;
 import com.Stradew.Main;
+import com.Stradew.Model.App;
 import com.Stradew.Model.GameAssetsManager;
+import com.Stradew.Server.NetworkClient;
+import com.Stradew.Server.ServerMessageHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -11,8 +15,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-public class MainMenu implements Screen {
+public class MainMenu implements Screen , ServerMessageHandler {
     private Boolean GoToGameMenu = false;
+    private Boolean CreateLobbyTable = false;
+
+    public void setCreateLobbyTable(Boolean createLobbyTable) {
+        CreateLobbyTable = createLobbyTable;
+    }
 
     public void setGoToGameMenu(Boolean goToGameMenu) {
         GoToGameMenu = goToGameMenu;
@@ -23,6 +32,12 @@ public class MainMenu implements Screen {
     private TextButton ProfileMenu;
     private TextButton LogoutButton;
     private Stage stage;
+    private TextButton GotoLobbyBotton;
+
+    public TextButton getGotoLobbyBotton() {
+        return GotoLobbyBotton;
+    }
+
     public TextButton getGameMenu() {
         return GameMenu;
     }
@@ -41,6 +56,7 @@ public class MainMenu implements Screen {
         GameMenu = new TextButton("Game menu" , GameAssetsManager.getInstance().getSkin());
         ProfileMenu = new TextButton("Profile menu" , GameAssetsManager.getInstance().getSkin());
         LogoutButton = new TextButton("Logout", GameAssetsManager.getInstance().getSkin());
+        GotoLobbyBotton = new TextButton("Lobby Setting", GameAssetsManager.getInstance().getSkin());
         stage = new Stage();
     }
 
@@ -55,6 +71,7 @@ public class MainMenu implements Screen {
         LogoutTable.top().right();
         MainTable.add(GameMenu);
         MainTable.add(ProfileMenu);
+        MainTable.add(GotoLobbyBotton);
         LogoutTable.add(LogoutButton);
         stage.addActor(LogoutTable);
         stage.addActor(MainTable);
@@ -66,6 +83,10 @@ public class MainMenu implements Screen {
         if(GoToGameMenu)
         {
             Main.getMain().setScreen(new GameMenu(new GameMenuController()));
+        }
+        if(CreateLobbyTable)
+        {
+            Main.getMain().setScreen(new LobbyView(new LobbyController()));
         }
         Main.getMain().getBatch().begin();
         controller.Update();
@@ -95,6 +116,16 @@ public class MainMenu implements Screen {
 
     @Override
     public void dispose() {
+
+    }
+
+    @Override
+    public void handleServerMessage(String message) {
+
+    }
+
+    @Override
+    public void handleDisconnection() {
 
     }
 }

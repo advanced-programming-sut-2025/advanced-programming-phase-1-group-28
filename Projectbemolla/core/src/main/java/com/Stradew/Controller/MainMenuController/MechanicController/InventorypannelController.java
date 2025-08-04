@@ -7,6 +7,7 @@ import com.Stradew.Model.GameAssetsManager;
 import com.Stradew.Model.InventorySlot;
 import com.Stradew.Model.Item.Item;
 import com.Stradew.Model.Tools.Tools;
+import com.Stradew.View.MainMenu.GameMenu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -54,6 +55,16 @@ public class InventorypannelController {
         Inventorytable.add(ChoosenItem);
     }
 
+    public void Remove(GameMenu menu)
+    {
+        if(menu.getBin().isChecked())
+        {
+
+            menu.getBin().setChecked(false);
+        }
+    }
+
+
     public void Equip(GameMenuController gamecontroller)
     {
         boolean ok = false;
@@ -72,6 +83,8 @@ public class InventorypannelController {
                     }
                     if(item instanceof Item)
                     {
+                        Item thing = (Item) item;
+                        ChoosenTexture = thing.getImage();
                         App.ReturnCurrentPlayer().getInventory().setCurrentItem((Item)item);
                     }
 
@@ -109,6 +122,29 @@ public class InventorypannelController {
                     if(inventorySlots.get(j).getItem() == null)
                     {
                         inventorySlots.get(j).SetImageButton(App.ReturnCurrentPlayer().getInventory().getTools().get(i));
+                        break;
+                    }
+                }
+            }
+        }
+        for(int i = 0;i < App.ReturnCurrentPlayer().getInventory().getItems().size();i++)
+        {
+            boolean ok = false;
+            for(int j = 0;j < 36;j++)
+            {
+                if(inventorySlots.get(j).getItem() != null) {
+                    if (inventorySlots.get(j).getItem().equals(App.ReturnCurrentPlayer().getInventory().getItems().get(i))) {
+                        ok = true;
+                    }
+                }
+            }
+            if(!ok)
+            {
+                for(int j = 0;j < 36;j++)
+                {
+                    if(inventorySlots.get(j).getItem() == null)
+                    {
+                        inventorySlots.get(j).SetImageButton(App.ReturnCurrentPlayer().getInventory().getItems().get(i));
                         break;
                     }
                 }

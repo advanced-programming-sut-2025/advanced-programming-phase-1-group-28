@@ -4,7 +4,16 @@ public class TimeControlPannel {
     private float CheatCodeUse = 0;
     private float TimeWalkForENetgy = 0;
     private float UsingTool = 0;
+    private float AnimationPlayer = 0;
 
+
+    public float getAnimationPlayer() {
+        return AnimationPlayer;
+    }
+
+    public void setAnimationPlayer(float animationPlayer) {
+        AnimationPlayer = animationPlayer;
+    }
 
     public float getUsingTool() {
         return UsingTool;

@@ -61,7 +61,9 @@ public class InventorySlot {
         }
         if(item instanceof Item)
         {
-            buttonTexture = new Texture("Mineral/Aerinite.png");
+            Item thing = (Item)item;
+            //Gdx.app.exit();
+            buttonTexture = thing.getImage();
         }
         TextureRegion region = new TextureRegion(buttonTexture);
         TextureRegionDrawable drawable = new TextureRegionDrawable(region);

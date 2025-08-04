@@ -26,6 +26,7 @@ public enum Fishes {
     ANGLER(Season.FALL, 900, true),
     CRIMSONFISH(Season.SUMMER, 1500, true);
 
+
     public final Season season;
     public final int price;
     public final boolean legendary;

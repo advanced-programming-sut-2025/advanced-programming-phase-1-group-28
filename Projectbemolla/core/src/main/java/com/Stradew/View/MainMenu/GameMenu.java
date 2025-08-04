@@ -6,6 +6,7 @@ import com.Stradew.Controller.MainMenuController.MechanicController.Inventorypan
 import com.Stradew.Main;
 import com.Stradew.Model.App;
 import com.Stradew.Model.GameAssetsManager;
+import com.Stradew.Server.ServerMessageHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -27,11 +28,12 @@ import com.sun.tools.classfile.Opcode;
 
 import javax.swing.plaf.IconUIResource;
 
-public class GameMenu implements Screen {
+public class GameMenu implements Screen , ServerMessageHandler {
 
 
     private Table Minigame;
     private ProgressBar MinigameProgress;
+    private TextButton QuitFromMiniGame;
     private OrthographicCamera fboCamera;
     private FrameBuffer mapFrameBuffer;
     private Sprite mapSprite;
@@ -39,6 +41,8 @@ public class GameMenu implements Screen {
     private OrthographicCamera camera;
     private Stage stage;
     private ParticleEffect Raineffect;
+    private ParticleEffect SnowEffect;
+    private ParticleEffect Lightning;
     private Texture shadeTexture;
     private Color shadeColor;
     private TextButton GreenhouseHoverButton;
@@ -48,6 +52,11 @@ public class GameMenu implements Screen {
     private Table SettingTable;
     private TextButton Exit;
     private TextButton BackTogame;
+    private TextButton Bin;
+    public TextButton getQuitFromMiniGame() {
+        return QuitFromMiniGame;
+    }
+
     public ParticleEffect getRaineffect() {
         return Raineffect;
     }
@@ -141,6 +150,10 @@ public class GameMenu implements Screen {
         return MapTable;
     }
 
+    public ParticleEffect getLightning() {
+        return Lightning;
+    }
+
     public Table getSocialTable() {
         return SocialTable;
     }
@@ -173,6 +186,14 @@ public class GameMenu implements Screen {
         return mapSprite;
     }
 
+    public ParticleEffect getSnowEffect() {
+        return SnowEffect;
+    }
+
+    public TextButton getBin() {
+        return Bin;
+    }
+
     public GameMenu(GameMenuController controller) {
         this.controller = controller;
         controller.setMenu(this);
@@ -181,6 +202,12 @@ public class GameMenu implements Screen {
         Raineffect = new ParticleEffect();
         Raineffect.load(Gdx.files.internal("WetherEffects/CorrectRainWether.p") , Gdx.files.internal("WetherEffects"));
         Raineffect.start();
+        SnowEffect = new ParticleEffect();
+        SnowEffect.load(Gdx.files.internal("WetherEffects/Particle Park Snow Flakes.p") , Gdx.files.internal("WetherEffects"));
+        SnowEffect.start();
+        Lightning = new ParticleEffect();
+        Lightning.load(Gdx.files.internal("WetherEffects/Particle Park Laser.p") , Gdx.files.internal("WetherEffects"));
+        Lightning.start();
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.WHITE);
         pixmap.fill();
@@ -209,7 +236,9 @@ public class GameMenu implements Screen {
 
 
         Minigame = new Table();
-        MinigameProgress = new ProgressBar(0 , 250 , 1f , true , GameAssetsManager.getInstance().getSkin());
+        MinigameProgress = new ProgressBar(0 , 350 , 1f , true , GameAssetsManager.getInstance().getSkin());
+        QuitFromMiniGame = new TextButton("Quit" , GameAssetsManager.getInstance().getSkin());
+        Bin = new TextButton("Bin" , GameAssetsManager.getInstance().getSkin());
     }
 
 
@@ -245,7 +274,9 @@ public class GameMenu implements Screen {
 
         Minigame.setFillParent(true);
         Minigame.setVisible(false);
+        Minigame.right();
         Minigame.add(MinigameProgress);
+        Minigame.add(QuitFromMiniGame);
         stage.addActor(Minigame);
 
         SettingTable.setPosition(800 , 800);
@@ -254,6 +285,8 @@ public class GameMenu implements Screen {
         SettingTable.setVisible(false);
         stage.addActor(SettingTable);
 
+        InventoryTable.setPosition(-400 , 100 );
+        InventoryTable.add(Bin);
         stage.addActor(InventoryTable);
 
         stage.addActor(SkillTable);
@@ -318,6 +351,16 @@ public class GameMenu implements Screen {
 
     @Override
     public void dispose() {
+
+    }
+
+    @Override
+    public void handleServerMessage(String message) {
+
+    }
+
+    @Override
+    public void handleDisconnection() {
 
     }
 //    SignUpController signUpController = App.signUpController;

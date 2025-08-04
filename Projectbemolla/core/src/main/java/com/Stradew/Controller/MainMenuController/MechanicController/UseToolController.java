@@ -1,13 +1,11 @@
 package com.Stradew.Controller.MainMenuController.MechanicController;
 
 import com.Stradew.Model.App;
-import com.Stradew.Model.Enums.Animals;
-import com.Stradew.Model.Enums.Entitity;
-import com.Stradew.Model.Enums.Fishes;
-import com.Stradew.Model.Enums.Terrain;
+import com.Stradew.Model.Enums.*;
 import com.Stradew.Model.Item.*;
 import com.Stradew.Model.PairChanges;
 import com.Stradew.Model.Tile.*;
+import com.Stradew.Model.Tile.Plants;
 import com.Stradew.Model.Tools.*;
 import com.badlogic.gdx.Gdx;
 
@@ -221,25 +219,25 @@ public class UseToolController {
             CurrentPepolee.addEnergy(1);
         }
         Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
-        if(TempGround[NewX][NewY].getTerrain() == Terrain.WATER)
+        if(TempGround[NewX][NewY].getTerrain() == Terrain.WATER || TempGround[NewX][NewY].getPlaceType() == PlaceType.LAKE)
         {
             int RandomSucsses = App.random.nextInt() % 3;
             if(RandomSucsses != 0)
             {
-                int Randomfish = App.random.nextInt() % 5;
-                int Count = 0;
-                for(Fishes fish : Fishes.values())
-                {
-                    if(fish.season == App.getCurrentGame().getTime().getSeason()) {
-                        if(Count == Randomfish) {
-                            int num = (App.ReturnCurrentPlayer().getSkills()[1].getLevel() + 2) * App.getCurrentGame().getWeather().FishCofficent;
-                            FishItem newfish = new FishItem(num , fish);
-                            App.ReturnCurrentPlayer().getInventory().AddItem(newfish);
-                            App.ReturnCurrentPlayer().getSkills()[1].setXp(App.ReturnCurrentPlayer().getSkills()[1].getXp() + 10);
-                        }
-                        Count++;
-                    }
-                }
+//                int Randomfish = App.random.nextInt() % 5;
+//                int Count = 0;
+//                for(Fishes fish : Fishes.values())
+//                {
+//                    if(fish.season == App.getCurrentGame().getTime().getSeason()) {
+//                        if(Count == Randomfish) {
+//                            int num = (App.ReturnCurrentPlayer().getSkills()[1].getLevel() + 2) * App.getCurrentGame().getWeather().FishCofficent;
+//                            FishItem newfish = new FishItem(num , fish);
+//                            App.ReturnCurrentPlayer().getInventory().AddItem(newfish);
+//                            App.ReturnCurrentPlayer().getSkills()[1].setXp(App.ReturnCurrentPlayer().getSkills()[1].getXp() + 10);
+//                        }
+//                        Count++;
+//                    }
+//                }
                 return "Fish Added To your inventory";
             }
             else
@@ -286,6 +284,7 @@ public class UseToolController {
                         TempGround[NewX][NewY].setPlaceType(null);
                         TempGround[NewX][NewY].setTerrain(Terrain.DIRT);
                         TempGround[NewX][NewY].setEntitity(null);
+                        App.ReturnCurrentPlayer().getFarm().getChanges().add(new PairChanges(NewX , NewY));
                     }
                 }
                 else

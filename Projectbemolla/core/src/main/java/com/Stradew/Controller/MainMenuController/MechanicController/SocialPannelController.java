@@ -58,7 +58,7 @@ public class SocialPannelController {
             socialTable.add(love);
 
             SelectBox<Integer> giftCount = new SelectBox<>(skin);
-            َArray<Integer> numbers = new Array<>();
+            Array<Integer> numbers = new Array<>();
             for (int j = 1; j <= 10; j++) {
                 numbers.add(j);
             }
@@ -106,7 +106,7 @@ public class SocialPannelController {
                     break;
             }
             socialTable.add(love).row();
-            
+
             i++;
         }
     }

@@ -4,9 +4,7 @@ import com.Stradew.Model.Enums.Saplings;
 import com.Stradew.Model.Enums.Seeds;
 import com.Stradew.Model.Enums.Tools.*;
 import com.Stradew.Model.Item.Item;
-import com.Stradew.Model.Tools.Hoe;
-import com.Stradew.Model.Tools.Pickaxe;
-import com.Stradew.Model.Tools.Tools;
+import com.Stradew.Model.Tools.*;
 
 import java.util.ArrayList;
 
@@ -24,6 +22,9 @@ public class Inventory {
     public Inventory() {
         this.tools.add(new Hoe());
         this.tools.add(new Pickaxe(Pickaxes.Normal));
+        this.tools.add(new FishingPole(FishingPoles.Bamboo));
+        this.tools.add(new Seythe(Seythes.Normal));
+        this.tools.add(new WaterCan(Watercans.Normal , 1));
         CurrentTool = tools.get(0);
         WhichTool = 0;
         this.seeds.add(Seeds.CarrotSeeds);
