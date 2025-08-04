@@ -55,14 +55,14 @@ public class InventorypannelController {
         Inventorytable.add(ChoosenItem);
     }
 
-    public void Remove(GameMenu menu)
+    /*public void Remove(GameMenu menu)
     {
         if(menu.getBin().isChecked())
         {
 
             menu.getBin().setChecked(false);
         }
-    }
+    }*/
 
 
     public void Equip(GameMenuController gamecontroller)
