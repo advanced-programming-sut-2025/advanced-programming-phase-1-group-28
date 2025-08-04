@@ -1,7 +1,9 @@
 package com.Stradew.View.MainMenu;
 
+import com.Stradew.Controller.MainMenuController.MainmenuController;
 import com.Stradew.Controller.MainMenuController.ProfileMenuController;
 import com.Stradew.Controller.SignUpController;
+import com.Stradew.Main;
 import com.Stradew.Model.App;
 import com.Stradew.Model.GameAssetsManager;
 import com.Stradew.Model.User;
@@ -40,6 +42,7 @@ public class ProfileMenu implements Screen {
     TextButton changePassword;
     TextButton changeNickname;
     TextButton changeEmail;
+    TextButton backButton;
 
     public ProfileMenu(ProfileMenuController profileMenuController) {
         this.profileMenuController = profileMenuController;
@@ -61,6 +64,7 @@ public class ProfileMenu implements Screen {
         changePassword = new TextButton("Change", GameAssetsManager.getInstance().getSkin());
         changeEmail = new TextButton("Change", GameAssetsManager.getInstance().getSkin());
         changeNickname = new TextButton("Change", GameAssetsManager.getInstance().getSkin());
+        backButton = new TextButton("Back", GameAssetsManager.getInstance().getSkin());
 
         table = new Table();
         table.setFillParent(true);
@@ -89,6 +93,7 @@ public class ProfileMenu implements Screen {
         table.add(new Label("Gender:", GameAssetsManager.getInstance().getSkin())).pad(pad);
         table.add(gender).width(textFieldWidth).pad(pad);
         table.row();
+        table.add(backButton).row();
 
         table.add(feedback).colspan(2).fillX().padTop(20).pad(pad);
 
@@ -111,6 +116,12 @@ public class ProfileMenu implements Screen {
         changeNickname.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) { ChangeNickname(nickname.getText()); }
+        });
+        backButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Main.getMain().setScreen(new MainMenu(new MainmenuController()));
+            }
         });
     }
 
