@@ -1,5 +1,6 @@
 package com.Stradew.Controller.MainMenuController;
 
+import com.Stradew.Controller.MainMenuController.HomeMenucontroller.PokhtOPazController;
 import com.Stradew.Controller.MainMenuController.MechanicController.InventorypannelController;
 import com.Stradew.Controller.MainMenuController.MechanicController.SocialPannelController;
 import com.Stradew.Controller.PepoleeContoller;
@@ -16,7 +17,9 @@ import com.Stradew.Model.Tools.ShippingBin;
 import com.Stradew.Model.Tools.Tools;
 import com.Stradew.View.Appview;
 import com.Stradew.View.MainMenu.GameMenu;
+import com.Stradew.View.MainMenu.MechanicGame.HomeMenu.PokhtOPaz;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -68,6 +71,7 @@ public class GameMenuController {
     }
     private SkillPannelController skillPannelController = new SkillPannelController();
     private SocialPannelController socialPannelController = new SocialPannelController();
+    private SwitchMenuController switchMenuController = new SwitchMenuController();
     private boolean ok = false;
 
     public void setMenu(GameMenu menu) {
@@ -115,6 +119,9 @@ public class GameMenuController {
             ApplyNextTurn();
         }
         CheckSetting();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.P)){
+            switchMenuController.openPokhMenu();
+        }
         if(!ok)
         {
             inventorypannelController.setInventorytable(menu.getInventoryTable());
