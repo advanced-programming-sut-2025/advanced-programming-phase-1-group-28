@@ -16,8 +16,8 @@ public class Npc {
     private ArrayList<String> Dialogues;
     private ArrayList<Item> FavouriteItems;
     private ArrayList<Quest> Quests;
-    private int x_position;
-    private int y_position;
+    private float x_position;
+    private float y_position;
     private int howManyDaysToUnlockQuest = (App.random.nextInt() % 60) + 30;
 
     public Npc(int ID , String name, String job, ArrayList<String> dialogues, ArrayList<Item> favouriteItems, ArrayList<Quest> quests , int x_position , int y_position) {
@@ -51,11 +51,11 @@ public class Npc {
         return Quests;
     }
 
-    public int getX_position() {
+    public float getX_position() {
         return x_position;
     }
 
-    public int getY_position() {
+    public float getY_position() {
         return y_position;
     }
     private NPC npc;

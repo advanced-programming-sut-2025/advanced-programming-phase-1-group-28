@@ -1,6 +1,7 @@
 package com.Stradew.Controller.MainMenuController.MechanicController;
 
 import com.Stradew.Controller.MainMenuController.GameMenuController;
+import com.Stradew.Controller.MainMenuController.NPCVillageController;
 import com.Stradew.Main;
 import com.Stradew.Model.App;
 import com.Stradew.Model.GameAssetsManager;
@@ -99,11 +100,97 @@ public class InventorypannelController {
         }
     }
 
+    public void EquipVillage(NPCVillageController gamecontroller)
+    {
+        boolean ok = false;
+        for(int i = 0;i < 36 ; i++)
+        {
+            if(!ok) {
+                if (inventorySlots.get(i).getButton().isChecked()){
+                    Texture ChoosenTexture = new Texture("Pants/Skirt.png");
+                    Object item = inventorySlots.get(i).getItem();
+                    if(item instanceof Tools)
+                    {
+                        Tools tool = (Tools)item;
+                        ChoosenTexture = tool.getImage();
+                        App.ReturnCurrentPlayer().getInventory().setCurrentTool((Tools)item);
+                        gamecontroller.getPepoleeController().setToolTexture(ChoosenTexture);
+                    }
+                    if(item instanceof Item)
+                    {
+                        Item thing = (Item) item;
+                        ChoosenTexture = thing.getImage();
+                        App.ReturnCurrentPlayer().getInventory().setCurrentItem((Item)item);
+                    }
+
+                    TextureRegion region = new TextureRegion(ChoosenTexture);
+                    TextureRegionDrawable drawable = new TextureRegionDrawable(region);
+                    ChoosenItem.getStyle().up = drawable;
+                    ChoosenItem.getStyle().down = drawable;
+                    ok = true;
+                }
+            }
+            inventorySlots.get(i).getButton().setChecked(false);
+        }
+    }
+
 
     public void Update(GameMenuController gamecontroller)
     {
         Main.getMain().getBatch().draw(BackGround , App.ReturnCurrentPlayer().getX() - 400 , App.ReturnCurrentPlayer().getY()  , 1000 , 1000);
         Equip(gamecontroller);
+        for(int i = 0;i < App.ReturnCurrentPlayer().getInventory().getTools().size();i++)
+        {
+            boolean ok = false;
+            for(int j = 0;j < 36;j++)
+            {
+                if(inventorySlots.get(j).getItem() != null) {
+                    if (inventorySlots.get(j).getItem().equals(App.ReturnCurrentPlayer().getInventory().getTools().get(i))) {
+                        ok = true;
+                    }
+                }
+            }
+            if(!ok)
+            {
+                for(int j = 0;j < 36;j++)
+                {
+                    if(inventorySlots.get(j).getItem() == null)
+                    {
+                        inventorySlots.get(j).SetImageButton(App.ReturnCurrentPlayer().getInventory().getTools().get(i));
+                        break;
+                    }
+                }
+            }
+        }
+        for(int i = 0;i < App.ReturnCurrentPlayer().getInventory().getItems().size();i++)
+        {
+            boolean ok = false;
+            for(int j = 0;j < 36;j++)
+            {
+                if(inventorySlots.get(j).getItem() != null) {
+                    if (inventorySlots.get(j).getItem().equals(App.ReturnCurrentPlayer().getInventory().getItems().get(i))) {
+                        ok = true;
+                    }
+                }
+            }
+            if(!ok)
+            {
+                for(int j = 0;j < 36;j++)
+                {
+                    if(inventorySlots.get(j).getItem() == null)
+                    {
+                        inventorySlots.get(j).SetImageButton(App.ReturnCurrentPlayer().getInventory().getItems().get(i));
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    public void UpdateVillage(NPCVillageController gamecontroller)
+    {
+        Main.getMain().getBatch().draw(BackGround , App.ReturnCurrentPlayer().getX() - 400 , App.ReturnCurrentPlayer().getY()  , 1000 , 1000);
+        EquipVillage(gamecontroller);
         for(int i = 0;i < App.ReturnCurrentPlayer().getInventory().getTools().size();i++)
         {
             boolean ok = false;

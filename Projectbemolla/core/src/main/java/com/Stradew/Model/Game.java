@@ -7,6 +7,7 @@ import com.Stradew.Model.Item.Food;
 import com.Stradew.Model.Item.Ingredient;
 import com.Stradew.Model.Item.Item;
 import com.Stradew.Model.Item.MineralItem;
+import com.Stradew.Model.Places.*;
 import com.Stradew.Model.Tile.Tile;
 import com.Stradew.Model.Tools.Pepolee;
 import com.Stradew.Model.Tools.WaterCan;
@@ -25,6 +26,15 @@ public class Game {
     private int WhoseTurn = 0;
     private Weathers Weather = Weathers.SUNNY;
     private ArrayList<Npc> GameNPCs = new ArrayList<>();
+    private Farm npcVillage = new Farm(new GreenHouse( 8 , 8) , new Cabin(10 , 25) , new Lake(25 , 15) , new Quarry(30 , 25));
+
+    public Farm getNpcVillage() {
+        return npcVillage;
+    }
+
+    public void setNpcVillage(Farm npcVillage) {
+        this.npcVillage = npcVillage;
+    }
 
     public TimeControlPannel getTimeControlPannel() {
         return timeControlPannel;
@@ -48,35 +58,35 @@ public class Game {
                 new ArrayList<Quest>(Arrays.asList(new Quest(new Item(50 , "Iron Bar") , new Reward(0 , new MineralItem(2 , Minerals.Diamond) , 0 , null , null)),
                         new Quest(new Food(1 , Foods.PumpkinPie) , new Reward(5000 , null , 0 , null , null)) ,
                         new Quest(new Item(150 , "Stone") , new Reward(0 , new MineralItem(50 , Minerals.Quartz) , 0 , null , null)))) ,
-                60 , 60));
+                1800 , 2800));
         // initialize abigail
         GameNPCs.add(new Npc(5 , "Abigail" , "Astronaut" , new ArrayList<String>(Arrays.asList("Abigail is GONE!")) ,
                 new ArrayList<Item>(Arrays.asList(new Item(1 , "Stone") , new MineralItem(1 , Minerals.Iron) , new Food(1 , Foods.TripleShotEspresso))) ,
                 new ArrayList<Quest>(Arrays.asList(new Quest(new Item(1 , "Gold Bar") , new Reward(0 , null , 1 , null , null)),
                         new Quest(new PlantsItem(1 , Plants.PUMPKIN) , new Reward(500 , null , 0 , null , null)) ,
                         new Quest(new PlantsItem(50 , Plants.WHEAT) , new Reward(0 , null, 0 , new WaterCan(Watercans.Iridium , 3), null)))) ,
-                70 , 70));
+                2770 , 2470));
         // initialize harvey
         GameNPCs.add(new Npc(6 , "Harvy" , "Prosecutor" , new ArrayList<String>(Arrays.asList("You either die a hero or you live long enough to see yourself become the villain")) ,
                 new ArrayList<Item>(Arrays.asList(new Food(1 , Foods.TripleShotEspresso) , new Food(1 , Foods.AppleWine) , new Food(1 , Foods.PotatoPickle))),
                 new ArrayList<Quest>(Arrays.asList(new Quest(new Item(12 , "plant") , new Reward(750 , null , 0 , null , null)),
                         new Quest(new FishItem(1 , Fishes.SALMON) , new Reward(0 , null , 1 , null , null)) ,
                         new Quest(new Item(1 , "wine") , new Reward(0 , new Food(5 , Foods.Salad), 0 , null , null)))) ,
-                80 , 80));
+                3780 , 980));
         // initialize leia
         GameNPCs.add(new Npc(7 , "Leia" , "Princess of Alderan" , new ArrayList<String>(Arrays.asList("I know")) ,
                 new ArrayList<Item>(Arrays.asList(new Food(1 , Foods.Salad) , new PlantsItem(1 , Plants.GRAPE) , new Food(1 , Foods.GrapeWine))),
                 new ArrayList<Quest>(Arrays.asList(new Quest(new Item(10 , "Wood") , new Reward(500 , null , 0 , null , null)),
                         new Quest(new FishItem(1 , Fishes.SALMON) , new Reward(0 , null , 0 , null , Foods.SalmonDinner)) ,
                         new Quest(new Item(200 , "Wood") , new Reward(0 , new Craft(3, Crafts.DeluxeScarecrow) , 0 , null , null)))) ,
-                90 , 90));
+                1190 , 1190));
         // initialize robin
         GameNPCs.add(new Npc(8 , "Robin" , "Journalist" , new ArrayList<String>(Arrays.asList("Everybody come and play")) ,
                 new ArrayList<Item>(Arrays.asList(new Food(1 , Foods.Spaghetti) , new Item(1 , "Wood") , new Item(1 , "Iron Bar"))),
                 new ArrayList<Quest>(Arrays.asList(new Quest(new Item(80 , "Wood") , new Reward(1000 , null , 0 , null , null)),
                         new Quest(new Item(10 , "Iron Bar") , new Reward(10000 , null , 0 , null , null )) ,
                         new Quest(new Item(1000 , "Wood") , new Reward(25000 , null , 0 , null , null)))) ,
-                100 , 100));
+                3010 , 3300));
     }
     private void InitializeMap() {
         for (int i = 0; i < 200; i++) {

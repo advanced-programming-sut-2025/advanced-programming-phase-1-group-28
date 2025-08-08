@@ -3,12 +3,14 @@ import com.Stradew.Controller.MainMenuController.GameMenuController;
 import com.Stradew.Controller.MainMenuController.MapController;
 import com.Stradew.Controller.MainMenuController.MechanicController.InventorypannelController;
 import com.Stradew.Controller.MainMenuController.MechanicController.NotificationController;
+import com.Stradew.Controller.MainMenuController.SwitchMenuController;
 import com.Stradew.Main;
 import com.Stradew.Model.App;
 import com.Stradew.Model.GameAssetsManager;
 import com.Stradew.View.MainMenu.MechanicGame.NotificationDialog;
 import com.Stradew.View.MainMenu.MechanicGame.NotificationMenu;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -54,6 +56,7 @@ public class GameMenu implements Screen {
     private TextButton notifications;
     private ParticleEffect SnowEffect;
     private ParticleEffect Lightning;
+    private SwitchMenuController switchMenuController;
     private TextButton QuitFromMiniGame;
 
     public TextButton getQuitFromMiniGame() {
@@ -202,6 +205,7 @@ public class GameMenu implements Screen {
     }
 
     public GameMenu(GameMenuController controller) {
+        switchMenuController = new SwitchMenuController();
         this.controller = controller;
         controller.setMenu(this);
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -339,6 +343,9 @@ public class GameMenu implements Screen {
         Main.getMain().getBatch().end();
         stage.act();
         stage.draw();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+            switchMenuController.openNpcVillage();
+        }
     }
 
     @Override
