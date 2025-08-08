@@ -68,6 +68,23 @@ public class GameMenuController {
     }
     private SkillPannelController skillPannelController = new SkillPannelController();
     private SocialPannelController socialPannelController = new SocialPannelController();
+    private OnlinePlayersController onlinePlayersController = new OnlinePlayersController();
+    private ReactionController reactionController = new ReactionController();
+    private TradeController tradeController = new TradeController();
+
+
+    public TradeController getTradeController() {
+        return tradeController;
+    }
+
+    public OptionsController getOptionsController() {
+        return optionsController;
+    }
+
+    public OnlinePlayersController getOnlinePlayersController() {
+        return onlinePlayersController;
+    }
+
     private boolean ok = false;
 
     public void setMenu(GameMenu menu) {
@@ -118,7 +135,7 @@ public class GameMenuController {
         if(!ok)
         {
             inventorypannelController.setInventorytable(menu.getInventoryTable());
-            inventorypannelController.firstTouch();
+            inventorypannelController.firstTouch(menu.getCurrntLobby().getUsernames());
             ok = true;
         }
         if(menu.getMainTable().isVisible()) {
@@ -143,6 +160,18 @@ public class GameMenuController {
             Main.getMain().getBatch().setColor(menu.getShadeColor());
             Main.getMain().getBatch().draw(menu.getShadeTexture() , App.ReturnCurrentPlayer().getX() - Gdx.graphics.getWidth()/2 , App.ReturnCurrentPlayer().getY() - Gdx.graphics.getHeight() / 2 , Gdx.graphics.getWidth() , Gdx.graphics.getHeight());
             Main.getMain().getBatch().setColor(Color.WHITE);
+            if(menu.getSeeOnlilnePlayers().isChecked())
+            {
+                menu.getOnlinePlayers().setVisible(true);
+                menu.getMainTable().setVisible(false);
+                menu.getSeeOnlilnePlayers().setChecked(false);
+            }
+            if(menu.getGoreact().isChecked())
+            {
+                menu.getReactionTable().setVisible(true);
+                menu.getMainTable().setVisible(false);
+                menu.getGoreact().setChecked(false);
+            }
         }
         if(menu.getSwitchTable().isVisible()) {
             optionsController.SwitchBeetweenOptions(menu);
@@ -163,7 +192,24 @@ public class GameMenuController {
         {
             minigameController.update(menu , v);
         }
-
+        if(menu.getOnlinePlayers().isVisible())
+        {
+            if(menu.getBackFromOnlinePlayers().isChecked())
+            {
+                menu.getOnlinePlayers().setVisible(false);
+                menu.getMainTable().setVisible(true);
+                menu.getBackFromOnlinePlayers().setChecked(false);
+            }
+            onlinePlayersController.Update();
+        }
+        if(menu.getReactionTable().isVisible())
+        {
+            reactionController.Update(menu);
+        }
+        if(menu.getTradeTable().isVisible())
+        {
+            tradeController.Update();
+        }
     }
 
 

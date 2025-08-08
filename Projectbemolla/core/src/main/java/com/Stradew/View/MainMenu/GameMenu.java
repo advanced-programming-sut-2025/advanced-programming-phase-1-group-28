@@ -6,6 +6,8 @@ import com.Stradew.Controller.MainMenuController.MechanicController.Notification
 import com.Stradew.Main;
 import com.Stradew.Model.App;
 import com.Stradew.Model.GameAssetsManager;
+import com.Stradew.Server.Lobby;
+import com.Stradew.Server.ServerMessageHandler;
 import com.Stradew.View.MainMenu.MechanicGame.NotificationDialog;
 import com.Stradew.View.MainMenu.MechanicGame.NotificationMenu;
 import com.badlogic.gdx.Gdx;
@@ -21,18 +23,83 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.sun.tools.classfile.Opcode;
 
 import javax.swing.plaf.IconUIResource;
 
-public class GameMenu implements Screen {
+public class GameMenu implements Screen , ServerMessageHandler {
+
+    @Override
+    public void handleServerMessage(String message) {
+        System.out.println(message);
+        String[] parts = message.split(" ", 10);
+        String command = parts[0].toUpperCase();
+        if(command.equals("PLAYER_LIST"))
+        {
+            controller.getOnlinePlayersController().OnlinePlayers.clear();
+            String Info = parts[1];
+            String[] Data = Info.split("\\|", 10);
+            for(int i = 0; i < Data.length; i++)
+            {
+                String[] parts2 = Data[i].split("\\.", 10);
+                controller.getOnlinePlayersController().OnlinePlayers.add(parts2[0] +  "         "  + parts2[1]);
+            }
+        }
+        if(command.equals("RECEIVE_REACTION"))
+        {
+            if(parts[2].equals("TEXT"))
+            {
+                ReactionTextSender = "1" + parts[1];
+                ReactionTextForDisplay = GameAssetsManager.getInstance().StringsReactionsText[Integer.parseInt(parts[3])];
+            }
+            else
+            {
+                ReactionTextSender = "2" + parts[1];
+                ReactionImageforDisplay = GameAssetsManager.getInstance().ImagesREacions[Integer.parseInt(parts[3])];
+            }
+            App.getCurrentGame().getTimeControlPannel().setReactionTime(0);
+        }
+
+        if(command.equals("SEND_TRADE_OFFER"))
+        {
+            if(parts[1].equals(App.getCurrentUser().getUsername()))
+            {
+                controller.getTradeController().setSenderName(parts[2]);
+                controller.getTradeController().setGiverName(parts[1]);
+                controller.getTradeController().setBuyer(true);
+                MainTable.setVisible(false);
+                TradeTable.setVisible(true);
+            }
+        }
+    }
+
+    @Override
+    public void handleDisconnection() {
+
+    }
+
+    public String getReactionTextSender() {
+        return ReactionTextSender;
+    }
+
+    public String getReactionTextForDisplay() {
+        return ReactionTextForDisplay;
+    }
+
+    public Texture getReactionImageforDisplay() {
+        return ReactionImageforDisplay;
+    }
 
 
+    private Texture ReactionImageforDisplay;
+    private String ReactionTextForDisplay;
+    private String ReactionTextSender;
+    private TextButton GoReact;
+    private Lobby CurrntLobby;
+    private Table OnlinePlayers;
     private Table Minigame;
     private ProgressBar MinigameProgress;
     private OrthographicCamera fboCamera;
@@ -55,6 +122,8 @@ public class GameMenu implements Screen {
     private ParticleEffect SnowEffect;
     private ParticleEffect Lightning;
     private TextButton QuitFromMiniGame;
+    private TextButton SeeOnlilnePlayers;
+    private TextButton BackFromOnlinePlayers;
 
     public TextButton getQuitFromMiniGame() {
         return QuitFromMiniGame;
@@ -118,7 +187,12 @@ public class GameMenu implements Screen {
     private Table SocialTable;
     private Table MapTable;
     private Table SwitchTable;
+    private Table ReactionTable;
+    private Table TradeTable;
 
+
+    private TextButton[] TextReactions;
+    private ImageButton[] ImageReactions;
     private TextButton InventoryButton;
     private TextButton SkillButton;
     private TextButton SocialButton;
@@ -155,6 +229,10 @@ public class GameMenu implements Screen {
 
     public TextButton getSkillButton() {
         return SkillButton;
+    }
+
+    public TextButton getBackFromOnlinePlayers() {
+        return BackFromOnlinePlayers;
     }
 
     public TextButton getInventoryButton() {
@@ -201,7 +279,42 @@ public class GameMenu implements Screen {
         return mapSprite;
     }
 
-    public GameMenu(GameMenuController controller) {
+
+    public TextButton getGoreact() {
+        return GoReact;
+    }
+
+    public Table getReactionTable() {
+        return ReactionTable;
+    }
+
+    public TextButton[] getTextReactions() {
+        return TextReactions;
+    }
+
+    public ImageButton[] getImageReactions() {
+        return ImageReactions;
+    }
+
+    public Lobby getCurrntLobby() {
+        return CurrntLobby;
+    }
+
+    public Table getOnlinePlayers() {
+        return OnlinePlayers;
+    }
+
+    public TextButton getSeeOnlilnePlayers() {
+        return SeeOnlilnePlayers;
+    }
+
+    public Table getTradeTable() {
+        return TradeTable;
+    }
+
+    public GameMenu(GameMenuController controller , Lobby lobby) {
+        CurrntLobby = lobby;
+        App.networkClient.setMessageHandler(this);
         this.controller = controller;
         controller.setMenu(this);
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -253,6 +366,15 @@ public class GameMenu implements Screen {
                 new NotificationDialog(GameAssetsManager.getInstance().getSkin()).show(stage);
             }
         });
+        SeeOnlilnePlayers = new TextButton("OnlinePlayers", GameAssetsManager.getInstance().getSkin());
+        OnlinePlayers = new Table();
+
+        ReactionTable = new Table();
+        TextReactions = GameAssetsManager.getInstance().Reactions();
+        ImageReactions = GameAssetsManager.getInstance().ImageReactions();
+        GoReact = new TextButton("React", GameAssetsManager.getInstance().getSkin());
+
+        TradeTable = new Table();
     }
 
 
@@ -279,15 +401,18 @@ public class GameMenu implements Screen {
         SwitchTable.add(Backbutton);
         stage.addActor(SwitchTable);
 
-        MainTable.setPosition(-800, 400);
+        MainTable.setPosition(-400, 400);
         MainTable.add(Setting);
         //MainTable.setOrigin(900 , 400);
         MainTable.add(EnergyBar);
         MainTable.add(notifications);
+        MainTable.add(SeeOnlilnePlayers);
+        MainTable.add(GoReact);
         stage.addActor(MainTable);
 
         Minigame.setFillParent(true);
         Minigame.setVisible(false);
+        Minigame.right();
         Minigame.add(MinigameProgress);
         Minigame.add(QuitFromMiniGame);
         stage.addActor(Minigame);
@@ -298,8 +423,28 @@ public class GameMenu implements Screen {
         SettingTable.setVisible(false);
         stage.addActor(SettingTable);
 
-        stage.addActor(InventoryTable);
+        OnlinePlayers.setFillParent(true);
+        OnlinePlayers.setVisible(false);
+        OnlinePlayers.right();
+        OnlinePlayers.add(BackFromOnlinePlayers);
 
+        ReactionTable.setFillParent(true);
+        ReactionTable.setVisible(false);
+        ReactionTable.left();
+        for(int i = 0;i < 6; i++)
+        {
+            ReactionTable.add(TextReactions[i]).width(200).padLeft(100);
+            ReactionTable.add(ImageReactions[i]).row();
+        }
+
+        TradeTable.setFillParent(true);
+        TradeTable.setVisible(false);
+        TradeTable.left();
+
+
+        stage.addActor(ReactionTable);
+        stage.addActor(OnlinePlayers);
+        stage.addActor(InventoryTable);
         stage.addActor(SkillTable);
         stage.addActor(MapTable);
         stage.addActor(SocialTable);
@@ -364,4 +509,5 @@ public class GameMenu implements Screen {
     public void dispose() {
 
     }
+
 }

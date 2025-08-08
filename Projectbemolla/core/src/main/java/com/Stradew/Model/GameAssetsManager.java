@@ -6,7 +6,10 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class GameAssetsManager {
     private static GameAssetsManager instance;
@@ -21,11 +24,41 @@ public class GameAssetsManager {
     private final Texture PlantTest = new Texture(Gdx.files.internal("FirstMap/Leek.png"));
     private final Texture InventoryBar = new Texture(Gdx.files.internal("Inventory/RealInventory.png"));
     private final Texture SkillPannel = new Texture(Gdx.files.internal("Inventory/RealSkills.png"));
+    public final String[] StringsReactionsText = {"HELLO" , "Yeah BOY" , "THANK YOU" , "GG" , "ARE YOU OK" , "GIVE ME A BO"};
+    public final Texture[] ImagesREacions = {new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png")};
 
-    private final Animation playerAnimation =  new Animation<>(0.1f , new Texture("FirstMap/Lewis1animation.png") ,
-        new Texture("FirstMap/lewis2animation.png") ,
-        new Texture("FirstMap/lewis3animation.png") ,
+    private final Animation playerAnimation = new Animation<>(0.1f, new Texture("FirstMap/Lewis1animation.png"),
+        new Texture("FirstMap/lewis2animation.png"),
+        new Texture("FirstMap/lewis3animation.png"),
         new Texture("FirstMap/lewis4animation.png"));
+
+
+    public TextButton[] Reactions() {
+        TextButton[] Reactions = new TextButton[6];
+        Reactions[0] = new TextButton("Hello", skin);
+        Reactions[1] = new TextButton("Yeah Boy", skin);
+        Reactions[2] = new TextButton("Thank you", skin);
+        Reactions[3] = new TextButton("GG", skin);
+        Reactions[4] = new TextButton("Are you ok", skin);
+        Reactions[5] = new TextButton("Give me a Bo", skin);
+        return Reactions;
+    }
+
+    public ImageButton[] ImageReactions()
+    {
+        ImageButton[] ImageReactions = new ImageButton[6];
+        Texture Axe = new Texture("Pants/Baggy_Pants.png");
+        TextureRegion region = new TextureRegion(Axe);
+        TextureRegionDrawable drawable = new TextureRegionDrawable(region);
+        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
+        style.up = drawable;
+        style.down = drawable;
+        for(int i = 0;i < 6  ;i++)
+        {
+            ImageReactions[i] = new ImageButton(style);
+        }
+        return ImageReactions;
+    }
 
     public Animation getPlayerAnimation() {
         return playerAnimation;

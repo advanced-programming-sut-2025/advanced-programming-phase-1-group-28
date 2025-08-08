@@ -41,6 +41,12 @@ public class GameServer {
     }
 
 
+    public synchronized void SendReaction(ClientHandler client , String Type , String number)
+    {
+        broadcastMessage("RECEIVE_REACTION" + " " + client.getRealUsername() + " " + Type + " " + number);
+    }
+
+
     public synchronized String createLobby(String lobbyName, String adminId, String password , String UsernameId , boolean Visible) {
         Lobby newLobby = new Lobby(lobbyName, adminId, password , UsernameId);
         newLobby.setVisible(Visible);
@@ -80,6 +86,11 @@ public class GameServer {
         broadcastLobbyUpdate();
     }
 
+    public synchronized void SendTradeOffer(ClientHandler client , String Username)
+    {
+        broadcastMessage("SEND_TRADE_OFFER" + " " + Username + " " + client.getRealUsername());
+    }
+
     public String getLobbyListString() {
         if(activeLobbies.isEmpty()) {
             return "LOBBY_LIST_EMPTY";
@@ -93,8 +104,11 @@ public class GameServer {
         if(connectedClients.isEmpty()) {
             return "PLAYER_LIST_EMPTY";
         }
-        return "PLAYER_LIST " + String.join(";", connectedClients.keySet());
+        return "PLAYER_LIST " + connectedClients.values().stream()
+            .map(ClientHandler::ReturnInfoUser)
+            .collect(Collectors.joining("|"));
     }
+
 
     public void broadcastLobbyUpdate() {
         broadcastMessage(getLobbyListString());
@@ -150,6 +164,17 @@ class ClientHandler implements Runnable {
     private final String clientId;
     private DataOutputStream out;
     private DataInputStream in;
+    private String RealUsername = "Anonymous";
+    private String RealLobbyID = "NOLobby";
+
+    public String getRealUsername() {
+        return RealUsername;
+    }
+
+    public String ReturnInfoUser()
+    {
+        return RealUsername + "." + RealLobbyID;
+    }
 
     public ClientHandler(Socket socket, GameServer server) {
         this.socket = socket;
@@ -193,6 +218,8 @@ class ClientHandler implements Runnable {
                     String Username = parts[2];
                     boolean visible = Boolean.parseBoolean(parts[3]);
                     String response = server.createLobby(lobbyName, this.clientId, password , Username , visible);
+                    RealUsername = Username;
+                    RealLobbyID = lobbyName;
                     sendMessage(response);
                 }
                 break;
@@ -210,6 +237,7 @@ class ClientHandler implements Runnable {
                     String lobbyId = parts[1];
                     String joinPassword = (parts.length > 3) ? parts[3] : "";
                     String Username = parts[2];
+                    RealLobbyID = lobbyId;
                     String response = server.joinLobby(lobbyId, this.clientId, joinPassword , Username);
                     sendMessage(response);
                 }
@@ -218,9 +246,28 @@ class ClientHandler implements Runnable {
             case "LEAVE_LOBBY":
                 if (parts.length > 1) {
                     String lobbyToLeave = parts[1];
+                    RealLobbyID = "NOLobby";
                     server.leaveLobby(lobbyToLeave, this.clientId);
                 }
                 break;
+
+            case "SEND_PLAYERS":
+                String Response = server.getOnlinePlayersString();
+                sendMessage(Response);
+                break;
+
+            case "REACTION":
+                String Type = parts[1];
+                String Number = parts[2];
+                System.out.println("Baghali");
+                server.SendReaction(this ,Type , Number);
+                System.out.println("MOZ");
+                break;
+
+            case "TRADE_OFFER":
+                String Username = parts[1];
+                server.SendTradeOffer(this , Username);
+
 
             default:
                 sendMessage("ERROR Unknown command");

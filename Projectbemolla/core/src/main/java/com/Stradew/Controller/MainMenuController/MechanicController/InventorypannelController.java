@@ -12,17 +12,24 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class InventorypannelController {
     private Texture BackGround = GameAssetsManager.getInstance().getInventoryBar();
     private Table Inventorytable;
     private ArrayList<InventorySlot> inventorySlots = new ArrayList<>();
     private ImageButton ChoosenItem;
+    private TextButton Trade = new TextButton("Trade" , GameAssetsManager.getInstance().getSkin());
+    private TextButton HistoryofTrades = new TextButton("History of Trades" , GameAssetsManager.getInstance().getSkin());
+    private SelectBox Users = new SelectBox(GameAssetsManager.getInstance().getSkin());
 
     public Table getInventorytable() {
         return Inventorytable;
@@ -33,7 +40,7 @@ public class InventorypannelController {
     }
 
 
-    public void firstTouch() {
+    public void firstTouch(ArrayList<String> Usernames) {
         Inventorytable.row().pad(40);
         for(int i = 0; i < 36 ;i++)
         {
@@ -52,7 +59,19 @@ public class InventorypannelController {
         style.up = drawable;
         style.down = drawable;
         ChoosenItem = new ImageButton(style);
-        Inventorytable.add(ChoosenItem);
+        Inventorytable.add(ChoosenItem).padRight(200);
+
+        Array<String> Usernamesfortrade = new Array<String>();
+        for(int i = 0; i < Usernames.size(); i++)
+        {
+            if(!Usernames.get(i).equals(App.getCurrentUser().getUsername())) {
+                Usernamesfortrade.add(Usernames.get(i));
+            }
+        }
+        Users.setItems(Usernamesfortrade);
+        Inventorytable.add(Users).padRight(50);
+        Inventorytable.add(Trade);
+        Inventorytable.add(HistoryofTrades);
     }
 
     /*public void Remove(GameMenu menu)
@@ -63,6 +82,23 @@ public class InventorypannelController {
             menu.getBin().setChecked(false);
         }
     }*/
+
+    public void Trade(GameMenu menu)
+    {
+        if(Trade.isChecked())
+        {
+            if(App.ReturnCurrentPlayer().getInventory().getCurrentItem() != null)
+            {
+                menu.getTradeTable().setVisible(true);
+                menu.getMainTable().setVisible(false);
+                menu.getController().getTradeController().setBuyer(true);
+                menu.getController().getTradeController().setSenderName(App.getCurrentUser().getUsername());
+                menu.getController().getTradeController().setGiverName((String) Users.getSelected());
+                App.networkClient.sendMessage("TRADE_OFFER" + " " + (String) Users.getSelected());
+            }
+            Trade.setChecked(false);
+        }
+    }
 
 
     public void Equip(GameMenuController gamecontroller)
@@ -102,7 +138,6 @@ public class InventorypannelController {
 
     public void Update(GameMenuController gamecontroller)
     {
-        Main.getMain().getBatch().draw(BackGround , App.ReturnCurrentPlayer().getX() - 400 , App.ReturnCurrentPlayer().getY()  , 1000 , 1000);
         Equip(gamecontroller);
         for(int i = 0;i < App.ReturnCurrentPlayer().getInventory().getTools().size();i++)
         {

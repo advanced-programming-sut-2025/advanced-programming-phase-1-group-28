@@ -8,6 +8,7 @@ import com.Stradew.Model.PairChanges;
 import com.Stradew.View.MainMenu.GameMenu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -125,12 +126,30 @@ public class OptionsController {
         menu.getBackbutton().setChecked(false);
     }
 
+    public void PrintReaction(GameMenu menu)
+    {
+        if(App.getCurrentGame().getTimeControlPannel().getReactionTime() < 10)
+        {
+            if(menu.getReactionTextSender().charAt(0) == '1') {
+                font.setColor(Color.BLUE);
+                font.draw(Main.getMain().getBatch(), menu.getReactionTextSender() +  "   :    " +  menu.getReactionTextForDisplay() , App.ReturnCurrentPlayer().getX()  + 400 , App.ReturnCurrentPlayer().getY() - 400);
+            }
+            else
+            {
+                font.setColor(Color.BLUE);
+                font.draw(Main.getMain().getBatch(), menu.getReactionTextSender() , App.ReturnCurrentPlayer().getX() + 300  , App.ReturnCurrentPlayer().getY() - 400);
+                 Main.getMain().getBatch().draw(menu.getReactionImageforDisplay() , App.ReturnCurrentPlayer().getX() + 400 , App.ReturnCurrentPlayer().getY() - 400 , 50 ,50);
+            }
+        }
+    }
+
     public void Update(TextButton textButton , GameMenu menu)
     {
         SetEnergyBar(menu);
         PrintClock();
         BuyGreenhouse(textButton , menu);
         InventoeyBuuton(menu);
+        PrintReaction(menu);
     }
 
 

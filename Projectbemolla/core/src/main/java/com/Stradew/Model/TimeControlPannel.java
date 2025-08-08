@@ -5,7 +5,15 @@ public class TimeControlPannel {
     private float TimeWalkForENetgy = 0;
     private float UsingTool = 0;
     private float AnimationPlayer = 0;
+    private float ReactionTime = 1000;
 
+    public float getReactionTime() {
+        return ReactionTime;
+    }
+
+    public void setReactionTime(float reactionTime) {
+        ReactionTime = reactionTime;
+    }
 
     public float getAnimationPlayer() {
         return AnimationPlayer;
@@ -35,6 +43,7 @@ public class TimeControlPannel {
     {
         CheatCodeUse = CheatCodeUse + Delta;
         UsingTool = UsingTool + Delta;
+        ReactionTime = ReactionTime + Delta;
     }
 
     public void setCheatCodeUse(float cheatCodeUse) {

@@ -6,6 +6,7 @@ import com.Stradew.Controller.MainMenuController.MainmenuController;
 import com.Stradew.Main;
 import com.Stradew.Model.App;
 import com.Stradew.Model.GameAssetsManager;
+import com.Stradew.Server.Lobby;
 import com.Stradew.Server.NetworkClient;
 import com.Stradew.Server.ServerMessageHandler;
 import com.badlogic.gdx.Gdx;
@@ -82,7 +83,7 @@ public class MainMenu implements Screen , ServerMessageHandler {
         ScreenUtils.clear(250 , 250 , 250 , 1);
         if(GoToGameMenu)
         {
-            Main.getMain().setScreen(new GameMenu(new GameMenuController()));
+            Main.getMain().setScreen(new GameMenu(new GameMenuController() , new Lobby(null , null , null , null)));
         }
         if(CreateLobbyTable)
         {
