@@ -130,7 +130,7 @@ public class NPCVillageController {
         if(!ok)
         {
             inventorypannelController.setInventorytable(menu.getInventoryTable());
-            inventorypannelController.firstTouch();
+            inventorypannelController.firstTouch(new ArrayList<>());
             ok = true;
         }
         if(menu.getMainTable().isVisible()) {

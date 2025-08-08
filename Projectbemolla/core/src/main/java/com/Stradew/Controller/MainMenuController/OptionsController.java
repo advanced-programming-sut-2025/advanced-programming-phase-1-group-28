@@ -205,6 +205,7 @@ public class OptionsController {
         if(App.getCurrentGame().getTimeControlPannel().getReactionTime() < 10)
         {
             if(menu.getReactionTextSender().charAt(0) == '1') {
+                //Gdx.app.exit();
                 font.setColor(Color.BLUE);
                 font.draw(Main.getMain().getBatch(), menu.getReactionTextSender() +  "   :    " +  menu.getReactionTextForDisplay() , App.ReturnCurrentPlayer().getX()  + 400 , App.ReturnCurrentPlayer().getY() - 400);
             }

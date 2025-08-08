@@ -128,6 +128,43 @@ public class GameMenu implements Screen , ServerMessageHandler {
     private TextButton SeeOnlilnePlayers;
     private TextButton BackFromOnlinePlayers;
 
+
+    public SwitchMenuController getSwitchMenuController() {
+        return switchMenuController;
+    }
+
+    public TextButton getSeeOnlilnePlayers() {
+        return SeeOnlilnePlayers;
+    }
+
+    public Table getReactionTable() {
+        return ReactionTable;
+    }
+
+    public Table getTradeTable() {
+        return TradeTable;
+    }
+
+    public TextButton[] getTextReactions() {
+        return TextReactions;
+    }
+
+    public ImageButton[] getImageReactions() {
+        return ImageReactions;
+    }
+
+    public TextButton getGoreact() {
+        return GoReact;
+    }
+
+    public Lobby getCurrntLobby() {
+        return CurrntLobby;
+    }
+
+    public Table getOnlinePlayers() {
+        return OnlinePlayers;
+    }
+
     public TextButton getQuitFromMiniGame() {
         return QuitFromMiniGame;
     }
@@ -282,7 +319,9 @@ public class GameMenu implements Screen , ServerMessageHandler {
         return mapSprite;
     }
 
-    public GameMenu(GameMenuController controller) {
+    public GameMenu(GameMenuController controller , Lobby lobby) {
+        App.networkClient.setMessageHandler(this);
+        CurrntLobby = lobby;
         switchMenuController = new SwitchMenuController();
         this.controller = controller;
         controller.setMenu(this);
@@ -344,6 +383,7 @@ public class GameMenu implements Screen , ServerMessageHandler {
         GoReact = new TextButton("React", GameAssetsManager.getInstance().getSkin());
 
         TradeTable = new Table();
+        BackFromOnlinePlayers = new TextButton("BackFromOnlinePlayers", GameAssetsManager.getInstance().getSkin());
     }
 
 

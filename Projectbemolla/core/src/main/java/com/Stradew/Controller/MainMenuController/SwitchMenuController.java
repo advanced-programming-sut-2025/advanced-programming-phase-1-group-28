@@ -5,6 +5,7 @@ import com.Stradew.Main;
 import com.Stradew.Model.App;
 import com.Stradew.Model.Npc;
 import com.Stradew.Model.Tools.Pepolee;
+import com.Stradew.Server.Lobby;
 import com.Stradew.View.MainMenu.GameMenu;
 import com.Stradew.View.MainMenu.MechanicGame.HomeMenu.PokhtOPaz;
 import com.Stradew.View.MainMenu.NPCVillage;
@@ -27,7 +28,7 @@ public class SwitchMenuController {
         if (Main.getMain().getBatch().isDrawing()){
             Main.getMain().getBatch().end();
         }
-        Main.getMain().setScreen(new GameMenu(new GameMenuController()));
+        Main.getMain().setScreen(new GameMenu(new GameMenuController() , new Lobby(null ,null ,null , null)));
     }
 
     public void openNpcMenu(Npc npc){
