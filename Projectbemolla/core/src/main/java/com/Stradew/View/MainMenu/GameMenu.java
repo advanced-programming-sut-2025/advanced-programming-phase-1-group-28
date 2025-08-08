@@ -3,6 +3,7 @@ import com.Stradew.Controller.MainMenuController.GameMenuController;
 import com.Stradew.Controller.MainMenuController.MapController;
 import com.Stradew.Controller.MainMenuController.MechanicController.InventorypannelController;
 import com.Stradew.Controller.MainMenuController.MechanicController.NotificationController;
+import com.Stradew.Controller.MainMenuController.SwitchMenuController;
 import com.Stradew.Main;
 import com.Stradew.Model.App;
 import com.Stradew.Model.GameAssetsManager;
@@ -11,6 +12,7 @@ import com.Stradew.Server.ServerMessageHandler;
 import com.Stradew.View.MainMenu.MechanicGame.NotificationDialog;
 import com.Stradew.View.MainMenu.MechanicGame.NotificationMenu;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -121,6 +123,7 @@ public class GameMenu implements Screen , ServerMessageHandler {
     private TextButton notifications;
     private ParticleEffect SnowEffect;
     private ParticleEffect Lightning;
+    private SwitchMenuController switchMenuController;
     private TextButton QuitFromMiniGame;
     private TextButton SeeOnlilnePlayers;
     private TextButton BackFromOnlinePlayers;
@@ -279,42 +282,8 @@ public class GameMenu implements Screen , ServerMessageHandler {
         return mapSprite;
     }
 
-
-    public TextButton getGoreact() {
-        return GoReact;
-    }
-
-    public Table getReactionTable() {
-        return ReactionTable;
-    }
-
-    public TextButton[] getTextReactions() {
-        return TextReactions;
-    }
-
-    public ImageButton[] getImageReactions() {
-        return ImageReactions;
-    }
-
-    public Lobby getCurrntLobby() {
-        return CurrntLobby;
-    }
-
-    public Table getOnlinePlayers() {
-        return OnlinePlayers;
-    }
-
-    public TextButton getSeeOnlilnePlayers() {
-        return SeeOnlilnePlayers;
-    }
-
-    public Table getTradeTable() {
-        return TradeTable;
-    }
-
-    public GameMenu(GameMenuController controller , Lobby lobby) {
-        CurrntLobby = lobby;
-        App.networkClient.setMessageHandler(this);
+    public GameMenu(GameMenuController controller) {
+        switchMenuController = new SwitchMenuController();
         this.controller = controller;
         controller.setMenu(this);
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -376,6 +345,7 @@ public class GameMenu implements Screen , ServerMessageHandler {
 
         TradeTable = new Table();
     }
+
 
 
     @Override
@@ -445,6 +415,7 @@ public class GameMenu implements Screen , ServerMessageHandler {
         stage.addActor(ReactionTable);
         stage.addActor(OnlinePlayers);
         stage.addActor(InventoryTable);
+
         stage.addActor(SkillTable);
         stage.addActor(MapTable);
         stage.addActor(SocialTable);
@@ -483,6 +454,9 @@ public class GameMenu implements Screen , ServerMessageHandler {
         Main.getMain().getBatch().end();
         stage.act();
         stage.draw();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+            switchMenuController.openNpcVillage();
+        }
     }
 
     @Override
@@ -509,5 +483,4 @@ public class GameMenu implements Screen , ServerMessageHandler {
     public void dispose() {
 
     }
-
 }

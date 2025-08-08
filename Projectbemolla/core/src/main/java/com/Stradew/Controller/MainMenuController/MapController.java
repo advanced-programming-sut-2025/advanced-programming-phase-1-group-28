@@ -10,6 +10,7 @@ import com.Stradew.Model.Tile.Plants;
 import com.Stradew.Model.Tile.Tile;
 import com.Stradew.Model.Tile.Trees;
 import com.Stradew.View.MainMenu.GameMenu;
+import com.Stradew.View.MainMenu.NPCVillage;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -84,6 +85,24 @@ public class MapController {
         mapFrameBuffer.end();
     }
 
+    public void PrintInitialVillage(FrameBuffer mapFrameBuffer  , OrthographicCamera camera)
+    {
+        mapFrameBuffer.begin();
+        Main.getMain().getBatch().begin();
+        Main.getMain().getBatch().setProjectionMatrix(camera.combined);
+        Gdx.gl.glClearColor(0, 0, 0, 0);
+        Gdx.gl.glClear(Gdx.gl.GL_COLOR_BUFFER_BIT);
+        for(int i = 1; i <MAP_ROWS ; i++)
+        {
+            for(int j = 1; j < MAP_COLS ;j++)
+            {
+                UpdateVillage(i , j);
+            }
+        }
+        Main.getMain().getBatch().end();
+        mapFrameBuffer.end();
+    }
+
     public void RenderMap(Sprite mapSprite , FrameBuffer mapFrameBuffer , GameMenu menu , OrthographicCamera camera , OrthographicCamera cam2)
     {
         Main.getMain().getBatch().flush();
@@ -96,6 +115,44 @@ public class MapController {
         {
             Update(App.ReturnCurrentPlayer().getFarm().getChanges().get(i).getX() , App.ReturnCurrentPlayer().getFarm().getChanges().get(i).getY());
             App.ReturnCurrentPlayer().getFarm().getChanges().remove(i);
+        }
+
+        Main.getMain().getBatch().flush();
+        mapFrameBuffer.end();
+        Main.getMain().getBatch().setProjectionMatrix(cam2.combined);
+        cam2.update();
+        mapSprite.setPosition(0 , 0);
+        mapSprite.draw(Main.getMain().getBatch());
+
+        if(App.getCurrentGame().getTime().getHour() > 18)
+        {
+            menu.getShadeColor().set(0.0f , 0.0f , 0.2f , 0.4f);
+        }
+        else
+        {
+            if(App.getCurrentGame().getTime().getSeason() == Season.SUMMER)
+            {
+                menu.getShadeColor().set(1.0f , 0.9f , 0.5f,  0.15f);
+            }
+            else
+            {
+                menu.getShadeColor().set(0, 0, 0,  0);
+            }
+        }
+    }
+
+    public void RenderVillageMap(Sprite mapSprite , FrameBuffer mapFrameBuffer , NPCVillage menu , OrthographicCamera camera , OrthographicCamera cam2)
+    {
+        Main.getMain().getBatch().flush();
+        mapFrameBuffer.begin();
+        camera.update();
+        Main.getMain().getBatch().setProjectionMatrix(camera.combined);
+        //Gdx.gl.glClearColor(0, 0, 0, 0);
+        //Gdx.gl.glClear(Gdx.gl.GL_COLOR_BUFFER_BIT);
+        for(int i = App.getCurrentGame().getNpcVillage().getChanges().size() - 1 ; i >= 0 ; i--)
+        {
+            UpdateVillage(App.getCurrentGame().getNpcVillage().getChanges().get(i).getX() , App.getCurrentGame().getNpcVillage().getChanges().get(i).getY());
+            App.getCurrentGame().getNpcVillage().getChanges().remove(i);
         }
 
         Main.getMain().getBatch().flush();
@@ -216,5 +273,102 @@ public class MapController {
                         Texture Dirt = GameAssetsManager.getInstance().getHowedTexture();
                         Main.getMain().getBatch().draw(Dirt, i * TILE_SIZE , j * TILE_SIZE , TILE_SIZE , TILE_SIZE);
                     }
+    }
+
+    public void UpdateVillage(int i , int j)
+    {
+        Tile[][] TempGround = App.getCurrentGame().getNpcVillage().getGround();
+        boolean ok = false;
+        if(ok)
+        {
+
+        } else if(TempGround[i][j].getEntitity() == Entitity.Minreal) {
+
+        } else if (TempGround[i][j].getTerrain() == Terrain.DIRT) {
+            if(TempGround[i][j].isHow())
+            {
+                Texture HowedDirt = GameAssetsManager.getInstance().getHowedTexture();
+                Main.getMain().getBatch().draw(HowedDirt , i * TILE_SIZE, j * TILE_SIZE , 100 , 100);
+                //Gdx.app.exit();
             }
+            else
+            {
+                Texture Dirt = GameAssetsManager.getInstance().DirtPicture();
+                Main.getMain().getBatch().draw(Dirt , i * TILE_SIZE, j * TILE_SIZE , TILE_SIZE , TILE_SIZE);
+                font.draw(Main.getMain().getBatch(), String.valueOf(i) + "," + String.valueOf(j), i * TILE_SIZE, j * TILE_SIZE);
+            }
+        }
+        else
+        {
+            if(TempGround[i][j].getPlaceType() == PlaceType.CABIN)
+            {
+                if(i-1 > 0 && j - 1 > 0) {
+                    if(TempGround[i-1][j].getPlaceType() != PlaceType.CABIN && TempGround[i][j-1].getPlaceType() != PlaceType.CABIN)
+                    {
+                        Texture Cabin = GameAssetsManager.getInstance().getCabin();
+                        Main.getMain().getBatch().draw(Cabin , i * TILE_SIZE, j * TILE_SIZE , TILE_SIZE * PlaceType.CABIN.XLength , TILE_SIZE * PlaceType.CABIN.YLength);
+                    }
+                }
+            }
+            else
+            {
+                if(TempGround[i][j].getPlaceType() == PlaceType.LAKE)
+                {
+                    Texture Water = GameAssetsManager.getInstance().WaterPicture();
+                    Main.getMain().getBatch().draw(Water , i * TILE_SIZE, j * TILE_SIZE , TILE_SIZE , TILE_SIZE);
+                }
+                else
+                {
+                    if(TempGround[i][j].getPlaceType() == PlaceType.GREENHOUSE)
+                    {
+                        if(i-1 > 0 && j - 1 > 0) {
+                            if(TempGround[i-1][j].getPlaceType() != PlaceType.GREENHOUSE && TempGround[i][j-1].getPlaceType() != PlaceType.GREENHOUSE && !App.ReturnCurrentPlayer().getFarm().getGreenHouse().getLocked())
+                            {
+                                Texture Greenhouse = GameAssetsManager.getInstance().getGreenhouse();
+                                Main.getMain().getBatch().draw(Greenhouse , i * TILE_SIZE, j * TILE_SIZE , TILE_SIZE * PlaceType.GREENHOUSE.XLength , TILE_SIZE * PlaceType.GREENHOUSE.YLength);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if(TempGround[i][j].getEntitity() == Entitity.TREE)
+                        {
+                            //Texture Dirt = GameAssetsManager.getInstance().DirtPicture();
+                            //Main.getMain().getBatch().draw(Dirt , i * TILE_SIZE, j * TILE_SIZE , TILE_SIZE , TILE_SIZE);
+                            Texture Tree  = ((Trees) TempGround[i][j]).getTree().TreeTexture;
+                            Main.getMain().getBatch().draw(Tree , i * TILE_SIZE, j * TILE_SIZE , 30 , 30);
+
+
+                        }
+                        else if(TempGround[i][j].getEntitity() == Entitity.PLANTS)
+                        {
+                            //Texture Dirt = GameAssetsManager.getInstance().DirtPicture();
+                            //Main.getMain().getBatch().draw(Dirt , i * TILE_SIZE, j * TILE_SIZE , TILE_SIZE , TILE_SIZE);
+                            Texture Plant = ((Plants) TempGround[i][j]).getPlant().PlantTexture;
+                            Main.getMain().getBatch().draw(Plant , i * TILE_SIZE, j * TILE_SIZE , 30 , 30);
+                            Plants plants = (Plants) TempGround[i][j];
+                            if(plants.getLastTimeWatering() != null) {
+                                if (plants.getLastTimeWatering().getDay() - App.getCurrentGame().getTime().getDay() > -1) {
+                                    Color Abas = new Color(0.0f, 0.3f, 0.7f, 0.2f);
+                                    Main.getMain().getBatch().setColor(Abas);
+                                    Main.getMain().getBatch().draw(GameAssetsManager.getInstance().GetWaterdTexture(), i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                                    Main.getMain().getBatch().setColor(Color.WHITE);
+                                }
+                            }
+                        } else if(TempGround[i][j].getPlaceType() == PlaceType.QUARRY)
+                        {
+                        } else if(TempGround[i][j].getPlaceType() == PlaceType.Craft) {
+
+                        }
+                    }
+                }
+            }
+        }
+        if(TempGround[i][j].getTerrain() == Terrain.DIRT && TempGround[i][j].isHow())
+        {
+            Texture Dirt = GameAssetsManager.getInstance().getHowedTexture();
+            Main.getMain().getBatch().draw(Dirt, i * TILE_SIZE , j * TILE_SIZE , TILE_SIZE , TILE_SIZE);
+        }
+
+    }
 }

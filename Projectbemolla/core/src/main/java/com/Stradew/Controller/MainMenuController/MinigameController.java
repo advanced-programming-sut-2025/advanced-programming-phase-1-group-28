@@ -208,6 +208,7 @@ public class MinigameController {
         }
     }
 
+
     public void ApplyCoincidence(GameMenu menu , float v)
     {
         if(YPos <= FishYPos && YPos +150 >= FishYPos)

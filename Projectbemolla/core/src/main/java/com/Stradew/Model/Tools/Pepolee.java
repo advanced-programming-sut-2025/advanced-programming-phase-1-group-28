@@ -36,6 +36,7 @@ public class Pepolee {
     private User CharacterUser;
     private Buff buff = new Buff();
     private int newMessages = 0;
+    private boolean isInNpcVillage = false;
     private ArrayList<Gift> upcomingGifts = new ArrayList<>();
     private ArrayList<Trade> upcomingTrade = new ArrayList<>();
     private ArrayList<Trade> tradeHistory = new ArrayList<>();
@@ -262,5 +263,13 @@ public class Pepolee {
 
     public void setNewMessages(int newMessages) {
         this.newMessages = newMessages;
+    }
+
+    public boolean isInNpcVillage() {
+        return isInNpcVillage;
+    }
+
+    public void setInNpcVillage(boolean inNpcVillage) {
+        isInNpcVillage = inNpcVillage;
     }
 }

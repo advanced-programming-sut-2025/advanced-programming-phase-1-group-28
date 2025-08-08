@@ -8,8 +8,19 @@ import com.Stradew.Model.Item.Food;
 import com.Stradew.Model.Item.Item;
 import com.Stradew.Model.Ref;
 import com.Stradew.Model.Tools.Pepolee;
+import com.Stradew.View.MainMenu.MechanicGame.HomeMenu.PokhtOPaz;
 
 public class PokhtOPazController {
+
+    PokhtOPaz pokhtOPaz;
+
+    public PokhtOPaz getPokhtOPaz() {
+        return pokhtOPaz;
+    }
+
+    public void setPokhtOPaz(PokhtOPaz pokhtOPaz) {
+        this.pokhtOPaz = pokhtOPaz;
+    }
 
     public void ApplyPickFromRef(String ItemName)
     {

@@ -1,6 +1,11 @@
 package com.Stradew.Controller.MainMenuController;
 
 import com.Stradew.Controller.MainMenuController.HomeMenucontroller.PokhtOPazController;
+import com.Stradew.Controller.MainMenuController.MapController;
+import com.Stradew.Controller.MainMenuController.MinigameController;
+import com.Stradew.Controller.MainMenuController.OptionsController;
+import com.Stradew.Controller.MainMenuController.SkillPannelController;
+import com.Stradew.Controller.MainMenuController.SwitchMenuController;
 import com.Stradew.Controller.MainMenuController.MechanicController.InventorypannelController;
 import com.Stradew.Controller.MainMenuController.MechanicController.SocialPannelController;
 import com.Stradew.Controller.PepoleeContoller;
@@ -16,8 +21,8 @@ import com.Stradew.Model.Tools.Pepolee;
 import com.Stradew.Model.Tools.ShippingBin;
 import com.Stradew.Model.Tools.Tools;
 import com.Stradew.View.Appview;
-import com.Stradew.View.MainMenu.GameMenu;
 import com.Stradew.View.MainMenu.MechanicGame.HomeMenu.PokhtOPaz;
+import com.Stradew.View.MainMenu.NPCVillage;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
@@ -26,7 +31,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 
 import java.util.ArrayList;
 
-public class GameMenuController {
+public class NPCVillageController {
 
 
     public PepoleeContoller getPepoleeController() {
@@ -43,7 +48,7 @@ public class GameMenuController {
                 return;
             }
         }
-        GameMenuController Abbas2 = new GameMenuController();
+        NPCVillageController Abbas2 = new NPCVillageController();
         if(!Abbas2.IsInAnotherGame(PlayersInGame)) {
             System.out.println("Your Friend are in the game");
             return;
@@ -60,7 +65,7 @@ public class GameMenuController {
         return inventorypannelController;
     }
 
-    GameMenu menu;
+    NPCVillage menu;
     private MinigameController minigameController = new MinigameController();
     private PepoleeContoller pepoleeController = new PepoleeContoller();
     private MapController mapController = new MapController();
@@ -72,30 +77,13 @@ public class GameMenuController {
     private SkillPannelController skillPannelController = new SkillPannelController();
     private SocialPannelController socialPannelController = new SocialPannelController();
     private SwitchMenuController switchMenuController = new SwitchMenuController();
-    private OnlinePlayersController onlinePlayersController = new OnlinePlayersController();
-    private ReactionController reactionController = new ReactionController();
-    private TradeController tradeController = new TradeController();
-
-
-    public TradeController getTradeController() {
-        return tradeController;
-    }
-
-    public OptionsController getOptionsController() {
-        return optionsController;
-    }
-
-    public OnlinePlayersController getOnlinePlayersController() {
-        return onlinePlayersController;
-    }
-
     private boolean ok = false;
 
-    public void setMenu(GameMenu menu) {
+    public void setMenu(NPCVillage menu) {
         this.menu = menu;
     }
 
-    public void SetEnergyBar(GameMenu menu)
+    public void SetEnergyBar(NPCVillage menu)
     {
 
     }
@@ -142,14 +130,13 @@ public class GameMenuController {
         if(!ok)
         {
             inventorypannelController.setInventorytable(menu.getInventoryTable());
-            inventorypannelController.firstTouch(menu.getCurrntLobby().getUsernames());
+            inventorypannelController.firstTouch();
             ok = true;
         }
         if(menu.getMainTable().isVisible()) {
-            mapController.HandleBuyGreenhouseButton(menu);
-            mapController.RenderMap(menu.getMapSprite(), menu.getMapFrameBuffer(), menu , menu.getFboCamera() , menu.getCamera());
-            pepoleeController.Update(menu ,App.ReturnCurrentPlayer(), v);
-            optionsController.Update(menu.getGreenhouseHoverButton() , menu);
+            mapController.RenderVillageMap(menu.getMapSprite(), menu.getMapFrameBuffer(), menu , menu.getFboCamera() , menu.getCamera());
+            pepoleeController.UpdateVillage(menu ,App.ReturnCurrentPlayer(), v);
+            optionsController.UpdateVillage(menu.getGreenhouseHoverButton() , menu);
             App.getCurrentGame().getTimeControlPannel().UpdateTimes(v);
             menu.getRaineffect().setPosition(App.ReturnCurrentPlayer().getX()  -Gdx.graphics.getWidth() / 2, App.ReturnCurrentPlayer().getY() - Gdx.graphics.getHeight() / 2);
             menu.getSnowEffect().setPosition(App.ReturnCurrentPlayer().getX() - Gdx.graphics.getWidth() / 2 , App.ReturnCurrentPlayer().getY() - Gdx.graphics.getHeight() /2 );
@@ -167,24 +154,12 @@ public class GameMenuController {
             Main.getMain().getBatch().setColor(menu.getShadeColor());
             Main.getMain().getBatch().draw(menu.getShadeTexture() , App.ReturnCurrentPlayer().getX() - Gdx.graphics.getWidth()/2 , App.ReturnCurrentPlayer().getY() - Gdx.graphics.getHeight() / 2 , Gdx.graphics.getWidth() , Gdx.graphics.getHeight());
             Main.getMain().getBatch().setColor(Color.WHITE);
-            if(menu.getSeeOnlilnePlayers().isChecked())
-            {
-                menu.getOnlinePlayers().setVisible(true);
-                menu.getMainTable().setVisible(false);
-                menu.getSeeOnlilnePlayers().setChecked(false);
-            }
-            if(menu.getGoreact().isChecked())
-            {
-                menu.getReactionTable().setVisible(true);
-                menu.getMainTable().setVisible(false);
-                menu.getGoreact().setChecked(false);
-            }
         }
         if(menu.getSwitchTable().isVisible()) {
-            optionsController.SwitchBeetweenOptions(menu);
+            optionsController.SwitchBetweenOptionsVillage(menu);
         }
         if(menu.getInventoryTable().isVisible()) {
-            inventorypannelController.Update(this);
+            inventorypannelController.UpdateVillage(this);
         }
         if(menu.getSkillTable().isVisible()) {
             skillPannelController.update();
@@ -197,26 +172,9 @@ public class GameMenuController {
         }
         if(menu.getMinigame().isVisible())
         {
-            minigameController.update(menu , v);
+//            minigameController.update(menu , v);
         }
-        if(menu.getOnlinePlayers().isVisible())
-        {
-            if(menu.getBackFromOnlinePlayers().isChecked())
-            {
-                menu.getOnlinePlayers().setVisible(false);
-                menu.getMainTable().setVisible(true);
-                menu.getBackFromOnlinePlayers().setChecked(false);
-            }
-            onlinePlayersController.Update();
-        }
-        if(menu.getReactionTable().isVisible())
-        {
-            reactionController.Update(menu);
-        }
-        if(menu.getTradeTable().isVisible())
-        {
-            tradeController.Update();
-        }
+
     }
 
 
@@ -487,29 +445,29 @@ public class GameMenuController {
         App.dailyLimits.setStarDropSaloon(new int[]{1 , 1 , 1 , 1 , 1 , 1 , 1 , 1 , 1});
         App.dailyLimits.setCarpenterShop(new int[]{1 , 1 , 1 , 1 , 1 , 1 , 1});
         App.dailyLimits.setJojaMart(new int[]
-                {5 , 10 , 5 , 1 , 5 ,
-                        5 , 5 , 5 , 5 , 5 ,
-                        5 , 5 , 5 , 5 , 5 ,
-                        5 , 5 , 5 , 5 , 5 ,
-                        5 , 5 , 10 , 5 , 5 ,
-                        10 , 5 , 5 , 5 , 5 ,
-                        5 , 5 , 5 , 5 , 5 ,
-                        5 , 1 , 10 , 1 , 5});
+            {5 , 10 , 5 , 1 , 5 ,
+                5 , 5 , 5 , 5 , 5 ,
+                5 , 5 , 5 , 5 , 5 ,
+                5 , 5 , 5 , 5 , 5 ,
+                5 , 5 , 10 , 5 , 5 ,
+                10 , 5 , 5 , 5 , 5 ,
+                5 , 5 , 5 , 5 , 5 ,
+                5 , 1 , 10 , 1 , 5});
         App.dailyLimits.setPierreStore(new int[]
-                {
-                        2 , 2 , 1 , 1 , 1 ,
-                        1 , 5 , 5 , 5 , 5 ,
-                        5 , 5 , 5 , 5 , 5 ,
-                        5 , 5 , 5 , 5 , 5 ,
-                        5 , 5 , 5 , 5 , 5 ,
-                        5 , 5 , 5 , 5 , 5 ,
-                        5 , 5 , 5 , 5 , 5 ,
-                        5 , 5 , 5 , 5
-                });
+            {
+                2 , 2 , 1 , 1 , 1 ,
+                1 , 5 , 5 , 5 , 5 ,
+                5 , 5 , 5 , 5 , 5 ,
+                5 , 5 , 5 , 5 , 5 ,
+                5 , 5 , 5 , 5 , 5 ,
+                5 , 5 , 5 , 5 , 5 ,
+                5 , 5 , 5 , 5 , 5 ,
+                5 , 5 , 5 , 5
+            });
         App.dailyLimits.setFishShop(new int[]
-                {
-                        1 , 1 , 1 , 1 , 1 , 1
-                });
+            {
+                1 , 1 , 1 , 1 , 1 , 1
+            });
 
         // empty shipping bin
         for(Tools tools : App.ReturnCurrentPlayer().getInventory().getTools())

@@ -6,6 +6,7 @@ import com.Stradew.Model.Game;
 import com.Stradew.Model.GameAssetsManager;
 import com.Stradew.Model.PairChanges;
 import com.Stradew.View.MainMenu.GameMenu;
+import com.Stradew.View.MainMenu.NPCVillage;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -62,7 +63,26 @@ public class OptionsController {
         }
     }
 
+    public void InventoryButtonVillage(NPCVillage menu)
+    {
+        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE))
+        {
+            menu.getMainTable().setVisible(false);
+            menu.getInventoryTable().setVisible(true);
+            menu.getSwitchTable().setVisible(true);
+        }
+    }
+
     public void SetEnergyBar(GameMenu menu)
+    {
+        if(App.ReturnCurrentPlayer().getEnergy() > menu.getEnergyBar().getMaxValue())
+        {
+            App.ReturnCurrentPlayer().setEnergy((int) menu.getEnergyBar().getMaxValue());
+        }
+        menu.getEnergyBar().setValue(App.ReturnCurrentPlayer().getEnergy());
+    }
+
+    public void SetEnergyBarVillage(NPCVillage menu)
     {
         if(App.ReturnCurrentPlayer().getEnergy() > menu.getEnergyBar().getMaxValue())
         {
@@ -73,6 +93,60 @@ public class OptionsController {
 
 
     public void SwitchBeetweenOptions(GameMenu menu)
+    {
+        if(menu.getInventoryButton().isChecked())
+        {
+            menu.getInventoryTable().setVisible(true);
+            menu.getSwitchTable().setVisible(true);
+            menu.getSocialTable().setVisible(false);
+            menu.getMapTable().setVisible(false);
+            menu.getSkillTable().setVisible(false);
+            menu.getMainTable().setVisible(false);
+        }
+        if(menu.getSkillButton().isChecked())
+        {
+            menu.getInventoryTable().setVisible(false);
+            menu.getSwitchTable().setVisible(true);
+            menu.getSocialTable().setVisible(false);
+            menu.getMapTable().setVisible(false);
+            menu.getSkillTable().setVisible(true);
+            menu.getMainTable().setVisible(false);
+        }
+        if(menu.getSocialButton().isChecked())
+        {
+            menu.getInventoryTable().setVisible(false);
+            menu.getSwitchTable().setVisible(true);
+            menu.getSocialTable().setVisible(true);
+            menu.getMapTable().setVisible(false);
+            menu.getSkillTable().setVisible(false);
+            menu.getMainTable().setVisible(false);
+        }
+        if(menu.getMapButton().isChecked())
+        {
+            menu.getInventoryTable().setVisible(false);
+            menu.getSwitchTable().setVisible(true);
+            menu.getSocialTable().setVisible(false);
+            menu.getMapTable().setVisible(true);
+            menu.getSkillTable().setVisible(false);
+            menu.getMainTable().setVisible(false);
+        }
+        if(menu.getBackbutton().isChecked())
+        {
+            menu.getInventoryTable().setVisible(false);
+            menu.getSwitchTable().setVisible(false);
+            menu.getSocialTable().setVisible(false);
+            menu.getMapTable().setVisible(false);
+            menu.getSkillTable().setVisible(false);
+            menu.getMainTable().setVisible(true);
+        }
+        menu.getInventoryButton().setChecked(false);
+        menu.getSkillButton().setChecked(false);
+        menu.getMapButton().setChecked(false);
+        menu.getSocialButton().setChecked(false);
+        menu.getBackbutton().setChecked(false);
+    }
+
+    public void SwitchBetweenOptionsVillage(NPCVillage menu)
     {
         if(menu.getInventoryButton().isChecked())
         {
@@ -150,6 +224,13 @@ public class OptionsController {
         BuyGreenhouse(textButton , menu);
         InventoeyBuuton(menu);
         PrintReaction(menu);
+    }
+
+    public void UpdateVillage(TextButton textButton , NPCVillage menu)
+    {
+        SetEnergyBarVillage(menu);
+        PrintClock();
+        InventoryButtonVillage(menu);
     }
 
 

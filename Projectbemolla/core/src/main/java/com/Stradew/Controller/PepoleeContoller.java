@@ -12,6 +12,7 @@ import com.Stradew.Model.Tile.Tile;
 import com.Stradew.Model.Tools.Pepolee;
 import com.Stradew.View.MainMenu.CheatCodes;
 import com.Stradew.View.MainMenu.GameMenu;
+import com.Stradew.View.MainMenu.NPCVillage;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -146,6 +147,18 @@ public class PepoleeContoller {
         HandleWalk(player , v);
         CheatCodes();
         UsingTool(menu);
+        idleAnimation(v);
+        player.getPlayerSprite().setPosition(player.getX() , player.getY() - 500);
+        player.getPlayerSprite().draw(Main.getMain().getBatch());
+        player.getPlayerSprite().setSize(700 , 700);
+        PrintTool();
+    }
+
+    public void UpdateVillage(NPCVillage menu , Pepolee player , float v)
+    {
+        HandleWalk(player , v);
+        CheatCodes();
+//        UsingTool(menu);
         idleAnimation(v);
         player.getPlayerSprite().setPosition(player.getX() , player.getY() - 500);
         player.getPlayerSprite().draw(Main.getMain().getBatch());

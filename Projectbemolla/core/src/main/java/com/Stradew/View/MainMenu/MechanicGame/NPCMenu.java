@@ -35,6 +35,7 @@ public class NPCMenu implements Screen {
     public NPCMenu(NPC_Controller npcController, Npc npc) {
         this.npcController = npcController;
         npcController.setNpcMenu(this);
+        stage = new Stage();
 
         feedback = new Label("", GameAssetsManager.getInstance().getSkin());
 
@@ -58,47 +59,49 @@ public class NPCMenu implements Screen {
         questsList.add(backToNpcMenu);
 
         int i = 0;
-        for (Quest quest: npc.getQuests()){
-            Image neededItem = new Image(quest.getGivenItems().getImage());
-            questsList.add(neededItem);
-            Reward reward1 = quest.getRewards();
-            if (reward1.getCoins() != 0){
-                Image coin = new Image(new Texture("Resource/Gold_Bar.png"));
-                questsList.add(coin);
-            } else if (reward1.getItem() != null) {
-                Image item = new Image(reward1.getItem().getImage());
-                questsList.add(item);
-            } else if (reward1.getTool() != null) {
-                Image tool = new Image(reward1.getItem().getImage());
-                questsList.add(tool);
-            }
+        if (npc != null){
+            for (Quest quest : npc.getQuests()) {
+                Image neededItem = new Image(quest.getGivenItems().getImage());
+                questsList.add(neededItem);
+                Reward reward1 = quest.getRewards();
+                if (reward1.getCoins() != 0) {
+                    Image coin = new Image(new Texture("Resource/Gold_Bar.png"));
+                    questsList.add(coin);
+                } else if (reward1.getItem() != null) {
+                    Image item = new Image(reward1.getItem().getImage());
+                    questsList.add(item);
+                } else if (reward1.getTool() != null) {
+                    Image tool = new Image(reward1.getItem().getImage());
+                    questsList.add(tool);
+                }
 
 
-            boolean isLocked = false;
-            if (quest.isQuestCompleted()){
-                Image lock = new Image(new Texture("Emoji/Emojis139.png"));
-                questsList.add(lock);
-                isLocked = true;
-            } else if (quest.getQuestLocked()[App.getCurrentGame().getWhoseTurn()]) {
-                Image lock = new Image(new Texture("Emoji/Emojis131.png"));
-                questsList.add(lock);
-                isLocked = true;
-            } else if (quest.getQuestLockedForever()[App.getCurrentGame().getWhoseTurn()]) {
-                Image lock = new Image(new Texture("Emoji/Emojis119.png"));
-                questsList.add(lock);
-            }
+                boolean isLocked = false;
+                if (quest.isQuestCompleted()) {
+                    Image lock = new Image(new Texture("Emoji/Emojis139.png"));
+                    questsList.add(lock);
+                    isLocked = true;
+                } else if (quest.getQuestLocked()[App.getCurrentGame().getWhoseTurn()]) {
+                    Image lock = new Image(new Texture("Emoji/Emojis131.png"));
+                    questsList.add(lock);
+                    isLocked = true;
+                } else if (quest.getQuestLockedForever()[App.getCurrentGame().getWhoseTurn()]) {
+                    Image lock = new Image(new Texture("Emoji/Emojis119.png"));
+                    questsList.add(lock);
+                }
 
-            if (!isLocked) {
-                TextButton completeQuest = new TextButton("Do quest", GameAssetsManager.getInstance().getSkin());
-                int finalI = i;
-                completeQuest.addListener(new ClickListener() {
-                    @Override
-                    public void clicked(InputEvent event, float x, float y) {
-                        finishQuest(npc.getId(), finalI);
-                    }
-                });
-                i++;
-                questsList.add(completeQuest);
+                if (!isLocked) {
+                    TextButton completeQuest = new TextButton("Do quest", GameAssetsManager.getInstance().getSkin());
+                    int finalI = i;
+                    completeQuest.addListener(new ClickListener() {
+                        @Override
+                        public void clicked(InputEvent event, float x, float y) {
+                            finishQuest(npc.getId(), finalI);
+                        }
+                    });
+                    i++;
+                    questsList.add(completeQuest);
+                }
             }
         }
 
@@ -134,18 +137,16 @@ public class NPCMenu implements Screen {
 
     }
 
-    public void meetNPC(String npcName){
+    public String meetNPC(String npcName){
         Npc npc = App.getCurrentGame().getNPCWithName(npcName);
         if (npc == null){
-            System.out.println("there is no npc with this name.");
-            return;
+            return ("there is no npc with this name.");
         }
-        if (!App.npcController.isNpcCloseEnough(npc)){
-            System.out.println("You are too far away!");
-            return;
-        }
-        System.out.println("Npc said: ");
-        System.out.println(App.npcController.meetNpc(npc));
+//        if (!App.npcController.isNpcCloseEnough(npc)){
+//            return ("You are too far away!");
+//        }
+//        System.out.println("Npc said: ");
+        return (App.npcController.meetNpc(npc));
     }
 
     public void giftNPC(String npcName, String itemName){
