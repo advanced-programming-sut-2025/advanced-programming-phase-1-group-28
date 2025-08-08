@@ -320,7 +320,9 @@ public class GameMenu implements Screen , ServerMessageHandler {
     }
 
     public GameMenu(GameMenuController controller , Lobby lobby) {
-        App.networkClient.setMessageHandler(this);
+        if (App.networkClient != null) {
+            App.networkClient.setMessageHandler(this);
+        }
         CurrntLobby = lobby;
         switchMenuController = new SwitchMenuController();
         this.controller = controller;

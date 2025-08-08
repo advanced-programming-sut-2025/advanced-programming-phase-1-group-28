@@ -19,6 +19,7 @@ public class MechanicGame implements Screen {
     MechanicController mechanicController = App.mechanicController;
     Stage stage;
     Skin skin;
+    Animal myAnimal;
 
     Label feedback;
     Label info;
@@ -38,14 +39,19 @@ public class MechanicGame implements Screen {
     Table products;
     Table switchButtons;
 
-    public MechanicGame(MechanicController mechanicController, Animal myAnimal) {
+    public MechanicGame(MechanicController mechanicController) {
         this.mechanicController = mechanicController;
         mechanicController.setMechanicGame(this);
         skin = GameAssetsManager.getInstance().getSkin();
 
         feedback = new Label("", skin);
-        info = new Label(this.ShowAnimal(myAnimal), skin);
-        allProducts = new Label(this.ShowAllAvailableProducts(myAnimal), skin);
+        if (myAnimal != null){
+            info = new Label(this.ShowAnimal(myAnimal), skin);
+            allProducts = new Label(this.ShowAllAvailableProducts(myAnimal), skin);
+        }else {
+            info = new Label("", skin);
+            allProducts = new Label("", skin);
+        }
 
         X = new TextField("X", skin);
         Y = new TextField("Y", skin);
@@ -296,7 +302,17 @@ public class MechanicGame implements Screen {
     {
 
     }
-    //Tow above Functions maybe Move To Another Places
+
+    public Animal getMyAnimal() {
+        return myAnimal;
+    }
+
+    public void setMyAnimal(Animal myAnimal) {
+        this.myAnimal = myAnimal;
+        info.setText(this.ShowAnimal(myAnimal));
+        allProducts.setText(this.ShowAllAvailableProducts(myAnimal));
+    }
+//Tow above Functions maybe Move To Another Places
 
     @Override
     public void show() {

@@ -65,6 +65,9 @@ public class InventorypannelController {
         Array<String> Usernamesfortrade = new Array<String>();
         for(int i = 0; i < Usernames.size(); i++)
         {
+            if (Usernames.get(i) == null){
+                continue;
+            }
             if(!Usernames.get(i).equals(App.getCurrentUser().getUsername())) {
                 Usernamesfortrade.add(Usernames.get(i));
             }
