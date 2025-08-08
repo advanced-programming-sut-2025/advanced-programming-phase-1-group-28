@@ -12,6 +12,8 @@ import com.Stradew.Controller.MainMenuController.MechanicController.UseToolContr
 import com.Stradew.Controller.MainMenuController.MechanicController.NPC_Controller;
 import com.Stradew.Controller.MainMenuController.ProfileMenuController;
 import com.Stradew.Controller.SignUpController;
+import com.Stradew.Model.Enums.Animals;
+import com.Stradew.Model.Tile.Animal;
 import com.Stradew.Model.Tools.Pepolee;
 import com.Stradew.Server.NetworkClient;
 import com.Stradew.View.Appview;
@@ -56,7 +58,7 @@ public class App {
     public static ProfileMenuController profileMenuController = new ProfileMenuController();
     public static MechanicController mechanicController = new MechanicController();
     public static NPC_Controller npcController = new NPC_Controller();
-    public static MechanicGame mechanicGame = new MechanicGame();
+    public static MechanicGame mechanicGame = new MechanicGame(new MechanicController());
     public static FarmingController farmingController = new FarmingController();
     public static Farming farming = new Farming();
     public static CraftingController craftingController = new CraftingController();

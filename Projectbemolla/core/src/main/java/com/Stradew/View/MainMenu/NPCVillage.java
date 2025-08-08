@@ -345,7 +345,7 @@ public class NPCVillage implements Screen {
             NPCActor npcActor = new NPCActor(npc, new Runnable() {
                 @Override
                 public void run() {
-                    switchMenuController.openNpcMenu(npc);
+                    switchMenuController.openNpcMenu(npc, stage);
                 }
             });
             constantStage.addActor(npcActor);
@@ -379,7 +379,7 @@ public class NPCVillage implements Screen {
             PeepleeActor peepleeActor = new PeepleeActor(pepolee, new Runnable() {
                 @Override
                 public void run() {
-                    switchMenuController.openFriendshipMenu(pepolee);
+                    switchMenuController.openFriendshipMenu(pepolee, stage);
                 }
             });
             constantStage.addActor(peepleeActor);

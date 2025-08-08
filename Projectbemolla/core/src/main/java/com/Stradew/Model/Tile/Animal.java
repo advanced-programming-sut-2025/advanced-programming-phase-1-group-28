@@ -3,6 +3,7 @@ package com.Stradew.Model.Tile;
 import com.Stradew.Model.Enums.*;
 import com.Stradew.Model.Item.Ingredient;
 import com.Stradew.Model.Item.Item;
+import com.badlogic.gdx.graphics.Texture;
 
 import java.util.ArrayList;
 
@@ -15,6 +16,7 @@ public class Animal extends Tile{
     private boolean pettedToday = false;
     private ArrayList<Ingredient> products = new ArrayList<>();
     private boolean isInside = true;
+    private Texture image = new Texture("Animals/Ostrich.png");
 
     public Animal(String petName, Animals animalType) {
         super(Terrain.GRASS , PlaceType.NORMAL , Entitity.ANIMAL);
@@ -172,4 +174,11 @@ public class Animal extends Tile{
         return (int) price;
     }
 
+    public Texture getImage() {
+        return image;
+    }
+
+    public void setImage(Texture image) {
+        this.image = image;
+    }
 }
