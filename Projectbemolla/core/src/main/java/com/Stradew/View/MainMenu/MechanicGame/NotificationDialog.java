@@ -1,19 +1,16 @@
-package com.Stradew.View.MainMenu.MechanicGame; // یا هر پکیجی که برای UI در نظر دارید
+package com.Stradew.View.MainMenu.MechanicGame;
 
 import com.Stradew.Controller.MainMenuController.MechanicController.FriendShipController;
 import com.Stradew.Model.App;
 import com.Stradew.Model.Gift;
-import com.Stradew.View.MainMenu.MechanicGame.Friendship; // اطمینان حاصل کنید که این import صحیح است
+import com.Stradew.View.MainMenu.MechanicGame.Friendship;
 import com.Stradew.View.MainMenu.ShowFigures;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 
-/**
- * این کلاس یک پنجره دیالوگ برای نمایش نوتیفیکیشن‌ها، هدایای پیش‌رو و تاریخچه است.
- * این کلاس جایگزین Screen کامل NotificationMenu می‌شود تا به صورت یک پاپ‌آپ روی بازی نمایش داده شود.
- */
+
 public class NotificationDialog extends Dialog {
 
     private Friendship friendship;

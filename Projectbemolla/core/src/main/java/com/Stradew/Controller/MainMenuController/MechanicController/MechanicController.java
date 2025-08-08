@@ -11,10 +11,21 @@ import com.Stradew.Model.Tile.Animal;
 import com.Stradew.Model.Tools.Pepolee;
 import com.Stradew.Model.Tools.Tools;
 import com.Stradew.Model.Tools.TrashCan;
+import com.Stradew.View.MainMenu.MechanicGame.MechanicGame;
 
 import java.util.ArrayList;
 
 public class MechanicController {
+    MechanicGame mechanicGame;
+
+    public MechanicGame getMechanicGame() {
+        return mechanicGame;
+    }
+
+    public void setMechanicGame(MechanicGame mechanicGame) {
+        this.mechanicGame = mechanicGame;
+    }
+
     public boolean IsWalkable(int x , int y)
     {
         if(x > 0 && y > 0 && x < 200 && y < 200) {
@@ -363,6 +374,8 @@ public class MechanicController {
             inventory.addItem(ingredient);
         }
     }
+
+
 
     public boolean IsSellable(Item item)
     {
