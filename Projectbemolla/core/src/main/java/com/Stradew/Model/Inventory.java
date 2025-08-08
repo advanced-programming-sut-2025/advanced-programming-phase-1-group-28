@@ -1,9 +1,13 @@
 package com.Stradew.Model;
 
+import com.Stradew.Model.Enums.Minerals;
+import com.Stradew.Model.Enums.Plants;
 import com.Stradew.Model.Enums.Saplings;
 import com.Stradew.Model.Enums.Seeds;
 import com.Stradew.Model.Enums.Tools.*;
 import com.Stradew.Model.Item.Item;
+import com.Stradew.Model.Item.MineralItem;
+import com.Stradew.Model.Item.PlantsItem;
 import com.Stradew.Model.Tools.*;
 
 import java.util.ArrayList;
@@ -163,6 +167,29 @@ public class Inventory {
         }
         return seedsSize;
     }
+
+    public Item ReturnItemWithNAme(String ItemName)
+    {
+        for(Plants plants : Plants.values())
+        {
+            if(plants.toString().equals(ItemName))
+            {
+                return new PlantsItem(1, plants);
+            }
+        }
+        for(Minerals minerals : Minerals.values())
+        {
+            if(minerals.toString().equals(ItemName))
+            {
+                return new MineralItem(1, minerals);
+            }
+        }
+        return null;
+    }
+
+
+
+
 
     public int calculateSaplingsSize()
     {

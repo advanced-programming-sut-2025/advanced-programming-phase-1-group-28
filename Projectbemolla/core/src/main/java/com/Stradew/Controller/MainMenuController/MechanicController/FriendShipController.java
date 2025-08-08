@@ -220,6 +220,21 @@ public class FriendShipController {
         currentPlayer.removeTradeByID(id);
     }
 
+    public void SellTrade(int Price)
+    {
+        App.ReturnCurrentPlayer().addCoin(Price);
+        App.ReturnCurrentPlayer().getInventory().removeItem(App.ReturnCurrentPlayer().getInventory().getCurrentItem());
+        App.ReturnCurrentPlayer().getInventory().setCurrentItem(null);
+    }
+
+    public void GetTreade(String ItemName , int Price)
+    {
+        Item offerItem = App.ReturnCurrentPlayer().getInventory().ReturnItemWithNAme(ItemName);
+        App.ReturnCurrentPlayer().getInventory().addItem(offerItem);
+        App.ReturnCurrentPlayer().addCoin(-1 * Price);
+    }
+
+
     public void acceptTrade(Trade trade){
         Pepolee currentPlayer = App.ReturnCurrentPlayer();
         Pepolee otherPlayer = App.getCurrentGame().getPlayerByUsername(trade.getSender());

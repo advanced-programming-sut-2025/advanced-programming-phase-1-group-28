@@ -56,6 +56,7 @@ public class GameMenu implements Screen , ServerMessageHandler {
             {
                 ReactionTextSender = "1" + parts[1];
                 ReactionTextForDisplay = GameAssetsManager.getInstance().StringsReactionsText[Integer.parseInt(parts[3])];
+
             }
             else
             {
@@ -74,6 +75,47 @@ public class GameMenu implements Screen , ServerMessageHandler {
                 controller.getTradeController().setBuyer(true);
                 MainTable.setVisible(false);
                 TradeTable.setVisible(true);
+            }
+        }
+
+        if(command.equals("USER_RANK_INFO"))
+        {
+            if(parts[1].equals(CurrntLobby.getId()))
+            {
+                for(int i = 0;i < CurrntLobby.getUsernames().size() ; i++)
+                {
+                    if(CurrntLobby.getUsernames().get(i).equals(parts[2]))
+                    {
+                        CurrntLobby.getCoins().set(i , Integer.parseInt(parts[3]));
+                        CurrntLobby.getNumOfQuests().set(i , Integer.parseInt(parts[4]));
+                        CurrntLobby.getSumLevelSkills().set(i , Integer.parseInt(parts[5]));
+                    }
+                }
+            }
+        }
+        if(command.equals("TRADE_INFO"))
+        {
+            if(parts[1].equals(App.getCurrentUser().getUsername()))
+            {
+                controller.getFriendShipController().GetTreade(parts[2] , 50);
+            }
+        }
+        if(command.equals("ACCEPT_TRADE"))
+        {
+            if(parts[2].equals(App.getCurrentUser().getUsername()))
+            {
+                App.networkClient.sendMessage("TRADE_INFO " + parts[1] + " " + App.ReturnCurrentPlayer().getInventory().getCurrentItem().getName());
+                controller.getFriendShipController().SellTrade(50);
+                TradeTable.setVisible(false);
+                MainTable.setVisible(true);
+            }
+        }
+        if(command.equals("REJECT_TRADE"))
+        {
+            if(parts[2].equals(App.getCurrentUser().getUsername()))
+            {
+                TradeTable.setVisible(false);
+                MainTable.setVisible(true);
             }
         }
     }
@@ -127,6 +169,7 @@ public class GameMenu implements Screen , ServerMessageHandler {
     private TextButton QuitFromMiniGame;
     private TextButton SeeOnlilnePlayers;
     private TextButton BackFromOnlinePlayers;
+    private TextButton Ranking;
 
 
     public SwitchMenuController getSwitchMenuController() {
@@ -229,7 +272,17 @@ public class GameMenu implements Screen , ServerMessageHandler {
     private Table SwitchTable;
     private Table ReactionTable;
     private Table TradeTable;
+    private Table RankingTable;
+    private Table RankingTable2;
 
+
+    public Table getRankingTable() {
+        return RankingTable;
+    }
+
+    public TextButton getRanking() {
+        return Ranking;
+    }
 
     private TextButton[] TextReactions;
     private ImageButton[] ImageReactions;
@@ -311,6 +364,10 @@ public class GameMenu implements Screen , ServerMessageHandler {
         return shadeColor;
     }
 
+    public Table getRankingTable2() {
+        return RankingTable2;
+    }
+
     public FrameBuffer getMapFrameBuffer() {
         return mapFrameBuffer;
     }
@@ -384,6 +441,10 @@ public class GameMenu implements Screen , ServerMessageHandler {
 
         TradeTable = new Table();
         BackFromOnlinePlayers = new TextButton("BackFromOnlinePlayers", GameAssetsManager.getInstance().getSkin());
+
+        Ranking = new TextButton("Ranking", GameAssetsManager.getInstance().getSkin());
+        RankingTable = new Table();
+        RankingTable2 = new Table();
     }
 
 
@@ -418,6 +479,7 @@ public class GameMenu implements Screen , ServerMessageHandler {
         MainTable.add(notifications);
         MainTable.add(SeeOnlilnePlayers);
         MainTable.add(GoReact);
+        MainTable.add(Ranking);
         stage.addActor(MainTable);
 
         Minigame.setFillParent(true);
@@ -449,9 +511,19 @@ public class GameMenu implements Screen , ServerMessageHandler {
 
         TradeTable.setFillParent(true);
         TradeTable.setVisible(false);
-        TradeTable.left();
+        TradeTable.center();
 
+        RankingTable.setFillParent(true);
+        RankingTable.setVisible(false);
+        RankingTable.center();
 
+        RankingTable2.setFillParent(true);
+        RankingTable2.setVisible(false);
+        RankingTable2.top().right();
+
+        stage.addActor(RankingTable2);
+        stage.addActor(RankingTable);
+        stage.addActor(TradeTable);
         stage.addActor(ReactionTable);
         stage.addActor(OnlinePlayers);
         stage.addActor(InventoryTable);

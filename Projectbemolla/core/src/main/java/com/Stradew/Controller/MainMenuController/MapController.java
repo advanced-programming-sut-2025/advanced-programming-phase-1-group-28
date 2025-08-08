@@ -251,14 +251,14 @@ public class MapController {
                                         Texture Plant = ((Plants) TempGround[i][j]).getPlant().PlantTexture;
                                         Main.getMain().getBatch().draw(Plant , i * TILE_SIZE, j * TILE_SIZE , 30 , 30);
                                         Plants plants = (Plants) TempGround[i][j];
-                                        if(plants.getLastTimeWatering() != null) {
+                                        /*if(plants.getLastTimeWatering() != null) {
                                             if (plants.getLastTimeWatering().getDay() - App.getCurrentGame().getTime().getDay() > -1) {
                                                 Color Abas = new Color(0.0f, 0.3f, 0.7f, 0.2f);
                                                 Main.getMain().getBatch().setColor(Abas);
                                                 Main.getMain().getBatch().draw(GameAssetsManager.getInstance().GetWaterdTexture(), i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE);
                                                 Main.getMain().getBatch().setColor(Color.WHITE);
                                             }
-                                        }
+                                        }*/
                                     } else if(TempGround[i][j].getPlaceType() == PlaceType.QUARRY)
                                     {
                                     } else if(TempGround[i][j].getPlaceType() == PlaceType.Craft) {

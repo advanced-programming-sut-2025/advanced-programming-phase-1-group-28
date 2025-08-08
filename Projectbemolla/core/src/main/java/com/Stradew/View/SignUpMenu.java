@@ -29,6 +29,7 @@ public class SignUpMenu implements Screen {
     TextButton Confirm;
     Label ErrorMessage;
     TextButton Back;
+    private TextButton Random;
     Stage stage;
     Table SignupTable;
     Table SequrityQuestions;
@@ -87,6 +88,10 @@ public class SignUpMenu implements Screen {
         return Back;
     }
 
+    public TextButton getRandom() {
+        return Random;
+    }
+
     private TextButton ConfirmAnswer;
 
     public SignUpMenu(SignUpController signUpController) {
@@ -119,6 +124,7 @@ public class SignUpMenu implements Screen {
         Answer = new TextField("Answer" , GameAssetsManager.getInstance().getSkin());
         Answer.setMessageText("Your Answer");
         ConfirmAnswer = new TextButton("Submit Answer", GameAssetsManager.getInstance().getSkin());
+        Random = new TextButton("Random", GameAssetsManager.getInstance().getSkin());
     }
 
     @Override
@@ -132,7 +138,8 @@ public class SignUpMenu implements Screen {
         SignupTable.add(Username).width(400).height(100).padBottom(20).row();
 
         SignupTable.add(new Label("Password:", GameAssetsManager.getInstance().getSkin())).right().padRight(10);
-        SignupTable.add(Password).width(400).height(100).padBottom(30).row();
+        SignupTable.add(Password).width(400).height(100);
+        SignupTable.add(Random).width(100).height(100).padBottom(30).row();
 
         SignupTable.add(new Label("Email:", GameAssetsManager.getInstance().getSkin())).right().padRight(10);
         SignupTable.add(Email).width(400).height(100).padBottom(30).row();

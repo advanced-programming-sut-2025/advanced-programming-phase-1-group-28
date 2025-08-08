@@ -86,10 +86,27 @@ public class GameServer {
         broadcastLobbyUpdate();
     }
 
+    public synchronized void SendInfoForRanking(ClientHandler client , String LobbyID , String Coin , String NumberOfQuests , String SumLevelSkills ) {
+        broadcastMessage("USER_RANK_INFO" + " " +  LobbyID + " " +  client.getRealUsername() + " " + Coin + " " + NumberOfQuests + " " + SumLevelSkills);
+    }
+
     public synchronized void SendTradeOffer(ClientHandler client , String Username)
     {
         broadcastMessage("SEND_TRADE_OFFER" + " " + Username + " " + client.getRealUsername());
     }
+
+    public synchronized void SendTradeREsult(ClientHandler client , String Username , String Type)
+    {
+        if(Type.equals("AC"))
+        {
+            broadcastMessage("ACCEPT_TRADE " + client.getRealUsername() + " " + Username);
+        }
+        if(Type.equals("RE"))
+        {
+            broadcastMessage("REJECT_TRADE " + client.getRealUsername() + " " + Username);
+        }
+    }
+
 
     public String getLobbyListString() {
         if(activeLobbies.isEmpty()) {
@@ -108,7 +125,6 @@ public class GameServer {
             .map(ClientHandler::ReturnInfoUser)
             .collect(Collectors.joining("|"));
     }
-
 
     public void broadcastLobbyUpdate() {
         broadcastMessage(getLobbyListString());
@@ -238,6 +254,7 @@ class ClientHandler implements Runnable {
                     String joinPassword = (parts.length > 3) ? parts[3] : "";
                     String Username = parts[2];
                     RealLobbyID = lobbyId;
+                    RealUsername = Username;
                     String response = server.joinLobby(lobbyId, this.clientId, joinPassword , Username);
                     sendMessage(response);
                 }
@@ -267,7 +284,26 @@ class ClientHandler implements Runnable {
             case "TRADE_OFFER":
                 String Username = parts[1];
                 server.SendTradeOffer(this , Username);
+                break;
 
+            case "INFO_FOR_RANK":
+                String LobbyID = parts[1];
+                String Coins = parts[2];
+                String NumberOfQuests = parts[3];
+                String SumLevelSkills = parts[4];
+                server.SendInfoForRanking(this , LobbyID, Coins, NumberOfQuests, SumLevelSkills);
+                break;
+
+            case "TRADE_RESULT":
+                String TYPEE = parts[1];
+                String Username1 = parts[2];
+                server.SendTradeREsult(this , Username1 , TYPEE);
+                break;
+
+
+            case "TRADE_INFO":
+                server.broadcastMessage(message);
+                break;
 
             default:
                 sendMessage("ERROR Unknown command");

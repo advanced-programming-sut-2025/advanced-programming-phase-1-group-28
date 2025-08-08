@@ -1,7 +1,9 @@
 package com.Stradew.Controller.MainMenuController;
 
 import com.Stradew.Controller.MainMenuController.HomeMenucontroller.PokhtOPazController;
+import com.Stradew.Controller.MainMenuController.MechanicController.FriendShipController;
 import com.Stradew.Controller.MainMenuController.MechanicController.InventorypannelController;
+import com.Stradew.Controller.MainMenuController.MechanicController.RankingTableController;
 import com.Stradew.Controller.MainMenuController.MechanicController.SocialPannelController;
 import com.Stradew.Controller.PepoleeContoller;
 import com.Stradew.Controller.SignUpController;
@@ -60,6 +62,10 @@ public class GameMenuController {
         return inventorypannelController;
     }
 
+    public GameMenu getMenu() {
+        return menu;
+    }
+
     GameMenu menu;
     private MinigameController minigameController = new MinigameController();
     private PepoleeContoller pepoleeController = new PepoleeContoller();
@@ -75,7 +81,12 @@ public class GameMenuController {
     private OnlinePlayersController onlinePlayersController = new OnlinePlayersController();
     private ReactionController reactionController = new ReactionController();
     private TradeController tradeController = new TradeController();
+    private RankingTableController rankingTableController = new RankingTableController();
+    private FriendShipController friendShipController = new FriendShipController();
 
+    public FriendShipController getFriendShipController() {
+        return friendShipController;
+    }
 
     public TradeController getTradeController() {
         return tradeController;
@@ -129,6 +140,12 @@ public class GameMenuController {
 
     public void Update(float v)
     {
+        App.getCurrentGame().getTimeControlPannel().setRankingTime(App.getCurrentGame().getTimeControlPannel().getRankingTime() + v);
+        if(App.getCurrentGame().getTimeControlPannel().getRankingTime() > 5)
+        {
+            App.networkClient.SendInfoForRanking(menu.getCurrntLobby().getId());
+            App.getCurrentGame().getTimeControlPannel().setRankingTime(0);
+        }
         menu.getNotifications().setText(String.format("%d", App.ReturnCurrentPlayer().getNewMessages()));
         if(App.ReturnCurrentPlayer().getEnergy() < 0)
         {
@@ -143,6 +160,8 @@ public class GameMenuController {
         {
             inventorypannelController.setInventorytable(menu.getInventoryTable());
             inventorypannelController.firstTouch(menu.getCurrntLobby().getUsernames());
+            tradeController.FirstTouch(menu);
+            rankingTableController.FirstTouch(menu);
             ok = true;
         }
         if(menu.getMainTable().isVisible()) {
@@ -178,6 +197,13 @@ public class GameMenuController {
                 menu.getReactionTable().setVisible(true);
                 menu.getMainTable().setVisible(false);
                 menu.getGoreact().setChecked(false);
+            }
+            if(menu.getRanking().isChecked())
+            {
+                menu.getRankingTable().setVisible(true);
+                menu.getRankingTable2().setVisible(true);
+                menu.getMainTable().setVisible(false);
+                menu.getRanking().setChecked(false);
             }
         }
         if(menu.getSwitchTable().isVisible()) {
@@ -215,7 +241,11 @@ public class GameMenuController {
         }
         if(menu.getTradeTable().isVisible())
         {
-            tradeController.Update();
+            tradeController.Update(menu , v);
+        }
+        if(menu.getRankingTable().isVisible())
+        {
+            rankingTableController.Update(menu);
         }
     }
 

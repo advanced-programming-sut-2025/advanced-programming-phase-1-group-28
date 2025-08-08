@@ -25,10 +25,25 @@ import java.util.stream.Collectors;
         private final String password; // Can be null for public lobbies
         private final List<String> playerIds = new ArrayList<>();
         private ArrayList<String> Usernames = new ArrayList<>();
+        private ArrayList<Integer> SumLevelSkills = new ArrayList<>();
+        private ArrayList<Integer> NumOfQuests = new ArrayList<>();
+        private ArrayList<Integer> Coins = new ArrayList<>();
         private int NumberPlayers;
         private String adminId;
         private Boolean GetStarted = false;
 
+
+        public ArrayList<Integer> getCoins() {
+            return Coins;
+        }
+
+        public ArrayList<Integer> getNumOfQuests() {
+            return NumOfQuests;
+        }
+
+        public ArrayList<Integer> getSumLevelSkills() {
+            return SumLevelSkills;
+        }
 
         public Boolean getGetStarted() {
             return GetStarted;
@@ -55,6 +70,12 @@ import java.util.stream.Collectors;
         }
 
         public Lobby(String name, String adminId, String password , String Usernameid) {
+            for(int i =0 ; i < 5 ; i++)
+            {
+                NumOfQuests.add(0);
+                Coins.add(0);
+                SumLevelSkills.add(0);
+            }
             this.id = "lobby-" + UUID.randomUUID().toString().substring(0, 8);
             this.name = name;
             this.adminId = adminId;

@@ -22,6 +22,16 @@ public class Pepolee {
         return PlayerSprite;
     }
 
+    public int getNumberOfQuests() {
+        return NumberOfQuests;
+    }
+
+    public int GetSumLevelSkills()
+    {
+        return Skills[0].getLevel() + Skills[1].getLevel() + Skills[2].getLevel() + Skills[3].getLevel();
+    }
+
+    private int NumberOfQuests = 0;
     private float x = 1;
     private float y = 1;
     private Farm Farm;

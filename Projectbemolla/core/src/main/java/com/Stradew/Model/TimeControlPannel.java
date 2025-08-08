@@ -6,6 +6,15 @@ public class TimeControlPannel {
     private float UsingTool = 0;
     private float AnimationPlayer = 0;
     private float ReactionTime = 1000;
+    private float RankingTime = 0;
+
+    public float getRankingTime() {
+        return RankingTime;
+    }
+
+    public void setRankingTime(float rankingTime) {
+        RankingTime = rankingTime;
+    }
 
     public float getReactionTime() {
         return ReactionTime;

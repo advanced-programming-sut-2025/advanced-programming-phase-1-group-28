@@ -88,14 +88,16 @@ public class InventorypannelController {
     {
         if(Trade.isChecked())
         {
-            if(App.ReturnCurrentPlayer().getInventory().getCurrentItem() != null)
+            //if(App.ReturnCurrentPlayer().getInventory().getCurrentItem() != null)
             {
                 menu.getTradeTable().setVisible(true);
                 menu.getMainTable().setVisible(false);
-                menu.getController().getTradeController().setBuyer(true);
+                menu.getSwitchTable().setVisible(false);
+                menu.getController().getTradeController().setBuyer(false);
                 menu.getController().getTradeController().setSenderName(App.getCurrentUser().getUsername());
                 menu.getController().getTradeController().setGiverName((String) Users.getSelected());
                 App.networkClient.sendMessage("TRADE_OFFER" + " " + (String) Users.getSelected());
+                menu.getInventoryTable().setVisible(false);
             }
             Trade.setChecked(false);
         }
@@ -173,6 +175,7 @@ public class InventorypannelController {
 
     public void Update(GameMenuController gamecontroller)
     {
+        Trade(gamecontroller.getMenu());
         Equip(gamecontroller);
         for(int i = 0;i < App.ReturnCurrentPlayer().getInventory().getTools().size();i++)
         {

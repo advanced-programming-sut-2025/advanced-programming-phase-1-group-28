@@ -1,15 +1,22 @@
 package com.Stradew.Controller.MainMenuController;
 
+import com.Stradew.Main;
+import com.Stradew.Model.App;
+import com.Stradew.Model.GameAssetsManager;
+import com.Stradew.View.MainMenu.GameMenu;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 public class TradeController {
 
     private Boolean Buyer = false;
-    private TextButton Accept;
-    private TextButton Reject;
+    private TextButton Accept = new TextButton("Accept" , GameAssetsManager.getInstance().getSkin());
+    private TextButton Reject = new TextButton("Reject " , GameAssetsManager.getInstance().getSkin());
     private String SenderName;
     private String GiverName;
+    private BitmapFont font = new BitmapFont();
+
 
     public Boolean getBuyer() {
         return Buyer;
@@ -51,23 +58,52 @@ public class TradeController {
         GiverName = giverName;
     }
 
-    public void FirstTouch()
+    public void FirstTouch(GameMenu menu)
     {
-
+        menu.getTradeTable().add(Accept);
+        menu.getTradeTable().add(Reject);
     }
 
 
-    public void Buy()
+    public void Buy(GameMenu menu)
     {
+        Accept.setVisible(true);
+        Accept.setVisible(true);
+        font.draw(Main.getMain().getBatch(), "You are Buying the Item From" + SenderName , App.ReturnCurrentPlayer().getX() , App.ReturnCurrentPlayer().getY() + 400);
 
+        if(Accept.isChecked())
+        {
+            App.networkClient.sendMessage("TRADE_RESULT " + "AC" + " " +  SenderName);
+            menu.getMainTable().setVisible(true);
+            menu.getTradeTable().setVisible(false);
+            Accept.setChecked(false);
+        }
+        if(Reject.isChecked())
+        {
+            menu.getMainTable().setVisible(true);
+            menu.getTradeTable().setVisible(false);
+            App.networkClient.sendMessage("TRADE_RESULT " + "RE" + " " + SenderName);
+            Reject.setChecked(false);
+        }
     }
 
-    public void Sell()
+    public void Sell(GameMenu menu)
     {
-
+        Accept.setVisible(false);
+        Reject.setVisible(false);
+        font.draw(Main.getMain().getBatch(),"You are Selling the item To " + GiverName ,  App.ReturnCurrentPlayer().getX(), App.ReturnCurrentPlayer().getY() + 400);
     }
 
-    public void Update()
-    {}
+    public void Update(GameMenu menu , float v)
+    {
+        if(Buyer)
+        {
+            Buy(menu);
+        }
+        else
+        {
+            Sell(menu);
+        }
+    }
 
 }

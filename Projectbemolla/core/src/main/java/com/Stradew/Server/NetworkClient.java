@@ -1,5 +1,7 @@
 package com.Stradew.Server;
 
+import com.Stradew.Model.App;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -58,6 +60,12 @@ public class NetworkClient implements Runnable {
             close();
         }
     }
+
+    public void SendInfoForRanking(String LobbyID)
+    {
+        sendMessage("INFO_FOR_RANK" + " " + LobbyID + " " + App.ReturnCurrentPlayer().getCoin() + " " + App.ReturnCurrentPlayer().getNumberOfQuests() + " " + App.ReturnCurrentPlayer().GetSumLevelSkills());
+    }
+
 
     public void sendMessage(String message) {
         if (out != null) {

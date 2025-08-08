@@ -104,16 +104,36 @@ public class SignUpController {
             for (int i = 0; i < RandomPasswordLength; i++) {
                 int RandomType = App.random.nextInt() % 4;
                 if (RandomType == 0) {
-                    RandomPassword[i] = SpecialCharacters.charAt((App.random.nextInt() % SpecialCharacters.length()));
+                    int X = App.random.nextInt() % 1000;
+                    if(X < 0)
+                    {
+                        X += 2000;
+                    }
+                    RandomPassword[i] = SpecialCharacters.charAt((X % SpecialCharacters.length()));
                 }
                 if (RandomType == 1) {
-                    RandomPassword[i] = Numbers.charAt((App.random.nextInt() % Numbers.length()));
+                    int X = App.random.nextInt() % 1000;
+                    if(X < 0)
+                    {
+                        X += 2000;
+                    }
+                    RandomPassword[i] = Numbers.charAt((X % Numbers.length()));
                 }
                 if (RandomType == 2) {
-                    RandomPassword[i] = Caps.charAt((App.random.nextInt() % Caps.length()));
+                    int X = App.random.nextInt() % 1000;
+                    if(X < 0)
+                    {
+                        X += 2000;
+                    }
+                    RandomPassword[i] = Caps.charAt((X % Caps.length()));
                 }
                 if (RandomType == 3) {
-                    RandomPassword[i] = Lower.charAt((App.random.nextInt() % Lower.length()));
+                    int X = App.random.nextInt() % 1000;
+                    if(X < 0)
+                    {
+                        X += 2000;
+                    }
+                    RandomPassword[i] = Lower.charAt((X % Lower.length()));
                 }
             }
             String modified = new String(RandomPassword);
@@ -167,6 +187,12 @@ public class SignUpController {
 
     public void Update()
     {
+        if(Menu.getRandom().isChecked())
+        {
+            String RandomPassword = RandomPassword();
+            Menu.getPassword().setText(RandomPassword);
+            Menu.getRandom().setChecked(false);
+        }
         if(Menu.getSignupTable().isVisible()) {
             if (Menu.getConfirm().isChecked()) {
                 if (Menu.getUsername().getText().isEmpty()) {
