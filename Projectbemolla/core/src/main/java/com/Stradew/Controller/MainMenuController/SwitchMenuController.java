@@ -56,4 +56,32 @@ public class SwitchMenuController {
         dialog.show(stage);
     }
 
+    public void openBlackSmith(){
+
+    }
+
+    public void openCarpenterShop(){
+
+    }
+
+    public void openFishShop(){
+
+    }
+
+    public void openJojaMart(){
+
+    }
+
+    public void openMarineRanch(){
+
+    }
+
+    public void openPerrieGeneralStore(){
+
+    }
+
+    public void openStarDropSaloon(){
+
+    }
+
 }
