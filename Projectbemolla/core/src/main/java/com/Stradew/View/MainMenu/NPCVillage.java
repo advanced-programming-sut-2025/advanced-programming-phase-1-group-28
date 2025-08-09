@@ -265,7 +265,9 @@ public class NPCVillage implements Screen {
         npcDialogs.setDisabled(true);
     }
 
-
+    public Stage getStage() {
+        return stage;
+    }
 
     @Override
     public void show() {

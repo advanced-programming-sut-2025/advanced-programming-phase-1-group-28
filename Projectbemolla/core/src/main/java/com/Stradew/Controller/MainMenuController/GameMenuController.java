@@ -143,8 +143,10 @@ public class GameMenuController {
         App.getCurrentGame().getTimeControlPannel().setRankingTime(App.getCurrentGame().getTimeControlPannel().getRankingTime() + v);
         if(App.getCurrentGame().getTimeControlPannel().getRankingTime() > 5)
         {
-            App.networkClient.SendInfoForRanking(menu.getCurrntLobby().getId());
-            App.getCurrentGame().getTimeControlPannel().setRankingTime(0);
+            if (App.networkClient != null) {
+                App.networkClient.SendInfoForRanking(menu.getCurrntLobby().getId());
+                App.getCurrentGame().getTimeControlPannel().setRankingTime(0);
+            }
         }
         menu.getNotifications().setText(String.format("%d", App.ReturnCurrentPlayer().getNewMessages()));
         if(App.ReturnCurrentPlayer().getEnergy() < 0)
@@ -154,7 +156,7 @@ public class GameMenuController {
         }
         CheckSetting();
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)){
-            switchMenuController.openPokhMenu();
+            switchMenuController.openPokhMenu(menu.getStage());
         }
         if(!ok)
         {

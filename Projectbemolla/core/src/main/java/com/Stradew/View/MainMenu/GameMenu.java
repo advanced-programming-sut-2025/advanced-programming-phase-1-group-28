@@ -449,7 +449,9 @@ public class GameMenu implements Screen , ServerMessageHandler {
         RankingTable2 = new Table();
     }
 
-
+    public Stage getStage() {
+        return stage;
+    }
 
     @Override
     public void show() {
