@@ -28,6 +28,7 @@ public class GameAssetsManager {
     private final Texture SkillPannel = new Texture(Gdx.files.internal("Inventory/RealSkills.png"));
     public final String[] StringsReactionsText = {"HELLO" , "Yeah BOY" , "THANK YOU" , "GG" , "ARE YOU OK" , "GIVE ME A BO"};
     public final Texture[] ImagesREacions = {new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png")};
+    public Animation playerAnimationRegion;
 
     public Texture RandomAvatar()
     {
@@ -72,6 +73,9 @@ public class GameAssetsManager {
         new Texture("FirstMap/lewis3animation.png"),
         new Texture("FirstMap/lewis4animation.png"));
 
+     {
+        load();
+    }
 
     public TextButton[] Reactions() {
         TextButton[] Reactions = new TextButton[6];
@@ -181,6 +185,22 @@ public class GameAssetsManager {
             instance = new GameAssetsManager();
         }
         return instance;
+    }
+
+    public void load() {
+
+        TextureRegion[] frames = new TextureRegion[4];
+        for (int i = 0; i < 4; i++) {
+            Texture texture = new Texture(Gdx.files.internal("FirstMap/lewis" + (i+1) + "animation.png"));
+            frames[i] = new TextureRegion(texture);
+        }
+
+        playerAnimationRegion = new Animation<TextureRegion>(0.2f, frames);
+        playerAnimationRegion.setPlayMode(Animation.PlayMode.LOOP);
+    }
+
+    public Animation<TextureRegion> getPlayerAnimationRegion() {
+        return playerAnimationRegion;
     }
 
     public Skin getSkin() {

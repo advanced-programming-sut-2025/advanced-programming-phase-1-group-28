@@ -13,13 +13,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
@@ -265,11 +263,74 @@ public class NPCVillage implements Screen {
         npcDialogs.setDisabled(true);
     }
 
+    public Stage getStage() {
+        return stage;
+    }
+
+    public void initializeShopActors(){
+        ShopActor blackSmith = new ShopActor("FirstMap/Cabins (8).png", 3250, 1500, new Runnable() {
+            @Override
+            public void run() {
+                switchMenuController.openBlackSmith();
+            }
+        });
+        constantStage.addActor(blackSmith);
+
+        ShopActor carpenterShop = new ShopActor("FirstMap/Cabins (9).png", 800, 2800, new Runnable() {
+            @Override
+            public void run() {
+                switchMenuController.openCarpenterShop();
+            }
+        });
+        constantStage.addActor(carpenterShop);
+
+        ShopActor jojaMart = new ShopActor("FirstMap/Cabins (10).png", 3500, 3400, new Runnable() {
+            @Override
+            public void run() {
+                switchMenuController.openJojaMart();
+            }
+        });
+        constantStage.addActor(jojaMart);
+
+        ShopActor marineRanch = new ShopActor("FirstMap/Cabins (11).png", 500, 800, new Runnable() {
+            @Override
+            public void run() {
+                switchMenuController.openMarineRanch();
+            }
+        });
+        constantStage.addActor(marineRanch);
+
+        ShopActor perrieGeneralStore = new ShopActor("FirstMap/Cabins (12).png", 1800, 1900, new Runnable() {
+            @Override
+            public void run() {
+                switchMenuController.openPerrieGeneralStore();
+            }
+        });
+        constantStage.addActor(perrieGeneralStore);
+
+        ShopActor fishShop = new ShopActor("FirstMap/Cabins (13).png", 2500, 500, new Runnable() {
+            @Override
+            public void run() {
+                switchMenuController.openFishShop();
+            }
+        });
+        constantStage.addActor(fishShop);
+
+        ShopActor starDropSaloon = new ShopActor("FirstMap/Cabins (14).png", 2000, 2100, new Runnable() {
+            @Override
+            public void run() {
+                switchMenuController.openStarDropSaloon();
+            }
+        });
+        constantStage.addActor(starDropSaloon);
+
+    }
 
 
     @Override
     public void show() {
 //        Gdx.input.setInputProcessor(stage);
+
         inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(stage);
         inputMultiplexer.addProcessor(constantStage);
@@ -372,6 +433,9 @@ public class NPCVillage implements Screen {
 
             constantStage.addActor(showMessage);
         }
+
+        initializeShopActors();
+
         for (Pepolee pepolee: App.getCurrentGame().getCharactersInGame()){
             if (pepolee == App.ReturnCurrentPlayer()){
                 continue;

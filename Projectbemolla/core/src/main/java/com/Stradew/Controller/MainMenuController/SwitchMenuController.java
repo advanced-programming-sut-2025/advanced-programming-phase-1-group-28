@@ -14,6 +14,7 @@ import com.Stradew.Server.Lobby;
 import com.Stradew.View.MainMenu.GameMenu;
 import com.Stradew.View.MainMenu.MechanicGame.AnimalInteractionDialog;
 import com.Stradew.View.MainMenu.MechanicGame.FriendshipDialog;
+import com.Stradew.View.MainMenu.MechanicGame.HomeMenu.CookingDialog;
 import com.Stradew.View.MainMenu.MechanicGame.HomeMenu.PokhtOPaz;
 import com.Stradew.View.MainMenu.MechanicGame.NpcDialog;
 import com.Stradew.View.MainMenu.NPCVillage;
@@ -21,9 +22,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class SwitchMenuController {
-    public void openPokhMenu(){
-        PokhtOPaz pokhtOPaz = new PokhtOPaz(new PokhtOPazController());
-        Main.getMain().setScreen(pokhtOPaz);
+    public void openPokhMenu(Stage stage){
+        CookingDialog cookingDialog = new CookingDialog(new PokhtOPazController(), GameAssetsManager.getInstance().getSkin());
+        cookingDialog.show(stage);
     }
     public void openNpcVillage(){
         App.ReturnCurrentPlayer().setInNpcVillage(true);
@@ -54,6 +55,34 @@ public class SwitchMenuController {
     public void openAnimalMenu(Animal animal, Stage stage){
         AnimalInteractionDialog dialog = new AnimalInteractionDialog(animal, new MechanicController(), GameAssetsManager.getInstance().getSkin());
         dialog.show(stage);
+    }
+
+    public void openBlackSmith(){
+
+    }
+
+    public void openCarpenterShop(){
+
+    }
+
+    public void openFishShop(){
+
+    }
+
+    public void openJojaMart(){
+
+    }
+
+    public void openMarineRanch(){
+
+    }
+
+    public void openPerrieGeneralStore(){
+
+    }
+
+    public void openStarDropSaloon(){
+
     }
 
 }

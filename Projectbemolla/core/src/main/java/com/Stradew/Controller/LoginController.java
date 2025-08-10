@@ -35,6 +35,9 @@ public class LoginController {
     public String PrintQuestion(String UserName)
     {
         int UserIndex = App.ReturnUserIndex(UserName);
+        if (UserIndex == -1){
+            return "user not found";
+        }
         int Count = 0;
         for(SecurityQuestions q : SecurityQuestions.values())
         {

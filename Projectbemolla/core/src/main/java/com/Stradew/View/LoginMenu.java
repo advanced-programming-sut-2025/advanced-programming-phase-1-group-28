@@ -1,10 +1,14 @@
 package com.Stradew.View;
 
 import com.Stradew.Controller.LoginController;
+import com.Stradew.Controller.MainMenuController.MainmenuController;
 import com.Stradew.Controller.SignUpController;
+import com.Stradew.Controller.StartmenuController;
+import com.Stradew.Main;
 import com.Stradew.Model.App;
 import com.Stradew.Model.Enums.Rejex.LoginMenuRejex;
 import com.Stradew.Model.GameAssetsManager;
+import com.Stradew.View.MainMenu.MainMenu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -30,10 +34,13 @@ public class LoginMenu implements Screen {
 
     TextButton login;
     TextButton forgetPassword;
+    TextButton getPassword;
+    TextButton back;
 
     Label errors;
 
     Table table;
+    Table forgetPassTable;
 
     public LoginMenu(LoginController loginController) {
         this.loginController = loginController;
@@ -43,13 +50,24 @@ public class LoginMenu implements Screen {
         username = new TextField("username" , GameAssetsManager.getInstance().getSkin());
         password = new TextField("password", GameAssetsManager.getInstance().getSkin());
         securityAnswer = new TextField("security answer", GameAssetsManager.getInstance().getSkin());
+        securityAnswer.setWidth(300f);
 
-        login = new TextButton("login", GameAssetsManager.getInstance().getSkin());
-        forgetPassword = new TextButton("forget pass", GameAssetsManager.getInstance().getSkin());
+        login = new TextButton("Login", GameAssetsManager.getInstance().getSkin());
+        forgetPassword = new TextButton("Forget Pass", GameAssetsManager.getInstance().getSkin());
+        getPassword = new TextButton("Get Password", GameAssetsManager.getInstance().getSkin());
+        back = new TextButton("Back", GameAssetsManager.getInstance().getSkin());
 
         errors = new Label("", GameAssetsManager.getInstance().getSkin());
 
 
+
+        forgetPassTable = new Table();
+        forgetPassTable.setFillParent(true);
+        forgetPassTable.bottom();
+        forgetPassTable.setVisible(false);
+
+        forgetPassTable.add(securityAnswer).uniformX().fillX();
+        forgetPassTable.add(getPassword).uniformX().fillX().row();
 
         table = new Table();
         table.setFillParent(true);
@@ -62,12 +80,13 @@ public class LoginMenu implements Screen {
         table.add(login).uniformX().fillX();
         table.add(forgetPassword).uniformX().fillX();
         table.row();
+        table.add(back).uniformX().fillX().row();
 
         table.add(errors).colspan(2).padTop(10);
 
         stage.addActor(table);
 
-        stage.addActor(table);
+        stage.addActor(forgetPassTable);
 
 
         // buttons
@@ -77,10 +96,28 @@ public class LoginMenu implements Screen {
                 Login(username.getText(), password.getText(), null);
             }
         });
+
         forgetPassword.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                errors.setText(loginController.PrintQuestion(username.getText()));
+                if (!loginController.PrintQuestion(username.getText()).equals("user not found")){
+                    forgetPassTable.setVisible(true);
+                }
+            }
+        });
+
+        getPassword.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
                 ForgotPassword(username.getText());
+            }
+        });
+
+        back.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Main.getMain().setScreen(new StartMenu(new StartmenuController()));
             }
         });
     }
@@ -117,20 +154,21 @@ public class LoginMenu implements Screen {
             Stay = true;
         }
         App.loginController.ApplyLogin(UserName , Stay);
+        Main.getMain().setScreen(new MainMenu(new MainmenuController()));
         errors.setText("Login Successful");
     }
 
     public void  ForgotPassword(String UserName) {
-        if(!App.loginController.IsUsernameValid(UserName)) {
-            errors.setText("Username Does Not Exist");
-            return;
-        }
-        App.loginController.PrintQuestion(UserName);
-
-        App.loginController.PrintQuestion(UserName);
-        String AnswerGet = securityAnswer.getText();
-        if((matcher = LoginMenuRejex.AnswerSecQuestion.getMatcher(AnswerGet)) != null) {
-            if (App.loginController.CheckAnswer(UserName , matcher.group(1).trim()))
+//        if(!App.loginController.IsUsernameValid(UserName)) {
+//            errors.setText("Username Does Not Exist");
+//            return;
+//        }
+//        App.loginController.PrintQuestion(UserName);
+//
+//        App.loginController.PrintQuestion(UserName);
+//        String AnswerGet = securityAnswer.getText();
+//        if((matcher = LoginMenuRejex.AnswerSecQuestion.getMatcher(AnswerGet)) != null) {
+            if (App.loginController.CheckAnswer(UserName , securityAnswer.getText()))
             {
                 errors.setText(App.loginController.ReturnPass(UserName));
             }
@@ -138,11 +176,11 @@ public class LoginMenu implements Screen {
             {
                 errors.setText("Answer Doesnt Match");
             }
-        }
-        else
-        {
-            errors.setText("Please enter valid Command");
-        }
+//        }
+//        else
+//        {
+//            errors.setText("Please enter valid Command");
+//        }
     }
 
     @Override
