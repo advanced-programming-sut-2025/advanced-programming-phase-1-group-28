@@ -1,5 +1,6 @@
 package com.Stradew.Model;
 
+import com.Stradew.Controller.MainMenuController.MechanicController.InventorypannelController;
 import com.Stradew.Model.Enums.Minerals;
 import com.Stradew.Model.Enums.Plants;
 import com.Stradew.Model.Enums.Saplings;
@@ -9,6 +10,11 @@ import com.Stradew.Model.Item.Item;
 import com.Stradew.Model.Item.MineralItem;
 import com.Stradew.Model.Item.PlantsItem;
 import com.Stradew.Model.Tools.*;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import java.util.ArrayList;
 
@@ -220,7 +226,25 @@ public class Inventory {
         return true;
     }
 
-    public void removeItem(Item item){
+    public void removeItem(Item item , InventorypannelController controller){
+        if(controller != null)
+        {
+            for(int i = 0;i < controller.getInventorySlots().size();i++)
+            {
+                if(item.equals(controller.getInventorySlots().get(i).getItem()))
+                {
+                   // Gdx.app.exit();
+                    controller.getInventorySlots().get(i).SetImageButton(null);
+                    Texture Axe = new Texture("Pants/Baggy_Pants.png");
+                    TextureRegion region = new TextureRegion(Axe);
+                    TextureRegionDrawable drawable = new TextureRegionDrawable(region);
+                    ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
+                    style.up = drawable;
+                    style.down = drawable;
+                    controller.setChoosenItem(new ImageButton(style));
+                }
+            }
+        }
         this.items.remove(item);
     }
 

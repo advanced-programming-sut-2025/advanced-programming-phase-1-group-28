@@ -6,6 +6,7 @@ import com.Stradew.Model.App;
 import com.Stradew.Model.Enums.MenuName;
 import com.Stradew.Model.Enums.Rejex.SignupMenuRejex;
 import com.Stradew.Model.Enums.SecurityQuestions;
+import com.Stradew.Model.GameAssetsManager;
 import com.Stradew.Model.User;
 import com.Stradew.View.Appview;
 import com.Stradew.View.MainMenu.MainMenu;
@@ -180,6 +181,7 @@ public class SignUpController {
     {
         String HashedPassword = HashAlghorithm.DecryptPassword(Password);
         User newuser = new User(Username , Password , HashedPassword , Email , App.Users.size() , NickName , Gender);
+        newuser.setAvatar(GameAssetsManager.getInstance().RandomAvatar());
         App.Users.add(newuser);
         Appview.UserLoggedInId = App.Users.size() - 1;
         Appview.Situation = MenuName.LoginMenu;

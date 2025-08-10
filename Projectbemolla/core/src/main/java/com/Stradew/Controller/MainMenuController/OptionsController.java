@@ -41,11 +41,7 @@ public class OptionsController {
                 if (App.ReturnCurrentPlayer().getCoin() > 100 || true) {
                     App.ReturnCurrentPlayer().getFarm().getGreenHouse().setLocked(false);
                     App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - 100);
-                    for (int X = -5; X < 20; X++) {
-                        for (int Y = -5; Y < 20; Y++) {
-                            App.ReturnCurrentPlayer().getFarm().getChanges().add(new PairChanges(App.ReturnCurrentPlayer().getFarm().getGreenHouse().getX_Coordinate() + X, App.ReturnCurrentPlayer().getFarm().getGreenHouse().getY_Coordinate() + Y));
-                        }
-                    }
+                    App.ReturnCurrentPlayer().getFarm().getChanges().add(new PairChanges(App.ReturnCurrentPlayer().getFarm().getGreenHouse().getX_Coordinate(), App.ReturnCurrentPlayer().getFarm().getGreenHouse().getY_Coordinate()));
                 }
                 textButton.remove();
             }

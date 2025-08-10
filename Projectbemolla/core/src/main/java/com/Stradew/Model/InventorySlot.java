@@ -50,20 +50,24 @@ public class InventorySlot {
 
     public void SetImageButton(Object item) {
         this.item = item;
-        Texture buttonTexture = null;
-        if(item instanceof Seeds){
-
-        }
-        if(item instanceof Tools)
+        Texture buttonTexture = new Texture("Pants/Baggy_Pants.png");
+        if(item == null)
         {
-            Tools tool = (Tools)item;
-            buttonTexture  = tool.getImage();
-        }
-        if(item instanceof Item)
-        {
-            Item thing = (Item)item;
             //Gdx.app.exit();
-            buttonTexture = thing.getImage();
+        }
+        if(item != null) {
+            if (item instanceof Seeds) {
+
+            }
+            if (item instanceof Tools) {
+                Tools tool = (Tools) item;
+                buttonTexture = tool.getImage();
+            }
+            if (item instanceof Item) {
+                Item thing = (Item) item;
+                //Gdx.app.exit();
+                buttonTexture = thing.getImage();
+            }
         }
         TextureRegion region = new TextureRegion(buttonTexture);
         TextureRegionDrawable drawable = new TextureRegionDrawable(region);

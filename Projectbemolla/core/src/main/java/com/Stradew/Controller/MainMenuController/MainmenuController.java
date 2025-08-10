@@ -2,10 +2,12 @@ package com.Stradew.Controller.MainMenuController;
 
 import com.Stradew.Controller.StartmenuController;
 import com.Stradew.Main;
+import com.Stradew.Model.App;
 import com.Stradew.View.Appview;
 import com.Stradew.View.MainMenu.MainMenu;
 import com.Stradew.View.MainMenu.ProfileMenu;
 import com.Stradew.View.StartMenu;
+import com.badlogic.gdx.Gdx;
 
 import java.util.ArrayList;
 
@@ -18,6 +20,11 @@ public class MainmenuController {
 
     public void Update()
     {
+        if(menu.getExitButton().isChecked())
+        {
+            Gdx.app.exit();
+        }
+        Main.getMain().getBatch().draw(App.getCurrentUser().getAvatar() , 1700 , 600 , 100 , 100);
         if(menu.getGameMenu().isChecked())
         {
             GameMenuController.StartGame(new ArrayList<>());

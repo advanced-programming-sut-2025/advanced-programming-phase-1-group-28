@@ -341,7 +341,7 @@ public class MechanicController {
         Item item = App.ReturnCurrentPlayer().getInventory().getItemByName("Hay");
         item.addCount(-1);
         if (item.getCount() == 0){
-            App.ReturnCurrentPlayer().getInventory().removeItem(item);
+            App.ReturnCurrentPlayer().getInventory().removeItem(item, null);
         }
         animal.setFed(true);
     }

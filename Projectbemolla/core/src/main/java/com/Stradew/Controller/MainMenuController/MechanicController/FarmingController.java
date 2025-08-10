@@ -8,6 +8,7 @@ import com.Stradew.Model.Tile.Plants;
 import com.Stradew.Model.Tile.Tile;
 import com.Stradew.Model.Tile.Trees;
 import com.Stradew.Model.Tools.Pepolee;
+import com.badlogic.gdx.Gdx;
 
 public class FarmingController {
 
@@ -21,6 +22,9 @@ public class FarmingController {
                 }
                 if(Randomnumber == 0)
                 {
+                    //Gdx.app.exit();
+                    App.ReturnCurrentPlayer().setLightend(true);
+                    App.getCurrentGame().getTimeControlPannel().setIsLightend(0);
                     if(Tempground[x][y].getEntitity() == Entitity.PLANTS && Tempground[x][y].getPlaceType() != PlaceType.GREENHOUSE)
                     {
                         Tempground[x][y] = new Tile(Terrain.DIRT , null , null);

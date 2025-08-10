@@ -31,6 +31,15 @@ public class Pepolee {
         return Skills[0].getLevel() + Skills[1].getLevel() + Skills[2].getLevel() + Skills[3].getLevel();
     }
 
+    public Boolean getLightend() {
+        return IsLightend;
+    }
+
+    public void setLightend(Boolean lightend) {
+        IsLightend = lightend;
+    }
+
+    private Boolean IsLightend = false;
     private int NumberOfQuests = 0;
     private float x = 1;
     private float y = 1;

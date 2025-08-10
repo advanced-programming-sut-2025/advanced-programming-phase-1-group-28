@@ -105,7 +105,7 @@ public class GameMenu implements Screen , ServerMessageHandler {
             if(parts[2].equals(App.getCurrentUser().getUsername()))
             {
                 App.networkClient.sendMessage("TRADE_INFO " + parts[1] + " " + App.ReturnCurrentPlayer().getInventory().getCurrentItem().getName());
-                controller.getFriendShipController().SellTrade(50);
+                controller.getFriendShipController().SellTrade(50, controller.getInventorypannelController());
                 TradeTable.setVisible(false);
                 MainTable.setVisible(true);
             }
@@ -393,7 +393,7 @@ public class GameMenu implements Screen , ServerMessageHandler {
         SnowEffect.load(Gdx.files.internal("WetherEffects/Particle Park Snow Flakes.p"), Gdx.files.internal("WetherEffects"));
         SnowEffect.start();
         Lightning = new ParticleEffect();
-        Lightning.load(Gdx.files.internal("WetherEffects/Particle Park Laser.p"), Gdx.files.internal("WetherEffects"));
+        Lightning.load(Gdx.files.internal("WetherEffects/Particle Park Explosion.p"), Gdx.files.internal("WetherEffects"));
         Lightning.start();
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.WHITE);
@@ -401,7 +401,7 @@ public class GameMenu implements Screen , ServerMessageHandler {
         shadeTexture = new Texture(pixmap);
         pixmap.dispose();
         shadeColor = new Color(0.0f, 0.0f, 0.2f, 0.4f);
-        GreenhouseHoverButton = new TextButton("Buy", GameAssetsManager.getInstance().getSkin());
+        GreenhouseHoverButton = new TextButton("100 G Buy Greenhouse", GameAssetsManager.getInstance().getSkin());
         InventoryTable = new Table();
         SkillTable = new Table();
         SocialTable = new Table();

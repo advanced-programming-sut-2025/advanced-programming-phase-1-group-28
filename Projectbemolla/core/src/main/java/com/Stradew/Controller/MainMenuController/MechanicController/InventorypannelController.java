@@ -29,8 +29,13 @@ public class InventorypannelController {
     private ArrayList<InventorySlot> inventorySlots = new ArrayList<>();
     private ImageButton ChoosenItem;
     private TextButton Trade = new TextButton("Trade" , GameAssetsManager.getInstance().getSkin());
+    private TextButton Remove = new TextButton("Remove" , GameAssetsManager.getInstance().getSkin());
     private TextButton HistoryofTrades = new TextButton("History of Trades" , GameAssetsManager.getInstance().getSkin());
     private SelectBox Users = new SelectBox(GameAssetsManager.getInstance().getSkin());
+
+    public ArrayList<InventorySlot> getInventorySlots() {
+        return inventorySlots;
+    }
 
     public Table getInventorytable() {
         return Inventorytable;
@@ -76,6 +81,12 @@ public class InventorypannelController {
         Inventorytable.add(Users).padRight(50);
         Inventorytable.add(Trade);
         Inventorytable.add(HistoryofTrades);
+        Inventorytable.row();
+        Inventorytable.add(Remove);
+    }
+
+    public void setChoosenItem(ImageButton choosenItem) {
+        ChoosenItem = choosenItem;
     }
 
     /*public void Remove(GameMenu menu)
@@ -86,6 +97,20 @@ public class InventorypannelController {
             menu.getBin().setChecked(false);
         }
     }*/
+
+    public void RemoveItem()
+    {
+        if(Remove.isChecked())
+        {
+            if(App.ReturnCurrentPlayer().getInventory().getCurrentItem() != null)
+            {
+                App.ReturnCurrentPlayer().getInventory().removeItem(App.ReturnCurrentPlayer().getInventory().getCurrentItem() , this);
+
+            }
+            Remove.setChecked(false);
+        }
+    }
+
 
     public void Trade(GameMenu menu)
     {
@@ -178,6 +203,7 @@ public class InventorypannelController {
 
     public void Update(GameMenuController gamecontroller)
     {
+        RemoveItem();
         Trade(gamecontroller.getMenu());
         Equip(gamecontroller);
         for(int i = 0;i < App.ReturnCurrentPlayer().getInventory().getTools().size();i++)
@@ -226,6 +252,7 @@ public class InventorypannelController {
                 }
             }
         }
+
     }
 
     public void UpdateVillage(NPCVillageController gamecontroller)

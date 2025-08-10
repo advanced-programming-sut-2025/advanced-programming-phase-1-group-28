@@ -11,6 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import java.util.ArrayList;
+
 public class GameAssetsManager {
     private static GameAssetsManager instance;
     private final Skin skin;
@@ -26,6 +28,44 @@ public class GameAssetsManager {
     private final Texture SkillPannel = new Texture(Gdx.files.internal("Inventory/RealSkills.png"));
     public final String[] StringsReactionsText = {"HELLO" , "Yeah BOY" , "THANK YOU" , "GG" , "ARE YOU OK" , "GIVE ME A BO"};
     public final Texture[] ImagesREacions = {new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png")};
+
+    public Texture RandomAvatar()
+    {
+        int RandomX = App.random.nextInt() % 7;
+        if(RandomX < 0)
+        {
+            RandomX += 7;
+        }
+        if(RandomX == 0)
+        {
+            return new Texture(Gdx.files.internal("Avatars/Wizard.png"));
+        }
+        if(RandomX == 1)
+        {
+            return new Texture(Gdx.files.internal("Avatars/Archer.png"));
+        }
+        if(RandomX == 2)
+        {
+            return new Texture(Gdx.files.internal("Avatars/Barbarian.png"));
+        }
+        if(RandomX == 3)
+        {
+            return new Texture(Gdx.files.internal("Avatars/HeHeHeHA.png"));
+        }
+        if(RandomX == 4)
+        {
+            return new Texture(Gdx.files.internal("Avatars/Knight.png"));
+        }
+        if(RandomX == 5)
+        {
+            return new Texture(Gdx.files.internal("Avatars/Pekka.png"));
+        }
+        if(RandomX == 6)
+        {
+            return new Texture(Gdx.files.internal("Avatars/Wizard.png"));
+        }
+        return new Texture(Gdx.files.internal("Avatars/Witch.png"));
+    }
 
     private final Animation playerAnimation = new Animation<>(0.1f, new Texture("FirstMap/Lewis1animation.png"),
         new Texture("FirstMap/lewis2animation.png"),

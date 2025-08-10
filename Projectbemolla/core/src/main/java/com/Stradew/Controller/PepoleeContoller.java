@@ -23,6 +23,8 @@ public class PepoleeContoller {
     CheatCodes cheatCodes = new CheatCodes();
     Texture ToolTexture = null;
 
+
+
     private UseToolController useToolController = new UseToolController();
 
     public void setToolTexture(Texture toolTexture) {
@@ -138,6 +140,19 @@ public class PepoleeContoller {
             if(Gdx.input.isKeyPressed(Input.Keys.NUM_3)) {
                 cheatCodes.SetEnergy(App.ReturnCurrentPlayer().getEnergy() + 50);
                 App.getCurrentGame().getTimeControlPannel().setCheatCodeUse(0);
+            }
+            if(Gdx.input.isKeyPressed(Input.Keys.NUM_4)) {
+                int x = App.random.nextInt()%100;
+                if(x < 0)
+                {
+                    x += 100;
+                }
+                int y = App.random.nextInt()%100;
+                if(y < 0)
+                {
+                    y += 100;
+                }
+                cheatCodes.Thor(x + 50 , y + 50);
             }
         }
     }

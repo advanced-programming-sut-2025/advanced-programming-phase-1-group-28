@@ -40,10 +40,10 @@ public class MapController {
         {
             menu.getBuyGreenhouseTable().setVisible(true);
         }
-        //else
-        //{
-          //  menu.getBuyGreenhouseTable().setVisible(false);
-        //}
+        else
+        {
+            menu.getBuyGreenhouseTable().setVisible(false);
+        }
 
     }
 

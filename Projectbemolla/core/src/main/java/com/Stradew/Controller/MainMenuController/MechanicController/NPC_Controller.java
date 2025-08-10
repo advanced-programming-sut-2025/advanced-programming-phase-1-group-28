@@ -49,7 +49,7 @@ public class NPC_Controller {
         Item item = pepolee.getInventory().getItemByName(giftName);
         item.addCount(-1);
         if (item.getCount() == 0){
-            pepolee.getInventory().removeItem(item);
+            pepolee.getInventory().removeItem(item , null);
         }
 
         if (npc.isFavoriteItem(item)){

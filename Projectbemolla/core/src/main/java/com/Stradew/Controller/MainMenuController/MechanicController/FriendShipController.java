@@ -152,7 +152,7 @@ public class FriendShipController {
         Item flower = currentPlayer.getInventory().getItemByName(Plants.FAIRY_ROSE.toString());
         flower.addCount(-1);
         if (flower.getCount() == 0){
-            currentPlayer.getInventory().removeItem(flower);
+            currentPlayer.getInventory().removeItem(flower, null);
         }
         Item gift = flower.getCopy();
         gift.setCount(1);
@@ -220,10 +220,10 @@ public class FriendShipController {
         currentPlayer.removeTradeByID(id);
     }
 
-    public void SellTrade(int Price)
+    public void SellTrade(int Price, InventorypannelController controller)
     {
         App.ReturnCurrentPlayer().addCoin(Price);
-        App.ReturnCurrentPlayer().getInventory().removeItem(App.ReturnCurrentPlayer().getInventory().getCurrentItem());
+        App.ReturnCurrentPlayer().getInventory().removeItem(App.ReturnCurrentPlayer().getInventory().getCurrentItem() , controller);
         App.ReturnCurrentPlayer().getInventory().setCurrentItem(null);
     }
 
