@@ -2,6 +2,7 @@ package com.Stradew.View.MainMenu;
 import com.Stradew.Controller.MainMenuController.GameMenuController;
 import com.Stradew.Controller.MainMenuController.MapController;
 import com.Stradew.Controller.MainMenuController.MechanicController.InventorypannelController;
+import com.Stradew.Controller.MainMenuController.MechanicController.MechanicController;
 import com.Stradew.Controller.MainMenuController.MechanicController.NotificationController;
 import com.Stradew.Controller.MainMenuController.SwitchMenuController;
 import com.Stradew.Main;
@@ -9,6 +10,8 @@ import com.Stradew.Model.App;
 import com.Stradew.Model.GameAssetsManager;
 import com.Stradew.Server.Lobby;
 import com.Stradew.Server.ServerMessageHandler;
+import com.Stradew.View.MainMenu.MechanicGame.AnimalInteractionDialog;
+import com.Stradew.View.MainMenu.MechanicGame.MechanicGame;
 import com.Stradew.View.MainMenu.MechanicGame.NotificationDialog;
 import com.Stradew.View.MainMenu.MechanicGame.NotificationMenu;
 import com.badlogic.gdx.Gdx;
@@ -291,6 +294,7 @@ public class GameMenu implements Screen , ServerMessageHandler {
     private TextButton SocialButton;
     private TextButton MapButton;
     private TextButton Backbutton;
+    private MechanicGame mechanicGame;
 
     public TextButton getBackbutton() {
         return Backbutton;
@@ -382,6 +386,7 @@ public class GameMenu implements Screen , ServerMessageHandler {
         }
         CurrntLobby = lobby;
         switchMenuController = new SwitchMenuController();
+        mechanicGame = new MechanicGame(new MechanicController());
         this.controller = controller;
         controller.setMenu(this);
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -572,6 +577,15 @@ public class GameMenu implements Screen , ServerMessageHandler {
         stage.draw();
         if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
             switchMenuController.openNpcVillage();
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.O)){
+            mechanicGame.playPettingAnimation(stage);
+            mechanicGame.petAllAnimals();
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F)){
+            mechanicGame.playFeedingAnimation(stage);
+        }if (Gdx.input.isKeyJustPressed(Input.Keys.G)){
+            mechanicGame.playShepherdingAnimation(stage);
         }
     }
 
