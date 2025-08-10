@@ -57,7 +57,7 @@ public class Crafting {
             System.out.println("There is no such craft in inventory");
             return;
         }
-        App.craftingController.ApplyPlantCraft(ItemName , x, y);
+        //App.craftingController.ApplyPlantCraft(ItemName , x, y);
     }
 
 }

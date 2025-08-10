@@ -1,9 +1,11 @@
 package com.Stradew.Controller.MainMenuController;
 
+import com.Stradew.Controller.MainMenuController.HomeMenucontroller.CraftingController;
 import com.Stradew.Main;
 import com.Stradew.Model.App;
 import com.Stradew.Model.Game;
 import com.Stradew.Model.GameAssetsManager;
+import com.Stradew.Model.Item.Craft;
 import com.Stradew.Model.PairChanges;
 import com.Stradew.View.MainMenu.GameMenu;
 import com.Stradew.View.MainMenu.NPCVillage;
@@ -16,6 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 public class OptionsController {
     private BitmapFont font = new BitmapFont();
+    private CraftingController craftingController = new CraftingController();
+
 
     public void PrintClock()
     {
@@ -214,6 +218,23 @@ public class OptionsController {
         }
     }
 
+    public void PlantCraft(GameMenu menu)
+    {
+        if(App.ReturnCurrentPlayer().getInventory().getCurrentItem() != null) {
+            if(App.ReturnCurrentPlayer().getInventory().getCurrentItem() instanceof Craft) {
+                int X = (int) (Math.floor(App.ReturnCurrentPlayer().getX() / MapController.TILE_SIZE));
+                int Y = (int) (Math.floor(App.ReturnCurrentPlayer().getY() / MapController.TILE_SIZE));
+                Main.getMain().getBatch().draw(menu.getShadeTexture(), X * MapController.TILE_SIZE, Y * MapController.TILE_SIZE, MapController.TILE_SIZE, MapController.TILE_SIZE);
+                if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+                    craftingController.ApplyPlantCraft((Craft) App.ReturnCurrentPlayer().getInventory().getCurrentItem(), X, Y);
+
+                }
+            }
+        }
+
+    }
+
+
     public void Update(TextButton textButton , GameMenu menu)
     {
         SetEnergyBar(menu);
@@ -222,6 +243,7 @@ public class OptionsController {
         InventoeyBuuton(menu);
         PrintReaction(menu);
     }
+
 
     public void UpdateVillage(TextButton textButton , NPCVillage menu)
     {

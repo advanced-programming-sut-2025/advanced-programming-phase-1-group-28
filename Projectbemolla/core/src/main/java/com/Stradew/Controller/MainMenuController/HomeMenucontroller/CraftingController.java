@@ -147,17 +147,17 @@ public class CraftingController {
         Craft newcraft = new Craft(1 , craft);
         currentPepolee.getInventory().AddItem(newcraft);
     }
-    public void ApplyPlantCraft(String ItemName , int x , int y)
+    public void ApplyPlantCraft(Craft craft , int x , int y)
     {
-//        Pepolee Currentpeople = App.ReturnCurrentPlayer();
-//        int Newx = Currentpeople.getX() + x;
-//        int Newy = Currentpeople.getY() + y;
-//        Tile[][] Tempground = Currentpeople.getFarm().getGround();
-//        Item item = App.ReturnCurrentPlayer().getInventory().getItemByName(ItemName);
-//        Craft ourcraft = (Craft) item;
-//        PlantedCrafts newplantedCraft = new PlantedCrafts(null , PlaceType.Craft , null , ourcraft.getCrafts());
-//        Tempground[Newx][Newy] = newplantedCraft;
-//        Currentpeople.getFarm().setGround(Tempground);
+        Pepolee Currentpeople = App.ReturnCurrentPlayer();
+        int Newx = x;
+        int Newy = y;
+        Tile[][] Tempground = Currentpeople.getFarm().getGround();
+        //Item item = App.ReturnCurrentPlayer().getInventory().getItemByName(ItemName);
+        Craft ourcraft = craft;
+        PlantedCrafts newplantedCraft = new PlantedCrafts(null , PlaceType.Craft , null , ourcraft.getCrafts());
+        Tempground[Newx][Newy] = newplantedCraft;
+        Currentpeople.getFarm().setGround(Tempground);
     }
 
 
