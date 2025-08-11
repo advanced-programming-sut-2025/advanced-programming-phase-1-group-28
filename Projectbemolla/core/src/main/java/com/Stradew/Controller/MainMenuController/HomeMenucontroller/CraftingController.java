@@ -10,9 +10,19 @@ import com.Stradew.Model.Item.Item;
 import com.Stradew.Model.Tile.PlantedCrafts;
 import com.Stradew.Model.Tile.Tile;
 import com.Stradew.Model.Tools.Pepolee;
+import com.Stradew.View.MainMenu.MechanicGame.HomeMenu.Crafting;
 
 public class CraftingController {
 
+    Crafting crafting;
+
+    public Crafting getCrafting() {
+        return crafting;
+    }
+
+    public void setCrafting(Crafting crafting) {
+        this.crafting = crafting;
+    }
 
     public String ShowCraft(Crafts craft)
     {

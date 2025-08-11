@@ -2,6 +2,7 @@ package com.Stradew.View.MainMenu.MechanicGame.HomeMenu;
 
 import com.Stradew.Controller.MainMenuController.HomeMenucontroller.PokhtOPazController;
 import com.Stradew.Model.App;
+import com.Stradew.Model.Enums.Foods;
 import com.Stradew.Model.Item.Food;
 import com.Stradew.Model.Item.Item;
 import com.Stradew.Model.Ref;
@@ -23,6 +24,13 @@ public class CookingDialog extends Dialog {
     private final Label feedbackLabel;
     private final TextField itemNameField;
     private final List<Image> refSlotImages = new ArrayList<>();
+    private final List<Image> recipeSlotImages = new ArrayList<>();
+
+    private boolean isInRef = true;
+
+    Table mainContent;
+    Table refrigeratorView;
+    Table actionPanelView;
 
     public CookingDialog(PokhtOPazController pokhtOPazController, Skin skin) {
         super("Kitchen & Refrigerator", skin);
@@ -36,10 +44,36 @@ public class CookingDialog extends Dialog {
         this.itemNameField = new TextField("", skin);
         itemNameField.setMessageText("Item name...");
 
-        Table mainContent = new Table();
-        Table refrigeratorView = buildRefrigeratorView();
-        Table actionPanelView = buildActionPanelView();
+        mainContent = new Table();
+        refrigeratorView = buildRefrigeratorView();
+        actionPanelView = buildActionPanelView();
 
+        TextButton SwitchMenu = new TextButton("Switch Menu", skin);
+        SwitchMenu.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                isInRef = !isInRef;
+
+                mainContent.clear();
+
+                mainContent.add(SwitchMenu);
+
+                if (isInRef) {
+                    refrigeratorView = buildRefrigeratorView();
+                    mainContent.add(refrigeratorView).pad(10);
+                    mainContent.add(actionPanelView).pad(10).top();
+                    actionPanelView.setVisible(true);
+                    updateRefrigeratorView();
+                } else {
+                    Table recipeMenu = buildRecipeMenu();
+                    mainContent.add(recipeMenu).pad(10);
+                    mainContent.add(actionPanelView).pad(10).top();
+                    actionPanelView.setVisible(false);
+                }
+            }
+        });
+
+        mainContent.add(SwitchMenu);
         mainContent.add(refrigeratorView).pad(10);
         mainContent.add(actionPanelView).pad(10).top();
 
@@ -119,6 +153,33 @@ public class CookingDialog extends Dialog {
             }
         });
 
+        return table;
+    }
+
+    private Table buildRecipeMenu(){
+        Table table = new Table();
+
+        List<Foods> knownRecipes = App.ReturnCurrentPlayer().getKnownRecipes();
+
+        for (int i = 0; i < knownRecipes.size(); i++) {
+            Image slotImage = new Image(knownRecipes.get(i).texture);
+            recipeSlotImages.add(slotImage);
+
+            int index = i;
+            slotImage.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    if (index < knownRecipes.size()) {
+                        itemNameField.setText(knownRecipes.get(index).name());
+                    }
+                }
+            });
+
+            table.add(slotImage).size(64, 64).pad(2);
+            if ((i + 1) % 5 == 0) {
+                table.row();
+            }
+        }
         return table;
     }
 

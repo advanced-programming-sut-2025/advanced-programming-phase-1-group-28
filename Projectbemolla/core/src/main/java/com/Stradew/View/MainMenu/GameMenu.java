@@ -7,7 +7,9 @@ import com.Stradew.Controller.MainMenuController.MechanicController.Notification
 import com.Stradew.Controller.MainMenuController.SwitchMenuController;
 import com.Stradew.Main;
 import com.Stradew.Model.App;
+import com.Stradew.Model.Enums.Animals;
 import com.Stradew.Model.GameAssetsManager;
+import com.Stradew.Model.Tile.Animal;
 import com.Stradew.Server.Lobby;
 import com.Stradew.Server.ServerMessageHandler;
 import com.Stradew.View.MainMenu.MechanicGame.*;
@@ -601,6 +603,8 @@ public class GameMenu implements Screen , ServerMessageHandler {
             mechanicGame.playFeedingAnimation(stage);
         }if (Gdx.input.isKeyJustPressed(Input.Keys.G)){
             mechanicGame.playShepherdingAnimation(stage);
+        }if (Gdx.input.isKeyJustPressed(Input.Keys.H)){
+            switchMenuController.openAnimalMenu(new Animal("mamad", Animals.Chicken), stage);
         }
     }
 

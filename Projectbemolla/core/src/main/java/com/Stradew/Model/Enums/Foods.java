@@ -1,5 +1,7 @@
 package com.Stradew.Model.Enums;
 
+import com.badlogic.gdx.graphics.Texture;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -11,7 +13,8 @@ public enum Foods {
             (int)(Plants.GRAPE.energy * 1.75),
             null,
             "Keg Artisan",
-            3 * Fruits.APRICOT.baseCellPrice
+            3 * Fruits.APRICOT.baseCellPrice,
+            "Foraging/Purple_Wine.png"
     ),
     ApricotWine(
             "ApricotWine",
@@ -20,7 +23,8 @@ public enum Foods {
             (int)(Fruits.APRICOT.Energy * 1.75),
             null,
             "Keg Artisan",
-            3 * Fruits.APRICOT.baseCellPrice
+            3 * Fruits.APRICOT.baseCellPrice,
+        "Artisan_good/Yellow_Juice.png"
     ),
     CherryWine(
             "CherryWine",
@@ -29,7 +33,8 @@ public enum Foods {
             (int)(Fruits.CHERRY.Energy * 1.75),
             null,
             "Keg Artisan",
-            3 * Fruits.CHERRY.baseCellPrice
+            3 * Fruits.CHERRY.baseCellPrice,
+            "Artisan_good/Dark_Pink_Wine.png"
     ),
     BananaWine(
             "BananaWine",
@@ -38,7 +43,8 @@ public enum Foods {
             (int)(Fruits.BANANA.Energy * 1.75),
             null,
             "Keg Artisan",
-            3 * Fruits.BANANA.baseCellPrice
+            3 * Fruits.BANANA.baseCellPrice,
+            "Artisan_good/Yellow_Wine.png"
     ),
     MangoWine(
             "MangoWine",
@@ -47,7 +53,8 @@ public enum Foods {
             (int)(Fruits.MANGO.Energy * 1.75),
             null,
             "Keg Artisan",
-            3 * Fruits.MANGO.baseCellPrice
+            3 * Fruits.MANGO.baseCellPrice,
+            "Artisan_good/Brown_Wine.png"
     ),
     OrangeWine(
             "OrangeWine",
@@ -56,7 +63,8 @@ public enum Foods {
             (int)(Fruits.ORANGE.Energy * 1.75),
             null,
             "Keg Artisan",
-            3 * Fruits.ORANGE.baseCellPrice
+            3 * Fruits.ORANGE.baseCellPrice,
+            "Artisan_good/Orange_Wine.png"
     ),
 
     PeachWine(
@@ -66,7 +74,8 @@ public enum Foods {
             (int)(Fruits.PEACH.Energy * 1.75),
             null,
             "Keg Artisan",
-            3 * Fruits.PEACH.baseCellPrice
+            3 * Fruits.PEACH.baseCellPrice,
+            "Artisan_good/Wine.png"
     ),
 
     AppleWine(
@@ -76,7 +85,8 @@ public enum Foods {
             (int)(Fruits.APPLE.Energy * 1.75),
             null,
             "Keg Artisan",
-            3 * Fruits.APPLE.baseCellPrice
+            3 * Fruits.APPLE.baseCellPrice,
+            "Artisan_good/Light_Blue_Wine.png"
     ),
 
     PomegranateWine(
@@ -86,7 +96,8 @@ public enum Foods {
             (int)(Fruits.POMEGRANATE.Energy * 1.75),
             null,
             "Keg Artisan",
-            3 * Fruits.POMEGRANATE.baseCellPrice
+            3 * Fruits.POMEGRANATE.baseCellPrice,
+            "Artisan_good/Dark_Purple_Wine.png"
     ),
 
     MahoganyWine(
@@ -96,7 +107,8 @@ public enum Foods {
             (int)(Fruits.MAHOGANY.Energy * 1.75),
             null,
             "Keg Artisan",
-            3 * Fruits.MAHOGANY.baseCellPrice
+            3 * Fruits.MAHOGANY.baseCellPrice,
+            "Artisan_good/Green_Wine.png"
     ),
 
     MushroomWine(
@@ -106,7 +118,8 @@ public enum Foods {
             (int)(Fruits.MUSHROOM.Energy * 1.75),
             null,
             "Keg Artisan",
-            3 * Fruits.MUSHROOM.baseCellPrice
+            3 * Fruits.MUSHROOM.baseCellPrice,
+            "Artisan_good/Red_Wine.png"
     ),
     MysticWine(
             "MysticWine",
@@ -115,7 +128,8 @@ public enum Foods {
             (int)(Fruits.MYSTIC.Energy * 1.75),
             null,
             "Keg Artisan",
-            3 * Fruits.MYSTIC.baseCellPrice
+            3 * Fruits.MYSTIC.baseCellPrice,
+            "Artisan_good/White_Wine.png"
     ),
     BlueJazzPickle(
             "BlueJazzPickle",
@@ -124,7 +138,8 @@ public enum Foods {
             (int)(Plants.BLUE_JAZZ.energy * 1.75),
             null,
             "Preserves Jar",
-            2 * Plants.BLUE_JAZZ.BasePrice + 50
+            2 * Plants.BLUE_JAZZ.BasePrice + 50,
+            "Artisan_good/Purple_Pickles.png"
     ),
     CarrotPickle(
             "CarrotPickle",
@@ -133,7 +148,8 @@ public enum Foods {
             (int)(Plants.CARROT.energy * 1.75),
             null,
             "Preserves Jar",
-            2 * Plants.CARROT.BasePrice + 50
+            2 * Plants.CARROT.BasePrice + 50,
+            "Artisan_good/Orange_Pickles.png"
     ),
     CauliflowerPickle(
             "CauliflowerPickle",
@@ -142,7 +158,8 @@ public enum Foods {
             (int)(Plants.CAULIFLOWER.energy * 1.75),
             null,
             "Preserves Jar",
-            2 * Plants.CAULIFLOWER.BasePrice + 50
+            2 * Plants.CAULIFLOWER.BasePrice + 50,
+            "Artisan_good/Green_Pickles.png"
     ),
     GarlicPickle(
             "GarlicPickle",
@@ -151,7 +168,8 @@ public enum Foods {
             (int)(Plants.GARLIC.energy * 1.75),
             null,
             "Preserves Jar",
-            2 * Plants.GARLIC.BasePrice + 50
+            2 * Plants.GARLIC.BasePrice + 50,
+            "Artisan_good/White_Pickles.png"
     ),
     GreenBeanPickle(
             "GreenBeanPickle",
@@ -160,7 +178,8 @@ public enum Foods {
             (int)(Plants.GREEN_BEAN.energy * 1.75),
             null,
             "Preserves Jar",
-            2 * Plants.GREEN_BEAN.BasePrice + 50
+            2 * Plants.GREEN_BEAN.BasePrice + 50,
+        "Artisan_good/Dark_Pink_Pickles.png"
     ),
     KalePickle(
             "KalePickle",
@@ -169,7 +188,8 @@ public enum Foods {
             (int)(Plants.KALE.energy * 1.75),
             null,
             "Preserves Jar",
-            2 * Plants.KALE.BasePrice + 50
+            2 * Plants.KALE.BasePrice + 50,
+            "Artisan_good/Dark_Purple_Pickles.png"
     ),
     ParsnipPickle(
             "ParsnipPickle",
@@ -178,7 +198,8 @@ public enum Foods {
             (int)(Plants.PARSNIP.energy * 1.75),
             null,
             "Preserves Jar",
-            2 * Plants.PARSNIP.BasePrice + 50
+            2 * Plants.PARSNIP.BasePrice + 50,
+            "Artisan_good/Brown_Pickles.png"
     ),
     PotatoPickle(
             "PotatoPickle",
@@ -187,7 +208,8 @@ public enum Foods {
             (int)(Plants.POTATO.energy * 1.75),
             null,
             "Preserves Jar",
-            2 * Plants.POTATO.BasePrice + 50
+            2 * Plants.POTATO.BasePrice + 50,
+            "Artisan_good/Brown_Pickles.png"
     ),
     RhubarbPickle(
             "RhubarbPickle",
@@ -196,7 +218,8 @@ public enum Foods {
             (int)(Plants.RHUBARB.energy * 1.75),
             null,
             "Preserves Jar",
-            2 * Plants.RHUBARB.BasePrice + 50
+            2 * Plants.RHUBARB.BasePrice + 50,
+            "Artisan_good/Red_Pickles.png"
     ),
     TomatoPickle(
             "TomatoPickle",
@@ -205,7 +228,8 @@ public enum Foods {
             (int)(Plants.TOMATO.energy * 1.75),
             null,
             "Preserves Jar",
-            2 * Plants.TOMATO.BasePrice + 50
+            2 * Plants.TOMATO.BasePrice + 50,
+        "Artisan_good/Red_Pickles.png"
     ),
     CranberriesPickle(
             "CranberriesPickle",
@@ -214,7 +238,8 @@ public enum Foods {
             (int)(Plants.CRANBERRIES.energy * 1.75),
             null,
             "Preserves Jar",
-            2 * Plants.CRANBERRIES.BasePrice + 50
+            2 * Plants.CRANBERRIES.BasePrice + 50,
+        "Artisan_good/Pink_Pickles.png"
     ),
     Beer(
             "Beer",
@@ -223,7 +248,8 @@ public enum Foods {
             50,
             null,
             "Stardrop Saloon",
-            200
+            200,
+        "Artisan_good/Beer.png"
     ),
     TroutSoup(
             "Trout Soup",
@@ -232,7 +258,8 @@ public enum Foods {
             50,
             null,
             "Fish Shop",
-            125
+            125,
+        "Recipe/Tom_Kha_Soup.png"
     ),
     FriedEgg(
             "Fried Egg",
@@ -241,7 +268,8 @@ public enum Foods {
             50,
             null,
             "Starter",
-            35
+            35,
+        "Recipe/Fried_Egg.png"
     ),
     BakedFish(
             "Baked Fish",
@@ -250,7 +278,8 @@ public enum Foods {
             75,
             null,
             "Starter",
-            100
+            100,
+        "Recipe/Baked_Fish.png"
     ),
     Salad(
             "Salad",
@@ -259,7 +288,8 @@ public enum Foods {
             113,
             null,
             "Starter",
-            110
+            110,
+        "Recipe/Salad.png"
     ),
     Olmelet(
             "Olmelet",
@@ -268,7 +298,8 @@ public enum Foods {
             100,
             null,
             "Stardrop Saloon",
-            125
+            125,
+        "Recipe/Omelet.png"
     ),
     PumpkinPie(
             "pumpkin pie",
@@ -277,7 +308,8 @@ public enum Foods {
             225,
             null,
             "Stardrop Saloon",
-            385
+            385,
+        "Recipe/Pumpkin_Pie.png"
     ),
     Spaghetti(
             "spaghetti",
@@ -286,7 +318,8 @@ public enum Foods {
             75,
             null,
             "Stardrop Saloon",
-            120
+            120,
+        "Recipe/Spaghetti.png"
     ),
     Pizza(
             "pizza",
@@ -295,7 +328,8 @@ public enum Foods {
             150,
             null,
             "Stardrop Saloon",
-            300
+            300,
+        "Recipe/Pizza.png"
     ),
     Tortilla(
             "Tortilla",
@@ -304,7 +338,8 @@ public enum Foods {
             50,
             null,
             "Stardrop Saloon",
-            50
+            50,
+        "Recipe/Tortilla.png"
     ),
     MakiRoll(
             "Maki Roll",
@@ -313,7 +348,8 @@ public enum Foods {
             100,
             null,
             "Stardrop Saloon",
-            220
+            220,
+        "Recipe/Maki_Roll.png"
     ),
     TripleShotEspresso(
             "Triple Shot Espresso",
@@ -322,7 +358,8 @@ public enum Foods {
             200,
             "Max Energy + 100 (5 hours)",
             "Stardrop Saloon",
-            450
+            450,
+        "Recipe/Triple_Shot_Espresso.png"
     ),
     Cookie(
             "Cookie",
@@ -331,7 +368,8 @@ public enum Foods {
             90,
             null,
             "Stardrop Saloon",
-            140
+            140,
+        "Recipe/Cookie.png"
     ),
     HashBrowns(
             "hash browns",
@@ -340,7 +378,8 @@ public enum Foods {
             90,
             "Farming (5 hours)",
             "Stardrop Saloon",
-            120
+            120,
+        "Recipe/Hashbrowns.png"
     ),
     Pancakes(
             "pancakes",
@@ -349,7 +388,8 @@ public enum Foods {
             90,
             "Foraging (11 hours)",
             "Stardrop Saloon",
-            80
+            80,
+        "Recipe/Pancakes.png"
     ),
     FruitSalad(
             "fruit salad",
@@ -358,7 +398,8 @@ public enum Foods {
             263,
             null,
             "Stardrop Saloon",
-            450
+            450,
+        "Recipe/Fruit_Salad.png"
     ),
     RedPlate(
             "red plate",
@@ -367,7 +408,8 @@ public enum Foods {
             240,
             "Max Energy +50 (3 hours)",
             "Stardrop Saloon",
-            400
+            400,
+        "Recipe/Red_Plate.png"
     ),
     Bread(
             "bread",
@@ -376,7 +418,8 @@ public enum Foods {
             50,
             null,
             "Stardrop Saloon",
-            60
+            60,
+        "Recipe/Bread.png"
     ),
     SalmonDinner(
             "salmon dinner",
@@ -385,7 +428,8 @@ public enum Foods {
             125,
             null,
             "Leah reward",
-            300
+            300,
+        "Recipe/Salmon_Dinner.png"
     ),
     VegetableMedley(
             "vegetable medley",
@@ -394,7 +438,8 @@ public enum Foods {
             165,
             "Foraging Level 2",
             null,
-            120
+            120,
+        "Recipe/Vegetable_Medley.png"
     ),
     FarmersLunch(
             "farmer's lunch",
@@ -403,7 +448,8 @@ public enum Foods {
             200,
             "Farming (5 hours)",
             "Farming level 1",
-            150
+            150,
+        "Recipe/Farmer%27s_Lunch.png"
     ),
     SurvivalBurger(
             "survival burger",
@@ -412,7 +458,8 @@ public enum Foods {
             125,
             "Foraging (5 hours)",
             "Foraging level 3",
-            180
+            180,
+        "Recipe/Survival_Burger.png"
     ),
     DishOTheSea(
             "dish O' the Sea",
@@ -421,7 +468,8 @@ public enum Foods {
             150,
             "Fishing (5 hours)",
             "Fishing level 2",
-            220
+            220,
+        "Recipe/Dish_O%27_The_Sea.png"
     ),
     SeaformPudding(
             "seaform Pudding",
@@ -430,7 +478,8 @@ public enum Foods {
             175,
             "Fishing (10 hours)",
             "Fishing level 3",
-            300
+            300,
+        "Recipe/Seafoam_Pudding.png"
     ),
     MinersTreat(
             "miner's treat",
@@ -439,7 +488,8 @@ public enum Foods {
             125,
             "Mining (5 hours)",
             "Mining level 1",
-            200
+            200,
+        "Recipe/Miner%27s_Treat.png"
     );
 
     public final String Name;
@@ -449,6 +499,7 @@ public enum Foods {
     public final String Buff;
     public final String Source;
     public final int SellPrice;
+    public final Texture texture;
 
     Foods(
             String Name,
@@ -457,7 +508,8 @@ public enum Foods {
             int energy,
             String buff,
             String source,
-            int sellPrice
+            int sellPrice,
+            String texture
     ) {
         this.Name = Name;
         this.Ingredient = ingredient;
@@ -466,5 +518,6 @@ public enum Foods {
         this.Buff = buff;
         this.Source = source;
         this.SellPrice = sellPrice;
+        this.texture = new Texture(texture);
     }
 }
