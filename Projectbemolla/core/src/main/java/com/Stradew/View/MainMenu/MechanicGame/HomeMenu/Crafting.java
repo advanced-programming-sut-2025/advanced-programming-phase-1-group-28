@@ -3,18 +3,16 @@ package com.Stradew.View.MainMenu.MechanicGame.HomeMenu;
 import com.Stradew.Controller.MainMenuController.HomeMenucontroller.CraftingController;
 import com.Stradew.Model.App;
 import com.Stradew.Model.Enums.Crafts;
-import com.Stradew.Model.Enums.Foods;
+import com.Stradew.Model.GameAssetsManager;
 import com.Stradew.Model.Tools.Pepolee;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -22,37 +20,44 @@ import java.util.Objects;
 public class Crafting implements Screen {
     Stage stage;
     CraftingController craftingController;
+    Skin skin;
 
     Label feedback;
 
     Table table;
-    List<ImageButton> crafts = new ArrayList<>();
+    List<Image> knownRecipes = new ArrayList<>();
 
     public Crafting(CraftingController craftingController) {
         this.craftingController = craftingController;
+        craftingController.setCrafting(this);
+        skin = GameAssetsManager.getInstance().getSkin();
 
 
 
-
+        int i = 0;
         for (Crafts craft: Crafts.values()) {
-//            ImageButton slotImage = new ImageButton(craft.)
-            crafts.add(slotImage);
+            Image slotImage = new Image(craft.Craftimage);
+            knownRecipes.add(slotImage);
 
             int index = i;
             slotImage.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    if (index < knownRecipes.size()) {
-                        crafts.setText(knownRecipes.get(index).name());
+                    if (!Objects.equals(App.craftingController.ShowCraft(craft), craft.toString() + ":" + "Locked" + "\n")) {
+                        feedback.setText(craft.Name);
                     }
                 }
             });
-
-            table.add(slotImage).size(64, 64).pad(2);
+            if (!Objects.equals(App.craftingController.ShowCraft(craft), craft.toString() + ":" + "Locked" + "\n")) {
+                table.add(slotImage).size(64, 64).pad(2);
+            }
             if ((i + 1) % 5 == 0) {
                 table.row();
             }
+            i++;
         }
+        table.setFillParent(true);
+        stage.addActor(table);
     }
 
     public void ShowCraftHelp()

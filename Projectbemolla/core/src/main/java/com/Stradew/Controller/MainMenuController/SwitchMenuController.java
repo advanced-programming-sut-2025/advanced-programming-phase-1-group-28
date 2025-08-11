@@ -1,5 +1,6 @@
 package com.Stradew.Controller.MainMenuController;
 
+import com.Stradew.Controller.MainMenuController.HomeMenucontroller.CraftingController;
 import com.Stradew.Controller.MainMenuController.HomeMenucontroller.PokhtOPazController;
 import com.Stradew.Controller.MainMenuController.MechanicController.FriendShipController;
 import com.Stradew.Controller.MainMenuController.MechanicController.MechanicController;
@@ -15,6 +16,7 @@ import com.Stradew.View.MainMenu.GameMenu;
 import com.Stradew.View.MainMenu.MechanicGame.AnimalInteractionDialog;
 import com.Stradew.View.MainMenu.MechanicGame.FriendshipDialog;
 import com.Stradew.View.MainMenu.MechanicGame.HomeMenu.CookingDialog;
+import com.Stradew.View.MainMenu.MechanicGame.HomeMenu.CraftingDialog;
 import com.Stradew.View.MainMenu.MechanicGame.HomeMenu.PokhtOPaz;
 import com.Stradew.View.MainMenu.MechanicGame.NpcDialog;
 import com.Stradew.View.MainMenu.NPCVillage;
@@ -55,6 +57,11 @@ public class SwitchMenuController {
     public void openAnimalMenu(Animal animal, Stage stage){
         AnimalInteractionDialog dialog = new AnimalInteractionDialog(animal, new MechanicController(), GameAssetsManager.getInstance().getSkin());
         dialog.show(stage);
+    }
+
+    public void openCraftMenu(Stage stage){
+        CraftingDialog craftingDialog = new CraftingDialog(new CraftingController(), GameAssetsManager.getInstance().getSkin());
+        craftingDialog.show(stage);
     }
 
     public void openBlackSmith(){

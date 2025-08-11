@@ -603,8 +603,8 @@ public class GameMenu implements Screen , ServerMessageHandler {
             mechanicGame.playFeedingAnimation(stage);
         }if (Gdx.input.isKeyJustPressed(Input.Keys.G)){
             mechanicGame.playShepherdingAnimation(stage);
-        }if (Gdx.input.isKeyJustPressed(Input.Keys.H)){
-            switchMenuController.openAnimalMenu(new Animal("mamad", Animals.Chicken), stage);
+        }if (Gdx.input.isKeyJustPressed(Input.Keys.B)){
+            switchMenuController.openCraftMenu(stage);
         }
     }
 
