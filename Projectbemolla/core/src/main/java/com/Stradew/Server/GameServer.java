@@ -305,6 +305,11 @@ class ClientHandler implements Runnable {
                 server.broadcastMessage(message);
                 break;
 
+
+            case "NEW_CHAT":
+                server.broadcastMessage("NEW_CHAT_INFO " + parts[1] +  " " + RealUsername);
+                break;
+
             default:
                 sendMessage("ERROR Unknown command");
                 break;

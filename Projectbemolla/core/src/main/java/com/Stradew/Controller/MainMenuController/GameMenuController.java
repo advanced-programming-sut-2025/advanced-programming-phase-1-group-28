@@ -84,7 +84,11 @@ public class GameMenuController {
     private FriendShipController friendShipController = new FriendShipController();
     private FarmingController farmingController = new FarmingController();
     private BitmapFont font = new BitmapFont();
+    private ChatController chatController = new ChatController();
 
+    public ChatController getChatController() {
+        return chatController;
+    }
 
     public FarmingController getFarmingController() {
         return farmingController;
@@ -179,6 +183,7 @@ public class GameMenuController {
             inventorypannelController.firstTouch(menu.getCurrntLobby().getUsernames());
             tradeController.FirstTouch(menu);
             rankingTableController.FirstTouch(menu);
+            chatController.FirstTouch(menu);
             ok = true;
         }
         if(menu.getMainTable().isVisible()) {
@@ -223,6 +228,12 @@ public class GameMenuController {
                 menu.getRankingTable2().setVisible(true);
                 menu.getMainTable().setVisible(false);
                 menu.getRanking().setChecked(false);
+            }
+            if(menu.getChat().isChecked())
+            {
+                menu.getChatTable().setVisible(true);
+                menu.getMainTable().setVisible(false);
+                menu.getChat().setChecked(false);
             }
         }
         if(menu.getSwitchTable().isVisible()) {
@@ -279,6 +290,10 @@ public class GameMenuController {
             {
                 font.draw(Main.getMain().getBatch() , App.ReturnCurrentPlayer().getTradeHistory().get(i).getSender() + " Sell the item  " + App.ReturnCurrentPlayer().getTradeHistory().get(i).getItemName() + " to the player  " + App.ReturnCurrentPlayer().getTradeHistory().get(i).getGiverName() , App.ReturnCurrentPlayer().getX()  - 200 , App.ReturnCurrentPlayer().getY() + 200 - (100 * i));
             }
+        }
+        if(menu.getChatTable().isVisible())
+        {
+            chatController.Update(menu);
         }
     }
 

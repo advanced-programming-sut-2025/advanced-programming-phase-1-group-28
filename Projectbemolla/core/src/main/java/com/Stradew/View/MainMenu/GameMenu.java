@@ -138,6 +138,11 @@ public class GameMenu implements Screen , ServerMessageHandler {
                 MainTable.setVisible(true);
             }
         }
+
+        if(command.equals("NEW_CHAT_INFO"))
+        {
+            controller.getChatController().getMessages().add(parts[2] + "   :   "  + parts[1]);
+        }
     }
 
     @Override
@@ -161,6 +166,11 @@ public class GameMenu implements Screen , ServerMessageHandler {
         return crafmenus;
     }
 
+    public String getChatToShow() {
+        return ChatToShow;
+    }
+
+    private TextButton Chat;
     private ArrayList<CraftMenu> crafmenus = new ArrayList<>();
     private InputMultiplexer inputMultiplexer;
     private Texture ReactionImageforDisplay;
@@ -197,6 +207,8 @@ public class GameMenu implements Screen , ServerMessageHandler {
     private TextButton Ranking;
     private Stage ConstantStage;
     private TextButton BackToInventory;
+    private String ChatToShow;
+
 
     public TextButton getBackToInventory() {
         return BackToInventory;
@@ -313,6 +325,16 @@ public class GameMenu implements Screen , ServerMessageHandler {
     private Table RankingTable;
     private Table RankingTable2;
     private Table TradeHistoryTable;
+    private Table ChatTable;
+
+
+    public TextButton getChat() {
+        return Chat;
+    }
+
+    public Table getChatTable() {
+        return ChatTable;
+    }
 
     public Table getRankingTable() {
         return RankingTable;
@@ -491,6 +513,9 @@ public class GameMenu implements Screen , ServerMessageHandler {
 
         TradeHistoryTable = new Table();
         BackToInventory = new TextButton("BackToInventory", GameAssetsManager.getInstance().getSkin());
+
+        ChatTable = new Table();
+        Chat = new TextButton("Chat", GameAssetsManager.getInstance().getSkin());
     }
 
     public Stage getStage() {
@@ -523,7 +548,7 @@ public class GameMenu implements Screen , ServerMessageHandler {
         SwitchTable.add(Backbutton);
         stage.addActor(SwitchTable);
 
-        MainTable.setPosition(-400, 400);
+        MainTable.setPosition(-300, 400);
         MainTable.add(Setting);
         //MainTable.setOrigin(900 , 400);
         MainTable.add(EnergyBar);
@@ -531,6 +556,7 @@ public class GameMenu implements Screen , ServerMessageHandler {
         MainTable.add(SeeOnlilnePlayers);
         MainTable.add(GoReact);
         MainTable.add(Ranking);
+        MainTable.add(Chat);
         stage.addActor(MainTable);
 
         Minigame.setFillParent(true);
@@ -577,6 +603,12 @@ public class GameMenu implements Screen , ServerMessageHandler {
         TradeHistoryTable.top();
         TradeHistoryTable.add(BackToInventory);
 
+        ChatTable.setFillParent(true);
+        ChatTable.setVisible(false);
+        ChatTable.top();
+
+
+        stage.addActor(ChatTable);
         stage.addActor(TradeHistoryTable);
         stage.addActor(RankingTable2);
         stage.addActor(RankingTable);
