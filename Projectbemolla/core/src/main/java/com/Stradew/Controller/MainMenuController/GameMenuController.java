@@ -23,6 +23,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 import java.util.ArrayList;
 
@@ -82,6 +83,8 @@ public class GameMenuController {
     private RankingTableController rankingTableController = new RankingTableController();
     private FriendShipController friendShipController = new FriendShipController();
     private FarmingController farmingController = new FarmingController();
+    private BitmapFont font = new BitmapFont();
+
 
     public FarmingController getFarmingController() {
         return farmingController;
@@ -262,6 +265,20 @@ public class GameMenuController {
         if(menu.getRankingTable().isVisible())
         {
             rankingTableController.Update(menu);
+        }
+        if(menu.getTradeHistoryTable().isVisible())
+        {
+            if(menu.getBackToInventory().isChecked())
+            {
+                menu.getInventoryTable().setVisible(true);
+                menu.getSwitchTable().setVisible(true);
+                menu.getTradeHistoryTable().setVisible(false);
+                menu.getBackToInventory().setChecked(false);
+            }
+            for(int i = 0;i < App.ReturnCurrentPlayer().getTradeHistory().size();i++)
+            {
+                font.draw(Main.getMain().getBatch() , App.ReturnCurrentPlayer().getTradeHistory().get(i).getSender() + " Sell the item  " + App.ReturnCurrentPlayer().getTradeHistory().get(i).getItemName() + " to the player  " + App.ReturnCurrentPlayer().getTradeHistory().get(i).getGiverName() , App.ReturnCurrentPlayer().getX()  - 200 , App.ReturnCurrentPlayer().getY() + 200 - (100 * i));
+            }
         }
     }
 

@@ -12,6 +12,7 @@ import com.Stradew.Model.Tools.Tools;
 import com.Stradew.View.MainMenu.GameMenu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
@@ -33,6 +34,8 @@ public class InventorypannelController {
     private TextButton Remove = new TextButton("Remove" , GameAssetsManager.getInstance().getSkin());
     private TextButton HistoryofTrades = new TextButton("History of Trades" , GameAssetsManager.getInstance().getSkin());
     private SelectBox Users = new SelectBox(GameAssetsManager.getInstance().getSkin());
+    private BitmapFont font = new BitmapFont();
+
 
     public ArrayList<InventorySlot> getInventorySlots() {
         return inventorySlots;
@@ -133,6 +136,24 @@ public class InventorypannelController {
     }
 
 
+    public void TradeHistory(GameMenu menu)
+    {
+        if(menu.getTradeHistoryTable().isVisible())
+        {
+            if(menu.getBackToInventory().isChecked())
+            {
+                menu.getInventoryTable().setVisible(true);
+                menu.getSwitchTable().setVisible(true);
+                menu.getTradeHistoryTable().setVisible(false);
+                menu.getBackToInventory().setChecked(false);
+            }
+            for(int i = 0;i < App.ReturnCurrentPlayer().getTradeHistory().size();i++)
+            {
+                font.draw(Main.getMain().getBatch() , App.ReturnCurrentPlayer().getTradeHistory().get(i).getSender() + " Sell the item  " + App.ReturnCurrentPlayer().getTradeHistory().get(i).getItemName() + " to the player  " + App.ReturnCurrentPlayer().getTradeHistory().get(i).getGiverName() , App.ReturnCurrentPlayer().getX()  - 200 , App.ReturnCurrentPlayer().getY() + 200 - (100 * i));
+            }
+        }
+    }
+
     public void Equip(GameMenuController gamecontroller)
     {
         boolean ok = false;
@@ -214,55 +235,54 @@ public class InventorypannelController {
 
     public void Update(GameMenuController gamecontroller)
     {
-        RemoveItem();
-        Trade(gamecontroller.getMenu());
-        Equip(gamecontroller);
-        for(int i = 0;i < App.ReturnCurrentPlayer().getInventory().getTools().size();i++)
-        {
-            boolean ok = false;
-            for(int j = 0;j < 36;j++)
+
+            if(HistoryofTrades.isChecked())
             {
-                if(inventorySlots.get(j).getItem() != null) {
-                    if (inventorySlots.get(j).getItem().equals(App.ReturnCurrentPlayer().getInventory().getTools().get(i))) {
-                        ok = true;
+                gamecontroller.getMenu().getTradeHistoryTable().setVisible(true);
+                gamecontroller.getMenu().getInventoryTable().setVisible(false);
+                gamecontroller.getMenu().getSwitchTable().setVisible(false);
+                gamecontroller.getMenu().getSwitchMenuController();
+                HistoryofTrades.setChecked(false);
+            }
+            RemoveItem();
+            Trade(gamecontroller.getMenu());
+            Equip(gamecontroller);
+            for (int i = 0; i < App.ReturnCurrentPlayer().getInventory().getTools().size(); i++) {
+                boolean ok = false;
+                for (int j = 0; j < 36; j++) {
+                    if (inventorySlots.get(j).getItem() != null) {
+                        if (inventorySlots.get(j).getItem().equals(App.ReturnCurrentPlayer().getInventory().getTools().get(i))) {
+                            ok = true;
+                        }
+                    }
+                }
+                if (!ok) {
+                    for (int j = 0; j < 36; j++) {
+                        if (inventorySlots.get(j).getItem() == null) {
+                            inventorySlots.get(j).SetImageButton(App.ReturnCurrentPlayer().getInventory().getTools().get(i));
+                            break;
+                        }
                     }
                 }
             }
-            if(!ok)
-            {
-                for(int j = 0;j < 36;j++)
-                {
-                    if(inventorySlots.get(j).getItem() == null)
-                    {
-                        inventorySlots.get(j).SetImageButton(App.ReturnCurrentPlayer().getInventory().getTools().get(i));
-                        break;
+            for (int i = 0; i < App.ReturnCurrentPlayer().getInventory().getItems().size(); i++) {
+                boolean ok = false;
+                for (int j = 0; j < 36; j++) {
+                    if (inventorySlots.get(j).getItem() != null) {
+                        if (inventorySlots.get(j).getItem().equals(App.ReturnCurrentPlayer().getInventory().getItems().get(i))) {
+                            ok = true;
+                        }
+                    }
+                }
+                if (!ok) {
+                    for (int j = 0; j < 36; j++) {
+                        if (inventorySlots.get(j).getItem() == null) {
+                            inventorySlots.get(j).SetImageButton(App.ReturnCurrentPlayer().getInventory().getItems().get(i));
+                            break;
+                        }
                     }
                 }
             }
-        }
-        for(int i = 0;i < App.ReturnCurrentPlayer().getInventory().getItems().size();i++)
-        {
-            boolean ok = false;
-            for(int j = 0;j < 36;j++)
-            {
-                if(inventorySlots.get(j).getItem() != null) {
-                    if (inventorySlots.get(j).getItem().equals(App.ReturnCurrentPlayer().getInventory().getItems().get(i))) {
-                        ok = true;
-                    }
-                }
-            }
-            if(!ok)
-            {
-                for(int j = 0;j < 36;j++)
-                {
-                    if(inventorySlots.get(j).getItem() == null)
-                    {
-                        inventorySlots.get(j).SetImageButton(App.ReturnCurrentPlayer().getInventory().getItems().get(i));
-                        break;
-                    }
-                }
-            }
-        }
 
     }
 

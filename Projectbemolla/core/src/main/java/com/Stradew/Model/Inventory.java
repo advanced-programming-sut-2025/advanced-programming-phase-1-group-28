@@ -234,7 +234,7 @@ public class Inventory {
                 {
                    // Gdx.app.exit();
                     controller.getInventorySlots().get(i).SetImageButton(null);
-                    Texture Axe = new Texture("Pants/Baggy_Pants.png");
+                    Texture Axe = GameAssetsManager.getInstance().Pants;
                     TextureRegion region = new TextureRegion(Axe);
                     TextureRegionDrawable drawable = new TextureRegionDrawable(region);
                     controller.getChoosenItem().getStyle().up = drawable;

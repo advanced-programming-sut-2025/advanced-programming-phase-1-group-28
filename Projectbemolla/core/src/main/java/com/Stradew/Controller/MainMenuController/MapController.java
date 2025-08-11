@@ -6,10 +6,8 @@ import com.Stradew.Model.Enums.*;
 import com.Stradew.Model.Game;
 import com.Stradew.Model.GameAssetsManager;
 import com.Stradew.Model.PairChanges;
-import com.Stradew.Model.Tile.PlantedCrafts;
+import com.Stradew.Model.Tile.*;
 import com.Stradew.Model.Tile.Plants;
-import com.Stradew.Model.Tile.Tile;
-import com.Stradew.Model.Tile.Trees;
 import com.Stradew.View.MainMenu.GameMenu;
 import com.Stradew.View.MainMenu.NPCVillage;
 import com.badlogic.gdx.Gdx;
@@ -188,8 +186,6 @@ public class MapController {
                     if(ok)
                     {
 
-                    } else if(TempGround[i][j].getEntitity() == Entitity.Minreal) {
-
                     } else if (TempGround[i][j].getTerrain() == Terrain.DIRT) {
                         if(TempGround[i][j].isHow())
                         {
@@ -249,7 +245,7 @@ public class MapController {
                                             //Texture Dirt = GameAssetsManager.getInstance().DirtPicture();
                                             //Main.getMain().getBatch().draw(Dirt , i * TILE_SIZE, j * TILE_SIZE , TILE_SIZE , TILE_SIZE);
                                             Texture Tree = ((Trees) TempGround[i][j]).getTree().TreeTexture;
-                                            Main.getMain().getBatch().draw(Tree, i * TILE_SIZE, j * TILE_SIZE, 30, 30);
+                                            Main.getMain().getBatch().draw(Tree, i * TILE_SIZE, j * TILE_SIZE, 70, 70);
 
 
                                         } else if (TempGround[i][j].getEntitity() == Entitity.PLANTS) {
@@ -267,6 +263,12 @@ public class MapController {
                                             }
                                         }*/
                                         } else if (TempGround[i][j].getPlaceType() == PlaceType.QUARRY) {
+                                            if(TempGround[i][j].getEntitity() == Entitity.Minreal)
+                                            {
+                                                Minreal mineral = (Minreal) TempGround[i][j];
+                                                Texture MineralTexture = mineral.getMineral().image;
+                                                Main.getMain().getBatch().draw(MineralTexture, i * TILE_SIZE, j * TILE_SIZE, 70, 70);
+                                            }
                                         }
                                     }
                                 }

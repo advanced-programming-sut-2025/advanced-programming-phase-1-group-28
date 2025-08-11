@@ -1,4 +1,6 @@
 package com.Stradew.Server;
+import com.badlogic.gdx.Gdx;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -22,7 +24,7 @@ import java.util.stream.Collectors;
         private boolean isVisible;
         private  String id;
         private final String name;
-        private final String password; // Can be null for public lobbies
+        private final String password;
         private final List<String> playerIds = new ArrayList<>();
         private ArrayList<String> Usernames = new ArrayList<>();
         private ArrayList<Integer> SumLevelSkills = new ArrayList<>();
@@ -31,6 +33,7 @@ import java.util.stream.Collectors;
         private int NumberPlayers;
         private String adminId;
         private Boolean GetStarted = false;
+        private Boolean PrivateIS  = true;
 
 
         public ArrayList<Integer> getCoins() {
@@ -79,6 +82,15 @@ import java.util.stream.Collectors;
             this.id = "lobby-" + UUID.randomUUID().toString().substring(0, 8);
             this.name = name;
             this.adminId = adminId;
+            if(password != null) {
+                if (password.equals("AJAB")) {
+                    PrivateIS = false;
+                }
+            }
+            if(password == null)
+            {
+                PrivateIS = false;
+            }
             this.password = password;
             Usernames.add(Usernameid);
             addPlayer(adminId);
@@ -86,7 +98,9 @@ import java.util.stream.Collectors;
 
         public String getId() { return id; }
         public String getName() { return name; }
-        public boolean isPrivate() { return password != null && !password.isEmpty(); }
+        public boolean isPrivate() {
+            return PrivateIS;
+        }
 
         public synchronized boolean addPlayer(String playerId) {
             if (playerIds.size() < 10) { // Max 4 players per lobby
@@ -123,15 +137,22 @@ import java.util.stream.Collectors;
         }
 
         public boolean checkPassword(String pass) {
-            if (!isPrivate()) return true;
+            System.out.println(this.password);
+            if (!isPrivate()) {
+                System.out.println("BaghaliZAde");
+                return true;
+            }
             return this.password.equals(pass);
         }
 
+        public boolean isVisible() {
+            return isVisible;
+        }
 
         // Method to get a string representation of the lobby for sending to clients
         // Format: LOBBY_ID;LOBBY_NAME;PLAYER_COUNT;IS_PRIVATE
         public String getLobbyInfo() {
-            return String.format("%s;%s;%b;%s;%s", name, playerIds.size(),  isPrivate() , id , getUsernamesInfo());
+                return String.format("%s;%s;%b;%s;%s;%b", name, playerIds.size(), isPrivate(), id, getUsernamesInfo() , isVisible);
         }
         public String getUsernamesInfo()
         {

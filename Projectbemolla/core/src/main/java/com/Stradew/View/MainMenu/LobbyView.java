@@ -41,16 +41,19 @@ public class LobbyView implements Screen , ServerMessageHandler {
                 for (int i = 0; i < LobbyData.length; i++) {
                     String S = LobbyData[i];
                     String parts2[] = S.split(";", 10);
-                    Lobby newlobby;
-                    if (parts2[2].equals("false")) {
-                        newlobby = new Lobby(parts2[0], null, parts2[2], null);
-                        newlobby.setId(parts2[3]);
-                    } else {
-                        newlobby = new Lobby(parts2[0], null, null, null);
-                        newlobby.setId(parts2[3]);
+                    if(parts2.length > 1) {
+                        Lobby newlobby;
+                        if (parts2[2].equals("false")) {
+                            newlobby = new Lobby(parts2[0], null, parts2[2], null);
+                            newlobby.setId(parts2[3]);
+                        } else {
+                            newlobby = new Lobby(parts2[0], null, null, null);
+                            newlobby.setId(parts2[3]);
+                        }
+                        newlobby.setNumberPlayers(Integer.parseInt(parts2[1]));
+                        newlobby.setVisible(Boolean.parseBoolean(parts2[parts2.length-1]));
+                        lobbies.add(newlobby);
                     }
-                    newlobby.setNumberPlayers(Integer.parseInt(parts2[1]));
-                    lobbies.add(newlobby);
                 }
                 for (int i = lobbies.size() - 1; i >= LobbyData.length; i--) {
                     lobbies.remove(i);
@@ -68,7 +71,7 @@ public class LobbyView implements Screen , ServerMessageHandler {
                                 newlobby = new Lobby(parts2[0], null, null, parts2[4]);
                                 newlobby.setId(parts2[3]);
                             }
-                            for (int j = 5; j < parts2.length; j++) {
+                            for (int j = 5; j < parts2.length - 1; j++) {
                                 newlobby.getUsernames().add(parts2[j]);
                             }
                             newlobby.setNumberPlayers(Integer.parseInt(parts2[1]));
@@ -92,7 +95,7 @@ public class LobbyView implements Screen , ServerMessageHandler {
                 newlobby = new Lobby(parts2[0], null, null , parts2[4]);
                 newlobby.setId(parts2[3]);
             }
-            for(int i = 5 ; i < parts2.length ; i++)
+            for(int i = 5 ; i < parts2.length - 1  ; i++)
             {
                 newlobby.getUsernames().add(parts2[i]);
             }
@@ -152,7 +155,7 @@ public class LobbyView implements Screen , ServerMessageHandler {
     private Table JoiningLobbyTable;
     private LobbyController lobbyController;
     private boolean GoingToGame = false;
-
+    private CheckBox Visible;
 
 
     public void setGoingToGame(boolean goingToGame) {
@@ -246,6 +249,11 @@ public class LobbyView implements Screen , ServerMessageHandler {
         JoinLobbyWithThisname = new TextButton("Join", GameAssetsManager.getInstance().getSkin());
         LeaveLobby = new TextButton("Leave", GameAssetsManager.getInstance().getSkin());
         GoTOGame = new TextButton("GoTOGame", GameAssetsManager.getInstance().getSkin());
+        Visible = new CheckBox("Visible", GameAssetsManager.getInstance().getSkin());
+    }
+
+    public CheckBox getVisible() {
+        return Visible;
     }
 
     public TextButton[] getButtons() {
@@ -284,7 +292,9 @@ public class LobbyView implements Screen , ServerMessageHandler {
         CreateLobbyTable.add(LobbyName).width(300).pad(20).row();
         CreateLobbyTable.add(LobbyPassword).width(300).pad(20).row();
         CreateLobbyTable.add(Public_Private).pad(40).row();
+        CreateLobbyTable.add(Visible).pad(40).row();
         CreateLobbyTable.add(SubmitCreateLobby);
+
 
         InsideLobbyTable.setVisible(false);
         InsideLobbyTable.setFillParent(true);

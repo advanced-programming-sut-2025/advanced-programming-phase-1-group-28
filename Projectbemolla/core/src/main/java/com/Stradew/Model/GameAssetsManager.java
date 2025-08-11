@@ -28,6 +28,34 @@ public class GameAssetsManager {
     private final Texture SkillPannel = new Texture(Gdx.files.internal("Inventory/RealSkills.png"));
     public final String[] StringsReactionsText = {"HELLO" , "Yeah BOY" , "THANK YOU" , "GG" , "ARE YOU OK" , "GIVE ME A BO"};
     public final Texture[] ImagesREacions = {new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png")};
+    public final Texture Pants = new Texture(Gdx.files.internal("Pants/Baggy_Pants.png"));
+
+
+    public Texture Slot()
+    {
+        return Pants;
+    }
+
+    public final Texture[] Stars = {new Texture(Gdx.files.internal("Achievement/Achievement_Star_01.png")) , new Texture(Gdx.files.internal("Achievement/Achievement_Star_02.png")) , new Texture(Gdx.files.internal("Achievement/Achievement_Star_03.png")) , new Texture(Gdx.files.internal("Achievement/Achievement_Star_04.png")) , new Texture(Gdx.files.internal("Achievement/Achievement_Star_05.png")) , new Texture(Gdx.files.internal("Achievement/Achievement_Star_06.png"))};
+
+    public Texture FishAchivment()
+    {
+        return new Texture(Gdx.files.internal("Achievement/Achievement_Fisherman.jpg"));
+    }
+
+    public Texture NatureAchivment()
+    {
+        return new Texture(Gdx.files.internal("Achievement/Achievement_Monoculture.jpg"));
+    }
+
+    public Texture mineAchivment(){
+        return new Texture(Gdx.files.internal("Achievement/Achievement_DIY.jpg"));
+    }
+
+    public Texture FarmAchivment(){
+        return new Texture(Gdx.files.internal("Achievement/Achievement_Master_Of_The_Five_Ways.jpg"));
+    }
+
     public Animation playerAnimationRegion;
 
     public Texture RandomAvatar()

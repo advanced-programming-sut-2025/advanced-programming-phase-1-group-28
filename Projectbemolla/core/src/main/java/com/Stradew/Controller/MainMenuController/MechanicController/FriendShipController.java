@@ -223,8 +223,11 @@ public class FriendShipController {
     public void SellTrade(int Price, InventorypannelController controller)
     {
         App.ReturnCurrentPlayer().addCoin(Price);
+        System.out.println("Khoda");
         App.ReturnCurrentPlayer().getInventory().removeItem(App.ReturnCurrentPlayer().getInventory().getCurrentItem() , controller);
+        System.out.println("BAE");
         App.ReturnCurrentPlayer().getInventory().setCurrentItem(null);
+
     }
 
     public void GetTreade(String ItemName , int Price)

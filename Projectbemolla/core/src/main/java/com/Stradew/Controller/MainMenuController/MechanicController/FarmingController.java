@@ -4,6 +4,7 @@ import com.Stradew.Model.App;
 import com.Stradew.Model.Enums.*;
 import com.Stradew.Model.Item.Ingredient;
 import com.Stradew.Model.PairChanges;
+import com.Stradew.Model.Tile.Minreal;
 import com.Stradew.Model.Tile.Plants;
 import com.Stradew.Model.Tile.Tile;
 import com.Stradew.Model.Tile.Trees;
@@ -126,7 +127,7 @@ public class FarmingController {
                 }
             }
         }
-        /*for(int x = 0 ; x < PlaceType.FARM.XLength ; x++)
+        for(int x = 0 ; x < PlaceType.FARM.XLength ; x++)
         {
             for(int y = 0; y < PlaceType.FARM.YLength ; y++)
             {
@@ -138,15 +139,30 @@ public class FarmingController {
                         if(TempGround[x][y].getEntitity() != Entitity.Minreal)
                         {
                             Minreal newminreal = new Minreal(null , null , Entitity.Minreal);
+                            int RandomMineral = App.random.nextInt() % 10;
+                            if(RandomMineral < 0)
+                            {
+                                RandomMineral += 10;
+                            }
+                            int Count = 0;
+                            for(Minerals m : Minerals.values())
+                            {
+                                if(Count == RandomMineral)
+                                {
+                                    newminreal.setMineral(m);
+                                }
+                                Count++;
+                            }
                             TempGround[x][y] = newminreal;
                             TempGround[x][y].setPlaceType(PlaceType.QUARRY);
                             TempGround[x][y].setEntitity(Entitity.Minreal);
                             TempGround[x][y].setTerrain(null);
+                            App.ReturnCurrentPlayer().getFarm().getChanges().add(new PairChanges(x , y));
                         }
                     }
                 }
             }
-        }*/
+        }
         CurrentPepolee.getFarm().setGround(TempGround);
     }
 

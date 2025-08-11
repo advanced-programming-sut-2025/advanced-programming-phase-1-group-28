@@ -44,15 +44,15 @@ public class LobbyController {
             }
             if(lobby.getSubmitCreateLobby().isChecked())
             {
-                if(!lobby.getPublic_Private().isChecked())
+                if(lobby.getPublic_Private().isChecked())
                 {
                     //it is public
-                    App.networkClient.sendMessage("CREATE_LOBBY "  + lobby.getLobbyName().getText() + " " + App.getCurrentUser().getUsername()  + " " +  "true");
+                    App.networkClient.sendMessage("CREATE_LOBBY "  + lobby.getLobbyName().getText() + " " + App.getCurrentUser().getUsername()  + " " +  String.valueOf(!lobby.getVisible().isChecked()));
                 }
                 else
                 {
                     //it is not public
-                    App.networkClient.sendMessage("CREATE_LOBBY "  + lobby.getLobbyName().getText() + " " + App.getCurrentUser().getUsername() + " " + "true" + " " +  lobby.getLobbyPassword().getText());
+                    App.networkClient.sendMessage("CREATE_LOBBY "  + lobby.getLobbyName().getText() + " " + App.getCurrentUser().getUsername() + " " + String.valueOf(!lobby.getVisible().isChecked()) + " " +  lobby.getLobbyPassword().getText());
                 }
                 lobby.getInsideLobbyTable().setVisible(true);
                 lobby.getCreateLobbyTable().setVisible(false);
@@ -66,7 +66,7 @@ public class LobbyController {
             font.draw(Main.getMain().getBatch(), "Players inside" , 700 , 500);
             for(int i = 0; i < lobby.getLobbies().size(); i++)
             {
-                if(lobby.getLobbies().get(i).getName() != null) {
+                if(lobby.getLobbies().get(i).getName() != null && lobby.getLobbies().get(i).isVisible()) {
                     font.draw(Main.getMain().getBatch(), lobby.getLobbies().get(i).getName(), 500, 600 + (i * 100));
                     font.draw(Main.getMain().getBatch(), String.valueOf(lobby.getLobbies().get(i).isPrivate()), 600, 600 + (i * 100));
                     font.draw(Main.getMain().getBatch(), String.valueOf(lobby.getLobbies().get(i).getNumberPlayers()), 700, 600 + (i * 100));

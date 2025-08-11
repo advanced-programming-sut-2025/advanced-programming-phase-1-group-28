@@ -50,7 +50,9 @@ public class InventorySlot {
 
     public void SetImageButton(Object item) {
         this.item = item;
-        Texture buttonTexture = new Texture("Pants/Baggy_Pants.png");
+        System.out.println("Va");
+        Texture buttonTexture = GameAssetsManager.getInstance().Pants;
+        System.out.println("KHODA");
         if(item == null)
         {
             //Gdx.app.exit();

@@ -230,7 +230,7 @@ class ClientHandler implements Runnable {
             case "CREATE_LOBBY":
                 if (parts.length > 1) {
                     String lobbyName = parts[1];
-                    String password = (parts.length > 4) ? parts[4] : "";
+                    String password = (parts.length > 4) ? parts[4] : "AJAB";
                     String Username = parts[2];
                     boolean visible = Boolean.parseBoolean(parts[3]);
                     String response = server.createLobby(lobbyName, this.clientId, password , Username , visible);

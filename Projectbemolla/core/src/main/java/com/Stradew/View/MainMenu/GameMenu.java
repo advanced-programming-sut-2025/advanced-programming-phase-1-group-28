@@ -8,6 +8,8 @@ import com.Stradew.Controller.MainMenuController.SwitchMenuController;
 import com.Stradew.Main;
 import com.Stradew.Model.App;
 import com.Stradew.Model.GameAssetsManager;
+import com.Stradew.Model.Item.Item;
+import com.Stradew.Model.Trade;
 import com.Stradew.Server.Lobby;
 import com.Stradew.Server.ServerMessageHandler;
 import com.Stradew.View.MainMenu.MechanicGame.*;
@@ -100,6 +102,10 @@ public class GameMenu implements Screen , ServerMessageHandler {
         {
             if(parts[1].equals(App.getCurrentUser().getUsername()))
             {
+                Trade newtrade = new Trade(parts[3] , "mamad" , 1 ,new Item(1 , parts[2]) , 100 , "mamad" , 1);
+                newtrade.setGiverName(App.getCurrentUser().getUsername());
+                newtrade.setItemName(parts[2]);
+                App.ReturnCurrentPlayer().getTradeHistory().add(newtrade);
                 controller.getFriendShipController().GetTreade(parts[2] , 50);
             }
         }
@@ -107,8 +113,17 @@ public class GameMenu implements Screen , ServerMessageHandler {
         {
             if(parts[2].equals(App.getCurrentUser().getUsername()))
             {
-                App.networkClient.sendMessage("TRADE_INFO " + parts[1] + " " + App.ReturnCurrentPlayer().getInventory().getCurrentItem().getName());
+                Trade newtrade = (new Trade(App.getCurrentUser().getUsername(), "mamad" , 1 , App.ReturnCurrentPlayer().getInventory().getCurrentItem() , 100 , "mamad" , 1));
+                newtrade.setGiverName(parts[1]);
+                System.out.println("ALi");
+                newtrade.setItemName(App.ReturnCurrentPlayer().getInventory().getCurrentItem().getName());
+                System.out.println("mamad");
+                App.ReturnCurrentPlayer().addTradeToHistory(newtrade);
+                System.out.println("Asghar");
+                App.networkClient.sendMessage("TRADE_INFO " + parts[1] + " " + App.ReturnCurrentPlayer().getInventory().getCurrentItem().getName() + " " + App.getCurrentUser().getUsername());
+                System.out.println("Akbar");
                 controller.getFriendShipController().SellTrade(50, controller.getInventorypannelController());
+                System.out.println("Sepehr");
                 TradeTable.setVisible(false);
                 MainTable.setVisible(true);
             }
@@ -179,6 +194,15 @@ public class GameMenu implements Screen , ServerMessageHandler {
     private TextButton BackFromOnlinePlayers;
     private TextButton Ranking;
     private Stage ConstantStage;
+    private TextButton BackToInventory;
+
+    public TextButton getBackToInventory() {
+        return BackToInventory;
+    }
+
+    public Table getTradeHistoryTable() {
+        return TradeHistoryTable;
+    }
 
     public SwitchMenuController getSwitchMenuController() {
         return switchMenuController;
@@ -286,7 +310,7 @@ public class GameMenu implements Screen , ServerMessageHandler {
     private Table TradeTable;
     private Table RankingTable;
     private Table RankingTable2;
-
+    private Table TradeHistoryTable;
 
     public Table getRankingTable() {
         return RankingTable;
@@ -462,6 +486,9 @@ public class GameMenu implements Screen , ServerMessageHandler {
         RankingTable = new Table();
         RankingTable2 = new Table();
         ConstantStage = new Stage(new ScreenViewport(camera));
+
+        TradeHistoryTable = new Table();
+        BackToInventory = new TextButton("BackToInventory", GameAssetsManager.getInstance().getSkin());
     }
 
     public Stage getStage() {
@@ -543,6 +570,12 @@ public class GameMenu implements Screen , ServerMessageHandler {
         RankingTable2.setVisible(false);
         RankingTable2.top().right();
 
+        TradeHistoryTable.setFillParent(true);
+        TradeHistoryTable.setVisible(false);
+        TradeHistoryTable.top();
+        TradeHistoryTable.add(BackToInventory);
+
+        stage.addActor(TradeHistoryTable);
         stage.addActor(RankingTable2);
         stage.addActor(RankingTable);
         stage.addActor(TradeTable);

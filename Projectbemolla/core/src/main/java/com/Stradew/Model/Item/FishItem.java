@@ -8,6 +8,7 @@ public class FishItem extends Item{
     public FishItem(int count, Fishes fish) {
         super(count, fish.name());
         this.fish = fish;
+        this.image = fish.Image;
     }
 
     public Fishes getFish() {

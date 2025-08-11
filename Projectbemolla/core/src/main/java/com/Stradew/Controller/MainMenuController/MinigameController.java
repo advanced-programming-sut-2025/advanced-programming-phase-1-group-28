@@ -237,7 +237,7 @@ public class MinigameController {
                     int num = (App.ReturnCurrentPlayer().getSkills()[1].getLevel() + 2) * App.getCurrentGame().getWeather().FishCofficent;
                     FishItem newfish = new FishItem(num , fish);
                     App.ReturnCurrentPlayer().getInventory().AddItem(newfish);
-                    App.ReturnCurrentPlayer().getSkills()[1].setXp(App.ReturnCurrentPlayer().getSkills()[1].getXp() + 10);
+                    App.ReturnCurrentPlayer().getSkills()[1].setXp(App.ReturnCurrentPlayer().getSkills()[1].getXp() + 100);
                 }
                 Count++;
             }
