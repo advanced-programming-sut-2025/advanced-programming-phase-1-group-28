@@ -19,6 +19,8 @@ import java.util.regex.Matcher;
 public class SignUpController {
 
     SignUpMenu Menu;
+    private int X = 1;
+
 
     public void setMenu(SignUpMenu menu) {
         Menu = menu;
@@ -177,11 +179,12 @@ public class SignUpController {
         return null;
     }
 
-    public void ApplySignUp(String Username , String Password , String NickName , String  Email , String Gender)
+    public void ApplySignUp(String Username , String Password , String NickName , String  Email , String Gender , int X)
     {
         String HashedPassword = HashAlghorithm.DecryptPassword(Password);
         User newuser = new User(Username , Password , HashedPassword , Email , App.Users.size() , NickName , Gender);
         newuser.setAvatar(GameAssetsManager.getInstance().RandomAvatar());
+        newuser.setFarmId(X);
         App.Users.add(newuser);
         Appview.UserLoggedInId = App.Users.size() - 1;
         Appview.Situation = MenuName.LoginMenu;
@@ -227,6 +230,18 @@ public class SignUpController {
         }
         if(Menu.getSequrityQuestions().isVisible())
         {
+            if(Menu.getFarm1().isChecked())
+            {
+                Menu.getFarm1().setChecked(false);
+                Menu.getFarm2().setChecked(false);
+                X = 1;
+            }
+            if(Menu.getFarm2().isChecked())
+            {
+                Menu.getFarm2().setChecked(false);
+                Menu.getFarm1().setChecked(false);
+                X = 2;
+            }
             if(Menu.getConfirmAnswer().isChecked())
             {
                 if(Menu.getAnswer().getText().isEmpty())
@@ -235,7 +250,7 @@ public class SignUpController {
                 }
                 else
                 {
-                    ApplySignUp(Menu.getUsername().getText() , Menu.getPassword().getText() ,Menu.getNickname().getText() , Menu.getEmail().getText() , Menu.getGender().getSelected());
+                    ApplySignUp(Menu.getUsername().getText() , Menu.getPassword().getText() ,Menu.getNickname().getText() , Menu.getEmail().getText() , Menu.getGender().getSelected() , X);
                     int QuestionId = 0;
                     for(SecurityQuestions question : SecurityQuestions.values())
                     {

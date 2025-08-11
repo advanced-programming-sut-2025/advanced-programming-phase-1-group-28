@@ -1,13 +1,15 @@
 package com.Stradew.Controller.MainMenuController;
 
 import com.Stradew.Controller.MainMenuController.HomeMenucontroller.CraftingController;
+import com.Stradew.Controller.MainMenuController.MechanicController.CraftMenuController;
 import com.Stradew.Main;
-import com.Stradew.Model.App;
-import com.Stradew.Model.Game;
-import com.Stradew.Model.GameAssetsManager;
+import com.Stradew.Model.*;
+import com.Stradew.Model.Enums.Terrain;
 import com.Stradew.Model.Item.Craft;
-import com.Stradew.Model.PairChanges;
+import com.Stradew.Model.Tile.PlantedCrafts;
+import com.Stradew.Model.Tile.Tile;
 import com.Stradew.View.MainMenu.GameMenu;
+import com.Stradew.View.MainMenu.MechanicGame.CraftMenu;
 import com.Stradew.View.MainMenu.NPCVillage;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -224,10 +226,38 @@ public class OptionsController {
             if(App.ReturnCurrentPlayer().getInventory().getCurrentItem() instanceof Craft) {
                 int X = (int) (Math.floor(App.ReturnCurrentPlayer().getX() / MapController.TILE_SIZE));
                 int Y = (int) (Math.floor(App.ReturnCurrentPlayer().getY() / MapController.TILE_SIZE));
-                Main.getMain().getBatch().draw(menu.getShadeTexture(), X * MapController.TILE_SIZE, Y * MapController.TILE_SIZE, MapController.TILE_SIZE, MapController.TILE_SIZE);
-                if (Gdx.input.isKeyPressed(Input.Keys.P)) {
-                    craftingController.ApplyPlantCraft((Craft) App.ReturnCurrentPlayer().getInventory().getCurrentItem(), X, Y);
+                Tile ourtile  = App.ReturnCurrentPlayer().getFarm().getGround()[X][Y];
+                if(ourtile.getPlaceType() == null && ourtile.getEntitity() == null && ourtile.getTerrain() == Terrain.DIRT) {
+                    Main.getMain().getBatch().draw(menu.getShadeTexture(), X * MapController.TILE_SIZE, Y * MapController.TILE_SIZE, MapController.TILE_SIZE, MapController.TILE_SIZE);
+                    if (Gdx.input.isKeyPressed(Input.Keys.L)) {
+                        craftingController.ApplyPlantCraft((Craft) App.ReturnCurrentPlayer().getInventory().getCurrentItem(), X, Y);
+                        App.ReturnCurrentPlayer().getFarm().getChanges().add(new PairChanges(X , Y));
+                        App.ReturnCurrentPlayer().getInventory().removeItem(App.ReturnCurrentPlayer().getInventory().getCurrentItem() , menu.getController().getInventorypannelController());
+                        App.ReturnCurrentPlayer().getInventory().setCurrentItem(null);
+                        CraftActor craftActor = new CraftActor((PlantedCrafts) App.ReturnCurrentPlayer().getFarm().getGround()[X][Y], X * MapController.TILE_SIZE, Y * MapController.TILE_SIZE, new Runnable() {
+                            @Override
+                            public void run() {
+                                //System.out.println("Ma Ke raftim Zin Jahan");
+                                boolean ok = false;
+                                for(int i = 0 ; i < menu.getCrafmenus().size(); i++)
+                                {
+                                    if(menu.getCrafmenus().get(i).getPlantedCrafts().getCraft() == ((PlantedCrafts) App.ReturnCurrentPlayer().getFarm().getGround()[X][Y]).getCraft())
+                                    {
 
+                                        menu.getCrafmenus().get(i).show(menu.getStage());
+                                        ok = true;
+                                        break;
+                                    }
+                                }
+                                if(!ok) {
+                                    CraftMenu craftMenu = new CraftMenu((PlantedCrafts) App.ReturnCurrentPlayer().getFarm().getGround()[X][Y], new CraftMenuController());
+                                    craftMenu.show(menu.getStage());
+                                    menu.getCrafmenus().add(craftMenu);
+                                }
+                            }
+                        });
+                        menu.getConstantStage().addActor(craftActor);
+                    }
                 }
             }
         }
@@ -242,6 +272,7 @@ public class OptionsController {
         BuyGreenhouse(textButton , menu);
         InventoeyBuuton(menu);
         PrintReaction(menu);
+        PlantCraft(menu);
     }
 
 

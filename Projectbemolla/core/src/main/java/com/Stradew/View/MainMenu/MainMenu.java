@@ -23,6 +23,10 @@ public class MainMenu implements Screen , ServerMessageHandler {
     private TextButton ExitButton;
     private Label Username;
 
+    public TextButton getLoadGame() {
+        return LoadGame;
+    }
+
     public void setCreateLobbyTable(Boolean createLobbyTable) {
         CreateLobbyTable = createLobbyTable;
     }
@@ -41,6 +45,8 @@ public class MainMenu implements Screen , ServerMessageHandler {
     private TextButton LogoutButton;
     private Stage stage;
     private TextButton GotoLobbyBotton;
+    private TextButton LoadGame;
+
 
     public TextButton getGotoLobbyBotton() {
         return GotoLobbyBotton;
@@ -67,6 +73,7 @@ public class MainMenu implements Screen , ServerMessageHandler {
         GotoLobbyBotton = new TextButton("Lobby Setting", GameAssetsManager.getInstance().getSkin());
         ExitButton  = new TextButton("Exit", GameAssetsManager.getInstance().getSkin());
         Username = new Label(App.getCurrentUser().getNickname(), GameAssetsManager.getInstance().getSkin());
+        LoadGame = new TextButton("Load Game", GameAssetsManager.getInstance().getSkin());
         stage = new Stage();
     }
 
@@ -80,6 +87,7 @@ public class MainMenu implements Screen , ServerMessageHandler {
         MainTable.center();
         LogoutTable.top().right();
         MainTable.add(GameMenu);
+        MainTable.add(LoadGame);
         MainTable.add(ProfileMenu);
         MainTable.add(GotoLobbyBotton);
         LogoutTable.add(LogoutButton).row();

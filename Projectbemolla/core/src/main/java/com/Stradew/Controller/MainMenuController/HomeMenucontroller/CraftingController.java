@@ -156,6 +156,9 @@ public class CraftingController {
         //Item item = App.ReturnCurrentPlayer().getInventory().getItemByName(ItemName);
         Craft ourcraft = craft;
         PlantedCrafts newplantedCraft = new PlantedCrafts(null , PlaceType.Craft , null , ourcraft.getCrafts());
+        newplantedCraft.setPlaceType(PlaceType.Craft);
+        newplantedCraft.setTerrain(null);
+        newplantedCraft.setEntitity(null);
         Tempground[Newx][Newy] = newplantedCraft;
         Currentpeople.getFarm().setGround(Tempground);
     }

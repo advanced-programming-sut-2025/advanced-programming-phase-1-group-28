@@ -3,6 +3,15 @@ package com.Stradew.Model;
 import com.badlogic.gdx.graphics.Texture;
 
 public class User {
+    public int getFarmId() {
+        return FarmId;
+    }
+
+    public void setFarmId(int farmId) {
+        FarmId = farmId;
+    }
+
+    private int FarmId;
     private String Gender;
     private String Nickname;
     private String Username;

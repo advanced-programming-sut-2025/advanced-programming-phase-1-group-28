@@ -6,6 +6,7 @@ import com.Stradew.Main;
 import com.Stradew.Model.App;
 import com.Stradew.Model.GameAssetsManager;
 import com.Stradew.Model.InventorySlot;
+import com.Stradew.Model.Item.Craft;
 import com.Stradew.Model.Item.Item;
 import com.Stradew.Model.Tools.Tools;
 import com.Stradew.View.MainMenu.GameMenu;
@@ -154,6 +155,12 @@ public class InventorypannelController {
                         ChoosenTexture = thing.getImage();
                         App.ReturnCurrentPlayer().getInventory().setCurrentItem((Item)item);
                     }
+                    /*if(item instanceof Craft)
+                    {
+                        Craft craftali = (Craft) item;
+                        ChoosenTexture = craftali.getImage();
+                        App.ReturnCurrentPlayer().getInventory().setCurrentItem((Craft)item);
+                    }*/
 
                     TextureRegion region = new TextureRegion(ChoosenTexture);
                     TextureRegionDrawable drawable = new TextureRegionDrawable(region);
@@ -164,6 +171,10 @@ public class InventorypannelController {
             }
             inventorySlots.get(i).getButton().setChecked(false);
         }
+    }
+
+    public ImageButton getChoosenItem() {
+        return ChoosenItem;
     }
 
     public void EquipVillage(NPCVillageController gamecontroller)

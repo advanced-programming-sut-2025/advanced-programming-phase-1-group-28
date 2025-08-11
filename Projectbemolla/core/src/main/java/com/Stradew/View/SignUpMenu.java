@@ -6,10 +6,14 @@ import com.Stradew.Model.App;
 import com.Stradew.Model.Enums.Rejex.SignupMenuRejex;
 import com.Stradew.Model.Enums.SecurityQuestions;
 import com.Stradew.Model.GameAssetsManager;
+import com.Stradew.Model.Places.Farm;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor; // Import Actor for ChangeListener
@@ -35,6 +39,20 @@ public class SignUpMenu implements Screen {
     Table SequrityQuestions;
     SelectBox Questions;
     TextField Answer;
+    ImageButton Farm1;
+    ImageButton Farm2;
+
+    public SignUpController getSignUpController() {
+        return signUpController;
+    }
+
+    public ImageButton getFarm1() {
+        return Farm1;
+    }
+
+    public ImageButton getFarm2() {
+        return Farm2;
+    }
 
     public TextField getNickname() {
         return Nickname;
@@ -125,6 +143,21 @@ public class SignUpMenu implements Screen {
         Answer.setMessageText("Your Answer");
         ConfirmAnswer = new TextButton("Submit Answer", GameAssetsManager.getInstance().getSkin());
         Random = new TextButton("Random", GameAssetsManager.getInstance().getSkin());
+
+        Texture Farm1Texture = new Texture("FirstMap/FirstFarm.png");
+        Texture Farm2Texture = new Texture("FirstMap/secondfarm.png");
+        TextureRegion region1 = new TextureRegion(Farm1Texture);
+        TextureRegionDrawable drawable1 = new TextureRegionDrawable(region1);
+        ImageButton.ImageButtonStyle style1 = new ImageButton.ImageButtonStyle();
+        style1.up = drawable1;
+        style1.down = drawable1;
+        Farm1 = new ImageButton(style1);
+        TextureRegion region2 = new TextureRegion(Farm2Texture);
+        TextureRegionDrawable drawable2 = new TextureRegionDrawable(region2);
+        ImageButton.ImageButtonStyle style2 = new ImageButton.ImageButtonStyle();
+        style2.up = drawable2;
+        style2.down = drawable2;
+        Farm2 = new ImageButton(style2);
     }
 
     @Override
@@ -172,6 +205,10 @@ public class SignUpMenu implements Screen {
         SequrityQuestions.add(Questions).expandX().fillX().pad(10).row();
         SequrityQuestions.add(Answer).expandX().fillX().pad(10).row();
         SequrityQuestions.add(ConfirmAnswer).expandX().fillX().pad(10).row();
+        Farm1.setSize(30 , 30);
+        Farm2.setSize(30 , 30);
+        SequrityQuestions.add(Farm1).pad(30);
+        SequrityQuestions.add(Farm2).pad(30);
         stage.addActor(SequrityQuestions);
     }
 

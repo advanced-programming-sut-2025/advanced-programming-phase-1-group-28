@@ -31,6 +31,13 @@ public class MainmenuController {
             //menu.dispose();
             menu.setGoToGameMenu(true);
         }
+        if(menu.getLoadGame().isChecked())
+        {
+            if(Appview.CurrentGameID != -1)
+            {
+                menu.setGoToGameMenu(true);
+            }
+        }
         if(menu.getProfileMenu().isChecked()) {
             Main.getMain().setScreen(new ProfileMenu(new ProfileMenuController()));
         }

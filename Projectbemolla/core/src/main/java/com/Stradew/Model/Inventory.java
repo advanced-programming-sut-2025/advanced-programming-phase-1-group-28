@@ -1,11 +1,9 @@
 package com.Stradew.Model;
 
 import com.Stradew.Controller.MainMenuController.MechanicController.InventorypannelController;
-import com.Stradew.Model.Enums.Minerals;
-import com.Stradew.Model.Enums.Plants;
-import com.Stradew.Model.Enums.Saplings;
-import com.Stradew.Model.Enums.Seeds;
+import com.Stradew.Model.Enums.*;
 import com.Stradew.Model.Enums.Tools.*;
+import com.Stradew.Model.Item.Craft;
 import com.Stradew.Model.Item.Item;
 import com.Stradew.Model.Item.MineralItem;
 import com.Stradew.Model.Item.PlantsItem;
@@ -35,6 +33,7 @@ public class Inventory {
         this.tools.add(new FishingPole(FishingPoles.Bamboo));
         this.tools.add(new Seythe(Seythes.Normal));
         this.tools.add(new WaterCan(Watercans.Normal , 1));
+        this.items.add(new Craft(1 ,Crafts.BeeHouse));
         CurrentTool = tools.get(0);
         WhichTool = 0;
         this.seeds.add(Seeds.CarrotSeeds);
@@ -238,10 +237,8 @@ public class Inventory {
                     Texture Axe = new Texture("Pants/Baggy_Pants.png");
                     TextureRegion region = new TextureRegion(Axe);
                     TextureRegionDrawable drawable = new TextureRegionDrawable(region);
-                    ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
-                    style.up = drawable;
-                    style.down = drawable;
-                    controller.setChoosenItem(new ImageButton(style));
+                    controller.getChoosenItem().getStyle().up = drawable;
+                    controller.getChoosenItem().getStyle().down = drawable;
                 }
             }
         }

@@ -16,6 +16,7 @@ import com.Stradew.Model.Tools.ShippingBin;
 import com.Stradew.Model.Tools.Tools;
 import com.Stradew.View.Appview;
 import com.Stradew.View.MainMenu.GameMenu;
+import com.Stradew.View.MainMenu.MainMenu;
 import com.Stradew.View.MainMenu.MechanicGame.HomeMenu.PokhtOPaz;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -51,7 +52,7 @@ public class GameMenuController {
         Abbas2.ApplyPlayersToGame(PlayersInGame);
         for(int i = 0 ;i < PlayersInGame.size();i++) {
 
-            Abbas2.SetFarm(i , 1);
+            Abbas2.SetFarm(i , App.getCurrentUser().getFarmId());
         }
     }
 
@@ -119,7 +120,7 @@ public class GameMenuController {
         {
             if(menu.getExit().isChecked())
             {
-                Gdx.app.exit();
+                Main.getMain().setScreen(new MainMenu(new MainmenuController()));
             }
             if(menu.getBackTogame().isChecked())
             {
@@ -142,6 +143,13 @@ public class GameMenuController {
 
     public void Update(float v)
     {
+
+        for(int i = 0; i < menu.getCrafmenus().size();i++) {
+            if(menu.getCrafmenus().get(i).isStarted()) {
+                menu.getCrafmenus().get(i).setTimePassed(menu.getCrafmenus().get(i).getTimePassed() + v);
+                menu.getCrafmenus().get(i).getProgressBar().setValue(menu.getCrafmenus().get(i).getTimePassed() * 10);
+            }
+        }
         App.getCurrentGame().getTimeControlPannel().setRankingTime(App.getCurrentGame().getTimeControlPannel().getRankingTime() + v);
         if(App.getCurrentGame().getTimeControlPannel().getRankingTime() > 5)
         {
@@ -153,7 +161,9 @@ public class GameMenuController {
         menu.getNotifications().setText(String.format("%d", App.ReturnCurrentPlayer().getNewMessages()));
         if(App.ReturnCurrentPlayer().getEnergy() < 0)
         {
-            App.ReturnCurrentPlayer().setEnergy(10);
+            App.getCurrentGame().getTimeControlPannel().setFiant(true);
+            App.getCurrentGame().getTimeControlPannel().setPassoutTime(0);
+            App.ReturnCurrentPlayer().setEnergy(100);
             ApplyNextTurn();
         }
         CheckSetting();
@@ -347,7 +357,7 @@ public class GameMenuController {
         }
         if(FarmID == 2)
         {
-            App.getCurrentGame().getCharactersInGame().get(Id).setFarm(new Farm(new GreenHouse( 25 , 8) , new Cabin(5 , 5) , new Lake(30 , 30) , new Quarry(25 , 8)));
+            App.getCurrentGame().getCharactersInGame().get(Id).setFarm(new Farm(new GreenHouse( 25 , 55) , new Cabin(55 , 55) , new Lake(30 , 30) , new Quarry(25 , 8)));
         }
     }
     public void ApplyDeleteGame()

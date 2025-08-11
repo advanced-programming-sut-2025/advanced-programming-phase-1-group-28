@@ -8,7 +8,24 @@ public class TimeControlPannel {
     private float ReactionTime = 1000;
     private float RankingTime = 0;
     private float IsLightend = 3;
+    private float PassoutTime = 0;
+    private boolean IsFiant = false;
 
+    public float getPassoutTime() {
+        return PassoutTime;
+    }
+
+    public void setPassoutTime(float passoutTime) {
+        PassoutTime = passoutTime;
+    }
+
+    public boolean isFiant() {
+        return IsFiant;
+    }
+
+    public void setFiant(boolean fiant) {
+        IsFiant = fiant;
+    }
 
     public float getRankingTime() {
         return RankingTime;

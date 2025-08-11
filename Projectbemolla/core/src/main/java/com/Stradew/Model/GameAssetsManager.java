@@ -77,6 +77,13 @@ public class GameAssetsManager {
         load();
     }
 
+    private final Animation PassoutAnimation = new Animation(1.f , new Texture(Gdx.files.internal("Pass_out/DOWN/0.png")) ,
+        new Texture(Gdx.files.internal("Pass_out/DOWN/1.png")) ,
+        new Texture(Gdx.files.internal("Pass_out/DOWN/2.png")) ,
+        new Texture(Gdx.files.internal("Pass_out/DOWN/3.png")) ,
+        new Texture(Gdx.files.internal("Pass_out/DOWN/4.png")) );
+
+
     public TextButton[] Reactions() {
         TextButton[] Reactions = new TextButton[6];
         Reactions[0] = new TextButton("Hello", skin);
@@ -106,6 +113,10 @@ public class GameAssetsManager {
 
     public Animation getPlayerAnimation() {
         return playerAnimation;
+    }
+
+    public Animation getPassout(){
+        return PassoutAnimation;
     }
 
     public GameAssetsManager() {

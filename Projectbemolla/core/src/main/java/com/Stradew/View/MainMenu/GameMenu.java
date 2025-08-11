@@ -10,12 +10,10 @@ import com.Stradew.Model.App;
 import com.Stradew.Model.GameAssetsManager;
 import com.Stradew.Server.Lobby;
 import com.Stradew.Server.ServerMessageHandler;
-import com.Stradew.View.MainMenu.MechanicGame.AnimalInteractionDialog;
-import com.Stradew.View.MainMenu.MechanicGame.MechanicGame;
-import com.Stradew.View.MainMenu.MechanicGame.NotificationDialog;
-import com.Stradew.View.MainMenu.MechanicGame.NotificationMenu;
+import com.Stradew.View.MainMenu.MechanicGame.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -31,9 +29,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.sun.tools.classfile.Opcode;
 
 import javax.swing.plaf.IconUIResource;
+import java.util.ArrayList;
 
 public class GameMenu implements Screen , ServerMessageHandler {
 
@@ -140,7 +140,12 @@ public class GameMenu implements Screen , ServerMessageHandler {
         return ReactionImageforDisplay;
     }
 
+    public ArrayList<CraftMenu> getCrafmenus() {
+        return crafmenus;
+    }
 
+    private ArrayList<CraftMenu> crafmenus = new ArrayList<>();
+    private InputMultiplexer inputMultiplexer;
     private Texture ReactionImageforDisplay;
     private String ReactionTextForDisplay;
     private String ReactionTextSender;
@@ -173,7 +178,7 @@ public class GameMenu implements Screen , ServerMessageHandler {
     private TextButton SeeOnlilnePlayers;
     private TextButton BackFromOnlinePlayers;
     private TextButton Ranking;
-
+    private Stage ConstantStage;
 
     public SwitchMenuController getSwitchMenuController() {
         return switchMenuController;
@@ -257,6 +262,10 @@ public class GameMenu implements Screen , ServerMessageHandler {
 
     public Table getBuyGreenhouseTable() {
         return BuyGreenhouseTable;
+    }
+
+    public Stage getConstantStage() {
+        return ConstantStage;
     }
 
     public ProgressBar getEnergyBar() {
@@ -452,6 +461,7 @@ public class GameMenu implements Screen , ServerMessageHandler {
         Ranking = new TextButton("Ranking", GameAssetsManager.getInstance().getSkin());
         RankingTable = new Table();
         RankingTable2 = new Table();
+        ConstantStage = new Stage(new ScreenViewport(camera));
     }
 
     public Stage getStage() {
@@ -460,7 +470,10 @@ public class GameMenu implements Screen , ServerMessageHandler {
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(stage);
+        inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(stage);
+        inputMultiplexer.addProcessor(ConstantStage);
+        Gdx.input.setInputProcessor(inputMultiplexer);
         InventoryTable.setFillParent(true);
         SkillTable.setFillParent(true);
         SocialTable.setFillParent(true);
@@ -575,6 +588,8 @@ public class GameMenu implements Screen , ServerMessageHandler {
         Main.getMain().getBatch().end();
         stage.act();
         stage.draw();
+        ConstantStage.act();
+        ConstantStage.draw();
         if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
             switchMenuController.openNpcVillage();
         }
