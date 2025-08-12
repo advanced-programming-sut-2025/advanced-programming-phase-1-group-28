@@ -48,7 +48,7 @@ public class Pepolee {
     private int Energy = 200;
     private int Id;
     private int Wood = 0;
-    private int Coin = 0;
+    private int Coin = 10000000;
     private boolean ISFainted = false;
     private Inventory inventory = new Inventory();
     private Skill[] Skills = new Skill[5];

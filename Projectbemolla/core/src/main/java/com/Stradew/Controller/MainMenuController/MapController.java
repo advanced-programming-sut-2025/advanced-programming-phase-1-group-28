@@ -65,7 +65,9 @@ public class MapController {
     }
 
     public void setGreenhouseHoverTextButton() {
-        Tile[][] TempGround  = App.ReturnCurrentPlayer().getFarm().getGround();
+        Tile[][] TempGround = App.getCurrentGame().isInVillage()
+            ? App.getCurrentGame().getVillage().getGround()
+            : App.ReturnCurrentPlayer().getFarm().getGround();
         float X = 0 , Y  = 0;
         Boolean ok = false;
         for(int i = 2; i < MAP_ROWS; i++) {
@@ -86,6 +88,10 @@ public class MapController {
 
     public void PrintInitialMap(FrameBuffer mapFrameBuffer  , OrthographicCamera camera)
     {
+        Tile[][] TempGround = App.getCurrentGame().isInVillage()
+            ? App.getCurrentGame().getVillage().getGround()
+            : App.ReturnCurrentPlayer().getFarm().getGround();
+        TempGround[1][10].setPlaceType(PlaceType.Portal);
         mapFrameBuffer.begin();
         Main.getMain().getBatch().begin();
         Main.getMain().getBatch().setProjectionMatrix(camera.combined);
@@ -199,7 +205,49 @@ public class MapController {
 
     public void Update(int i , int j)
     {
-        Tile[][] TempGround = App.ReturnCurrentPlayer().getFarm().getGround();
+        Tile[][] TempGround = App.getCurrentGame().isInVillage()
+            ? App.getCurrentGame().getVillage().getGround()
+            : App.ReturnCurrentPlayer().getFarm().getGround();
+        if (TempGround[i][j].getPlaceType() == PlaceType.StarDropSaloon) {
+            boolean isTopLeft = true;
+            for (int x = 1; x <= PlaceType.StarDropSaloon.XLength; x++) {
+                if (i - x >= 0 && TempGround[i - x][j].getPlaceType() == PlaceType.StarDropSaloon) {
+                    isTopLeft = false;
+                    break;
+                }
+            }
+            for (int y = 1; y <= PlaceType.StarDropSaloon.YLength; y++) {
+                if (j - y >= 0 && TempGround[i][j - y].getPlaceType() == PlaceType.StarDropSaloon) {
+                    isTopLeft = false;
+                    break;
+                }
+            }
+            if (isTopLeft) {
+                Texture saloon = GameAssetsManager.getInstance().getStarDropSaloon();
+                Main.getMain().getBatch().draw(saloon,
+                    i * TILE_SIZE, j * TILE_SIZE,
+                    TILE_SIZE * PlaceType.StarDropSaloon.XLength,
+                    TILE_SIZE * PlaceType.StarDropSaloon.YLength);
+            }
+        }
+        if (TempGround[i][j].getPlaceType() == PlaceType.COOP) {
+            boolean isTopLeft = true;
+            for (int x = 1; x <= PlaceType.COOP.XLength; x++) {
+                if (i - x >= 0 && TempGround[i - x][j].getPlaceType() == PlaceType.COOP) { isTopLeft = false; break; }
+            }
+            for (int y = 1; y <= PlaceType.COOP.YLength; y++) {
+                if (j - y >= 0 && TempGround[i][j - y].getPlaceType() == PlaceType.COOP) { isTopLeft = false; break; }
+            }
+            if (isTopLeft) {
+                Texture coop = GameAssetsManager.getInstance().getCoop(); // add this getter (see below)
+                Main.getMain().getBatch().draw(
+                    coop,
+                    i * TILE_SIZE, j * TILE_SIZE,
+                    TILE_SIZE * PlaceType.COOP.XLength,
+                    TILE_SIZE * PlaceType.COOP.YLength
+                );
+            }
+        }
                     boolean ok = false;
                     if(ok)
                     {

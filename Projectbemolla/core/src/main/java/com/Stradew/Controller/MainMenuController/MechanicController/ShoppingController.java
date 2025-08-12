@@ -7,8 +7,10 @@ import com.Stradew.Model.Item.Craft;
 import com.Stradew.Model.Item.Food;
 import com.Stradew.Model.Item.Ingredient;
 import com.Stradew.Model.Item.Item;
+import com.Stradew.Model.PairChanges;
 import com.Stradew.Model.Places.AnimalHouse;
 import com.Stradew.Model.Tile.Animal;
+import com.Stradew.Model.Tile.Tile;
 import com.Stradew.Model.Tools.*;
 
 import java.util.ArrayList;
@@ -1283,24 +1285,29 @@ public class ShoppingController {
             return limit;
         }
         // check if x , y is empty for build
-        boolean Empty = true;
-        for(int i = x ; i < x + 6 ; i++)
-        {
-            for(int j = y ; j < y + 3 ; j++)
-            {
-                if(App.getCurrentGame().getEntireMap()[i][j].getEntitity() != Entitity.EMPTY ||
-                        App.getCurrentGame().getEntireMap()[i][j].getPlaceType() != PlaceType.FARM)
-                {
-                    Empty = false;
-                    break;
-                }
-            }
-        }
-        if(!Empty)
-        {
-            System.out.println("Given position is filled. You can't place here");
+        Tile[][] ground = App.ReturnCurrentPlayer().getFarm().getGround();
+        if (!canPlaceRectEmpty(ground, x, y, PlaceType.COOP.XLength, PlaceType.COOP.YLength)) {
+            System.out.println("Cannot place Coop at " + x + " " + y + " — area is not empty or out of bounds.");
             return limit;
         }
+//        boolean Empty = true;
+//        for(int i = x ; i < x + 6 ; i++)
+//        {
+//            for(int j = y ; j < y + 3 ; j++)
+//            {
+//                if(App.getCurrentGame().getEntireMap()[i][j].getEntitity() != Entitity.EMPTY ||
+//                        App.getCurrentGame().getEntireMap()[i][j].getPlaceType() != PlaceType.FARM)
+//                {
+//                    Empty = false;
+//                    break;
+//                }
+//            }
+//        }
+//        if(!Empty)
+//        {
+//            System.out.println("Given position is filled. You can't place here");
+//            return limit;
+//        }
         // building the coop
         // paying the price
         App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price);
@@ -1320,16 +1327,11 @@ public class ShoppingController {
         ArrayList<AnimalHouse> newCoops = App.ReturnCurrentPlayer().getFarm().getCoops();
         newCoops.add(new AnimalHouse(x , y , CoopType , Capacity));
         App.ReturnCurrentPlayer().getFarm().setCoops(newCoops);
+
+        markStructure(ground, x, y, PlaceType.COOP);
         // updating barn tiles
-        for(int i = x ; i < x + 6 ; i++)
-        {
-            for(int j = y ; j < y + 3 ; j++)
-            {
-                App.getCurrentGame().getEntireMap()[i][j].setEntitity(null);
-                App.getCurrentGame().getEntireMap()[i][j].setPlaceType(PlaceType.COOP);
-                App.getCurrentGame().getEntireMap()[i][j].setTerrain(null);
-            }
-        }
+        java.util.List<PairChanges> changes = App.ReturnCurrentPlayer().getFarm().getChanges();
+        enqueueRectChanges(changes, x, y, PlaceType.COOP.XLength, PlaceType.COOP.YLength);
 
         System.out.println(CoopType + " has been built");
         return limit - 1;
@@ -2081,5 +2083,38 @@ public class ShoppingController {
         App.ReturnCurrentPlayer().getInventory().addTool(new ShippingBin(x , y , ShippingBins.Regular));
         System.out.println("Shipping Bin has been added");
     }
+    private boolean canPlaceRectEmpty(Tile[][] g, int x, int y, int w, int h) {
+        // bounds
+        int cols = g.length;
+        int rows = g[0].length;
+        if (x < 0 || y < 0 || x + w > cols || y + h > rows) return false;
 
+        // emptiness: BOTH entity == null AND placeType == null
+        for (int i = x; i < x + w; i++) {
+            for (int j = y; j < y + h; j++) {
+                Tile t = g[i][j];
+                if (!(t.getPlaceType() == null)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private void markStructure(Tile[][] g, int x, int y, PlaceType type) {
+        for (int i = x; i < x + type.XLength; i++) {
+            for (int j = y; j < y + type.YLength; j++) {
+                g[i][j].setPlaceType(type);
+                // leave entity as-is (null) unless you also place an actor/entity separately
+            }
+        }
+    }
+
+    private void enqueueRectChanges(java.util.List<PairChanges> changes, int x, int y, int w, int h) {
+        for (int i = x; i < x + w; i++) {
+            for (int j = y; j < y + h; j++) {
+                changes.add(new PairChanges(i, j));
+            }
+        }
+    }
 }

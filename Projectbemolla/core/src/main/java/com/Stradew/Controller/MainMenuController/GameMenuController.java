@@ -389,7 +389,7 @@ public class GameMenuController {
         }
         if(FarmID == 2)
         {
-            App.getCurrentGame().getCharactersInGame().get(Id).setFarm(new Farm(new GreenHouse( 25 , 55) , new Cabin(55 , 55) , new Lake(30 , 30) , new Quarry(25 , 8)));
+            App.getCurrentGame().getCharactersInGame().get(Id).setFarm(new Farm(new GreenHouse( 25 , 8) , new Cabin(5 , 5) , new Lake(30 , 30) , new Quarry(25 , 8)));
         }
     }
     public void ApplyDeleteGame()
@@ -402,6 +402,10 @@ public class GameMenuController {
     }
     public void RandomForagingOnGird()
     {
+
+//        if(menu.getNPCandShop().isVisible()) {
+//            //menu
+//        }
 
     }
 

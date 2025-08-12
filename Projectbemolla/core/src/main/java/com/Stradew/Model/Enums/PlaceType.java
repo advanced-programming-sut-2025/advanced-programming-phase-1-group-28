@@ -18,7 +18,8 @@ public enum PlaceType {
     JojaMart(true , 0 , 0),
     MarineRanch(true , 0 , 0),
     PerrieGeneralStore(true , 0 , 0),
-    StarDropSaloon(true , 0 , 0);
+    StarDropSaloon(true , 15 , 15),
+    Portal(true , 1 , 1);
 
     public final boolean isWalkable;
     public final int XLength;
