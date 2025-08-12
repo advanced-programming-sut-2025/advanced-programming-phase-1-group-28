@@ -246,7 +246,7 @@ public class GameMenuController {
             skillPannelController.update();
         }
         if(menu.getMapTable().isVisible()) {
-
+            mapController.PrintEasyMap(menu);
         }
         if(menu.getSocialTable().isVisible()) {
             socialPannelController.rebuild(menu.getSocialTable());

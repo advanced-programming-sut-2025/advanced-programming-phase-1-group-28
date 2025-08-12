@@ -24,7 +24,7 @@ public class Farming {
         {
             System.out.println("This seed is not in your inventory");
         }
-        App.farmingController.ApplyPlanting(Seedname , x , y);
+        //App.farmingController.ApplyPlanting(Seedname , x , y);
         System.out.println("planted sucssesfully");
 
     }

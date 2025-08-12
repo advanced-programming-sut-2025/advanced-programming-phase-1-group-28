@@ -4,6 +4,7 @@ import com.Stradew.Controller.MainMenuController.GameMenuController;
 import com.Stradew.Controller.MainMenuController.NPCVillageController;
 import com.Stradew.Main;
 import com.Stradew.Model.App;
+import com.Stradew.Model.Enums.Seeds;
 import com.Stradew.Model.GameAssetsManager;
 import com.Stradew.Model.InventorySlot;
 import com.Stradew.Model.Item.Craft;
@@ -175,6 +176,11 @@ public class InventorypannelController {
                         Item thing = (Item) item;
                         ChoosenTexture = thing.getImage();
                         App.ReturnCurrentPlayer().getInventory().setCurrentItem((Item)item);
+                    }
+                    if(item instanceof Seeds)
+                    {
+                        Seeds seed = (Seeds)item;
+                        ChoosenTexture = seed.SeedTexture;
                     }
                     /*if(item instanceof Craft)
                     {

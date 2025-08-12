@@ -75,6 +75,17 @@ public class OptionsController {
         }
     }
 
+    public void GotoMap(GameMenu menu)
+    {
+        if(Gdx.input.isKeyPressed(Input.Keys.M))
+        {
+            menu.getMainTable().setVisible(false);
+            menu.getMapTable().setVisible(true);
+            menu.getSwitchTable().setVisible(true);
+        }
+    }
+
+
     public void SetEnergyBar(GameMenu menu)
     {
         if(App.ReturnCurrentPlayer().getEnergy() > menu.getEnergyBar().getMaxValue())
@@ -273,6 +284,7 @@ public class OptionsController {
         InventoeyBuuton(menu);
         PrintReaction(menu);
         PlantCraft(menu);
+        GotoMap(menu);
     }
 
 
