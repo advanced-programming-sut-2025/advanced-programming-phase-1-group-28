@@ -237,14 +237,6 @@ public class FarmingController {
         Seeds Goalseed = seedali;
         Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
         Tile[][] TempGround = CurrentPepolee.getFarm().getGround();
-        for(int i = 0;i < CurrentPepolee.getInventory().getSeeds().size(); i++)
-        {
-            if(CurrentPepolee.getInventory().getSeeds().get(i) == Goalseed)
-            {
-                CurrentPepolee.getInventory().getSeeds().remove(i);
-                break;
-            }
-        }
         if(Goalseed == Seeds.MixedSeeds) {
             Season OurSeason = App.getCurrentGame().getTime().getSeason();
             for(MixedSeeds seed : MixedSeeds.values()) {
@@ -270,6 +262,7 @@ public class FarmingController {
             TempGround[NewX][NewY].setHow(false);
             TempGround[NewX][NewY].setEntitity(Entitity.PLANTS);
             TempGround[NewX][NewY].setTerrain(null);
+            App.ReturnCurrentPlayer().getFarm().getChanges().add(new PairChanges(NewX , NewY));
         }
         CurrentPepolee.getFarm().setGround(TempGround);
     }

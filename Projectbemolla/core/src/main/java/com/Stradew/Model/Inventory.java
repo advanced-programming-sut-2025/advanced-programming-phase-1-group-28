@@ -46,7 +46,9 @@ public class Inventory {
         this.items.add(new Craft(1 ,Crafts.BeeHouse));
         CurrentTool = tools.get(0);
         WhichTool = 0;
-       // this.seeds.add(Seeds.CarrotSeeds);
+        this.seeds.add(Seeds.CarrotSeeds);
+        this.seeds.add(Seeds.BlueberrySeeds);
+        this.CurrentSeed = seeds.get(0);
     }
 
     public void AddItem(Item item) {

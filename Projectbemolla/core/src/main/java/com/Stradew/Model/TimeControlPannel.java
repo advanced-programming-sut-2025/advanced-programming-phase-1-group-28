@@ -10,6 +10,16 @@ public class TimeControlPannel {
     private float IsLightend = 3;
     private float PassoutTime = 0;
     private boolean IsFiant = false;
+    private float Planting = 0;
+
+
+    public float getPlanting() {
+        return Planting;
+    }
+
+    public void setPlanting(float planting) {
+        Planting = planting;
+    }
 
     public float getPassoutTime() {
         return PassoutTime;
@@ -80,6 +90,7 @@ public class TimeControlPannel {
     {
         CheatCodeUse = CheatCodeUse + Delta;
         UsingTool = UsingTool + Delta;
+        Planting = Planting + Delta;
         ReactionTime = ReactionTime + Delta;
         IsLightend = IsLightend + Delta;
         if(IsLightend > 3)

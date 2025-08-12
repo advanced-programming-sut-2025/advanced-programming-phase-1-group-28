@@ -53,7 +53,7 @@ public class MapController {
 
         int XALi =(int) App.ReturnCurrentPlayer().getX() - (App.ReturnCurrentPlayer().getFarm().getGreenHouse().getX_Coordinate() * TILE_SIZE);
         int YAli = (int) App.ReturnCurrentPlayer().getY() - (App.ReturnCurrentPlayer().getFarm().getGreenHouse().getY_Coordinate() * TILE_SIZE);
-        if(XALi < 600 && XALi > -600 && YAli < 600 && YAli > -600)
+        if(XALi < 200 && XALi > -200 && YAli < 200 && YAli > -200)
         {
             menu.getBuyGreenhouseTable().setVisible(true);
         }

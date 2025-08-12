@@ -181,6 +181,7 @@ public class InventorypannelController {
                     {
                         Seeds seed = (Seeds)item;
                         ChoosenTexture = seed.SeedTexture;
+                        App.ReturnCurrentPlayer().getInventory().setCurrentSeed((Seeds)item);
                     }
                     /*if(item instanceof Craft)
                     {
@@ -289,7 +290,24 @@ public class InventorypannelController {
                     }
                 }
             }
-
+            for (int i = 0; i < App.ReturnCurrentPlayer().getInventory().getSeeds().size(); i++) {
+            boolean ok = false;
+            for (int j = 0; j < 36; j++) {
+                if (inventorySlots.get(j).getItem() != null) {
+                    if (inventorySlots.get(j).getItem().equals(App.ReturnCurrentPlayer().getInventory().getSeeds().get(i))) {
+                        ok = true;
+                    }
+                }
+            }
+            if (!ok) {
+                for (int j = 0; j < 36; j++) {
+                    if (inventorySlots.get(j).getItem() == null) {
+                        inventorySlots.get(j).SetImageButton(App.ReturnCurrentPlayer().getInventory().getSeeds().get(i));
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     public void UpdateVillage(NPCVillageController gamecontroller)

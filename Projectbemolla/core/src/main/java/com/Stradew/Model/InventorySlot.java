@@ -59,7 +59,8 @@ public class InventorySlot {
         }
         if(item != null) {
             if (item instanceof Seeds) {
-
+                Seeds seeds = (Seeds) item;
+                buttonTexture = seeds.SeedTexture;
             }
             if (item instanceof Tools) {
                 Tools tool = (Tools) item;
