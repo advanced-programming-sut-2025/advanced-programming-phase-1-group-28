@@ -63,7 +63,7 @@ public class App {
     public static Farming farming = new Farming();
     public static CraftingController craftingController = new CraftingController();
     public static UseToolController useToolController = new UseToolController();
-    public static Crafting Crafting = new Crafting();
+//    public static Crafting Crafting = new Crafting();
     public static UseTool UseTool = new UseTool();
     public static AllMenuCommandsController allMenuCommandsController = new AllMenuCommandsController();
 //    public static ProfileMenu profileMenu = new ProfileMenu();

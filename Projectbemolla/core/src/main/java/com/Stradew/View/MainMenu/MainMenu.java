@@ -12,6 +12,7 @@ import com.Stradew.Server.ServerMessageHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -19,6 +20,12 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class MainMenu implements Screen , ServerMessageHandler {
     private Boolean GoToGameMenu = false;
     private Boolean CreateLobbyTable = false;
+    private TextButton ExitButton;
+    private Label Username;
+
+    public TextButton getLoadGame() {
+        return LoadGame;
+    }
 
     public void setCreateLobbyTable(Boolean createLobbyTable) {
         CreateLobbyTable = createLobbyTable;
@@ -28,12 +35,18 @@ public class MainMenu implements Screen , ServerMessageHandler {
         GoToGameMenu = goToGameMenu;
     }
 
+    public TextButton getExitButton() {
+        return ExitButton;
+    }
+
     private MainmenuController controller;
     private TextButton GameMenu;
     private TextButton ProfileMenu;
     private TextButton LogoutButton;
     private Stage stage;
     private TextButton GotoLobbyBotton;
+    private TextButton LoadGame;
+
 
     public TextButton getGotoLobbyBotton() {
         return GotoLobbyBotton;
@@ -58,6 +71,9 @@ public class MainMenu implements Screen , ServerMessageHandler {
         ProfileMenu = new TextButton("Profile menu" , GameAssetsManager.getInstance().getSkin());
         LogoutButton = new TextButton("Logout", GameAssetsManager.getInstance().getSkin());
         GotoLobbyBotton = new TextButton("Lobby Setting", GameAssetsManager.getInstance().getSkin());
+        ExitButton  = new TextButton("Exit", GameAssetsManager.getInstance().getSkin());
+        Username = new Label(App.getCurrentUser().getNickname(), GameAssetsManager.getInstance().getSkin());
+        LoadGame = new TextButton("Load Game", GameAssetsManager.getInstance().getSkin());
         stage = new Stage();
     }
 
@@ -71,9 +87,12 @@ public class MainMenu implements Screen , ServerMessageHandler {
         MainTable.center();
         LogoutTable.top().right();
         MainTable.add(GameMenu);
+        MainTable.add(LoadGame);
         MainTable.add(ProfileMenu);
         MainTable.add(GotoLobbyBotton);
-        LogoutTable.add(LogoutButton);
+        LogoutTable.add(LogoutButton).row();
+        LogoutTable.add(ExitButton).row();
+        LogoutTable.add(Username);
         stage.addActor(LogoutTable);
         stage.addActor(MainTable);
     }

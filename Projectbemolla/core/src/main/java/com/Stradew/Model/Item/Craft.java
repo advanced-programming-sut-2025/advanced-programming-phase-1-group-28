@@ -8,6 +8,7 @@ public class Craft extends Item{
         super(count , crafts.toString());
         this.crafts = crafts;
         this.name = crafts.Name;
+        this.image = crafts.Craftimage;
     }
 
     public Crafts getCrafts() {

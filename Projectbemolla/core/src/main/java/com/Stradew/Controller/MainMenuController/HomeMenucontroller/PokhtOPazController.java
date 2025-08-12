@@ -34,7 +34,7 @@ public class PokhtOPazController {
         Inventory inventory = App.ReturnCurrentPlayer().getInventory();
         Item item = inventory.getItemByName(ItemName);
         ref.AddItem(item);
-        inventory.removeItem(item);
+        inventory.removeItem(item , null);
     }
     public boolean EnoughItemsFromRef(String ItemName)
     {

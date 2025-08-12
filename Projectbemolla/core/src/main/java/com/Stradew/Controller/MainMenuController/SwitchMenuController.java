@@ -1,5 +1,6 @@
 package com.Stradew.Controller.MainMenuController;
 
+import com.Stradew.Controller.MainMenuController.HomeMenucontroller.CraftingController;
 import com.Stradew.Controller.MainMenuController.HomeMenucontroller.PokhtOPazController;
 import com.Stradew.Controller.MainMenuController.MechanicController.FriendShipController;
 import com.Stradew.Controller.MainMenuController.MechanicController.MechanicController;
@@ -18,32 +19,18 @@ import com.Stradew.Server.Lobby;
 import com.Stradew.View.MainMenu.GameMenu;
 import com.Stradew.View.MainMenu.MechanicGame.AnimalInteractionDialog;
 import com.Stradew.View.MainMenu.MechanicGame.FriendshipDialog;
+import com.Stradew.View.MainMenu.MechanicGame.HomeMenu.CookingDialog;
+import com.Stradew.View.MainMenu.MechanicGame.HomeMenu.CraftingDialog;
 import com.Stradew.View.MainMenu.MechanicGame.HomeMenu.PokhtOPaz;
 import com.Stradew.View.MainMenu.MechanicGame.NpcDialog;
 import com.Stradew.View.MainMenu.NPCVillage;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Scaling;
-
-import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Consumer;
-
-import com.Stradew.Model.Enums.BlackSmithItems;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class SwitchMenuController {
+    public void openPokhMenu(Stage stage){
+        CookingDialog cookingDialog = new CookingDialog(new PokhtOPazController(), GameAssetsManager.getInstance().getSkin());
+        cookingDialog.show(stage);
     ShoppingController shoppingController = new ShoppingController();
     private final Map<StarDropSaloonItems, TextureRegionDrawable> saloonIconCache = new HashMap<>();
     private final java.util.Map<BlackSmithItems, TextureRegionDrawable> blacksmithIconCache = new java.util.HashMap<>();
@@ -100,6 +87,17 @@ public class SwitchMenuController {
         AnimalInteractionDialog dialog = new AnimalInteractionDialog(animal, new MechanicController(), GameAssetsManager.getInstance().getSkin());
         dialog.show(stage);
     }
+
+    public void openCraftMenu(Stage stage){
+        CraftingDialog craftingDialog = new CraftingDialog(new CraftingController(), GameAssetsManager.getInstance().getSkin());
+        craftingDialog.show(stage);
+    }
+
+    public void openBlackSmith(){
+
+    }
+
+    public void openCarpenterShop(){
 
     private static class BRow {
         final BlackSmithItems item;

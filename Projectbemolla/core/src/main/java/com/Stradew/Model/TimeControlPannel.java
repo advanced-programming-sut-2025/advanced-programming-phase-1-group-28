@@ -7,6 +7,25 @@ public class TimeControlPannel {
     private float AnimationPlayer = 0;
     private float ReactionTime = 1000;
     private float RankingTime = 0;
+    private float IsLightend = 3;
+    private float PassoutTime = 0;
+    private boolean IsFiant = false;
+
+    public float getPassoutTime() {
+        return PassoutTime;
+    }
+
+    public void setPassoutTime(float passoutTime) {
+        PassoutTime = passoutTime;
+    }
+
+    public boolean isFiant() {
+        return IsFiant;
+    }
+
+    public void setFiant(boolean fiant) {
+        IsFiant = fiant;
+    }
 
     public float getRankingTime() {
         return RankingTime;
@@ -32,6 +51,15 @@ public class TimeControlPannel {
         AnimationPlayer = animationPlayer;
     }
 
+
+    public float getIsLightend() {
+        return IsLightend;
+    }
+
+    public void setIsLightend(float isLightend) {
+        IsLightend = isLightend;
+    }
+
     public float getUsingTool() {
         return UsingTool;
     }
@@ -53,6 +81,11 @@ public class TimeControlPannel {
         CheatCodeUse = CheatCodeUse + Delta;
         UsingTool = UsingTool + Delta;
         ReactionTime = ReactionTime + Delta;
+        IsLightend = IsLightend + Delta;
+        if(IsLightend > 3)
+        {
+            App.ReturnCurrentPlayer().setLightend(false);
+        }
     }
 
     public void setCheatCodeUse(float cheatCodeUse) {

@@ -11,6 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import java.util.ArrayList;
+
 public class GameAssetsManager {
     private static GameAssetsManager instance;
     private final Skin skin;
@@ -27,11 +29,88 @@ public class GameAssetsManager {
     public final String[] StringsReactionsText = {"HELLO" , "Yeah BOY" , "THANK YOU" , "GG" , "ARE YOU OK" , "GIVE ME A BO"};
     public final Texture[] ImagesREacions = {new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png")};
     private final Texture coop = new Texture(Gdx.files.internal("sprites/Coop.png"));
+    public final Texture Pants = new Texture(Gdx.files.internal("Pants/Baggy_Pants.png"));
+
+
+    public Texture Slot()
+    {
+        return Pants;
+    }
+
+    public final Texture[] Stars = {new Texture(Gdx.files.internal("Achievement/Achievement_Star_01.png")) , new Texture(Gdx.files.internal("Achievement/Achievement_Star_02.png")) , new Texture(Gdx.files.internal("Achievement/Achievement_Star_03.png")) , new Texture(Gdx.files.internal("Achievement/Achievement_Star_04.png")) , new Texture(Gdx.files.internal("Achievement/Achievement_Star_05.png")) , new Texture(Gdx.files.internal("Achievement/Achievement_Star_06.png"))};
+
+    public Texture FishAchivment()
+    {
+        return new Texture(Gdx.files.internal("Achievement/Achievement_Fisherman.jpg"));
+    }
+
+    public Texture NatureAchivment()
+    {
+        return new Texture(Gdx.files.internal("Achievement/Achievement_Monoculture.jpg"));
+    }
+
+    public Texture mineAchivment(){
+        return new Texture(Gdx.files.internal("Achievement/Achievement_DIY.jpg"));
+    }
+
+    public Texture FarmAchivment(){
+        return new Texture(Gdx.files.internal("Achievement/Achievement_Master_Of_The_Five_Ways.jpg"));
+    }
+
+    public Animation playerAnimationRegion;
+
+    public Texture RandomAvatar()
+    {
+        int RandomX = App.random.nextInt() % 7;
+        if(RandomX < 0)
+        {
+            RandomX += 7;
+        }
+        if(RandomX == 0)
+        {
+            return new Texture(Gdx.files.internal("Avatars/Wizard.png"));
+        }
+        if(RandomX == 1)
+        {
+            return new Texture(Gdx.files.internal("Avatars/Archer.png"));
+        }
+        if(RandomX == 2)
+        {
+            return new Texture(Gdx.files.internal("Avatars/Barbarian.png"));
+        }
+        if(RandomX == 3)
+        {
+            return new Texture(Gdx.files.internal("Avatars/HeHeHeHA.png"));
+        }
+        if(RandomX == 4)
+        {
+            return new Texture(Gdx.files.internal("Avatars/Knight.png"));
+        }
+        if(RandomX == 5)
+        {
+            return new Texture(Gdx.files.internal("Avatars/Pekka.png"));
+        }
+        if(RandomX == 6)
+        {
+            return new Texture(Gdx.files.internal("Avatars/Wizard.png"));
+        }
+        return new Texture(Gdx.files.internal("Avatars/Witch.png"));
+    }
 
     private final Animation playerAnimation = new Animation<>(0.1f, new Texture("FirstMap/Lewis1animation.png"),
         new Texture("FirstMap/lewis2animation.png"),
         new Texture("FirstMap/lewis3animation.png"),
         new Texture("FirstMap/lewis4animation.png"));
+
+     {
+        load();
+    }
+
+    private final Animation PassoutAnimation = new Animation(1.f , new Texture(Gdx.files.internal("Pass_out/DOWN/0.png")) ,
+        new Texture(Gdx.files.internal("Pass_out/DOWN/1.png")) ,
+        new Texture(Gdx.files.internal("Pass_out/DOWN/2.png")) ,
+        new Texture(Gdx.files.internal("Pass_out/DOWN/3.png")) ,
+        new Texture(Gdx.files.internal("Pass_out/DOWN/4.png")) );
 
 
     public TextButton[] Reactions() {
@@ -66,6 +145,10 @@ public class GameAssetsManager {
     }
 
     private final Texture starDropSaloon = new Texture(Gdx.files.internal("sprites/The Stardrop Saloon.png"));
+
+    public Animation getPassout(){
+        return PassoutAnimation;
+    }
 
     public GameAssetsManager() {
         skin = new Skin(Gdx.files.internal("Skins/pixthulhu-ui.json"));
@@ -137,15 +220,29 @@ public class GameAssetsManager {
         return DirtTexture;
     }
 
-    public Texture getStarDropSaloon() {
-        return starDropSaloon;
-    }
+
 
     public static GameAssetsManager getInstance() {
         if(instance == null) {
             instance = new GameAssetsManager();
         }
         return instance;
+    }
+
+    public void load() {
+
+        TextureRegion[] frames = new TextureRegion[4];
+        for (int i = 0; i < 4; i++) {
+            Texture texture = new Texture(Gdx.files.internal("FirstMap/lewis" + (i+1) + "animation.png"));
+            frames[i] = new TextureRegion(texture);
+        }
+
+        playerAnimationRegion = new Animation<TextureRegion>(0.2f, frames);
+        playerAnimationRegion.setPlayMode(Animation.PlayMode.LOOP);
+    }
+
+    public Animation<TextureRegion> getPlayerAnimationRegion() {
+        return playerAnimationRegion;
     }
 
     public Skin getSkin() {

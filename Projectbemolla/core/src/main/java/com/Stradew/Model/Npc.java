@@ -20,7 +20,8 @@ public class Npc {
     private float y_position;
     private int howManyDaysToUnlockQuest = (App.random.nextInt() % 60) + 30;
 
-    public Npc(int ID , String name, String job, ArrayList<String> dialogues, ArrayList<Item> favouriteItems, ArrayList<Quest> quests , int x_position , int y_position) {
+    public Npc(int ID , String name, String job, ArrayList<String> dialogues, ArrayList<Item> favouriteItems,
+               ArrayList<Quest> quests , int x_position , int y_position, String imageAddress) {
         this.ID = ID;
         this.name = name;
         this.job = job;
@@ -29,6 +30,7 @@ public class Npc {
         Quests = quests;
         this.x_position = x_position;
         this.y_position = y_position;
+        npcTexture = new Texture(imageAddress);
     }
 
     public int getId() {

@@ -1,22 +1,28 @@
 package com.Stradew.View.MainMenu;
-
 import com.Stradew.Controller.MainMenuController.GameMenuController;
 import com.Stradew.Controller.MainMenuController.MapController;
 import com.Stradew.Controller.MainMenuController.MechanicController.InventorypannelController;
+import com.Stradew.Controller.MainMenuController.MechanicController.MechanicController;
 import com.Stradew.Controller.MainMenuController.MechanicController.NotificationController;
 import com.Stradew.Controller.MainMenuController.SwitchMenuController;
 import com.Stradew.Main;
 import com.Stradew.Model.App;
 import com.Stradew.Model.Enums.PlaceType;
 import com.Stradew.Model.Game;
+import com.Stradew.Model.Enums.Animals;
 import com.Stradew.Model.GameAssetsManager;
+import com.Stradew.Model.Item.Item;
+import com.Stradew.Model.Trade;
+import com.Stradew.Model.Tile.Animal;
 import com.Stradew.Server.Lobby;
 import com.Stradew.Server.ServerMessageHandler;
 import com.Stradew.Model.Tile.Tile;
 import com.Stradew.View.MainMenu.MechanicGame.NotificationDialog;
 import com.Stradew.View.MainMenu.MechanicGame.NotificationMenu;
+import com.Stradew.View.MainMenu.MechanicGame.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -32,9 +38,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.sun.tools.classfile.Opcode;
 
 import javax.swing.plaf.IconUIResource;
+import java.util.ArrayList;
 
 public class GameMenu implements Screen , ServerMessageHandler {
 
@@ -101,6 +109,10 @@ public class GameMenu implements Screen , ServerMessageHandler {
         {
             if(parts[1].equals(App.getCurrentUser().getUsername()))
             {
+                Trade newtrade = new Trade(parts[3] , "mamad" , 1 ,new Item(1 , parts[2]) , 100 , "mamad" , 1);
+                newtrade.setGiverName(App.getCurrentUser().getUsername());
+                newtrade.setItemName(parts[2]);
+                App.ReturnCurrentPlayer().getTradeHistory().add(newtrade);
                 controller.getFriendShipController().GetTreade(parts[2] , 50);
             }
         }
@@ -108,8 +120,17 @@ public class GameMenu implements Screen , ServerMessageHandler {
         {
             if(parts[2].equals(App.getCurrentUser().getUsername()))
             {
-                App.networkClient.sendMessage("TRADE_INFO " + parts[1] + " " + App.ReturnCurrentPlayer().getInventory().getCurrentItem().getName());
-                controller.getFriendShipController().SellTrade(50);
+                Trade newtrade = (new Trade(App.getCurrentUser().getUsername(), "mamad" , 1 , App.ReturnCurrentPlayer().getInventory().getCurrentItem() , 100 , "mamad" , 1));
+                newtrade.setGiverName(parts[1]);
+                System.out.println("ALi");
+                newtrade.setItemName(App.ReturnCurrentPlayer().getInventory().getCurrentItem().getName());
+                System.out.println("mamad");
+                App.ReturnCurrentPlayer().addTradeToHistory(newtrade);
+                System.out.println("Asghar");
+                App.networkClient.sendMessage("TRADE_INFO " + parts[1] + " " + App.ReturnCurrentPlayer().getInventory().getCurrentItem().getName() + " " + App.getCurrentUser().getUsername());
+                System.out.println("Akbar");
+                controller.getFriendShipController().SellTrade(50, controller.getInventorypannelController());
+                System.out.println("Sepehr");
                 TradeTable.setVisible(false);
                 MainTable.setVisible(true);
             }
@@ -121,6 +142,11 @@ public class GameMenu implements Screen , ServerMessageHandler {
                 TradeTable.setVisible(false);
                 MainTable.setVisible(true);
             }
+        }
+
+        if(command.equals("NEW_CHAT_INFO"))
+        {
+            controller.getChatController().getMessages().add(parts[2] + "   :   "  + parts[1]);
         }
     }
 
@@ -141,7 +167,17 @@ public class GameMenu implements Screen , ServerMessageHandler {
         return ReactionImageforDisplay;
     }
 
+    public ArrayList<CraftMenu> getCrafmenus() {
+        return crafmenus;
+    }
 
+    public String getChatToShow() {
+        return ChatToShow;
+    }
+
+    private TextButton Chat;
+    private ArrayList<CraftMenu> crafmenus = new ArrayList<>();
+    private InputMultiplexer inputMultiplexer;
     private Texture ReactionImageforDisplay;
     private String ReactionTextForDisplay;
     private String ReactionTextSender;
@@ -176,7 +212,18 @@ public class GameMenu implements Screen , ServerMessageHandler {
     private TextButton SeeOnlilnePlayers;
     private TextButton BackFromOnlinePlayers;
     private TextButton Ranking;
+    private Stage ConstantStage;
+    private TextButton BackToInventory;
+    private String ChatToShow;
 
+
+    public TextButton getBackToInventory() {
+        return BackToInventory;
+    }
+
+    public Table getTradeHistoryTable() {
+        return TradeHistoryTable;
+    }
 
     public SwitchMenuController getSwitchMenuController() {
         return switchMenuController;
@@ -262,6 +309,10 @@ public class GameMenu implements Screen , ServerMessageHandler {
         return BuyGreenhouseTable;
     }
 
+    public Stage getConstantStage() {
+        return ConstantStage;
+    }
+
     public ProgressBar getEnergyBar() {
         return EnergyBar;
     }
@@ -280,7 +331,17 @@ public class GameMenu implements Screen , ServerMessageHandler {
     private Table TradeTable;
     private Table RankingTable;
     private Table RankingTable2;
+    private Table TradeHistoryTable;
+    private Table ChatTable;
 
+
+    public TextButton getChat() {
+        return Chat;
+    }
+
+    public Table getChatTable() {
+        return ChatTable;
+    }
 
     public Table getRankingTable() {
         return RankingTable;
@@ -297,6 +358,7 @@ public class GameMenu implements Screen , ServerMessageHandler {
     private TextButton SocialButton;
     private TextButton MapButton;
     private TextButton Backbutton;
+    private MechanicGame mechanicGame;
 
     public TextButton getBackbutton() {
         return Backbutton;
@@ -388,6 +450,7 @@ public class GameMenu implements Screen , ServerMessageHandler {
         }
         CurrntLobby = lobby;
         switchMenuController = new SwitchMenuController();
+        mechanicGame = new MechanicGame(new MechanicController());
         this.controller = controller;
         controller.setMenu(this);
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -399,7 +462,7 @@ public class GameMenu implements Screen , ServerMessageHandler {
         SnowEffect.load(Gdx.files.internal("WetherEffects/Particle Park Snow Flakes.p"), Gdx.files.internal("WetherEffects"));
         SnowEffect.start();
         Lightning = new ParticleEffect();
-        Lightning.load(Gdx.files.internal("WetherEffects/Particle Park Laser.p"), Gdx.files.internal("WetherEffects"));
+        Lightning.load(Gdx.files.internal("WetherEffects/Particle Park Explosion.p"), Gdx.files.internal("WetherEffects"));
         Lightning.start();
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.WHITE);
@@ -407,7 +470,7 @@ public class GameMenu implements Screen , ServerMessageHandler {
         shadeTexture = new Texture(pixmap);
         pixmap.dispose();
         shadeColor = new Color(0.0f, 0.0f, 0.2f, 0.4f);
-        GreenhouseHoverButton = new TextButton("Buy", GameAssetsManager.getInstance().getSkin());
+        GreenhouseHoverButton = new TextButton("100 G Buy Greenhouse", GameAssetsManager.getInstance().getSkin());
         InventoryTable = new Table();
         SkillTable = new Table();
         SocialTable = new Table();
@@ -455,13 +518,25 @@ public class GameMenu implements Screen , ServerMessageHandler {
         Ranking = new TextButton("Ranking", GameAssetsManager.getInstance().getSkin());
         RankingTable = new Table();
         RankingTable2 = new Table();
+        ConstantStage = new Stage(new ScreenViewport(camera));
+
+        TradeHistoryTable = new Table();
+        BackToInventory = new TextButton("BackToInventory", GameAssetsManager.getInstance().getSkin());
+
+        ChatTable = new Table();
+        Chat = new TextButton("Chat", GameAssetsManager.getInstance().getSkin());
     }
 
-
+    public Stage getStage() {
+        return stage;
+    }
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(stage);
+        inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(stage);
+        inputMultiplexer.addProcessor(ConstantStage);
+        Gdx.input.setInputProcessor(inputMultiplexer);
         InventoryTable.setFillParent(true);
         SkillTable.setFillParent(true);
         SocialTable.setFillParent(true);
@@ -483,7 +558,7 @@ public class GameMenu implements Screen , ServerMessageHandler {
         SwitchTable.add(Backbutton);
         stage.addActor(SwitchTable);
 
-        MainTable.setPosition(-400, 400);
+        MainTable.setPosition(-300, 400);
         MainTable.add(Setting);
         //MainTable.setOrigin(900 , 400);
         MainTable.add(EnergyBar);
@@ -491,6 +566,7 @@ public class GameMenu implements Screen , ServerMessageHandler {
         MainTable.add(SeeOnlilnePlayers);
         MainTable.add(GoReact);
         MainTable.add(Ranking);
+        MainTable.add(Chat);
         stage.addActor(MainTable);
 
         Minigame.setFillParent(true);
@@ -532,6 +608,18 @@ public class GameMenu implements Screen , ServerMessageHandler {
         RankingTable2.setVisible(false);
         RankingTable2.top().right();
 
+        TradeHistoryTable.setFillParent(true);
+        TradeHistoryTable.setVisible(false);
+        TradeHistoryTable.top();
+        TradeHistoryTable.add(BackToInventory);
+
+        ChatTable.setFillParent(true);
+        ChatTable.setVisible(false);
+        ChatTable.top();
+
+
+        stage.addActor(ChatTable);
+        stage.addActor(TradeHistoryTable);
         stage.addActor(RankingTable2);
         stage.addActor(RankingTable);
         stage.addActor(TradeTable);
@@ -577,8 +665,21 @@ public class GameMenu implements Screen , ServerMessageHandler {
         Main.getMain().getBatch().end();
         stage.act();
         stage.draw();
+        ConstantStage.act();
+        ConstantStage.draw();
         if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
             switchMenuController.openNpcVillage();
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.O)){
+            mechanicGame.playPettingAnimation(stage);
+            mechanicGame.petAllAnimals();
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F)){
+            mechanicGame.playFeedingAnimation(stage);
+        }if (Gdx.input.isKeyJustPressed(Input.Keys.G)){
+            mechanicGame.playShepherdingAnimation(stage);
+        }if (Gdx.input.isKeyJustPressed(Input.Keys.B)){
+            switchMenuController.openCraftMenu(stage);
         }
     }
 

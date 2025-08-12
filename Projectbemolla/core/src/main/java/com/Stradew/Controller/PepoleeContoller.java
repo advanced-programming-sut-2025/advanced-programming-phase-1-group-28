@@ -23,6 +23,8 @@ public class PepoleeContoller {
     CheatCodes cheatCodes = new CheatCodes();
     Texture ToolTexture = null;
 
+
+
     private UseToolController useToolController = new UseToolController();
 
     public void setToolTexture(Texture toolTexture) {
@@ -139,6 +141,19 @@ public class PepoleeContoller {
                 cheatCodes.SetEnergy(App.ReturnCurrentPlayer().getEnergy() + 50);
                 App.getCurrentGame().getTimeControlPannel().setCheatCodeUse(0);
             }
+            if(Gdx.input.isKeyPressed(Input.Keys.NUM_4)) {
+                int x = App.random.nextInt()%100;
+                if(x < 0)
+                {
+                    x += 100;
+                }
+                int y = App.random.nextInt()%100;
+                if(y < 0)
+                {
+                    y += 100;
+                }
+                cheatCodes.Thor(x + 50 , y + 50);
+            }
         }
     }
 
@@ -147,10 +162,18 @@ public class PepoleeContoller {
         HandleWalk(player , v);
         CheatCodes();
         UsingTool(menu);
-        idleAnimation(v);
-        player.getPlayerSprite().setPosition(player.getX() , player.getY() - 500);
+        if(App.getCurrentGame().getTimeControlPannel().isFiant())
+        {
+            IdlePassoutAnimation(v);
+            player.getPlayerSprite().setPosition(player.getX() , player.getY() + 150);
+            player.getPlayerSprite().setSize(100 , 100 );
+        }
+        else {
+            idleAnimation(v);
+            player.getPlayerSprite().setPosition(player.getX() , player.getY() - 500);
+            player.getPlayerSprite().setSize(700 , 700);
+        }
         player.getPlayerSprite().draw(Main.getMain().getBatch());
-        player.getPlayerSprite().setSize(700 , 700);
         PrintTool();
     }
 
@@ -178,5 +201,25 @@ public class PepoleeContoller {
 //            App.getCurrentGame().getTimeControlPannel().setAnimationPlayer(0);
 //        }
         animation.setPlayMode(Animation.PlayMode.LOOP);
+    }
+
+    public void IdlePassoutAnimation(float Delta){
+        if(App.getCurrentGame().getTimeControlPannel().isFiant())
+        {
+            Animation<Texture> animation = GameAssetsManager.getInstance().getPassout();
+            App.ReturnCurrentPlayer().getPlayerSprite().setRegion(animation.getKeyFrame(App.getCurrentGame().getTimeControlPannel().getAnimationPlayer()));
+            if (!animation.isAnimationFinished(App.getCurrentGame().getTimeControlPannel().getAnimationPlayer())) {
+            App.getCurrentGame().getTimeControlPannel().setAnimationPlayer(App.getCurrentGame().getTimeControlPannel().getAnimationPlayer() + Delta);
+        }
+        else {
+            App.getCurrentGame().getTimeControlPannel().setAnimationPlayer(0);
+        }
+        animation.setPlayMode(Animation.PlayMode.LOOP);
+        App.getCurrentGame().getTimeControlPannel().setPassoutTime(App.getCurrentGame().getTimeControlPannel().getPassoutTime() + Delta);
+        if(App.getCurrentGame().getTimeControlPannel().getPassoutTime() > 20)
+        {
+            App.getCurrentGame().getTimeControlPannel().setFiant(false);
+        }
+        }
     }
 }

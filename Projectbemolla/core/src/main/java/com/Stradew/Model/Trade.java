@@ -11,6 +11,24 @@ public class Trade {
     String targetItemName;
     int targetAmount;
     boolean accept;
+    String GiverName;
+    String ItemName;
+
+    public String getItemName() {
+        return ItemName;
+    }
+
+    public void setItemName(String itemName) {
+        ItemName = itemName;
+    }
+
+    public String getGiverName() {
+        return GiverName;
+    }
+
+    public void setGiverName(String giverName) {
+        GiverName = giverName;
+    }
 
     public Trade(String sender, String type, int amount, Item offerItem, int price, String targetItemName, int targetAmount) {
         this.sender = sender;

@@ -13,6 +13,7 @@ public class Ingredient extends  Item{
         if (ingredient != null){
             this.setName(ingredient.toString());
         }
+        this.image = ingredient.Image;
         this.ingredient = ingredient;
     }
 

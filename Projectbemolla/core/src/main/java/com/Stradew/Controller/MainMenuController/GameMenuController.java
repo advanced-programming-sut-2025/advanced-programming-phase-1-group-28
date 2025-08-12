@@ -1,10 +1,7 @@
 package com.Stradew.Controller.MainMenuController;
 
 import com.Stradew.Controller.MainMenuController.HomeMenucontroller.PokhtOPazController;
-import com.Stradew.Controller.MainMenuController.MechanicController.FriendShipController;
-import com.Stradew.Controller.MainMenuController.MechanicController.InventorypannelController;
-import com.Stradew.Controller.MainMenuController.MechanicController.RankingTableController;
-import com.Stradew.Controller.MainMenuController.MechanicController.SocialPannelController;
+import com.Stradew.Controller.MainMenuController.MechanicController.*;
 import com.Stradew.Controller.PepoleeContoller;
 import com.Stradew.Controller.SignUpController;
 import com.Stradew.Main;
@@ -19,12 +16,14 @@ import com.Stradew.Model.Tools.ShippingBin;
 import com.Stradew.Model.Tools.Tools;
 import com.Stradew.View.Appview;
 import com.Stradew.View.MainMenu.GameMenu;
+import com.Stradew.View.MainMenu.MainMenu;
 import com.Stradew.View.MainMenu.MechanicGame.HomeMenu.PokhtOPaz;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 import java.util.ArrayList;
 
@@ -54,7 +53,7 @@ public class GameMenuController {
         Abbas2.ApplyPlayersToGame(PlayersInGame);
         for(int i = 0 ;i < PlayersInGame.size();i++) {
 
-            Abbas2.SetFarm(i , 1);
+            Abbas2.SetFarm(i , App.getCurrentUser().getFarmId());
         }
     }
 
@@ -83,6 +82,17 @@ public class GameMenuController {
     private TradeController tradeController = new TradeController();
     private RankingTableController rankingTableController = new RankingTableController();
     private FriendShipController friendShipController = new FriendShipController();
+    private FarmingController farmingController = new FarmingController();
+    private BitmapFont font = new BitmapFont();
+    private ChatController chatController = new ChatController();
+
+    public ChatController getChatController() {
+        return chatController;
+    }
+
+    public FarmingController getFarmingController() {
+        return farmingController;
+    }
 
     public FriendShipController getFriendShipController() {
         return friendShipController;
@@ -117,7 +127,7 @@ public class GameMenuController {
         {
             if(menu.getExit().isChecked())
             {
-                Gdx.app.exit();
+                Main.getMain().setScreen(new MainMenu(new MainmenuController()));
             }
             if(menu.getBackTogame().isChecked())
             {
@@ -140,10 +150,17 @@ public class GameMenuController {
 
     public void Update(float v)
     {
+
+        for(int i = 0; i < menu.getCrafmenus().size();i++) {
+            if(menu.getCrafmenus().get(i).isStarted()) {
+                menu.getCrafmenus().get(i).setTimePassed(menu.getCrafmenus().get(i).getTimePassed() + v);
+                menu.getCrafmenus().get(i).getProgressBar().setValue(menu.getCrafmenus().get(i).getTimePassed() * 10);
+            }
+        }
         App.getCurrentGame().getTimeControlPannel().setRankingTime(App.getCurrentGame().getTimeControlPannel().getRankingTime() + v);
         if(App.getCurrentGame().getTimeControlPannel().getRankingTime() > 5)
         {
-            if(App.networkClient != null) {
+            if (App.networkClient != null) {
                 App.networkClient.SendInfoForRanking(menu.getCurrntLobby().getId());
                 App.getCurrentGame().getTimeControlPannel().setRankingTime(0);
             }
@@ -151,12 +168,14 @@ public class GameMenuController {
         menu.getNotifications().setText(String.format("%d", App.ReturnCurrentPlayer().getNewMessages()));
         if(App.ReturnCurrentPlayer().getEnergy() < 0)
         {
-            App.ReturnCurrentPlayer().setEnergy(10);
+            App.getCurrentGame().getTimeControlPannel().setFiant(true);
+            App.getCurrentGame().getTimeControlPannel().setPassoutTime(0);
+            App.ReturnCurrentPlayer().setEnergy(100);
             ApplyNextTurn();
         }
         CheckSetting();
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)){
-            switchMenuController.openPokhMenu();
+            switchMenuController.openPokhMenu(menu.getStage());
         }
         if(!ok)
         {
@@ -164,6 +183,7 @@ public class GameMenuController {
             inventorypannelController.firstTouch(menu.getCurrntLobby().getUsernames());
             tradeController.FirstTouch(menu);
             rankingTableController.FirstTouch(menu);
+            chatController.FirstTouch(menu);
             ok = true;
         }
         if(menu.getMainTable().isVisible()) {
@@ -174,11 +194,13 @@ public class GameMenuController {
             App.getCurrentGame().getTimeControlPannel().UpdateTimes(v);
             menu.getRaineffect().setPosition(App.ReturnCurrentPlayer().getX()  -Gdx.graphics.getWidth() / 2, App.ReturnCurrentPlayer().getY() - Gdx.graphics.getHeight() / 2);
             menu.getSnowEffect().setPosition(App.ReturnCurrentPlayer().getX() - Gdx.graphics.getWidth() / 2 , App.ReturnCurrentPlayer().getY() - Gdx.graphics.getHeight() /2 );
-            menu.getLightning().setPosition(App.ReturnCurrentPlayer().getX() - Gdx.graphics.getWidth() / 2 , App.ReturnCurrentPlayer().getY() - Gdx.graphics.getHeight() / 2);
+            menu.getLightning().setPosition(App.ReturnCurrentPlayer().getX(), App.ReturnCurrentPlayer().getY());
             menu.getRaineffect().update(v);
             menu.getSnowEffect().update(v);
             menu.getLightning().update(v);
-            menu.getLightning().draw(Main.getMain().getBatch());
+            if(App.ReturnCurrentPlayer().getLightend()) {
+                menu.getLightning().draw(Main.getMain().getBatch());
+            }
             if(App.getCurrentGame().getWeather() == Weathers.SNOW) {
                 menu.getSnowEffect().draw(Main.getMain().getBatch());
             }
@@ -206,6 +228,12 @@ public class GameMenuController {
                 menu.getRankingTable2().setVisible(true);
                 menu.getMainTable().setVisible(false);
                 menu.getRanking().setChecked(false);
+            }
+            if(menu.getChat().isChecked())
+            {
+                menu.getChatTable().setVisible(true);
+                menu.getMainTable().setVisible(false);
+                menu.getChat().setChecked(false);
             }
         }
         if(menu.getSwitchTable().isVisible()) {
@@ -248,6 +276,24 @@ public class GameMenuController {
         if(menu.getRankingTable().isVisible())
         {
             rankingTableController.Update(menu);
+        }
+        if(menu.getTradeHistoryTable().isVisible())
+        {
+            if(menu.getBackToInventory().isChecked())
+            {
+                menu.getInventoryTable().setVisible(true);
+                menu.getSwitchTable().setVisible(true);
+                menu.getTradeHistoryTable().setVisible(false);
+                menu.getBackToInventory().setChecked(false);
+            }
+            for(int i = 0;i < App.ReturnCurrentPlayer().getTradeHistory().size();i++)
+            {
+                font.draw(Main.getMain().getBatch() , App.ReturnCurrentPlayer().getTradeHistory().get(i).getSender() + " Sell the item  " + App.ReturnCurrentPlayer().getTradeHistory().get(i).getItemName() + " to the player  " + App.ReturnCurrentPlayer().getTradeHistory().get(i).getGiverName() , App.ReturnCurrentPlayer().getX()  - 200 , App.ReturnCurrentPlayer().getY() + 200 - (100 * i));
+            }
+        }
+        if(menu.getChatTable().isVisible())
+        {
+            chatController.Update(menu);
         }
     }
 
@@ -357,9 +403,9 @@ public class GameMenuController {
     public void RandomForagingOnGird()
     {
 
-        if(menu.getNPCandShop().isVisible()) {
-            //menu
-        }
+//        if(menu.getNPCandShop().isVisible()) {
+//            //menu
+//        }
 
     }
 
@@ -595,3 +641,150 @@ public class GameMenuController {
         }
     }
 }
+/*
+explosion
+- Delay -
+active: false
+- Duration -
+lowMin: 2000.0
+lowMax: 2000.0
+- Count -
+min: 0
+max: 200
+- Emission -
+lowMin: 0.0
+lowMax: 0.0
+highMin: 50.0
+highMax: 50.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Life -
+lowMin: 0.0
+lowMax: 0.0
+highMin: 3000.0
+highMax: 3000.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+independent: false
+- Life Offset -
+active: false
+independent: false
+- X Offset -
+active: false
+- Y Offset -
+active: false
+- Spawn Shape -
+shape: point
+- Spawn Width -
+lowMin: 0.0
+lowMax: 0.0
+highMin: 1920.0
+highMax: 1920.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Spawn Height -
+lowMin: 0.0
+lowMax: 0.0
+highMin: 1080.0
+highMax: 1080.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- X Scale -
+lowMin: 0.0
+lowMax: 0.0
+highMin: 400.0
+highMax: 400.0
+relative: false
+scalingCount: 3
+scaling0: 1.0
+scaling1: 1.0
+scaling2: 0.0
+timelineCount: 3
+timeline0: 0.0
+timeline1: 0.36301368
+timeline2: 1.0
+- Y Scale -
+active: false
+- Velocity -
+active: true
+lowMin: 0.0
+lowMax: 0.0
+highMin: 50.0
+highMax: 50.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Angle -
+active: true
+lowMin: 0.0
+lowMax: 0.0
+highMin: 0.0
+highMax: 360.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Rotation -
+active: true
+lowMin: 0.0
+lowMax: 0.0
+highMin: 0.0
+highMax: 360.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
+- Wind -
+active: false
+- Gravity -
+active: false
+- Tint -
+colorsCount: 3
+colors0: 1.0
+colors1: 0.12156863
+colors2: 0.047058824
+timelineCount: 1
+timeline0: 0.0
+- Transparency -
+lowMin: 0.0
+lowMax: 0.0
+highMin: 1.0
+highMax: 1.0
+relative: false
+scalingCount: 2
+scaling0: 1.0
+scaling1: 0.0
+timelineCount: 2
+timeline0: 0.0
+timeline1: 1.0
+- Options -
+attached: false
+continuous: true
+aligned: false
+additive: true
+behind: false
+premultipliedAlpha: false
+spriteMode: random
+- Image Paths -
+explosion-1.png
+explosion-2.png
+explosion-3.png
+
+
+ */

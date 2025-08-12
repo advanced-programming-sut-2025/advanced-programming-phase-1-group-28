@@ -131,7 +131,6 @@ public class NpcDialog extends Dialog {
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // محتوای container را با نمای اصلی جایگزین کن
                 container.clear();
                 container.add(mainView);
             }

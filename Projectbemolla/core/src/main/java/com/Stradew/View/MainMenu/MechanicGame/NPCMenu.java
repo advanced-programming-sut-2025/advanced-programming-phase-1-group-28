@@ -185,6 +185,10 @@ public class NPCMenu implements Screen {
         System.out.println("hello");
     }
 
+    public Stage getStage() {
+        return stage;
+    }
+
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);

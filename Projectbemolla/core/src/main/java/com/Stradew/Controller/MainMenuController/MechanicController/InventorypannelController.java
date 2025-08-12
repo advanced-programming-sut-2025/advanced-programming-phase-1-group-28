@@ -6,11 +6,13 @@ import com.Stradew.Main;
 import com.Stradew.Model.App;
 import com.Stradew.Model.GameAssetsManager;
 import com.Stradew.Model.InventorySlot;
+import com.Stradew.Model.Item.Craft;
 import com.Stradew.Model.Item.Item;
 import com.Stradew.Model.Tools.Tools;
 import com.Stradew.View.MainMenu.GameMenu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
@@ -29,8 +31,15 @@ public class InventorypannelController {
     private ArrayList<InventorySlot> inventorySlots = new ArrayList<>();
     private ImageButton ChoosenItem;
     private TextButton Trade = new TextButton("Trade" , GameAssetsManager.getInstance().getSkin());
+    private TextButton Remove = new TextButton("Remove" , GameAssetsManager.getInstance().getSkin());
     private TextButton HistoryofTrades = new TextButton("History of Trades" , GameAssetsManager.getInstance().getSkin());
     private SelectBox Users = new SelectBox(GameAssetsManager.getInstance().getSkin());
+    private BitmapFont font = new BitmapFont();
+
+
+    public ArrayList<InventorySlot> getInventorySlots() {
+        return inventorySlots;
+    }
 
     public Table getInventorytable() {
         return Inventorytable;
@@ -76,6 +85,12 @@ public class InventorypannelController {
         Inventorytable.add(Users).padRight(50);
         Inventorytable.add(Trade);
         Inventorytable.add(HistoryofTrades);
+        Inventorytable.row();
+        Inventorytable.add(Remove);
+    }
+
+    public void setChoosenItem(ImageButton choosenItem) {
+        ChoosenItem = choosenItem;
     }
 
     /*public void Remove(GameMenu menu)
@@ -86,6 +101,20 @@ public class InventorypannelController {
             menu.getBin().setChecked(false);
         }
     }*/
+
+    public void RemoveItem()
+    {
+        if(Remove.isChecked())
+        {
+            if(App.ReturnCurrentPlayer().getInventory().getCurrentItem() != null)
+            {
+                App.ReturnCurrentPlayer().getInventory().removeItem(App.ReturnCurrentPlayer().getInventory().getCurrentItem() , this);
+
+            }
+            Remove.setChecked(false);
+        }
+    }
+
 
     public void Trade(GameMenu menu)
     {
@@ -106,6 +135,24 @@ public class InventorypannelController {
         }
     }
 
+
+    public void TradeHistory(GameMenu menu)
+    {
+        if(menu.getTradeHistoryTable().isVisible())
+        {
+            if(menu.getBackToInventory().isChecked())
+            {
+                menu.getInventoryTable().setVisible(true);
+                menu.getSwitchTable().setVisible(true);
+                menu.getTradeHistoryTable().setVisible(false);
+                menu.getBackToInventory().setChecked(false);
+            }
+            for(int i = 0;i < App.ReturnCurrentPlayer().getTradeHistory().size();i++)
+            {
+                font.draw(Main.getMain().getBatch() , App.ReturnCurrentPlayer().getTradeHistory().get(i).getSender() + " Sell the item  " + App.ReturnCurrentPlayer().getTradeHistory().get(i).getItemName() + " to the player  " + App.ReturnCurrentPlayer().getTradeHistory().get(i).getGiverName() , App.ReturnCurrentPlayer().getX()  - 200 , App.ReturnCurrentPlayer().getY() + 200 - (100 * i));
+            }
+        }
+    }
 
     public void Equip(GameMenuController gamecontroller)
     {
@@ -129,6 +176,12 @@ public class InventorypannelController {
                         ChoosenTexture = thing.getImage();
                         App.ReturnCurrentPlayer().getInventory().setCurrentItem((Item)item);
                     }
+                    /*if(item instanceof Craft)
+                    {
+                        Craft craftali = (Craft) item;
+                        ChoosenTexture = craftali.getImage();
+                        App.ReturnCurrentPlayer().getInventory().setCurrentItem((Craft)item);
+                    }*/
 
                     TextureRegion region = new TextureRegion(ChoosenTexture);
                     TextureRegionDrawable drawable = new TextureRegionDrawable(region);
@@ -139,6 +192,10 @@ public class InventorypannelController {
             }
             inventorySlots.get(i).getButton().setChecked(false);
         }
+    }
+
+    public ImageButton getChoosenItem() {
+        return ChoosenItem;
     }
 
     public void EquipVillage(NPCVillageController gamecontroller)
@@ -178,54 +235,55 @@ public class InventorypannelController {
 
     public void Update(GameMenuController gamecontroller)
     {
-        Trade(gamecontroller.getMenu());
-        Equip(gamecontroller);
-        for(int i = 0;i < App.ReturnCurrentPlayer().getInventory().getTools().size();i++)
-        {
-            boolean ok = false;
-            for(int j = 0;j < 36;j++)
+
+            if(HistoryofTrades.isChecked())
             {
-                if(inventorySlots.get(j).getItem() != null) {
-                    if (inventorySlots.get(j).getItem().equals(App.ReturnCurrentPlayer().getInventory().getTools().get(i))) {
-                        ok = true;
+                gamecontroller.getMenu().getTradeHistoryTable().setVisible(true);
+                gamecontroller.getMenu().getInventoryTable().setVisible(false);
+                gamecontroller.getMenu().getSwitchTable().setVisible(false);
+                gamecontroller.getMenu().getSwitchMenuController();
+                HistoryofTrades.setChecked(false);
+            }
+            RemoveItem();
+            Trade(gamecontroller.getMenu());
+            Equip(gamecontroller);
+            for (int i = 0; i < App.ReturnCurrentPlayer().getInventory().getTools().size(); i++) {
+                boolean ok = false;
+                for (int j = 0; j < 36; j++) {
+                    if (inventorySlots.get(j).getItem() != null) {
+                        if (inventorySlots.get(j).getItem().equals(App.ReturnCurrentPlayer().getInventory().getTools().get(i))) {
+                            ok = true;
+                        }
+                    }
+                }
+                if (!ok) {
+                    for (int j = 0; j < 36; j++) {
+                        if (inventorySlots.get(j).getItem() == null) {
+                            inventorySlots.get(j).SetImageButton(App.ReturnCurrentPlayer().getInventory().getTools().get(i));
+                            break;
+                        }
                     }
                 }
             }
-            if(!ok)
-            {
-                for(int j = 0;j < 36;j++)
-                {
-                    if(inventorySlots.get(j).getItem() == null)
-                    {
-                        inventorySlots.get(j).SetImageButton(App.ReturnCurrentPlayer().getInventory().getTools().get(i));
-                        break;
+            for (int i = 0; i < App.ReturnCurrentPlayer().getInventory().getItems().size(); i++) {
+                boolean ok = false;
+                for (int j = 0; j < 36; j++) {
+                    if (inventorySlots.get(j).getItem() != null) {
+                        if (inventorySlots.get(j).getItem().equals(App.ReturnCurrentPlayer().getInventory().getItems().get(i))) {
+                            ok = true;
+                        }
+                    }
+                }
+                if (!ok) {
+                    for (int j = 0; j < 36; j++) {
+                        if (inventorySlots.get(j).getItem() == null) {
+                            inventorySlots.get(j).SetImageButton(App.ReturnCurrentPlayer().getInventory().getItems().get(i));
+                            break;
+                        }
                     }
                 }
             }
-        }
-        for(int i = 0;i < App.ReturnCurrentPlayer().getInventory().getItems().size();i++)
-        {
-            boolean ok = false;
-            for(int j = 0;j < 36;j++)
-            {
-                if(inventorySlots.get(j).getItem() != null) {
-                    if (inventorySlots.get(j).getItem().equals(App.ReturnCurrentPlayer().getInventory().getItems().get(i))) {
-                        ok = true;
-                    }
-                }
-            }
-            if(!ok)
-            {
-                for(int j = 0;j < 36;j++)
-                {
-                    if(inventorySlots.get(j).getItem() == null)
-                    {
-                        inventorySlots.get(j).SetImageButton(App.ReturnCurrentPlayer().getInventory().getItems().get(i));
-                        break;
-                    }
-                }
-            }
-        }
+
     }
 
     public void UpdateVillage(NPCVillageController gamecontroller)

@@ -125,7 +125,7 @@ public class NPCVillageController {
         }
         CheckSetting();
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)){
-            switchMenuController.openPokhMenu();
+            switchMenuController.openPokhMenu(menu.getStage());
         }
         if(!ok)
         {

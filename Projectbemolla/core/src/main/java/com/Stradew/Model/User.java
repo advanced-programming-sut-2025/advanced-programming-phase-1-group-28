@@ -1,6 +1,17 @@
 package com.Stradew.Model;
 
+import com.badlogic.gdx.graphics.Texture;
+
 public class User {
+    public int getFarmId() {
+        return FarmId;
+    }
+
+    public void setFarmId(int farmId) {
+        FarmId = farmId;
+    }
+
+    private int FarmId;
     private String Gender;
     private String Nickname;
     private String Username;
@@ -14,6 +25,16 @@ public class User {
     private int GamesPlayed = 0;
     private int GameId = -1;
     private boolean StayLoggedIn = false;
+    private Texture Avatar;
+
+
+    public Texture getAvatar() {
+        return Avatar;
+    }
+
+    public void setAvatar(Texture avatar) {
+        Avatar = avatar;
+    }
 
     public boolean isStayLoggedIn() {
         return StayLoggedIn;

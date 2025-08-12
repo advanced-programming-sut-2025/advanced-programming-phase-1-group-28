@@ -1,14 +1,18 @@
 package com.Stradew.Model;
 
-import com.Stradew.Model.Enums.Minerals;
-import com.Stradew.Model.Enums.Plants;
-import com.Stradew.Model.Enums.Saplings;
-import com.Stradew.Model.Enums.Seeds;
+import com.Stradew.Controller.MainMenuController.MechanicController.InventorypannelController;
+import com.Stradew.Model.Enums.*;
 import com.Stradew.Model.Enums.Tools.*;
+import com.Stradew.Model.Item.Craft;
 import com.Stradew.Model.Item.Item;
 import com.Stradew.Model.Item.MineralItem;
 import com.Stradew.Model.Item.PlantsItem;
 import com.Stradew.Model.Tools.*;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import java.util.ArrayList;
 
@@ -29,6 +33,7 @@ public class Inventory {
         this.tools.add(new FishingPole(FishingPoles.Bamboo));
         this.tools.add(new Seythe(Seythes.Normal));
         this.tools.add(new WaterCan(Watercans.Normal , 1));
+        this.items.add(new Craft(1 ,Crafts.BeeHouse));
         CurrentTool = tools.get(0);
         WhichTool = 0;
         this.seeds.add(Seeds.CarrotSeeds);
@@ -220,7 +225,23 @@ public class Inventory {
         return true;
     }
 
-    public void removeItem(Item item){
+    public void removeItem(Item item , InventorypannelController controller){
+        if(controller != null)
+        {
+            for(int i = 0;i < controller.getInventorySlots().size();i++)
+            {
+                if(item.equals(controller.getInventorySlots().get(i).getItem()))
+                {
+                   // Gdx.app.exit();
+                    controller.getInventorySlots().get(i).SetImageButton(null);
+                    Texture Axe = GameAssetsManager.getInstance().Pants;
+                    TextureRegion region = new TextureRegion(Axe);
+                    TextureRegionDrawable drawable = new TextureRegionDrawable(region);
+                    controller.getChoosenItem().getStyle().up = drawable;
+                    controller.getChoosenItem().getStyle().down = drawable;
+                }
+            }
+        }
         this.items.remove(item);
     }
 

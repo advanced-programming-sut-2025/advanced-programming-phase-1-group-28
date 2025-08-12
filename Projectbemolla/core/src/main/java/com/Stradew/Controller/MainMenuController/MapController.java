@@ -6,9 +6,8 @@ import com.Stradew.Model.Enums.*;
 import com.Stradew.Model.Game;
 import com.Stradew.Model.GameAssetsManager;
 import com.Stradew.Model.PairChanges;
+import com.Stradew.Model.Tile.*;
 import com.Stradew.Model.Tile.Plants;
-import com.Stradew.Model.Tile.Tile;
-import com.Stradew.Model.Tile.Trees;
 import com.Stradew.View.MainMenu.GameMenu;
 import com.Stradew.View.MainMenu.NPCVillage;
 import com.badlogic.gdx.Gdx;
@@ -40,10 +39,10 @@ public class MapController {
         {
             menu.getBuyGreenhouseTable().setVisible(true);
         }
-        //else
-        //{
-          //  menu.getBuyGreenhouseTable().setVisible(false);
-        //}
+        else
+        {
+            menu.getBuyGreenhouseTable().setVisible(false);
+        }
 
     }
 
@@ -121,6 +120,7 @@ public class MapController {
         {
             Update(App.ReturnCurrentPlayer().getFarm().getChanges().get(i).getX() , App.ReturnCurrentPlayer().getFarm().getChanges().get(i).getY());
             App.ReturnCurrentPlayer().getFarm().getChanges().remove(i);
+            //System.out.println("Dash Chi be gam behet");
         }
 
         Main.getMain().getBatch().flush();
@@ -234,8 +234,6 @@ public class MapController {
                     if(ok)
                     {
 
-                    } else if(TempGround[i][j].getEntitity() == Entitity.Minreal) {
-
                     } else if (TempGround[i][j].getTerrain() == Terrain.DIRT) {
                         if(TempGround[i][j].isHow())
                         {
@@ -283,22 +281,27 @@ public class MapController {
                                 }
                                 else
                                 {
-                                    if(TempGround[i][j].getEntitity() == Entitity.TREE)
+                                    if(TempGround[i][j].getPlaceType() == PlaceType.Craft)
                                     {
-                                        //Texture Dirt = GameAssetsManager.getInstance().DirtPicture();
-                                        //Main.getMain().getBatch().draw(Dirt , i * TILE_SIZE, j * TILE_SIZE , TILE_SIZE , TILE_SIZE);
-                                        Texture Tree  = ((Trees) TempGround[i][j]).getTree().TreeTexture;
-                                        Main.getMain().getBatch().draw(Tree , i * TILE_SIZE, j * TILE_SIZE , 30 , 30);
-
-
+                                        PlantedCrafts plantedCraft = (PlantedCrafts) TempGround[i][j];
+                                        Texture PlantedCraft = plantedCraft.getCraft().Craftimage;
+                                        Main.getMain().getBatch().draw(PlantedCraft, i * TILE_SIZE , j * TILE_SIZE , TILE_SIZE , TILE_SIZE);
+                                        System.out.println("MozBaghali");
                                     }
-                                    else if(TempGround[i][j].getEntitity() == Entitity.PLANTS)
-                                    {
-                                        //Texture Dirt = GameAssetsManager.getInstance().DirtPicture();
-                                        //Main.getMain().getBatch().draw(Dirt , i * TILE_SIZE, j * TILE_SIZE , TILE_SIZE , TILE_SIZE);
-                                        Texture Plant = ((Plants) TempGround[i][j]).getPlant().PlantTexture;
-                                        Main.getMain().getBatch().draw(Plant , i * TILE_SIZE, j * TILE_SIZE , 30 , 30);
-                                        Plants plants = (Plants) TempGround[i][j];
+                                    else {
+                                        if (TempGround[i][j].getEntitity() == Entitity.TREE) {
+                                            //Texture Dirt = GameAssetsManager.getInstance().DirtPicture();
+                                            //Main.getMain().getBatch().draw(Dirt , i * TILE_SIZE, j * TILE_SIZE , TILE_SIZE , TILE_SIZE);
+                                            Texture Tree = ((Trees) TempGround[i][j]).getTree().TreeTexture;
+                                            Main.getMain().getBatch().draw(Tree, i * TILE_SIZE, j * TILE_SIZE, 70, 70);
+
+
+                                        } else if (TempGround[i][j].getEntitity() == Entitity.PLANTS) {
+                                            //Texture Dirt = GameAssetsManager.getInstance().DirtPicture();
+                                            //Main.getMain().getBatch().draw(Dirt , i * TILE_SIZE, j * TILE_SIZE , TILE_SIZE , TILE_SIZE);
+                                            Texture Plant = ((Plants) TempGround[i][j]).getPlant().PlantTexture;
+                                            Main.getMain().getBatch().draw(Plant, i * TILE_SIZE, j * TILE_SIZE, 30, 30);
+                                            Plants plants = (Plants) TempGround[i][j];
                                         /*if(plants.getLastTimeWatering() != null) {
                                             if (plants.getLastTimeWatering().getDay() - App.getCurrentGame().getTime().getDay() > -1) {
                                                 Color Abas = new Color(0.0f, 0.3f, 0.7f, 0.2f);
@@ -307,10 +310,14 @@ public class MapController {
                                                 Main.getMain().getBatch().setColor(Color.WHITE);
                                             }
                                         }*/
-                                    } else if(TempGround[i][j].getPlaceType() == PlaceType.QUARRY)
-                                    {
-                                    } else if(TempGround[i][j].getPlaceType() == PlaceType.Craft) {
-
+                                        } else if (TempGround[i][j].getPlaceType() == PlaceType.QUARRY) {
+                                            if(TempGround[i][j].getEntitity() == Entitity.Minreal)
+                                            {
+                                                Minreal mineral = (Minreal) TempGround[i][j];
+                                                Texture MineralTexture = mineral.getMineral().image;
+                                                Main.getMain().getBatch().draw(MineralTexture, i * TILE_SIZE, j * TILE_SIZE, 70, 70);
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -379,34 +386,39 @@ public class MapController {
                     }
                     else
                     {
-                        if(TempGround[i][j].getEntitity() == Entitity.TREE)
+                        if(TempGround[i][j].getPlaceType() == PlaceType.Craft)
                         {
-                            //Texture Dirt = GameAssetsManager.getInstance().DirtPicture();
-                            //Main.getMain().getBatch().draw(Dirt , i * TILE_SIZE, j * TILE_SIZE , TILE_SIZE , TILE_SIZE);
-                            Texture Tree  = ((Trees) TempGround[i][j]).getTree().TreeTexture;
-                            Main.getMain().getBatch().draw(Tree , i * TILE_SIZE, j * TILE_SIZE , 30 , 30);
-
-
+                            PlantedCrafts plantedCraft = (PlantedCrafts) TempGround[i][j];
+                            Texture PlantedCraft = plantedCraft.getCraft().Craftimage;
+                            Main.getMain().getBatch().draw(PlantedCraft, i * TILE_SIZE , j * TILE_SIZE , TILE_SIZE , TILE_SIZE);
+                            System.out.println("MozBaghali");
                         }
-                        else if(TempGround[i][j].getEntitity() == Entitity.PLANTS)
-                        {
-                            //Texture Dirt = GameAssetsManager.getInstance().DirtPicture();
-                            //Main.getMain().getBatch().draw(Dirt , i * TILE_SIZE, j * TILE_SIZE , TILE_SIZE , TILE_SIZE);
-                            Texture Plant = ((Plants) TempGround[i][j]).getPlant().PlantTexture;
-                            Main.getMain().getBatch().draw(Plant , i * TILE_SIZE, j * TILE_SIZE , 30 , 30);
-                            Plants plants = (Plants) TempGround[i][j];
-                            if(plants.getLastTimeWatering() != null) {
-                                if (plants.getLastTimeWatering().getDay() - App.getCurrentGame().getTime().getDay() > -1) {
-                                    Color Abas = new Color(0.0f, 0.3f, 0.7f, 0.2f);
-                                    Main.getMain().getBatch().setColor(Abas);
-                                    Main.getMain().getBatch().draw(GameAssetsManager.getInstance().GetWaterdTexture(), i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-                                    Main.getMain().getBatch().setColor(Color.WHITE);
-                                }
-                            }
-                        } else if(TempGround[i][j].getPlaceType() == PlaceType.QUARRY)
-                        {
-                        } else if(TempGround[i][j].getPlaceType() == PlaceType.Craft) {
+                        else {
+                            if (TempGround[i][j].getEntitity() == Entitity.TREE) {
+                                //Texture Dirt = GameAssetsManager.getInstance().DirtPicture();
+                                //Main.getMain().getBatch().draw(Dirt , i * TILE_SIZE, j * TILE_SIZE , TILE_SIZE , TILE_SIZE);
+                                Texture Tree = ((Trees) TempGround[i][j]).getTree().TreeTexture;
+                                Main.getMain().getBatch().draw(Tree, i * TILE_SIZE, j * TILE_SIZE, 30, 30);
 
+
+                            } else if (TempGround[i][j].getEntitity() == Entitity.PLANTS) {
+                                //Texture Dirt = GameAssetsManager.getInstance().DirtPicture();
+                                //Main.getMain().getBatch().draw(Dirt , i * TILE_SIZE, j * TILE_SIZE , TILE_SIZE , TILE_SIZE);
+                                Texture Plant = ((Plants) TempGround[i][j]).getPlant().PlantTexture;
+                                Main.getMain().getBatch().draw(Plant, i * TILE_SIZE, j * TILE_SIZE, 30, 30);
+                                Plants plants = (Plants) TempGround[i][j];
+                                if (plants.getLastTimeWatering() != null) {
+                                    if (plants.getLastTimeWatering().getDay() - App.getCurrentGame().getTime().getDay() > -1) {
+                                        Color Abas = new Color(0.0f, 0.3f, 0.7f, 0.2f);
+                                        Main.getMain().getBatch().setColor(Abas);
+                                        Main.getMain().getBatch().draw(GameAssetsManager.getInstance().GetWaterdTexture(), i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                                        Main.getMain().getBatch().setColor(Color.WHITE);
+                                    }
+                                }
+                            } else if (TempGround[i][j].getPlaceType() == PlaceType.QUARRY) {
+                            } else if (TempGround[i][j].getPlaceType() == PlaceType.Craft) {
+
+                            }
                         }
                     }
                 }
