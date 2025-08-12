@@ -7,6 +7,7 @@ import com.Stradew.Model.Item.Food;
 import com.Stradew.Model.Item.Ingredient;
 import com.Stradew.Model.Item.Item;
 import com.Stradew.Model.Item.MineralItem;
+import com.Stradew.Model.Places.Village;
 import com.Stradew.Model.Places.*;
 import com.Stradew.Model.Tile.Tile;
 import com.Stradew.Model.Tools.Pepolee;
@@ -26,6 +27,8 @@ public class Game {
     private int WhoseTurn = 0;
     private Weathers Weather = Weathers.SUNNY;
     private ArrayList<Npc> GameNPCs = new ArrayList<>();
+    private static Village village = new Village();
+    private static boolean inVillage = false;
     private Farm npcVillage = new Farm(new GreenHouse( 8 , 8) , new Cabin(10 , 25) , new Lake(25 , 15) , new Quarry(30 , 25));
 
     public Farm getNpcVillage() {
@@ -262,5 +265,17 @@ public class Game {
 
     public String returnHello(){
         return "hello";
+    }
+
+    public static Village getVillage() {
+        return village;
+    }
+
+    public static boolean isInVillage() {
+        return inVillage;
+    }
+
+    public static void setInVillage(boolean inVillage) {
+        Game.inVillage = inVillage;
     }
 }

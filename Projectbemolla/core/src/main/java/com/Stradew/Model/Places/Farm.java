@@ -22,7 +22,7 @@ public class Farm extends Place {
     private Cabin cabin; // attention if we construct in Cabin Class then Apply Here
     private Lake lake;
     private Quarry quarry;
-    private ArrayList<AnimalHouse> Coops;
+    private ArrayList<AnimalHouse> Coops = new ArrayList<>();
     private ArrayList<AnimalHouse> Barns;
 
     public ArrayList<AnimalHouse> getBarns() {

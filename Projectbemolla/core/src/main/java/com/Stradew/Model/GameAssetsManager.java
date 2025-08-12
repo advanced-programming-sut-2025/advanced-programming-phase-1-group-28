@@ -26,6 +26,7 @@ public class GameAssetsManager {
     private final Texture SkillPannel = new Texture(Gdx.files.internal("Inventory/RealSkills.png"));
     public final String[] StringsReactionsText = {"HELLO" , "Yeah BOY" , "THANK YOU" , "GG" , "ARE YOU OK" , "GIVE ME A BO"};
     public final Texture[] ImagesREacions = {new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png")};
+    private final Texture coop = new Texture(Gdx.files.internal("sprites/Coop.png"));
 
     private final Animation playerAnimation = new Animation<>(0.1f, new Texture("FirstMap/Lewis1animation.png"),
         new Texture("FirstMap/lewis2animation.png"),
@@ -63,6 +64,8 @@ public class GameAssetsManager {
     public Animation getPlayerAnimation() {
         return playerAnimation;
     }
+
+    private final Texture starDropSaloon = new Texture(Gdx.files.internal("sprites/The Stardrop Saloon.png"));
 
     public GameAssetsManager() {
         skin = new Skin(Gdx.files.internal("Skins/pixthulhu-ui.json"));
@@ -134,7 +137,9 @@ public class GameAssetsManager {
         return DirtTexture;
     }
 
-
+    public Texture getStarDropSaloon() {
+        return starDropSaloon;
+    }
 
     public static GameAssetsManager getInstance() {
         if(instance == null) {
@@ -145,5 +150,9 @@ public class GameAssetsManager {
 
     public Skin getSkin() {
         return skin;
+    }
+
+    public Texture getCoop() {
+        return coop;
     }
 }

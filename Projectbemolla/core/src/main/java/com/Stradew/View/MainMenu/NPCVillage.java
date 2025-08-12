@@ -345,7 +345,8 @@ public class NPCVillage implements Screen {
             NPCActor npcActor = new NPCActor(npc, new Runnable() {
                 @Override
                 public void run() {
-                    switchMenuController.openNpcMenu(npc, stage);
+                    //switchMenuController.openNpcMenu(npc, stage);
+                    switchMenuController.openCarpenterShop(stage);
                 }
             });
             constantStage.addActor(npcActor);
