@@ -59,6 +59,7 @@ public class GameAssetsManager {
 
     public Animation playerAnimationRegion;
 
+
     public Texture RandomAvatar()
     {
         int RandomX = App.random.nextInt() % 7;
@@ -102,7 +103,7 @@ public class GameAssetsManager {
         new Texture("FirstMap/lewis3animation.png"),
         new Texture("FirstMap/lewis4animation.png"));
 
-     {
+    {
         load();
     }
 
@@ -154,7 +155,9 @@ public class GameAssetsManager {
         skin = new Skin(Gdx.files.internal("Skins/pixthulhu-ui.json"));
     }
 
-
+    public Texture getStarDropSaloon() {
+        return starDropSaloon;
+    }
 
     public Texture getSkillPannel()
     {

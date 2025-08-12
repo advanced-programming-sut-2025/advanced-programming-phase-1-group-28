@@ -271,7 +271,7 @@ public class NPCVillage implements Screen {
         ShopActor blackSmith = new ShopActor("FirstMap/Cabins (8).png", 3250, 1500, new Runnable() {
             @Override
             public void run() {
-                switchMenuController.openBlackSmith();
+                switchMenuController.openBlacksmith(stage);
             }
         });
         constantStage.addActor(blackSmith);
@@ -279,7 +279,7 @@ public class NPCVillage implements Screen {
         ShopActor carpenterShop = new ShopActor("FirstMap/Cabins (9).png", 800, 2800, new Runnable() {
             @Override
             public void run() {
-                switchMenuController.openCarpenterShop();
+                switchMenuController.openCarpenterShop(stage);
             }
         });
         constantStage.addActor(carpenterShop);
@@ -295,7 +295,7 @@ public class NPCVillage implements Screen {
         ShopActor marineRanch = new ShopActor("FirstMap/Cabins (11).png", 500, 800, new Runnable() {
             @Override
             public void run() {
-                switchMenuController.openMarineRanch();
+                switchMenuController.openMarineRanch(stage);
             }
         });
         constantStage.addActor(marineRanch);
@@ -319,7 +319,7 @@ public class NPCVillage implements Screen {
         ShopActor starDropSaloon = new ShopActor("FirstMap/Cabins (14).png", 2000, 2100, new Runnable() {
             @Override
             public void run() {
-                switchMenuController.openStarDropSaloon();
+                switchMenuController.openStarDropSaloon(stage);
             }
         });
         constantStage.addActor(starDropSaloon);
@@ -407,7 +407,7 @@ public class NPCVillage implements Screen {
                 @Override
                 public void run() {
                     //switchMenuController.openNpcMenu(npc, stage);
-                    switchMenuController.openCarpenterShop(stage);
+                    switchMenuController.openNpcMenu(npc, stage);
                 }
             });
             constantStage.addActor(npcActor);

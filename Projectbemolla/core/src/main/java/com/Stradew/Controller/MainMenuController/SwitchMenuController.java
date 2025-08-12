@@ -8,6 +8,39 @@ import com.Stradew.Controller.MainMenuController.MechanicController.NPC_Controll
 import com.Stradew.Controller.MainMenuController.MechanicController.ShoppingController;
 import com.Stradew.Main;
 import com.Stradew.Model.App;
+import com.Stradew.Model.Enums.BlackSmithItems;
+import com.Stradew.Model.Enums.CarpenterShopItems;
+import com.Stradew.Model.Enums.MarineRanchItems;
+import com.Stradew.Model.Enums.StarDropSaloonItems;
+import com.Stradew.Model.GameAssetsManager;
+import com.Stradew.Model.Npc;
+import com.Stradew.Model.Tile.Animal;
+import com.Stradew.Model.Tools.Pepolee;
+import com.Stradew.Server.Lobby;
+import com.Stradew.View.MainMenu.GameMenu;
+import com.Stradew.View.MainMenu.MechanicGame.AnimalInteractionDialog;
+import com.Stradew.View.MainMenu.MechanicGame.FriendshipDialog;
+import com.Stradew.View.MainMenu.MechanicGame.HomeMenu.CookingDialog;
+import com.Stradew.View.MainMenu.MechanicGame.HomeMenu.CraftingDialog;
+import com.Stradew.View.MainMenu.MechanicGame.HomeMenu.PokhtOPaz;
+import com.Stradew.View.MainMenu.MechanicGame.NpcDialog;
+import com.Stradew.View.MainMenu.NPCVillage;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.Stradew.Controller.MainMenuController.HomeMenucontroller.CraftingController;
+import com.Stradew.Controller.MainMenuController.HomeMenucontroller.PokhtOPazController;
+import com.Stradew.Controller.MainMenuController.MechanicController.FriendShipController;
+import com.Stradew.Controller.MainMenuController.MechanicController.MechanicController;
+import com.Stradew.Controller.MainMenuController.MechanicController.NPC_Controller;
+import com.Stradew.Controller.MainMenuController.MechanicController.ShoppingController;
+import com.Stradew.Main;
+import com.Stradew.Model.App;
 import com.Stradew.Model.Enums.CarpenterShopItems;
 import com.Stradew.Model.Enums.MarineRanchItems;
 import com.Stradew.Model.Enums.StarDropSaloonItems;
@@ -26,17 +59,32 @@ import com.Stradew.View.MainMenu.MechanicGame.NpcDialog;
 import com.Stradew.View.MainMenu.NPCVillage;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Scaling;
+
+
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Consumer;
 
 public class SwitchMenuController {
-    public void openPokhMenu(Stage stage){
-        CookingDialog cookingDialog = new CookingDialog(new PokhtOPazController(), GameAssetsManager.getInstance().getSkin());
-        cookingDialog.show(stage);
-    ShoppingController shoppingController = new ShoppingController();
     private final Map<StarDropSaloonItems, TextureRegionDrawable> saloonIconCache = new HashMap<>();
     private final java.util.Map<BlackSmithItems, TextureRegionDrawable> blacksmithIconCache = new java.util.HashMap<>();
     private final java.util.Map<MarineRanchItems, TextureRegionDrawable> ranchIconCache = new java.util.HashMap<>();
-    private final java.util.List<MRRow> mrRows = new java.util.ArrayList<>();
+    private final java.util.List<MRRow> mrRows = new ArrayList<>();
     private final java.util.Map<CarpenterShopItems, TextureRegionDrawable> carpenterIconCache = new java.util.HashMap<>();
+    private final java.util.List<CRow> cRows = new java.util.ArrayList<>();
+
+    // Simple validators
+    private static final TextField.TextFieldFilter DIGITS_ONLY = new TextField.TextFieldFilter.DigitsOnlyFilter();
+    private static final TextField.TextFieldFilter COORD_FILTER = (tf, c) -> (c==' ' || c=='-' || Character.isDigit(c));
+    public void openPokhMenu(Stage stage) {
+        CookingDialog cookingDialog = new CookingDialog(new PokhtOPazController(), GameAssetsManager.getInstance().getSkin());
+        cookingDialog.show(stage);
+    }
+    ShoppingController shoppingController = new ShoppingController();
 
     private static class CRow {
         final CarpenterShopItems item;
@@ -47,16 +95,12 @@ public class SwitchMenuController {
             this.item = item; this.pick = pick; this.qtyField = qtyField; this.coordField = coordField;
         }
     }
-    private final java.util.List<CRow> cRows = new java.util.ArrayList<>();
-
-    // Simple validators
-    private static final TextField.TextFieldFilter DIGITS_ONLY = new TextField.TextFieldFilter.DigitsOnlyFilter();
-    private static final TextField.TextFieldFilter COORD_FILTER = (tf, c) -> (c==' ' || c=='-' || Character.isDigit(c));
 
     public void openPokhMenu(){
         PokhtOPaz pokhtOPaz = new PokhtOPaz(new PokhtOPazController());
         Main.getMain().setScreen(pokhtOPaz);
     }
+
     public void openNpcVillage(){
         App.ReturnCurrentPlayer().setInNpcVillage(true);
         if (Main.getMain().getBatch().isDrawing()){
@@ -93,21 +137,21 @@ public class SwitchMenuController {
         craftingDialog.show(stage);
     }
 
-    public void openBlackSmith(){
 
-    }
 
-    public void openCarpenterShop(){
+        private static class BRow {
+            final BlackSmithItems item;
+            final CheckBox pick;
+            final TextField qty;
 
-    private static class BRow {
-        final BlackSmithItems item;
-        final CheckBox pick;
-        final TextField qty;
-        BRow(BlackSmithItems item, CheckBox pick, TextField qty) {
-            this.item = item; this.pick = pick; this.qty = qty;
+            BRow(BlackSmithItems item, CheckBox pick, TextField qty) {
+                this.item = item;
+                this.pick = pick;
+                this.qty = qty;
+            }
         }
-    }
-    private final java.util.List<BRow> bRows = new java.util.ArrayList<>();
+        private final java.util.List<BRow> bRows = new java.util.ArrayList<>();
+
 
     public void openBlacksmith(Stage stage) {
         final Skin skin = GameAssetsManager.getInstance().getSkin();
@@ -794,7 +838,7 @@ public class SwitchMenuController {
             tex = new Texture(Gdx.files.internal(path));
         } catch (Exception e) {
             // fallback tiny placeholder if missing
-            tex = new Texture(Gdx.files.internal("ui/placeholder_32.png"));
+            tex = new Texture(Gdx.files.internal("Artisan_good/Beer.png"));
         }
         dr = new TextureRegionDrawable(new TextureRegion(tex));
         saloonIconCache.put(item, dr);
