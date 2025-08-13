@@ -313,7 +313,9 @@ public class LobbyView implements Screen , ServerMessageHandler {
         if(GoingToGame)
         {
             GameMenuController.StartGame(new ArrayList<>());
-            Main.getMain().setScreen(new GameMenu(new GameMenuController() , CurrentLobby));
+            GameMenu newGameMenu = new GameMenu(new GameMenuController() , CurrentLobby);
+            App.setCurrentGameMenu(newGameMenu);
+            Main.getMain().setScreen(newGameMenu);
         }
         ScreenUtils.clear(250 , 250 , 250 , 1);
         Main.getMain().getBatch().begin();

@@ -102,7 +102,9 @@ public class MainMenu implements Screen , ServerMessageHandler {
         ScreenUtils.clear(250 , 250 , 250 , 1);
         if(GoToGameMenu)
         {
-            Main.getMain().setScreen(new GameMenu(new GameMenuController() , new Lobby(null , null , null , null)));
+            GameMenu newGameMenu = new GameMenu(new GameMenuController() , new Lobby(null , null , null , null));
+            App.setCurrentGameMenu(newGameMenu);
+            Main.getMain().setScreen(newGameMenu);
         }
         if(CreateLobbyTable)
         {

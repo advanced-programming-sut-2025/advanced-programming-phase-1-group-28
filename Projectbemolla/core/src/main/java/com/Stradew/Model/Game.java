@@ -9,6 +9,7 @@ import com.Stradew.Model.Item.Item;
 import com.Stradew.Model.Item.MineralItem;
 import com.Stradew.Model.Places.Village;
 import com.Stradew.Model.Places.*;
+import com.Stradew.Model.Tile.Animal;
 import com.Stradew.Model.Tile.Tile;
 import com.Stradew.Model.Tools.Pepolee;
 import com.Stradew.Model.Tools.WaterCan;
@@ -30,6 +31,17 @@ public class Game {
     private static Village village = new Village();
     private static boolean inVillage = false;
     private Farm npcVillage = new Farm(new GreenHouse( 8 , 8) , new Cabin(10 , 25) , new Lake(25 , 15) , new Quarry(30 , 25));
+
+    public ArrayList<Animal> animals = new ArrayList<>();
+
+    public void addAnimal(Animal animal)
+    {
+        animals.add(animal);
+    }
+
+    public ArrayList<Animal> getAnimals() {
+        return animals;
+    }
 
     public Farm getNpcVillage() {
         return npcVillage;

@@ -19,6 +19,7 @@ import com.Stradew.Server.NetworkClient;
 import com.Stradew.View.Appview;
 import com.Stradew.View.LoginMenu;
 import com.Stradew.View.MainMenu.CheatCodes;
+import com.Stradew.View.MainMenu.GameMenu;
 import com.Stradew.View.MainMenu.MechanicGame.Farming;
 import com.Stradew.View.MainMenu.MechanicGame.Friendship;
 import com.Stradew.View.MainMenu.MechanicGame.HomeMenu.Crafting;
@@ -39,6 +40,15 @@ import java.util.Scanner;
 
 public class App {
     File UsersFile;
+    public static GameMenu CurrentGameMenu;
+    public static GameMenu getCurrentGameMenu() {
+        return CurrentGameMenu;
+    }
+
+    public static void setCurrentGameMenu(GameMenu currentGameMenu) {
+        CurrentGameMenu = currentGameMenu;
+    }
+
     public static NetworkClient networkClient = null;
     public static ArrayList<User> Users = new ArrayList<>();
     public static ArrayList<Game> Games = new ArrayList<>();

@@ -1,8 +1,11 @@
 package com.Stradew.Controller.MainMenuController.MechanicController;
 
+import com.Stradew.Controller.MainMenuController.SwitchMenuController;
+import com.Stradew.Model.AnimalActor;
 import com.Stradew.Model.App;
 import com.Stradew.Model.Enums.*;
 import com.Stradew.Model.Enums.Tools.*;
+import com.Stradew.Model.GameAssetsManager;
 import com.Stradew.Model.Item.Craft;
 import com.Stradew.Model.Item.Food;
 import com.Stradew.Model.Item.Ingredient;
@@ -12,8 +15,13 @@ import com.Stradew.Model.Places.AnimalHouse;
 import com.Stradew.Model.Tile.Animal;
 import com.Stradew.Model.Tile.Tile;
 import com.Stradew.Model.Tools.*;
+import com.Stradew.View.MainMenu.GameMenu;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.ArrayList;
+
+import static com.badlogic.gdx.scenes.scene2d.ui.Table.Debug.actor;
 
 public class ShoppingController {
     public void ApplyBlackSmithPurchase(String ProductName , int count)
@@ -1788,11 +1796,17 @@ public class ShoppingController {
                 // lessen capacity
                 // price
                 ArrayList<Animal> newAnimals = App.ReturnCurrentPlayer().getFarm().getAnimals();
-                newAnimals.add(new Animal(AnimalName , AnimalType));
+                Animal newAnimal = new Animal(AnimalName , AnimalType);
+                newAnimal.setAnimalHouse(coop);
+                newAnimals.add(newAnimal);
                 App.ReturnCurrentPlayer().getFarm().setAnimals(newAnimals);
                 limit--;
                 coop.setCapacity(coop.getCapacity() - 1);
                 App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price);
+                //Animation<TextureRegion> anim = pickAnimFor(AnimalType);
+                App.getCurrentGame().addAnimal(newAnimal);
+//                GameMenu gm = App.getCurrentGameMenu(); // however you access it
+//                gm.getAnimalStage().addActor(actor);
                 System.out.println(AnimalType.name() + " purchased");
                 return limit;
             }
@@ -1824,11 +1838,19 @@ public class ShoppingController {
                 // lessen capacity
                 // price
                 ArrayList<Animal> newAnimals = App.ReturnCurrentPlayer().getFarm().getAnimals();
-                newAnimals.add(new Animal(AnimalName , AnimalType));
+                Animal newAnimal = new Animal(AnimalName , AnimalType);
+                newAnimal.setAnimalHouse(barn);
+                newAnimals.add(newAnimal);
                 App.ReturnCurrentPlayer().getFarm().setAnimals(newAnimals);
                 limit--;
                 barn.setCapacity(barn.getCapacity() - 1);
                 App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price);
+                App.getCurrentGame().addAnimal(newAnimal);
+//                Animation<TextureRegion> anim = pickAnimFor(AnimalType);
+//                AnimalActor actor = new AnimalActor(newAnimal, anim, barn);
+//                GameMenu gm = App.getCurrentGameMenu(); // however you access it
+//                gm.getAnimalStage().addActor(actor);
+
                 System.out.println(AnimalType.name() + " purchased");
                 return limit;
             }
@@ -2114,6 +2136,8 @@ public class ShoppingController {
         for (int i = x; i < x + type.XLength; i++) {
             for (int j = y; j < y + type.YLength; j++) {
                 g[i][j].setPlaceType(type);
+                g[i][j].setEntitity(null);
+                g[i][j].setTerrain(null);
                 // leave entity as-is (null) unless you also place an actor/entity separately
             }
         }
@@ -2126,4 +2150,14 @@ public class ShoppingController {
             }
         }
     }
+    private Animation<TextureRegion> pickAnimFor(Animals type) {
+        GameAssetsManager am = GameAssetsManager.getInstance();
+        switch (type) {
+            case Chicken: return am.getChickenWalk();
+            case Cow:     return am.getCowWalk();
+            // ... Duck, Rabbit, Dinosaur, Goat, Sheep, Pig ...
+            default:      return am.getChickenWalk();
+        }
+    }
+
 }

@@ -6,13 +6,12 @@ import com.Stradew.Controller.MainMenuController.MechanicController.MechanicCont
 import com.Stradew.Controller.MainMenuController.MechanicController.NotificationController;
 import com.Stradew.Controller.MainMenuController.SwitchMenuController;
 import com.Stradew.Main;
-import com.Stradew.Model.App;
+import com.Stradew.Model.*;
 import com.Stradew.Model.Enums.PlaceType;
-import com.Stradew.Model.Game;
 import com.Stradew.Model.Enums.Animals;
-import com.Stradew.Model.GameAssetsManager;
 import com.Stradew.Model.Item.Item;
-import com.Stradew.Model.Trade;
+import com.Stradew.Model.Places.AnimalHouse;
+import com.Stradew.Model.Places.Farm;
 import com.Stradew.Model.Tile.Animal;
 import com.Stradew.Server.Lobby;
 import com.Stradew.Server.ServerMessageHandler;
@@ -28,8 +27,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -43,6 +44,8 @@ import com.sun.tools.classfile.Opcode;
 
 import javax.swing.plaf.IconUIResource;
 import java.util.ArrayList;
+
+import static jdk.internal.org.jline.utils.Colors.h;
 
 public class GameMenu implements Screen , ServerMessageHandler {
 
@@ -215,6 +218,7 @@ public class GameMenu implements Screen , ServerMessageHandler {
     private Stage ConstantStage;
     private TextButton BackToInventory;
     private String ChatToShow;
+    private Stage animalStage;
 
 
     public TextButton getBackToInventory() {
@@ -454,7 +458,8 @@ public class GameMenu implements Screen , ServerMessageHandler {
         this.controller = controller;
         controller.setMenu(this);
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        stage = new Stage();
+        stage = new Stage(new ScreenViewport());
+        animalStage = new Stage(new ScreenViewport(camera));
         Raineffect = new ParticleEffect();
         Raineffect.load(Gdx.files.internal("WetherEffects/CorrectRainWether.p"), Gdx.files.internal("WetherEffects"));
         Raineffect.start();
@@ -536,7 +541,7 @@ public class GameMenu implements Screen , ServerMessageHandler {
         inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(stage);
         inputMultiplexer.addProcessor(ConstantStage);
-        Gdx.input.setInputProcessor(inputMultiplexer);
+        Gdx.input.setInputProcessor(new InputMultiplexer(stage , animalStage));
         InventoryTable.setFillParent(true);
         SkillTable.setFillParent(true);
         SocialTable.setFillParent(true);
@@ -643,6 +648,18 @@ public class GameMenu implements Screen , ServerMessageHandler {
             controller.getMapController().PrintInitialMap(mapFrameBuffer, fboCamera);
 
         }
+
+        for(Animal a : App.getCurrentGame().getAnimals())
+        {
+            AnimalActor animalActor = new AnimalActor(a, new Runnable() {
+                @Override
+                public void run() {
+                    switchMenuController.openAnimalMenu(a , ConstantStage);
+                }
+            });
+            ConstantStage.addActor(animalActor);
+        }
+
         //controller.getMapController().setGreenhouseHoverTextButton(GreenhouseHoverButton);
         //GreenhouseHoverButton.setPosition(500 , 500);
         controller.getMapController().setGreenhouseHoverTextButton();
@@ -652,7 +669,30 @@ public class GameMenu implements Screen , ServerMessageHandler {
         BuyGreenhouseTable.add(GreenhouseHoverButton);
         stage.addActor(BuyGreenhouseTable);
         //stage.addActor(GreenhouseHoverButton);
+//        rebuildAnimals();
     }
+
+//    private void rebuildAnimals() {
+//        animalStage.clear();
+//        Farm farm = App.ReturnCurrentPlayer().getFarm();
+//        for (Animal a : farm.getAnimals()) {
+//            AnimalHouse house = a.getAnimalHouse();
+//            Animation<TextureRegion> anim = pickAnimFor(a.getAnimalType());
+//            AnimalActor actor = new AnimalActor(a, anim, house);
+//            animalStage.addActor(actor);
+//        }
+//    }
+//
+//
+//    private Animation<TextureRegion> pickAnimFor(Animals type) {
+//        GameAssetsManager am = GameAssetsManager.getInstance();
+//        switch (type) {
+//            case Chicken: return am.getChickenWalk();
+//            case Cow:     return am.getCowWalk();
+//            // ... Duck, Rabbit, Dinosaur, Goat, Sheep, Pig ...
+//            default:      return am.getChickenWalk();
+//        }
+//    }
 
     @Override
     public void render(float v) {
@@ -663,6 +703,11 @@ public class GameMenu implements Screen , ServerMessageHandler {
         Main.getMain().getBatch().setProjectionMatrix(camera.combined);
         controller.Update(v);
         Main.getMain().getBatch().end();
+
+        // draw actors aligned to world camera
+        animalStage.act(v);
+        animalStage.draw();
+
         stage.act();
         stage.draw();
         ConstantStage.act();
@@ -685,6 +730,8 @@ public class GameMenu implements Screen , ServerMessageHandler {
 
     @Override
     public void resize(int i, int i1) {
+        stage.getViewport().update(i, i1, true);
+        animalStage.getViewport().update(i, i1); // keep world stage in sync with camera
 
     }
 
@@ -711,6 +758,8 @@ public class GameMenu implements Screen , ServerMessageHandler {
     public Table getNPCandShop() {
         return NPCandShop;
     }
+    public Stage getAnimalStage() { return animalStage; }
+
 //    SignUpController signUpController = App.signUpController;
 //    GameMenuController gameMenuController = App.gameMenuController;
 //    ShowFigures showFigures = App.showFigures;

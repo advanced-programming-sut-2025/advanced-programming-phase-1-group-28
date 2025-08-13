@@ -147,7 +147,9 @@ public class SwitchMenuController {
         if (Main.getMain().getBatch().isDrawing()){
             Main.getMain().getBatch().end();
         }
-        Main.getMain().setScreen(new GameMenu(new GameMenuController() , new Lobby(null ,null ,null , null)));
+        GameMenu newGameMenu = new GameMenu(new GameMenuController() , new Lobby(null ,null ,null , null));
+        App.setCurrentGameMenu(newGameMenu);
+        Main.getMain().setScreen(newGameMenu);
     }
 
     public void openNpcMenu(Npc npc, Stage stage){

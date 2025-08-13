@@ -3,11 +3,22 @@ package com.Stradew.Model.Tile;
 import com.Stradew.Model.Enums.*;
 import com.Stradew.Model.Item.Ingredient;
 import com.Stradew.Model.Item.Item;
+import com.Stradew.Model.Places.AnimalHouse;
 import com.badlogic.gdx.graphics.Texture;
 
 import java.util.ArrayList;
 
 public class Animal extends Tile{
+    private AnimalHouse animalHouse;
+
+    public AnimalHouse getAnimalHouse() {
+        return animalHouse;
+    }
+
+    public void setAnimalHouse(AnimalHouse animalHouse) {
+        this.animalHouse = animalHouse;
+    }
+
     private String PetName;
     private int FriendShip = 0;
     private Animals animalType;

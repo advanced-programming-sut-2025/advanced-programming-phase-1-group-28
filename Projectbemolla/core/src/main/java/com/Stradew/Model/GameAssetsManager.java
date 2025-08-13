@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -30,6 +31,16 @@ public class GameAssetsManager {
     public final Texture[] ImagesREacions = {new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png") , new Texture("Pants/Baggy_Pants.png")};
     private final Texture coop = new Texture(Gdx.files.internal("sprites/Coop.png"));
     public final Texture Pants = new Texture(Gdx.files.internal("Pants/Baggy_Pants.png"));
+    private TextureAtlas chickenAtlas, cowAtlas; // ...etc
+
+    public Animation<TextureRegion> getChickenWalk() {
+        if (chickenAtlas == null) chickenAtlas = new TextureAtlas("Animals/Blue_Chicken.png");
+        return new Animation<>(0.12f, chickenAtlas.findRegions("walk"), Animation.PlayMode.LOOP);
+    }
+    public Animation<TextureRegion> getCowWalk() {
+        if (cowAtlas == null) cowAtlas = new TextureAtlas("Animals/White_Cow.png");
+        return new Animation<>(0.14f, cowAtlas.findRegions("walk"), Animation.PlayMode.LOOP);
+    }
 
 
     public Texture Slot()
@@ -255,4 +266,11 @@ public class GameAssetsManager {
     public Texture getCoop() {
         return coop;
     }
+
+    // Example maker (in a factory or GameAssetsManager)
+    public static Animation<TextureRegion> makeAnimalAnim(TextureAtlas atlas, String prefix, float frameDur) {
+        // e.g., prefix "chicken_walk" with regions chicken_walk_0, chicken_walk_1, ...
+        return new Animation<>(frameDur, atlas.findRegions(prefix), Animation.PlayMode.LOOP);
+    }
+
 }
