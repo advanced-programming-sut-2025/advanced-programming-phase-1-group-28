@@ -23,9 +23,19 @@ public class Inventory {
     private ArrayList<Tools> tools = new ArrayList<>();
     private Tools CurrentTool;
     private Item CurrentItem;
+    private Seeds CurrentSeed;
     private ArrayList<Item> items = new ArrayList<>();
     private ArrayList<Seeds> seeds = new ArrayList<>();
     private ArrayList<Saplings> saplings = new ArrayList<>();
+
+
+    public Seeds getCurrentSeed() {
+        return CurrentSeed;
+    }
+
+    public void setCurrentSeed(Seeds currentSeed) {
+        CurrentSeed = currentSeed;
+    }
 
     public Inventory() {
         this.tools.add(new Hoe());
@@ -37,6 +47,8 @@ public class Inventory {
         CurrentTool = tools.get(0);
         WhichTool = 0;
         this.seeds.add(Seeds.CarrotSeeds);
+        this.seeds.add(Seeds.BlueberrySeeds);
+        this.CurrentSeed = seeds.get(0);
     }
 
     public void AddItem(Item item) {

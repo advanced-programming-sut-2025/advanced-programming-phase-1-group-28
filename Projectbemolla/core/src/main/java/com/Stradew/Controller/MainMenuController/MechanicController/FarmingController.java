@@ -232,46 +232,39 @@ public class FarmingController {
     }
 
 
-    public void ApplyPlanting(String Seedname , int x , int y)
+    public void ApplyPlanting(Seeds seedali , int x , int y)
     {
-//        Seeds Goalseed = returnseed(Seedname);
-//        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
-//        Tile[][] TempGround = CurrentPepolee.getFarm().getGround();
-//        for(int i = 0;i < CurrentPepolee.getInventory().getSeeds().size(); i++)
-//        {
-//            if(CurrentPepolee.getInventory().getSeeds().get(i) == Goalseed)
-//            {
-//                CurrentPepolee.getInventory().getSeeds().remove(i);
-//                break;
-//            }
-//        }
-//        if(Goalseed == Seeds.MixedSeeds) {
-//            Season OurSeason = App.getCurrentGame().getTime().getSeason();
-//            for(MixedSeeds seed : MixedSeeds.values()) {
-//                if(seed.season == OurSeason) {
-//                    int Randomplant = App.random.nextInt() % seed.Plants.size();
-//                    Plants newplant = new Plants(seed.Plants.get(Randomplant));
-//                    newplant.setBornTime(App.getCurrentGame().getTime());
-//                    int NewX = CurrentPepolee.getX() + x;
-//                    int NewY = CurrentPepolee.getY() + y;
-//                    TempGround[NewX][NewY] = newplant;
-//                    TempGround[NewX][NewY].setHow(false);
-//                    TempGround[NewX][NewY].setEntitity(Entitity.PLANTS);
-//                    TempGround[NewX][NewY].setTerrain(null);
-//                }
-//            }
-//        }
-//        else {
-//            Plants newplant = new Plants(Goalseed.Plant);
-//            newplant.setBornTime(App.getCurrentGame().getTime());
-//            int NewX = CurrentPepolee.getX() + x;
-//            int NewY = CurrentPepolee.getY() + y;
-//            TempGround[NewX][NewY] = newplant;
-//            TempGround[NewX][NewY].setHow(false);
-//            TempGround[NewX][NewY].setEntitity(Entitity.PLANTS);
-//            TempGround[NewX][NewY].setTerrain(null);
-//        }
-//        CurrentPepolee.getFarm().setGround(TempGround);
+        Seeds Goalseed = seedali;
+        Pepolee CurrentPepolee = App.ReturnCurrentPlayer();
+        Tile[][] TempGround = CurrentPepolee.getFarm().getGround();
+        if(Goalseed == Seeds.MixedSeeds) {
+            Season OurSeason = App.getCurrentGame().getTime().getSeason();
+            for(MixedSeeds seed : MixedSeeds.values()) {
+                if(seed.season == OurSeason) {
+                    int Randomplant = App.random.nextInt() % seed.Plants.size();
+                    Plants newplant = new Plants(seed.Plants.get(Randomplant));
+                    newplant.setBornTime(App.getCurrentGame().getTime());
+                    int NewX =  x;
+                    int NewY = y;
+                    TempGround[NewX][NewY] = newplant;
+                    TempGround[NewX][NewY].setHow(false);
+                    TempGround[NewX][NewY].setEntitity(Entitity.PLANTS);
+                    TempGround[NewX][NewY].setTerrain(null);
+                }
+            }
+        }
+        else {
+            Plants newplant = new Plants(Goalseed.Plant);
+            newplant.setBornTime(App.getCurrentGame().getTime());
+            int NewX = x;
+            int NewY = y;
+            TempGround[NewX][NewY] = newplant;
+            TempGround[NewX][NewY].setHow(false);
+            TempGround[NewX][NewY].setEntitity(Entitity.PLANTS);
+            TempGround[NewX][NewY].setTerrain(null);
+            App.ReturnCurrentPlayer().getFarm().getChanges().add(new PairChanges(NewX , NewY));
+        }
+        CurrentPepolee.getFarm().setGround(TempGround);
     }
 
     public boolean CanCood(int x , int y)

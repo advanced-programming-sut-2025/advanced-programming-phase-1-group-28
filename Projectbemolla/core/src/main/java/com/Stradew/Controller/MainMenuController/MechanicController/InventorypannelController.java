@@ -4,6 +4,7 @@ import com.Stradew.Controller.MainMenuController.GameMenuController;
 import com.Stradew.Controller.MainMenuController.NPCVillageController;
 import com.Stradew.Main;
 import com.Stradew.Model.App;
+import com.Stradew.Model.Enums.Seeds;
 import com.Stradew.Model.GameAssetsManager;
 import com.Stradew.Model.InventorySlot;
 import com.Stradew.Model.Item.Craft;
@@ -176,6 +177,12 @@ public class InventorypannelController {
                         ChoosenTexture = thing.getImage();
                         App.ReturnCurrentPlayer().getInventory().setCurrentItem((Item)item);
                     }
+                    if(item instanceof Seeds)
+                    {
+                        Seeds seed = (Seeds)item;
+                        ChoosenTexture = seed.SeedTexture;
+                        App.ReturnCurrentPlayer().getInventory().setCurrentSeed((Seeds)item);
+                    }
                     /*if(item instanceof Craft)
                     {
                         Craft craftali = (Craft) item;
@@ -283,7 +290,24 @@ public class InventorypannelController {
                     }
                 }
             }
-
+            for (int i = 0; i < App.ReturnCurrentPlayer().getInventory().getSeeds().size(); i++) {
+            boolean ok = false;
+            for (int j = 0; j < 36; j++) {
+                if (inventorySlots.get(j).getItem() != null) {
+                    if (inventorySlots.get(j).getItem().equals(App.ReturnCurrentPlayer().getInventory().getSeeds().get(i))) {
+                        ok = true;
+                    }
+                }
+            }
+            if (!ok) {
+                for (int j = 0; j < 36; j++) {
+                    if (inventorySlots.get(j).getItem() == null) {
+                        inventorySlots.get(j).SetImageButton(App.ReturnCurrentPlayer().getInventory().getSeeds().get(i));
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     public void UpdateVillage(NPCVillageController gamecontroller)

@@ -1,10 +1,12 @@
 package com.Stradew.Controller;
 
 import com.Stradew.Controller.MainMenuController.MapController;
+import com.Stradew.Controller.MainMenuController.MechanicController.FarmingController;
 import com.Stradew.Controller.MainMenuController.MechanicController.UseToolController;
 import com.Stradew.Main;
 import com.Stradew.Model.App;
 import com.Stradew.Model.Enums.Entitity;
+import com.Stradew.Model.Enums.Terrain;
 import com.Stradew.Model.GameAssetsManager;
 import com.Stradew.Model.PairChanges;
 import com.Stradew.Model.Tile.Plants;
@@ -22,7 +24,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public class PepoleeContoller {
     CheatCodes cheatCodes = new CheatCodes();
     Texture ToolTexture = null;
-
+    private FarmingController farmingController = new FarmingController();
 
 
     private UseToolController useToolController = new UseToolController();
@@ -157,11 +159,26 @@ public class PepoleeContoller {
         }
     }
 
+    public void Plating()
+    {
+        if(Gdx.input.isKeyPressed(Input.Keys.Z) && App.getCurrentGame().getTimeControlPannel().getPlanting() > 1) {
+            if (App.ReturnCurrentPlayer().getInventory().getCurrentSeed() != null) {
+                int X = (int) App.ReturnCurrentPlayer().getX() / MapController.TILE_SIZE;
+                int Y = (int) App.ReturnCurrentPlayer().getY() / MapController.TILE_SIZE;
+                if (App.ReturnCurrentPlayer().getFarm().getGround()[X][Y].getTerrain() == Terrain.DIRT /*App.ReturnCurrentPlayer().getFarm().getGround()[X][Y].isHow()*/) {
+                    farmingController.ApplyPlanting(App.ReturnCurrentPlayer().getInventory().getCurrentSeed(), X, Y);
+                    App.getCurrentGame().getTimeControlPannel().setPlanting(0);
+                }
+            }
+        }
+    }
+
     public void Update(GameMenu menu , Pepolee player , float v)
     {
         HandleWalk(player , v);
         CheatCodes();
         UsingTool(menu);
+        Plating();
         if(App.getCurrentGame().getTimeControlPannel().isFiant())
         {
             IdlePassoutAnimation(v);

@@ -27,7 +27,25 @@ public class MapController {
     public static final int TILE_SIZE = 100; // Ensure this matches your MapController
     public static final int MAP_COLS = 100; // Based on your MapController loop
     public static final int MAP_ROWS = 100;
+    public Texture Map1 = new Texture(Gdx.files.internal("FirstMap/FirstFarm.png"));
+    public Texture Map2 = new Texture(Gdx.files.internal("FirstMap/secondfarm.png"));
+    public Texture Character = new Texture(Gdx.files.internal("Villagers/Lewis.png"));
 
+
+
+    public void PrintEasyMap(GameMenu menu)
+    {
+        if(App.getCurrentUser().getFarmId() == 1)
+        {
+            Main.getMain().getBatch().draw(Map1 , App.ReturnCurrentPlayer().getX() - 400, App.ReturnCurrentPlayer().getY() - 400 , 1000 , 600);
+            Main.getMain().getBatch().draw(Character , App.ReturnCurrentPlayer().getX() - 400 + (App.ReturnCurrentPlayer().getX() / MapController.TILE_SIZE * 10)  , App.ReturnCurrentPlayer().getY() - 400 + (App.ReturnCurrentPlayer().getY() / MapController.TILE_SIZE * 5) , 50 , 50);
+        }
+        else
+        {
+            Main.getMain().getBatch().draw(Map2 , App.ReturnCurrentPlayer().getX() - 400, App.ReturnCurrentPlayer().getY() - 400 , 1000 , 600);
+            Main.getMain().getBatch().draw(Character , App.ReturnCurrentPlayer().getX() - 400 + (App.ReturnCurrentPlayer().getX() / MapController.TILE_SIZE * 10)  , App.ReturnCurrentPlayer().getY() - 400 + (App.ReturnCurrentPlayer().getY() / MapController.TILE_SIZE * 5) , 50 , 50);
+        }
+    }
 
 
     public void HandleBuyGreenhouseButton(GameMenu menu)
@@ -35,7 +53,7 @@ public class MapController {
 
         int XALi =(int) App.ReturnCurrentPlayer().getX() - (App.ReturnCurrentPlayer().getFarm().getGreenHouse().getX_Coordinate() * TILE_SIZE);
         int YAli = (int) App.ReturnCurrentPlayer().getY() - (App.ReturnCurrentPlayer().getFarm().getGreenHouse().getY_Coordinate() * TILE_SIZE);
-        if(XALi < 600 && XALi > -600 && YAli < 600 && YAli > -600)
+        if(XALi < 200 && XALi > -200 && YAli < 200 && YAli > -200)
         {
             menu.getBuyGreenhouseTable().setVisible(true);
         }
