@@ -1199,25 +1199,30 @@ public class ShoppingController {
             System.out.println("Not enough wood or stone bro");
             return limit;
         }
-        // check if x , y is empty for build
-        boolean Empty = true;
-        for(int i = x ; i < x + 7 ; i++)
-        {
-            for(int j = y ; j < y + 4 ; j++)
-            {
-                if(App.getCurrentGame().getEntireMap()[i][j].getEntitity() != Entitity.EMPTY ||
-                        App.getCurrentGame().getEntireMap()[i][j].getPlaceType() != PlaceType.FARM)
-                {
-                    Empty = false;
-                    break;
-                }
-            }
-        }
-        if(!Empty)
-        {
-            System.out.println("Given position is filled. You can't place here");
+        // check if x , y is empty for build\
+        Tile[][] ground = App.ReturnCurrentPlayer().getFarm().getGround();
+        if (!canPlaceRectEmpty(ground, x, y, PlaceType.BARN.XLength, PlaceType.BARN.YLength)) {
+            System.out.println("Cannot place Barn at " + x + " " + y + " — area is not empty or out of bounds.");
             return limit;
         }
+//        boolean Empty = true;
+//        for(int i = x ; i < x + 7 ; i++)
+//        {
+//            for(int j = y ; j < y + 4 ; j++)
+//            {
+//                if(App.getCurrentGame().getEntireMap()[i][j].getEntitity() != Entitity.EMPTY ||
+//                        App.getCurrentGame().getEntireMap()[i][j].getPlaceType() != PlaceType.FARM)
+//                {
+//                    Empty = false;
+//                    break;
+//                }
+//            }
+//        }
+//        if(!Empty)
+//        {
+//            System.out.println("Given position is filled. You can't place here");
+//            return limit;
+//        }
         // building the barn
         // paying the price
         App.ReturnCurrentPlayer().setCoin(App.ReturnCurrentPlayer().getCoin() - Price);
@@ -1238,15 +1243,19 @@ public class ShoppingController {
         newBarns.add(new AnimalHouse(x , y , BarnType , Capacity));
         App.ReturnCurrentPlayer().getFarm().setBarns(newBarns);
         // updating barn tiles
-        for(int i = x ; i < x + 7 ; i++)
-        {
-            for(int j = y ; j < y + 4 ; j++)
-            {
-                App.getCurrentGame().getEntireMap()[i][j].setEntitity(null);
-                App.getCurrentGame().getEntireMap()[i][j].setPlaceType(PlaceType.BARN);
-                App.getCurrentGame().getEntireMap()[i][j].setTerrain(null);
-            }
-        }
+//        for(int i = x ; i < x + 7 ; i++)
+//        {
+//            for(int j = y ; j < y + 4 ; j++)
+//            {
+//                App.getCurrentGame().getEntireMap()[i][j].setEntitity(null);
+//                App.getCurrentGame().getEntireMap()[i][j].setPlaceType(PlaceType.BARN);
+//                App.getCurrentGame().getEntireMap()[i][j].setTerrain(null);
+//            }
+//        }
+        markStructure(ground, x, y, PlaceType.BARN);
+        // updating barn tiles
+        java.util.List<PairChanges> changes = App.ReturnCurrentPlayer().getFarm().getChanges();
+        enqueueRectChanges(changes, x, y, PlaceType.BARN.XLength, PlaceType.BARN.YLength);
 
         System.out.println(BarnType + " has been built");
         return limit - 1;

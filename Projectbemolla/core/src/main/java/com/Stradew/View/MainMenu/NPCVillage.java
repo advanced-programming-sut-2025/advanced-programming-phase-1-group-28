@@ -287,7 +287,7 @@ public class NPCVillage implements Screen {
         ShopActor jojaMart = new ShopActor("FirstMap/Cabins (10).png", 3500, 3400, new Runnable() {
             @Override
             public void run() {
-                switchMenuController.openJojaMart();
+                switchMenuController.openJojaMart(stage);
             }
         });
         constantStage.addActor(jojaMart);
@@ -303,7 +303,7 @@ public class NPCVillage implements Screen {
         ShopActor perrieGeneralStore = new ShopActor("FirstMap/Cabins (12).png", 1800, 1900, new Runnable() {
             @Override
             public void run() {
-                switchMenuController.openPerrieGeneralStore();
+                switchMenuController.openPierreGeneralStore(stage);
             }
         });
         constantStage.addActor(perrieGeneralStore);
@@ -311,7 +311,7 @@ public class NPCVillage implements Screen {
         ShopActor fishShop = new ShopActor("FirstMap/Cabins (13).png", 2500, 500, new Runnable() {
             @Override
             public void run() {
-                switchMenuController.openFishShop();
+                switchMenuController.openFishShop(stage);
             }
         });
         constantStage.addActor(fishShop);

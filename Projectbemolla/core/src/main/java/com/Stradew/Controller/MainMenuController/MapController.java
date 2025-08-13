@@ -230,6 +230,24 @@ public class MapController {
                 );
             }
         }
+        if (TempGround[i][j].getPlaceType() == PlaceType.BARN) {
+            boolean isTopLeft = true;
+            for (int x = 1; x <= PlaceType.BARN.XLength; x++) {
+                if (i - x >= 0 && TempGround[i - x][j].getPlaceType() == PlaceType.BARN) { isTopLeft = false; break; }
+            }
+            for (int y = 1; y <= PlaceType.BARN.YLength; y++) {
+                if (j - y >= 0 && TempGround[i][j - y].getPlaceType() == PlaceType.BARN) { isTopLeft = false; break; }
+            }
+            if (isTopLeft) {
+                Texture coop = GameAssetsManager.getInstance().getCoop(); // add this getter (see below)
+                Main.getMain().getBatch().draw(
+                    coop,
+                    i * TILE_SIZE, j * TILE_SIZE,
+                    TILE_SIZE * PlaceType.BARN.XLength,
+                    TILE_SIZE * PlaceType.BARN.YLength
+                );
+            }
+        }
                     boolean ok = false;
                     if(ok)
                     {

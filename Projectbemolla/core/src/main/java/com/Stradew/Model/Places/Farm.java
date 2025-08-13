@@ -23,7 +23,7 @@ public class Farm extends Place {
     private Lake lake;
     private Quarry quarry;
     private ArrayList<AnimalHouse> Coops = new ArrayList<>();
-    private ArrayList<AnimalHouse> Barns;
+    private ArrayList<AnimalHouse> Barns = new ArrayList<>();
 
     public ArrayList<AnimalHouse> getBarns() {
         return Barns;

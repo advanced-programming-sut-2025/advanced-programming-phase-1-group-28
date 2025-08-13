@@ -8,10 +8,7 @@ import com.Stradew.Controller.MainMenuController.MechanicController.NPC_Controll
 import com.Stradew.Controller.MainMenuController.MechanicController.ShoppingController;
 import com.Stradew.Main;
 import com.Stradew.Model.App;
-import com.Stradew.Model.Enums.BlackSmithItems;
-import com.Stradew.Model.Enums.CarpenterShopItems;
-import com.Stradew.Model.Enums.MarineRanchItems;
-import com.Stradew.Model.Enums.StarDropSaloonItems;
+import com.Stradew.Model.Enums.*;
 import com.Stradew.Model.GameAssetsManager;
 import com.Stradew.Model.Npc;
 import com.Stradew.Model.Tile.Animal;
@@ -31,6 +28,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.Stradew.Controller.MainMenuController.HomeMenucontroller.CraftingController;
@@ -44,6 +42,7 @@ import com.Stradew.Model.App;
 import com.Stradew.Model.Enums.CarpenterShopItems;
 import com.Stradew.Model.Enums.MarineRanchItems;
 import com.Stradew.Model.Enums.StarDropSaloonItems;
+import com.Stradew.Model.Enums.JojaMartItems;
 import com.Stradew.Model.GameAssetsManager;
 import com.Stradew.Model.Npc;
 import com.Stradew.Model.Tile.Animal;
@@ -69,6 +68,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import com.Stradew.Model.Enums.PierreStoreItems;
+
 public class SwitchMenuController {
     private final Map<StarDropSaloonItems, TextureRegionDrawable> saloonIconCache = new HashMap<>();
     private final java.util.Map<BlackSmithItems, TextureRegionDrawable> blacksmithIconCache = new java.util.HashMap<>();
@@ -76,6 +77,38 @@ public class SwitchMenuController {
     private final java.util.List<MRRow> mrRows = new ArrayList<>();
     private final java.util.Map<CarpenterShopItems, TextureRegionDrawable> carpenterIconCache = new java.util.HashMap<>();
     private final java.util.List<CRow> cRows = new java.util.ArrayList<>();
+    private final java.util.Map<FishShopItems, TextureRegionDrawable> fishIconCache = new java.util.HashMap<>();
+    private final java.util.List<FRow> fRows = new java.util.ArrayList<>();
+    private final java.util.Map<JojaMartItems, TextureRegionDrawable> jojaIconCache = new java.util.HashMap<>();
+    private final java.util.List<JRow> jRows = new java.util.ArrayList<>();
+    private final java.util.Map<PierreStoreItems, TextureRegionDrawable> pierreIconCache = new java.util.HashMap<>();
+    private final java.util.List<PRow> pRows = new java.util.ArrayList<>();
+    private static class PRow {
+        final PierreStoreItems item;
+        final CheckBox pick;
+        final TextField qty;
+        PRow(PierreStoreItems item, CheckBox pick, TextField qty) {
+            this.item = item; this.pick = pick; this.qty = qty;
+        }
+    }
+
+    private static class JRow {
+        final JojaMartItems item;
+        final com.badlogic.gdx.scenes.scene2d.ui.CheckBox pick;
+        final com.badlogic.gdx.scenes.scene2d.ui.TextField qty;
+        JRow(JojaMartItems item, com.badlogic.gdx.scenes.scene2d.ui.CheckBox pick, com.badlogic.gdx.scenes.scene2d.ui.TextField qty) {
+            this.item = item; this.pick = pick; this.qty = qty;
+        }
+    }
+
+    private static class FRow {
+        final FishShopItems item;
+        final CheckBox pick;
+        final TextField qty;
+        FRow(FishShopItems item, CheckBox pick, TextField qty) {
+            this.item = item; this.pick = pick; this.qty = qty;
+        }
+    }
 
     // Simple validators
     private static final TextField.TextFieldFilter DIGITS_ONLY = new TextField.TextFieldFilter.DigitsOnlyFilter();
@@ -483,12 +516,303 @@ public class SwitchMenuController {
         dialog.setResizable(true);
     }
 
-    public void openFishShop(){
+    public void openFishShop(Stage stage) {
+        final Skin skin = GameAssetsManager.getInstance().getSkin();
 
+        // --- Activity console (graphical System.out) ---
+        final StringBuilder consoleBuf = new StringBuilder();
+        final Label consoleLabel = new Label("", skin);
+        consoleLabel.setWrap(true);
+        final ScrollPane consoleScroll = new ScrollPane(consoleLabel, skin);
+        consoleScroll.setFadeScrollBars(false);
+        consoleScroll.setScrollingDisabled(true, false);
+        consoleScroll.setOverscroll(false, false);
+        final Runnable scrollToBottom = () -> Gdx.app.postRunnable(() -> consoleScroll.setScrollPercentY(1f));
+        final Consumer<String> consoleAppend = s -> { consoleBuf.append(s); consoleLabel.setText(consoleBuf.toString()); scrollToBottom.run(); };
+
+        final Dialog dialog = new Dialog("Fish Shop", skin);
+
+        // --- List header ---
+        Table list = new Table(skin);
+        list.defaults().pad(6).left();
+        list.add(new Label("Item", skin)).left().padLeft(4);
+        list.add().growX();
+        list.add(new Label("Qty", skin)).width(110).center();
+        list.add(new Label("Pick", skin)).width(70).center();
+        list.row();
+
+        fRows.clear();
+
+        // Single-selection group
+        ButtonGroup<CheckBox> group = new ButtonGroup<>();
+        group.setMinCheckCount(0);   // set to 1 if you want one always selected
+        group.setMaxCheckCount(1);
+
+        for (FishShopItems it : FishShopItems.values()) {
+            // icon
+            Image icon = new Image(getFishIcon(it));
+            icon.setScaling(Scaling.fit);
+            list.add(icon).size(48, 48).padRight(8).left();
+
+            // display name (assuming your enum exposes a field called `name` like others)
+            Label nameLbl = new Label(it.name, skin);
+            nameLbl.setAlignment(Align.left);
+            list.add(nameLbl).growX().left();
+
+            // qty input
+            TextField qty = new TextField("0", skin);
+            qty.setMessageText("0");
+            qty.setTextFieldFilter(new TextField.TextFieldFilter.DigitsOnlyFilter());
+            list.add(qty).width(110).center();
+
+            // radio-style pick
+            CheckBox pick = skin.has("radio", CheckBox.CheckBoxStyle.class)
+                ? new CheckBox("", skin, "radio")
+                : new CheckBox("", skin);
+            list.add(pick).width(70).center();
+
+            list.row();
+
+            fRows.add(new FRow(it, pick, qty));
+            group.add(pick);
+        }
+
+        ScrollPane scroll = new ScrollPane(list, skin);
+        scroll.setFadeScrollBars(false);
+        scroll.setScrollingDisabled(true, false);
+        scroll.setOverscroll(false, false);
+
+        // Layout content
+        dialog.getContentTable()
+            .add(scroll)
+            .width(Math.min(720, Gdx.graphics.getWidth() * 0.9f))
+            .height(Math.min(420, Gdx.graphics.getHeight() * 0.7f))
+            .pad(8);
+        dialog.getContentTable().row();
+
+        dialog.getContentTable()
+            .add(new Label("Activity:", skin))
+            .left().padTop(6).padBottom(2).padLeft(8).growX();
+        dialog.getContentTable().row();
+
+        dialog.getContentTable()
+            .add(consoleScroll)
+            .width(Math.min(720, Gdx.graphics.getWidth() * 0.9f))
+            .height(110)
+            .pad(8)
+            .growX();
+        dialog.getContentTable().row();
+
+        // Buttons: Cancel closes; Buy is custom (stays open)
+        dialog.button("Cancel", false);
+
+        TextButton buyBtn = new TextButton("Buy", skin);
+        dialog.getButtonTable().add(buyBtn).pad(6);
+
+        buyBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                // find selected
+                FRow selected = null;
+                for (FRow r : fRows) { if (r.pick.isChecked()) { selected = r; break; } }
+                if (selected == null) { consoleAppend.accept("No item selected.\n"); return; }
+
+                int q;
+                try {
+                    q = Integer.parseInt(selected.qty.getText().trim());
+                } catch (NumberFormatException ex) {
+                    consoleAppend.accept("Please enter a valid quantity.\n");
+                    return;
+                }
+                if (q <= 0) { consoleAppend.accept("Quantity must be > 0.\n"); return; }
+
+                // Capture System.out while ShoppingController runs (so its prints show in Activity)
+                PrintStream oldOut = System.out;
+                PrintStream capturing = new PrintStream(new java.io.OutputStream() {
+                    @Override public void write(int b) { consoleAppend.accept(String.valueOf((char)b)); }
+                }, true);
+                System.setOut(capturing);
+                try {
+                    // IMPORTANT: match your controller signature
+                    shoppingController.ApplyFishShop(selected.item.name, q);
+                } catch (Throwable t) {
+                    consoleAppend.accept("\n[Error] " + t.getMessage() + "\n");
+                } finally {
+                    System.setOut(oldOut);
+                }
+
+                // Optional QoL:
+                // selected.qty.setText("0");
+                // selected.pick.setChecked(false);
+            }
+        });
+
+        // ENTER triggers Buy without closing
+        dialog.addListener(new InputListener() {
+            @Override public boolean keyDown(InputEvent event, int keycode) {
+                if (keycode == Input.Keys.ENTER) {
+                    buyBtn.setProgrammaticChangeEvents(true);
+                    buyBtn.toggle();
+                    buyBtn.setProgrammaticChangeEvents(false);
+                    buyBtn.fire(new ChangeListener.ChangeEvent());
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        // ESC => Cancel
+        dialog.key(Input.Keys.ESCAPE, false);
+
+        dialog.show(stage);
+        dialog.setMovable(true);
+        dialog.setResizable(true);
     }
 
-    public void openJojaMart(){
+    public void openJojaMart(Stage stage) {
+        final Skin skin = GameAssetsManager.getInstance().getSkin();
 
+        // Activity console
+        final StringBuilder consoleBuf = new StringBuilder();
+        final Label consoleLabel = new Label("", skin);
+        consoleLabel.setWrap(true);
+        final ScrollPane consoleScroll = new ScrollPane(consoleLabel, skin);
+        consoleScroll.setFadeScrollBars(false);
+        consoleScroll.setScrollingDisabled(true, false);
+        consoleScroll.setOverscroll(false, false);
+        final Runnable scrollToBottom = () -> Gdx.app.postRunnable(() -> consoleScroll.setScrollPercentY(1f));
+        final Consumer<String> consoleAppend = s -> { consoleBuf.append(s); consoleLabel.setText(consoleBuf.toString()); scrollToBottom.run(); };
+
+        final Dialog dialog = new Dialog("JojaMart", skin);
+
+        // List header
+        Table list = new Table(skin);
+        list.defaults().pad(6).left();
+        list.add(new Label("Item", skin)).left().padLeft(4);
+        list.add().growX();
+        list.add(new Label("Qty", skin)).width(110).center();
+        list.add(new Label("Pick", skin)).width(70).center();
+        list.row();
+
+        jRows.clear();
+
+        // Single-select
+        ButtonGroup<CheckBox> group = new ButtonGroup<>();
+        group.setMinCheckCount(0);
+        group.setMaxCheckCount(1);
+
+        for (JojaMartItems it : JojaMartItems.values()) {
+            Image icon = new Image(getJojaIcon(it));
+            icon.setScaling(Scaling.fit);
+            list.add(icon).size(48, 48).padRight(8).left();
+
+            Label nameLbl = new Label(it.name(), skin); // adjust if your enum uses a different display field
+            nameLbl.setAlignment(Align.left);
+            list.add(nameLbl).growX().left();
+
+            TextField qty = new TextField("0", skin);
+            qty.setMessageText("0");
+            qty.setTextFieldFilter(new TextField.TextFieldFilter.DigitsOnlyFilter());
+            list.add(qty).width(110).center();
+
+            CheckBox pick = skin.has("radio", CheckBox.CheckBoxStyle.class)
+                ? new CheckBox("", skin, "radio")
+                : new CheckBox("", skin);
+            list.add(pick).width(70).center();
+
+            list.row();
+
+            jRows.add(new JRow(it, pick, qty));
+            group.add(pick);
+        }
+
+        ScrollPane scroll = new ScrollPane(list, skin);
+        scroll.setFadeScrollBars(false);
+        scroll.setScrollingDisabled(true, false);
+        scroll.setOverscroll(false, false);
+
+        // Layout content
+        dialog.getContentTable()
+            .add(scroll)
+            .width(Math.min(720, Gdx.graphics.getWidth() * 0.9f))
+            .height(Math.min(420, Gdx.graphics.getHeight() * 0.7f))
+            .pad(8);
+        dialog.getContentTable().row();
+
+        dialog.getContentTable()
+            .add(new Label("Activity:", skin))
+            .left().padTop(6).padBottom(2).padLeft(8).growX();
+        dialog.getContentTable().row();
+
+        dialog.getContentTable()
+            .add(consoleScroll)
+            .width(Math.min(720, Gdx.graphics.getWidth() * 0.9f))
+            .height(110)
+            .pad(8)
+            .growX();
+        dialog.getContentTable().row();
+
+        // Buttons
+        dialog.button("Cancel", false); // closes
+        TextButton buyBtn = new TextButton("Buy", skin);
+        dialog.getButtonTable().add(buyBtn).pad(6);
+
+        buyBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                // selected row
+                JRow selected = null;
+                for (JRow r : jRows) { if (r.pick.isChecked()) { selected = r; break; } }
+                if (selected == null) { consoleAppend.accept("No item selected.\n"); return; }
+
+                int q;
+                try { q = Integer.parseInt(selected.qty.getText().trim()); }
+                catch (NumberFormatException ex) { consoleAppend.accept("Please enter a valid quantity.\n"); return; }
+                if (q <= 0) { consoleAppend.accept("Quantity must be > 0.\n"); return; }
+
+                // Capture System.out while controller runs
+                PrintStream oldOut = System.out;
+                PrintStream capturing = new PrintStream(new java.io.OutputStream() {
+                    @Override public void write(int b) { consoleAppend.accept(String.valueOf((char)b)); }
+                }, true);
+                System.setOut(capturing);
+                try {
+                    shoppingController.ApplyJojaMart((selected.item.Name != null) ? selected.item.Name : selected.item.name(), q);
+
+
+
+                } catch (Throwable t) {
+                    consoleAppend.accept("\n[Error] " + t.getMessage() + "\n");
+                } finally {
+                    System.setOut(oldOut);
+                }
+
+                // Optional reset
+                // selected.qty.setText("0");
+                // selected.pick.setChecked(false);
+            }
+        });
+
+        // ENTER triggers Buy without closing
+        dialog.addListener(new InputListener() {
+            @Override public boolean keyDown(InputEvent event, int keycode) {
+                if (keycode == Input.Keys.ENTER) {
+                    buyBtn.setProgrammaticChangeEvents(true);
+                    buyBtn.toggle();
+                    buyBtn.setProgrammaticChangeEvents(false);
+                    buyBtn.fire(new ChangeListener.ChangeEvent());
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        // ESC => Cancel
+        dialog.key(Input.Keys.ESCAPE, false);
+
+        dialog.show(stage);
+        dialog.setMovable(true);
+        dialog.setResizable(true);
     }
 
     private static class MRRow {
@@ -653,8 +977,147 @@ public class SwitchMenuController {
         dialog.setResizable(true);
     }
 
-    public void openPerrieGeneralStore(){
+    public void openPierreGeneralStore(Stage stage) {
+        final Skin skin = GameAssetsManager.getInstance().getSkin();
 
+        // Activity console (shows System.out from controller)
+        final StringBuilder consoleBuf = new StringBuilder();
+        final Label consoleLabel = new Label("", skin);
+        consoleLabel.setWrap(true);
+        final ScrollPane consoleScroll = new ScrollPane(consoleLabel, skin);
+        consoleScroll.setFadeScrollBars(false);
+        consoleScroll.setScrollingDisabled(true, false);
+        consoleScroll.setOverscroll(false, false);
+        final Runnable scrollToBottom = () -> Gdx.app.postRunnable(() -> consoleScroll.setScrollPercentY(1f));
+        final Consumer<String> consoleAppend = s -> { consoleBuf.append(s); consoleLabel.setText(consoleBuf.toString()); scrollToBottom.run(); };
+
+        final Dialog dialog = new Dialog("Pierre's General Store", skin);
+
+        // List header
+        Table list = new Table(skin);
+        list.defaults().pad(6).left();
+        list.add(new Label("Item", skin)).left().padLeft(4);
+        list.add().growX();
+        list.add(new Label("Qty", skin)).width(110).center();
+        list.add(new Label("Pick", skin)).width(70).center();
+        list.row();
+
+        pRows.clear();
+
+        // single-select
+        ButtonGroup<CheckBox> group = new ButtonGroup<>();
+        group.setMinCheckCount(0);
+        group.setMaxCheckCount(1);
+
+        for (PierreStoreItems it : PierreStoreItems.values()) {
+            Image icon = new Image(getPierreIcon(it));
+            icon.setScaling(Scaling.fit);
+            list.add(icon).size(48, 48).padRight(8).left();
+
+            // assumes your enum has a display field `name` like others
+            Label nameLbl = new Label(it.name(), skin);
+            nameLbl.setAlignment(Align.left);
+            list.add(nameLbl).growX().left();
+
+            TextField qty = new TextField("0", skin);
+            qty.setMessageText("0");
+            qty.setTextFieldFilter(new TextField.TextFieldFilter.DigitsOnlyFilter());
+            list.add(qty).width(110).center();
+
+            CheckBox pick = skin.has("radio", CheckBox.CheckBoxStyle.class)
+                ? new CheckBox("", skin, "radio")
+                : new CheckBox("", skin);
+            list.add(pick).width(70).center();
+
+            list.row();
+
+            pRows.add(new PRow(it, pick, qty));
+            group.add(pick);
+        }
+
+        ScrollPane scroll = new ScrollPane(list, skin);
+        scroll.setFadeScrollBars(false);
+        scroll.setScrollingDisabled(true, false);
+        scroll.setOverscroll(false, false);
+
+        // Layout
+        dialog.getContentTable()
+            .add(scroll)
+            .width(Math.min(720, Gdx.graphics.getWidth() * 0.9f))
+            .height(Math.min(420, Gdx.graphics.getHeight() * 0.7f))
+            .pad(8);
+        dialog.getContentTable().row();
+
+        dialog.getContentTable().add(new Label("Activity:", skin))
+            .left().padTop(6).padBottom(2).padLeft(8).growX();
+        dialog.getContentTable().row();
+
+        dialog.getContentTable()
+            .add(consoleScroll)
+            .width(Math.min(720, Gdx.graphics.getWidth() * 0.9f))
+            .height(110)
+            .pad(8)
+            .growX();
+        dialog.getContentTable().row();
+
+        // Buttons
+        dialog.button("Cancel", false); // closes
+
+        TextButton buyBtn = new TextButton("Buy", skin); // stays open
+        dialog.getButtonTable().add(buyBtn).pad(6);
+
+        buyBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                PRow selected = null;
+                for (PRow r : pRows) { if (r.pick.isChecked()) { selected = r; break; } }
+                if (selected == null) { consoleAppend.accept("No item selected.\n"); return; }
+
+                int q;
+                try { q = Integer.parseInt(selected.qty.getText().trim()); }
+                catch (NumberFormatException ex) { consoleAppend.accept("Please enter a valid quantity.\n"); return; }
+                if (q <= 0) { consoleAppend.accept("Quantity must be > 0.\n"); return; }
+
+                // capture System.out while applying purchase
+                PrintStream oldOut = System.out;
+                PrintStream capturing = new PrintStream(new java.io.OutputStream() {
+                    @Override public void write(int b) { consoleAppend.accept(String.valueOf((char)b)); }
+                }, true);
+                System.setOut(capturing);
+                try {
+                    shoppingController.ApplyPierreStore(selected.item.name(), q);
+                } catch (Throwable t) {
+                    consoleAppend.accept("\n[Error] " + t.getMessage() + "\n");
+                } finally {
+                    System.setOut(oldOut);
+                }
+
+                // Optional QoL:
+                // selected.qty.setText("0");
+                // selected.pick.setChecked(false);
+            }
+        });
+
+        // ENTER triggers Buy
+        dialog.addListener(new InputListener() {
+            @Override public boolean keyDown(InputEvent event, int keycode) {
+                if (keycode == Input.Keys.ENTER) {
+                    buyBtn.setProgrammaticChangeEvents(true);
+                    buyBtn.toggle();
+                    buyBtn.setProgrammaticChangeEvents(false);
+                    buyBtn.fire(new ChangeListener.ChangeEvent());
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        // ESC => Cancel
+        dialog.key(Input.Keys.ESCAPE, false);
+
+        dialog.show(stage);
+        dialog.setMovable(true);
+        dialog.setResizable(true);
     }
 
     private static class Row {
@@ -995,6 +1458,188 @@ public class SwitchMenuController {
                 return true;
             default:
                 return false;
+        }
+    }
+
+    private TextureRegionDrawable getFishIcon(FishShopItems item) {
+        TextureRegionDrawable dr = fishIconCache.get(item);
+        if (dr != null) return dr;
+
+        String path = resolveFishIconPath(item);
+        Texture tex;
+        try {
+            tex = new Texture(Gdx.files.internal(path));
+        } catch (Exception e) {
+            tex = new Texture(Gdx.files.internal("Fishing_Pole/Iridium_Rod.png")); // ensure exists
+        }
+        dr = new TextureRegionDrawable(new TextureRegion(tex));
+        fishIconCache.put(item, dr);
+        return dr;
+    }
+
+    // If your files follow a pattern like "items/fishshop/<enum>_48.png"
+    private String resolveFishIconPath(FishShopItems item) {
+        switch (item)
+        {
+            case FISH_SMOKER_RECIPE : return "Crafting/Fish_Smoker.png";
+            case TROUT_SOUP : return "Recipe/Trout_Soup.png";
+            case TRAINING_ROD: return "Fishing_Pole/Training_Rod.png";
+            case BAMBOO_POLE: return "Fishing_Pole/Bamboo_Pole.png";
+            case FIBERGLASS_ROD: return "Fishing_Pole/Fiberglass_Rod.png";
+            default: return "Fishing_Pole/Iridium_Rod.png";
+        }
+    }
+    private TextureRegionDrawable getJojaIcon(JojaMartItems item) {
+        TextureRegionDrawable dr = jojaIconCache.get(item);
+        if (dr != null) return dr;
+        String path = resolveJojaIconPath(item);
+        Texture tex;
+        try { tex = new Texture(Gdx.files.internal(path)); }
+        catch (Exception e) { tex = new Texture(Gdx.files.internal("Crops/Wheat_Seeds.png")); }
+        dr = new TextureRegionDrawable(new TextureRegion(tex));
+        jojaIconCache.put(item, dr);
+        return dr;
+    }
+
+    // If your filenames follow a pattern like items/jojmart/<enum>_48.png:
+    private String resolveJojaIconPath(JojaMartItems item) {
+        switch (item)
+        {
+            case JojaCola: return "Concessions/Joja_Cola_%28large%29.png";
+            case Sugar: return "Ingredient/Sugar.png";
+            case WheatFlour: return "Ingredient/Wheat_Flour.png";
+            case Rice: return "Ingredient/Rice.png";
+            case GrassStarter: return "Crafting/Grass_Starter.png";
+            case JazzSeeds:            return "Crops/Jazz_Seeds.png";
+            case CarrotSeeds:          return "Crops/Carrot_Seeds.png";
+            case CauliflowerSeeds:     return "Crops/Cauliflower_Seeds.png";
+            case CoffeeBean:           return "Crops/Coffee_Bean.png";
+            case GarlicSeeds:          return "Crops/Garlic_Seeds.png";
+            case BeanStarter:          return "Crops/Bean_Starter.png";
+            case KaleSeeds:            return "Crops/Kale_Seeds.png";
+            case ParsnipSeeds:         return "Crops/Parsnip_Seeds.png";
+            case PotatoSeeds:          return "Crops/Potato_Seeds.png";
+            case RhubarbSeeds:         return "Crops/Rhubarb_Seeds.png";
+            case StrawberrySeeds:      return "Crops/Strawberry_Seeds.png";
+            case TulipBulb:            return "Crops/Tulip_Bulb.png";
+            case RiceShoot:            return "Crops/Rice_Shoot.png";
+            case BlueberrySeeds:       return "Crops/Blueberry_Seeds.png";
+            case CornSeeds:            return "Crops/Corn_Seeds.png";
+            case HopsStarter:          return "Crops/Hops_Starter.png";
+            case PepperSeeds:          return "Crops/Pepper_Seeds.png";
+            case MelonSeeds:           return "Crops/Melon_Seeds.png";
+            case PoppySeeds:           return "Crops/Poppy_Seeds.png";
+            case RadishSeeds:          return "Crops/Radish_Seeds.png";
+            case RedCabbageSeeds:      return "Crops/Red_Cabbage_Seeds.png";
+            case StarfruitSeeds:       return "Crops/Starfruit_Seeds.png";
+            case SpangleSeeds:         return "Crops/Spangle_Seeds.png";
+            case SummerSquashSeeds:    return "Crops/Summer_Squash_Seeds.png";
+            case SunflowerSeeds:       return "Crops/Sunflower_Seeds.png";
+            case TomatoSeeds:          return "Crops/Tomato_Seeds.png";
+            case WheatSeeds:           return "Crops/Wheat_Seeds.png";
+            case AmaranthSeeds:        return "Crops/Amaranth_Seeds.png";
+            case ArtichokeSeeds:       return "Crops/Artichoke_Seeds.png";
+            case BeetSeeds:            return "Crops/Beet_Seeds.png";
+            case BokChoySeeds:         return "Crops/Bok_Choy_Seeds.png";
+            case BroccoliSeeds:        return "Crops/Broccoli_Seeds.png";
+            case CranberrySeeds:       return "Crops/Cranberry_Seeds.png";
+            case EggplantSeeds:        return "Crops/Eggplant_Seeds.png";
+            case FairySeeds:           return "Crops/Fairy_Seeds.png";
+            case GrapeStarter:         return "Crops/Grape_Starter.png";
+            case PumpkinSeeds:         return "Crops/Pumpkin_Seeds.png";
+            case YamSeeds:             return "Crops/Yam_Seeds.png";
+            case RareSeed:             return "Crops/Rare_Seed.png";
+            case PowdermelonSeeds:     return "Crops/Powdermelon_Seeds.png";
+            case AncientSeeds:         return "Crops/Ancient_Seeds.png";
+            default: return "Crops/Wheat_Seeds.png";
+        }
+    }
+
+    private TextureRegionDrawable getPierreIcon(PierreStoreItems item) {
+        TextureRegionDrawable dr = pierreIconCache.get(item);
+        if (dr != null) return dr;
+        String path = resolvePierreIconPath(item);
+        Texture tex;
+        try { tex = new Texture(Gdx.files.internal(path)); }
+        catch (Exception e) { tex = new Texture(Gdx.files.internal("ui/placeholder_32.png")); }
+        dr = new TextureRegionDrawable(new TextureRegion(tex));
+        pierreIconCache.put(item, dr);
+        return dr;
+    }
+
+    // If your files follow a pattern like "items/pierre/<enum>_48.png":
+    private String resolvePierreIconPath(PierreStoreItems item) {
+        switch (item) {
+            // مواد اولیه و اینگریدینت‌ها
+            case RICE:                    return "Ingredient/Rice.png";
+            case WHEAT_FLOUR:            return "Ingredient/Wheat_Flour.png";
+            case SUGAR:                  return "Ingredient/Sugar.png";
+            case OIL:                    return "Ingredient/Oil.png";
+            case VINEGAR:                return "Ingredient/Vinegar.png";
+
+            // Retaining soil ها (اصلاح‌شده: پوشه‌ی Fertilizer)
+            case BASIC_RETAINING_SOIL:   return "Fertilizer/Basic_Retaining_Soil.png";
+            case QUALITY_RETAINING_SOIL: return "Fertilizer/Quality_Retaining_Soil.png";
+            case DELUXE_RETAINING_SOIL:  return "Fertilizer/Deluxe_Retaining_Soil.png";
+
+            // سایر آیتم‌های فروشگاهی
+            case GRASS_STARTER:          return "Crafting/Grass_Starter.png";
+            case SPEED_GRO:              return "Fertilizer/Speed-Gro.png";
+
+            // نهال‌ها (saplings)
+            case APPLE_SAPLING:          return "Trees/Apple_Sapling.png";
+            case APRICOT_SAPLING:        return "Trees/Apricot_Sapling.png";
+            case CHERRY_SAPLING:         return "Trees/Cherry_Sapling.png";
+            case ORANGE_SAPLING:         return "Trees/Orange_Sapling.png";
+            case PEACH_SAPLING:          return "Trees/Peach_Sapling.png";
+            case POMEGRANATE_SAPLING:    return "Trees/Pomegranate_Sapling.png";
+
+            // آیتم‌های خاص/آیتم‌های متفرقه
+            case BOUQUET:                return "Special_item/Bouquet.png";
+            case WEDDING_RING:           return "Crafting/Wedding_Ring.png";
+            case DEHYDRATOR_RECIPE:      return "Crafting/Dehydrator.png";        // نزدیک‌ترین آیکن موجود
+            case GRASS_STARTER_RECIPE:   return "Crafting/Grass_Starter.png";     // نزدیک‌ترین آیکن موجود
+            case LARGE_PACK:             return "Tools/Backpack.png";
+            case DELUXE_PACK:            return "Tools/36_Backpack.png";
+
+            // بذرها (seeds)
+            case PARSNIP_SEEDS:          return "Crops/Parsnip_Seeds.png";
+            case BEAN_STARTER:           return "Crops/Bean_Starter.png";
+            case CAULIFLOWER_SEEDS:      return "Crops/Cauliflower_Seeds.png";
+            case POTATO_SEEDS:           return "Crops/Potato_Seeds.png";
+            case TULIP_BULB:             return "Crops/Tulip_Bulb.png";
+            case KALE_SEEDS:             return "Crops/Kale_Seeds.png";
+            case JAZZ_SEEDS:             return "Crops/Jazz_Seeds.png";
+            case GARLIC_SEEDS:           return "Crops/Garlic_Seeds.png";
+            case RICE_SHOOT:             return "Crops/Rice_Shoot.png";
+
+            case MELON_SEEDS:            return "Crops/Melon_Seeds.png";
+            case TOMATO_SEEDS:           return "Crops/Tomato_Seeds.png";
+            case BLUEBERRY_SEEDS:        return "Crops/Blueberry_Seeds.png";
+            case PEPPER_SEEDS:           return "Crops/Pepper_Seeds.png";
+            case WHEAT_SEEDS_SUMMER:     return "Crops/Wheat_Seeds.png";
+            case RADISH_SEEDS:           return "Crops/Radish_Seeds.png";
+            case POPPY_SEEDS:            return "Crops/Poppy_Seeds.png";
+            case SPANGLE_SEEDS:          return "Crops/Spangle_Seeds.png";
+            case HOPS_STARTER:           return "Crops/Hops_Starter.png";
+            case CORN_SEEDS_SUMMER:      return "Crops/Corn_Seeds.png";
+            case SUNFLOWER_SEEDS_SUMMER: return "Crops/Sunflower_Seeds.png";
+            case RED_CABBAGE_SEEDS:      return "Crops/Red_Cabbage_Seeds.png";
+
+            case EGGPLANT_SEEDS:         return "Crops/Eggplant_Seeds.png";
+            case CORN_SEEDS_FALL:        return "Crops/Corn_Seeds.png";
+            case PUMPKIN_SEEDS:          return "Crops/Pumpkin_Seeds.png";
+            case BOK_CHOY_SEEDS:         return "Crops/Bok_Choy_Seeds.png";
+            case YAM_SEEDS:              return "Crops/Yam_Seeds.png";
+            case CRANBERRY_SEEDS:        return "Crops/Cranberry_Seeds.png";
+            case SUNFLOWER_SEEDS_FALL:   return "Crops/Sunflower_Seeds.png";
+            case FAIRY_SEEDS:            return "Crops/Fairy_Seeds.png";
+            case AMARANTH_SEEDS:         return "Crops/Amaranth_Seeds.png";
+            case GRAPE_STARTER:          return "Crops/Grape_Starter.png";
+            case WHEAT_SEEDS_FALL:       return "Crops/Wheat_Seeds.png";
+            case ARTICHOKE_SEEDS:        return "Crops/Artichoke_Seeds.png";
+
+            default: return "Crops/Eggplant_Seeds.png";
         }
     }
 }
